@@ -14420,7 +14420,7 @@ public final class RepoFileQuery: GraphQLQuery {
 
 public final class RepoFileHistoryQuery: GraphQLQuery {
   public static let operationString =
-    "query RepoFileHistory($owner: String!, $name: String!, $branch: String!, $path: String, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    object(expression: $branch) {\n      __typename\n      ... on Commit {\n        history(after: $after, path: $path, first: $page_size) {\n          __typename\n          nodes {\n            __typename\n            message\n            oid\n            committedDate\n            author {\n              __typename\n              user {\n                __typename\n                login\n                avatarUrl\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}"
+    "query RepoFileHistory($owner: String!, $name: String!, $branch: String!, $path: String, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    object(expression: $branch) {\n      __typename\n      ... on Commit {\n        history(after: $after, path: $path, first: $page_size) {\n          __typename\n          nodes {\n            __typename\n            message\n            oid\n            committedDate\n            url\n            author {\n              __typename\n              user {\n                __typename\n                login\n              }\n            }\n            committer {\n              __typename\n              user {\n                __typename\n                login\n              }\n            }\n          }\n          pageInfo {\n            __typename\n            hasNextPage\n            endCursor\n          }\n        }\n      }\n    }\n  }\n}"
 
   public var owner: String
   public var name: String
@@ -14603,6 +14603,7 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("nodes", type: .list(.object(Node.selections))),
+              GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -14611,8 +14612,8 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "CommitHistoryConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
+            public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
+              self.init(snapshot: ["__typename": "CommitHistoryConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
             }
 
             public var __typename: String {
@@ -14634,6 +14635,16 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
               }
             }
 
+            /// Information to aid in pagination.
+            public var pageInfo: PageInfo {
+              get {
+                return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+              }
+              set {
+                snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+              }
+            }
+
             public struct Node: GraphQLSelectionSet {
               public static let possibleTypes = ["Commit"]
 
@@ -14642,7 +14653,9 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
                 GraphQLField("message", type: .nonNull(.scalar(String.self))),
                 GraphQLField("oid", type: .nonNull(.scalar(String.self))),
                 GraphQLField("committedDate", type: .nonNull(.scalar(String.self))),
+                GraphQLField("url", type: .nonNull(.scalar(String.self))),
                 GraphQLField("author", type: .object(Author.selections)),
+                GraphQLField("committer", type: .object(Committer.selections)),
               ]
 
               public var snapshot: Snapshot
@@ -14651,8 +14664,8 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
                 self.snapshot = snapshot
               }
 
-              public init(message: String, oid: String, committedDate: String, author: Author? = nil) {
-                self.init(snapshot: ["__typename": "Commit", "message": message, "oid": oid, "committedDate": committedDate, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
+              public init(message: String, oid: String, committedDate: String, url: String, author: Author? = nil, committer: Committer? = nil) {
+                self.init(snapshot: ["__typename": "Commit", "message": message, "oid": oid, "committedDate": committedDate, "url": url, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "committer": committer.flatMap { (value: Committer) -> Snapshot in value.snapshot }])
               }
 
               public var __typename: String {
@@ -14694,6 +14707,16 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
                 }
               }
 
+              /// The HTTP URL for this commit
+              public var url: String {
+                get {
+                  return snapshot["url"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "url")
+                }
+              }
+
               /// Authorship details of the commit.
               public var author: Author? {
                 get {
@@ -14701,6 +14724,16 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
                 }
                 set {
                   snapshot.updateValue(newValue?.snapshot, forKey: "author")
+                }
+              }
+
+              /// Committership details of the commit.
+              public var committer: Committer? {
+                get {
+                  return (snapshot["committer"] as? Snapshot).flatMap { Committer(snapshot: $0) }
+                }
+                set {
+                  snapshot.updateValue(newValue?.snapshot, forKey: "committer")
                 }
               }
 
@@ -14747,7 +14780,6 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
                   public static let selections: [GraphQLSelection] = [
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                     GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
                   ]
 
                   public var snapshot: Snapshot
@@ -14756,8 +14788,8 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
                     self.snapshot = snapshot
                   }
 
-                  public init(login: String, avatarUrl: String) {
-                    self.init(snapshot: ["__typename": "User", "login": login, "avatarUrl": avatarUrl])
+                  public init(login: String) {
+                    self.init(snapshot: ["__typename": "User", "login": login])
                   }
 
                   public var __typename: String {
@@ -14778,16 +14810,131 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
                       snapshot.updateValue(newValue, forKey: "login")
                     }
                   }
+                }
+              }
 
-                  /// A URL pointing to the user's public avatar.
-                  public var avatarUrl: String {
+              public struct Committer: GraphQLSelectionSet {
+                public static let possibleTypes = ["GitActor"]
+
+                public static let selections: [GraphQLSelection] = [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("user", type: .object(User.selections)),
+                ]
+
+                public var snapshot: Snapshot
+
+                public init(snapshot: Snapshot) {
+                  self.snapshot = snapshot
+                }
+
+                public init(user: User? = nil) {
+                  self.init(snapshot: ["__typename": "GitActor", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+                }
+
+                public var __typename: String {
+                  get {
+                    return snapshot["__typename"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                /// The GitHub user corresponding to the email field. Null if no such user exists.
+                public var user: User? {
+                  get {
+                    return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "user")
+                  }
+                }
+
+                public struct User: GraphQLSelectionSet {
+                  public static let possibleTypes = ["User"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public init(login: String) {
+                    self.init(snapshot: ["__typename": "User", "login": login])
+                  }
+
+                  public var __typename: String {
                     get {
-                      return snapshot["avatarUrl"]! as! String
+                      return snapshot["__typename"]! as! String
                     }
                     set {
-                      snapshot.updateValue(newValue, forKey: "avatarUrl")
+                      snapshot.updateValue(newValue, forKey: "__typename")
                     }
                   }
+
+                  /// The username used to login.
+                  public var login: String {
+                    get {
+                      return snapshot["login"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "login")
+                    }
+                  }
+                }
+              }
+            }
+
+            public struct PageInfo: GraphQLSelectionSet {
+              public static let possibleTypes = ["PageInfo"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+                GraphQLField("endCursor", type: .scalar(String.self)),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(hasNextPage: Bool, endCursor: String? = nil) {
+                self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// When paginating forwards, are there more items?
+              public var hasNextPage: Bool {
+                get {
+                  return snapshot["hasNextPage"]! as! Bool
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "hasNextPage")
+                }
+              }
+
+              /// When paginating forwards, the cursor to continue.
+              public var endCursor: String? {
+                get {
+                  return snapshot["endCursor"] as? String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "endCursor")
                 }
               }
             }

@@ -93,6 +93,7 @@ RepositoryBranchUpdatable {
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         var actions = [
+            viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client, path: path),
             AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },

@@ -1,18 +1,27 @@
-query RepoFileHistory($owner: String!, $name: String!, $branch: String!, $path: String, $after:String, $page_size:Int!) {
+query RepoFileHistory($owner: String!, $name: String!, $branch: String!, $path: String, $after: String, $page_size: Int!) {
   repository(owner: $owner, name: $name) {
     object(expression: $branch) {
       ... on Commit {
-        history(after:$after, path: $path, first:$page_size) {
+        history(after: $after, path: $path, first: $page_size) {
           nodes {
             message
             oid
             committedDate
+            url
             author {
               user {
                 login
-                avatarUrl
               }
             }
+            committer {
+              user {
+                login
+              }
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
           }
         }
       }
