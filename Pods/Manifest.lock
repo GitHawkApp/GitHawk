@@ -169,7 +169,7 @@ CHECKOUT OPTIONS:
     :commit: 88d671bbe86e3c18d54e094fac97df12a3054d53
     :git: https://github.com/GitHawkApp/Squawk.git
   StyledTextKit:
-    :commit: d15f77a32203daafd71e14e6f5911528e932aca5
+    :commit: 8583c80e742f886e541c5ec500b7be6f5e7a233f
     :git: https://github.com/GitHawkApp/StyledTextKit.git
 
 SPEC CHECKSUMS:

@@ -17,36 +17,6 @@ protocol RepositoryQuery {
     func nextPageToken(from data: GraphQLSelectionSet) -> String?
 }
 
-extension RepoIssuePagesQuery: RepositoryQuery {
-
-    func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
-        guard let issues = data as? Data else { return [] }
-        return issues.repository?.issues.nodes?.compactMap { $0 } ?? []
-    }
-
-    func nextPageToken(from data: GraphQLSelectionSet) -> String? {
-        guard let issues = data as? Data else { return nil }
-        guard let pageInfo = issues.repository?.issues.pageInfo, pageInfo.hasNextPage else { return nil }
-        return pageInfo.endCursor
-    }
-
-}
-
-extension RepoPullRequestPagesQuery: RepositoryQuery {
-
-    func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
-        guard let prs = data as? RepoPullRequestPagesQuery.Data else { return [] }
-        return prs.repository?.pullRequests.nodes?.compactMap { $0 } ?? []
-    }
-
-    func nextPageToken(from data: GraphQLSelectionSet) -> String? {
-        guard let prs = data as? RepoPullRequestPagesQuery.Data else { return nil }
-        guard let pageInfo = prs.repository?.pullRequests.pageInfo, pageInfo.hasNextPage else { return nil }
-        return pageInfo.endCursor
-    }
-
-}
-
 extension RepoSearchPagesQuery: RepositoryQuery {
 
     func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
@@ -69,12 +39,34 @@ func createSummaryModel(
     ) -> RepositoryIssueSummaryModel? {
     guard let date = node.repoEventFields.createdAt.githubDate else { return nil }
 
-    let title = StyledTextBuilder(styledText: StyledText(
+    let builder = StyledTextBuilder(styledText: StyledText(
         text: node.title,
-        style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color)
-    )).build()
+//        style: Styles.Text.body.with(foreground: Styles.Colors.Gray.medium.color)
+        style: Styles.Text.body
+    ))
+    if let ciStatus = node.ciStatus {
+        let iconName: String
+        let color: UIColor
+        switch ciStatus {
+        case .pending:
+            iconName = "primitive-dot"
+            color = Styles.Colors.Yellow.medium.color
+        case .failure:
+            iconName = "x-small"
+            color = Styles.Colors.Red.medium.color
+        case .success:
+            iconName = "check-small"
+            color = Styles.Colors.Green.medium.color
+        }
+        if let icon = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate) {
+            builder.save()
+                .add(text: "\u{00A0}")
+                .add(image: icon, attributes: [.foregroundColor: color])
+                .restore()
+        }
+    }
     let string = StyledTextRenderer(
-        string: title,
+        string: builder.build(),
         contentSizeCategory: contentSizeCategory,
         inset: RepositorySummaryCell.titleInset
     ).warm(width: containerWidth)
@@ -87,7 +79,8 @@ func createSummaryModel(
         author: node.repoEventFields.author?.login ?? Constants.Strings.unknown,
         status: node.status,
         pullRequest: node.pullRequest,
-        labels: node.labelableFields.issueLabelModels
+        labels: node.labelableFields.issueLabelModels,
+        ciStatus: node.ciStatus
     )
 }
 
@@ -98,11 +91,13 @@ func createSummaryModel(
     containerWidth: CGFloat
     ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?) {
     let nextPage = query.nextPageToken(from: data)
-    let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).compactMap { (node: RepositoryIssueSummaryType) in
-        return createSummaryModel(node, contentSizeCategory: contentSizeCategory, containerWidth: containerWidth)
-    }.sorted(by: {
-        $0.created > $1.created 
-    })
+    let models = query.summaryTypes(from: data).compactMap { node in
+        return createSummaryModel(
+            node,
+            contentSizeCategory: contentSizeCategory,
+            containerWidth: containerWidth
+        )
+    }.sorted {$0.created > $1.created }
     return (models, nextPage)
 }
 
@@ -153,30 +148,6 @@ final class RepositoryClient {
                 }
             }
         })
-    }
-
-    func loadIssues(
-        nextPage: String? = nil,
-        containerWidth: CGFloat,
-        completion: @escaping (Result<RepositoryPayload>) -> Void
-        ) {
-        loadPage(
-            query: RepoIssuePagesQuery(owner: owner, name: name, after: nextPage, page_size: 30),
-            containerWidth: containerWidth,
-            completion: completion
-        )
-    }
-
-    func loadPullRequests(
-        nextPage: String? = nil,
-        containerWidth: CGFloat,
-        completion: @escaping (Result<RepositoryPayload>) -> Void
-        ) {
-        loadPage(
-            query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, page_size: 30),
-            containerWidth: containerWidth,
-            completion: completion
-        )
     }
 
     func searchIssues(
