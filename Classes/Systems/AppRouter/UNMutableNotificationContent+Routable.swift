@@ -7,6 +7,7 @@
 //
 
 import UserNotifications
+import GitHawkRoutes
 
 let UNNotificationContentRoutePathKey = "path"
 

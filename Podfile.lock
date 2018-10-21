@@ -23,6 +23,7 @@ PODS:
   - FMDB (2.7.2):
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
+  - GitHawkRoutes (0.1.0)
   - GitHubAPI (0.1.0):
     - Alamofire (~> 4.4.0)
     - Apollo (~> 0.8.0)
@@ -70,6 +71,7 @@ DEPENDENCIES:
   - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
   - FLEX (~> 2.0)
   - FMDB
+  - GitHawkRoutes (from `https://github.com/GitHawkApp/GitHawkRoutes.git`, branch `master`)
   - GitHubAPI (from `Local Pods/GitHubAPI`)
   - GitHubSession (from `Local Pods/GitHubSession`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
@@ -122,6 +124,9 @@ EXTERNAL SOURCES:
   FlatCache:
     :branch: master
     :git: https://github.com/GitHawkApp/FlatCache.git
+  GitHawkRoutes:
+    :branch: master
+    :git: https://github.com/GitHawkApp/GitHawkRoutes.git
   GitHubAPI:
     :path: Local Pods/GitHubAPI
   GitHubSession:
@@ -156,6 +161,9 @@ CHECKOUT OPTIONS:
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
     :git: https://github.com/GitHawkApp/FlatCache.git
+  GitHawkRoutes:
+    :commit: 33ecf4eaba9f472e307421a5b23a596b2fd93821
+    :git: https://github.com/GitHawkApp/GitHawkRoutes.git
   Highlightr:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
@@ -187,6 +195,7 @@ SPEC CHECKSUMS:
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  GitHawkRoutes: 9cfcc0f40d1971e5ee649e62b1f2c222461698a5
   GitHubAPI: 44a907f9699210536d65179d3d0dc0dc70dde7a1
   GitHubSession: 60c7bbd84fb915a0bd911a367c9661418ccfd7ae
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
@@ -206,6 +215,6 @@ SPEC CHECKSUMS:
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: cd04a784668fade26d053b1f1a225f3c76449423
+PODFILE CHECKSUM: ad1a1bfa60ab2cc8e941a4bddf5239063f1bdeee
 
 COCOAPODS: 1.5.3

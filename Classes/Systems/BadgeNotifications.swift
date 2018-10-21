@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 import GitHubAPI
 import GitHubSession
+import GitHawkRoutes
 
 final class BadgeNotifications {
 

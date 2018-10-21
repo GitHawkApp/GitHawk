@@ -8,12 +8,8 @@
 
 import Foundation
 
-protocol Routable {
+public protocol Routable {
     static func from(params: [String: String]) -> Self?
     var encoded: [String: String] { get }
     static var path: String { get }
-}
-
-extension Routable {
-    var encoded: [String: String] { return [:] }
 }
