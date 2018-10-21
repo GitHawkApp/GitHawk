@@ -164,7 +164,7 @@ CHECKOUT OPTIONS:
     :commit: a6956a50277f2382b920058ea90f78a82caeaaa9
     :git: https://github.com/GitHawkApp/ContextMenu.git
   DropdownTitleView:
-    :commit: bec63ded91d0852145e2cb193155785d4cf7ba9e
+    :commit: c50b85680df92e7efc985f530c971ff7bb0e9ef7
     :git: https://github.com/GitHawkApp/DropdownTitleView.git
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d

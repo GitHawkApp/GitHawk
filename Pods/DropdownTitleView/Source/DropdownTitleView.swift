@@ -52,6 +52,7 @@ open class DropdownTitleView: UIControl {
         subtitleLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         subtitleLabel.isAccessibilityElement = false
 
+        verticalStackView.isUserInteractionEnabled = false
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.alignment = .center
         verticalStackView.axis = .vertical
@@ -59,6 +60,7 @@ open class DropdownTitleView: UIControl {
         verticalStackView.addArrangedSubview(titleLabel)
         verticalStackView.addArrangedSubview(subtitleLabel)
 
+        horizontalStackView.isUserInteractionEnabled = false
         horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         horizontalStackView.alignment = .center
         horizontalStackView.distribution = .equalCentering
