@@ -83,10 +83,13 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
             modelController.markNotificationRead(id: model.id)
         }
 
+        BadgeNotifications.clear(for: model)
+
         switch model.number {
         case .hash(let hash):
             viewController?.presentCommit(owner: model.owner, repo: model.repo, hash: hash)
         case .number(let number):
+
             let controller = IssuesViewController(
                 client: modelController.githubClient,
                 model: IssueDetailsModel(owner: model.owner, repo: model.repo, number: number),
