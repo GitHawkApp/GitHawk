@@ -12,6 +12,7 @@ import Pageboy
 import TUSafariActivity
 import Squawk
 import ContextMenu
+import DropdownTitleView
 
 class RepositoryViewController: TabmanViewController,
 PageboyViewControllerDataSource,
@@ -84,7 +85,7 @@ ContextMenuDelegate {
         }
         navigationItem.rightBarButtonItems = items
 
-        let navigationTitle = NavigationTitleDropdownView()
+        let navigationTitle = DropdownTitleView()
         navigationItem.titleView = navigationTitle
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         let labelFormat = NSLocalizedString(

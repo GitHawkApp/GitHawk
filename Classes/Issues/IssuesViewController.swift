@@ -16,6 +16,7 @@ import Squawk
 import ContextMenu
 import GitHubAPI
 import ImageAlertAction
+import DropdownTitleView
 
 extension ListDiffable {
     var needsSpacer: Bool {
@@ -147,7 +148,7 @@ final class IssuesViewController: MessageViewController,
         let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
 
-        let navigationTitle = NavigationTitleDropdownView()
+        let navigationTitle = DropdownTitleView()
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         navigationTitle.configure(
             title: "#\(model.number)",

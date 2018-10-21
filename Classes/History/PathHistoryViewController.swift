@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import Squawk
+import DropdownTitleView
 
 final class PathHistoryViewController: BaseListViewController2<String>,
 BaseListViewController2DataSource {
@@ -29,10 +30,11 @@ BaseListViewController2DataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let titleView = NavigationTitleDropdownView(chevronVisible: false)
+        let titleView = DropdownTitleView()
         titleView.configure(
             title: NSLocalizedString("History", comment: ""),
-            subtitle: viewModel.path?.path
+            subtitle: viewModel.path?.path,
+            chevronEnabled: false
         )
         navigationItem.titleView = titleView
     }
