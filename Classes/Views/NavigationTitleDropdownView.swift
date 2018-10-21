@@ -16,42 +16,45 @@ final class NavigationTitleDropdownView: UIControl {
     private let label = UILabel()
     private let chevron = UIImageView(image: UIImage(named: "chevron-down-small")?.withRenderingMode(.alwaysTemplate))
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(chevronVisible: Bool = true) {
+        super.init(frame: .zero)
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
 
         let chevronSize = chevron.image?.size ?? .zero
 
-        chevron.tintColor = Styles.Colors.Gray.medium.color
-        chevron.setContentCompressionResistancePriority(.required, for: .horizontal)
-        chevron.setContentCompressionResistancePriority(.required, for: .vertical)
-        chevron.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(chevron)
+        if chevronVisible {
+            chevron.tintColor = Styles.Colors.Gray.medium.color
+            chevron.setContentCompressionResistancePriority(.required, for: .horizontal)
+            chevron.setContentCompressionResistancePriority(.required, for: .vertical)
+            chevron.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(chevron)
+        }
 
         label.backgroundColor = .clear
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.lineBreakMode = .byTruncatingMiddle
+        label.lineBreakMode = .byTruncatingHead
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.75
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         addSubview(label)
 
-        chevron.snp.makeConstraints { make in
-            make.left.equalTo(label.snp.right).offset(NavigationTitleDropdownView.spacing)
-            make.right.lessThanOrEqualTo(self)
-            make.centerY.equalTo(self)
-            make.size.equalTo(chevronSize)
+        if chevronVisible {
+            chevron.snp.makeConstraints { make in
+                make.left.equalTo(label.snp.right).offset(NavigationTitleDropdownView.spacing)
+                make.right.lessThanOrEqualTo(self)
+                make.centerY.equalTo(self)
+                make.size.equalTo(chevronSize)
+            }
         }
 
         label.snp.makeConstraints { make in
-//            make.center.equalTo(self)
             make.centerY.equalToSuperview()
-            make.centerX.equalToSuperview().offset(-2)
-            make.top.bottom.left.lessThanOrEqualTo(self).priority(.high)
+            make.centerX.equalToSuperview().offset(chevronVisible ? -2 : 0)
+            make.top.bottom.left.right.lessThanOrEqualTo(self).priority(.high)
         }
     }
 
@@ -62,10 +65,12 @@ final class NavigationTitleDropdownView: UIControl {
     override var intrinsicContentSize: CGSize {
         let greatest = CGFloat.greatestFiniteMagnitude
         let labelSize = label.sizeThatFits(CGSize(width: greatest, height: greatest))
-        let chevronSize = chevron.image?.size ?? .zero
+        let chevronSpacing = dropdownEnabled
+            ? (chevron.image?.size ?? .zero).width + NavigationTitleDropdownView.spacing
+            : 0
         return CGSize(
-            width: labelSize.width + NavigationTitleDropdownView.spacing + chevronSize.width,
-            height: max(chevronSize.height, labelSize.height)
+            width: labelSize.width + chevronSpacing,
+            height: labelSize.height
         )
     }
 
@@ -100,7 +105,7 @@ final class NavigationTitleDropdownView: UIControl {
         ]
 
         let attributedTitle = NSMutableAttributedString(string: title, attributes: titleAttributes)
-        if let subtitle = subtitle {
+        if let subtitle = subtitle, !subtitle.isEmpty {
             attributedTitle.append(NSAttributedString(string: "\n"))
             attributedTitle.append(NSAttributedString(string: subtitle, attributes: [
                 .font: Styles.Text.secondaryBold.preferredFont,
@@ -116,7 +121,12 @@ final class NavigationTitleDropdownView: UIControl {
 
     // MARK: Private API
 
-    func fadeControls(alpha: CGFloat) {
+    private var dropdownEnabled: Bool {
+        return chevron.superview != nil
+    }
+
+    private func fadeControls(alpha: CGFloat) {
+        guard dropdownEnabled else { return }
         [label, chevron].forEach { $0.alpha = alpha }
     }
 

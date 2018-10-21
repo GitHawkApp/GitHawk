@@ -326,6 +326,15 @@
 		29AF1E8C1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */; };
 		29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */; };
 		29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */; };
+		29B205F2217B7B5A00E4DD9F /* PathHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205F1217B7B5A00E4DD9F /* PathHistoryViewController.swift */; };
+		29B205F4217B7B8400E4DD9F /* PathCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205F3217B7B8400E4DD9F /* PathCommitSectionController.swift */; };
+		29B205F6217B7B9C00E4DD9F /* PathCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205F5217B7B9C00E4DD9F /* PathCommitModel.swift */; };
+		29B205F8217B7E6F00E4DD9F /* PathHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205F7217B7E6F00E4DD9F /* PathHistoryViewModel.swift */; };
+		29B205FA217B8B9100E4DD9F /* PathCommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205F9217B8B9100E4DD9F /* PathCommitCell.swift */; };
+		29B205FC217B912A00E4DD9F /* Client+History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205FB217B912A00E4DD9F /* Client+History.swift */; };
+		29B205FE217B971300E4DD9F /* String+FirstLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205FD217B971300E4DD9F /* String+FirstLine.swift */; };
+		29B20600217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205FF217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift */; };
+		29B20602217BC37B00E4DD9F /* UIViewController+HistoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B20601217BC37B00E4DD9F /* UIViewController+HistoryAction.swift */; };
 		29B5D08B20D578DB003DFBE2 /* InboxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B5D08A20D578DB003DFBE2 /* InboxType.swift */; };
 		29B75AD9210A9A0300C28131 /* IssueLabelStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */; };
 		29B75ADB210A9B3100C28131 /* IssueLabelStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */; };
@@ -867,6 +876,15 @@
 		29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeDirectoryViewController.swift; sourceTree = "<group>"; };
 		29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFile.swift; sourceTree = "<group>"; };
 		29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeBlobViewController.swift; sourceTree = "<group>"; };
+		29B205F1217B7B5A00E4DD9F /* PathHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathHistoryViewController.swift; sourceTree = "<group>"; };
+		29B205F3217B7B8400E4DD9F /* PathCommitSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathCommitSectionController.swift; sourceTree = "<group>"; };
+		29B205F5217B7B9C00E4DD9F /* PathCommitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathCommitModel.swift; sourceTree = "<group>"; };
+		29B205F7217B7E6F00E4DD9F /* PathHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathHistoryViewModel.swift; sourceTree = "<group>"; };
+		29B205F9217B8B9100E4DD9F /* PathCommitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathCommitCell.swift; sourceTree = "<group>"; };
+		29B205FB217B912A00E4DD9F /* Client+History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+History.swift"; sourceTree = "<group>"; };
+		29B205FD217B971300E4DD9F /* String+FirstLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+FirstLine.swift"; sourceTree = "<group>"; };
+		29B205FF217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoFileHistoryQueryDataToPathHistoryViewModel.swift; sourceTree = "<group>"; };
+		29B20601217BC37B00E4DD9F /* UIViewController+HistoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HistoryAction.swift"; sourceTree = "<group>"; };
 		29B5D08A20D578DB003DFBE2 /* InboxType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxType.swift; sourceTree = "<group>"; };
 		29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusCell.swift; sourceTree = "<group>"; };
 		29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusModel.swift; sourceTree = "<group>"; };
@@ -1624,6 +1642,7 @@
 			isa = PBXGroup;
 			children = (
 				DCA5ED0C1FAED8FE0072F074 /* Bookmark */,
+				29B205F0217B7B4700E4DD9F /* History */,
 				98F9F3FB1F9CCFFE005A0266 /* Image Upload */,
 				292FCAC71EDFCC510026635E /* Issues */,
 				29EE1C131F3A2E440046A54D /* Labels */,
@@ -1890,6 +1909,21 @@
 			path = EditComment;
 			sourceTree = "<group>";
 		};
+		29B205F0217B7B4700E4DD9F /* History */ = {
+			isa = PBXGroup;
+			children = (
+				29B205FB217B912A00E4DD9F /* Client+History.swift */,
+				29B205F9217B8B9100E4DD9F /* PathCommitCell.swift */,
+				29B205F5217B7B9C00E4DD9F /* PathCommitModel.swift */,
+				29B205F3217B7B8400E4DD9F /* PathCommitSectionController.swift */,
+				29B205F1217B7B5A00E4DD9F /* PathHistoryViewController.swift */,
+				29B205F7217B7E6F00E4DD9F /* PathHistoryViewModel.swift */,
+				29B205FF217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift */,
+				29B20601217BC37B00E4DD9F /* UIViewController+HistoryAction.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		29BCA7FA212137E000753A3C /* Branches */ = {
 			isa = PBXGroup;
 			children = (
@@ -2114,6 +2148,7 @@
 				7B7BBA3D1F8B752A00D6AEDA /* SearchQueryTokenizer.swift */,
 				49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */,
 				DCA5ED111FAEE3AE0072F074 /* Store.swift */,
+				29B205FD217B971300E4DD9F /* String+FirstLine.swift */,
 				29B75ADC210AA14F00C28131 /* String+Size.swift */,
 				754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */,
 				2967DC55211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift */,
@@ -2762,6 +2797,7 @@
 				290744B41F250A6800FD9E48 /* AutocompleteCell.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
+				29B20600217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift in Sources */,
 				29459A6F1FE61E0500034A04 /* MarkdownCheckboxModel.swift in Sources */,
 				299997302031227E00995FFD /* IssueMergeButtonModel.swift in Sources */,
 				29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */,
@@ -2772,6 +2808,7 @@
 				D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */,
 				98003D8D1FCAD7FC00755C17 /* LabelDetails.swift in Sources */,
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
+				29B205FA217B8B9100E4DD9F /* PathCommitCell.swift in Sources */,
 				29AAB7171FB4A2AE001D5E6A /* BoundedImageSize.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
 				29AF1E8C1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift in Sources */,
@@ -2916,6 +2953,7 @@
 				2946FA5120367FC100C37435 /* GithubClient+Merge.swift in Sources */,
 				2999972A20311B3800995FFD /* IssueMergeSectionController.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
+				29B20602217BC37B00E4DD9F /* UIViewController+HistoryAction.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
 				292FF8B91F303DB0009E63F7 /* IssuePreviewModel.swift in Sources */,
 				2973E81120FBF73D0050233F /* IssueManagingContextController.swift in Sources */,
@@ -2974,6 +3012,7 @@
 				291929491F3EAD2E0012067B /* IssueViewFilesSectionController.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
+				29B205F8217B7E6F00E4DD9F /* PathHistoryViewModel.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */,
 				29136BE3200AAA5A007317BE /* UIViewController+FilePathTitle.swift in Sources */,
@@ -3086,6 +3125,7 @@
 				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
+				29B205F6217B7B9C00E4DD9F /* PathCommitModel.swift in Sources */,
 				297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				299F63EA20603FB80015D901 /* MarkdownStyledTextView.swift in Sources */,
@@ -3109,6 +3149,7 @@
 				292D2F1720FA5CAD00099342 /* Squawk+GitHawk.swift in Sources */,
 				DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */,
 				29BCA7FF212137E100753A3C /* IssueBranchesSectionController.swift in Sources */,
+				29B205F4217B7B8400E4DD9F /* PathCommitSectionController.swift in Sources */,
 				DCA5ED121FAEE3AE0072F074 /* Store.swift in Sources */,
 				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,
 				29BCA800212137E100753A3C /* IssueTargetBranchCell.swift in Sources */,
@@ -3118,6 +3159,7 @@
 				29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */,
 				49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
+				29B205FC217B912A00E4DD9F /* Client+History.swift in Sources */,
 				29242814210A51B5001F5980 /* SpacerSectionController.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */,
@@ -3131,10 +3173,12 @@
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,
 				2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */,
 				29A10543216D9381004734A0 /* UNMutableNotificationContent+Routable.swift in Sources */,
+				29B205FE217B971300E4DD9F /* String+FirstLine.swift in Sources */,
 				29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */,
 				98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */,
 				29C167671ECA005500439D62 /* Constants.swift in Sources */,
 				291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */,
+				29B205F2217B7B5A00E4DD9F /* PathHistoryViewController.swift in Sources */,
 				29B75ADD210AA14F00C28131 /* String+Size.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				29622B45210520E6000C428D /* CardCollectionViewCell.swift in Sources */,

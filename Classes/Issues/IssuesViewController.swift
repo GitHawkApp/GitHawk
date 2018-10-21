@@ -9,7 +9,6 @@
 import UIKit
 import IGListKit
 import TUSafariActivity
-import SafariServices
 import SnapKit
 import FlatCache
 import MessageViewController

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SafariServices
 import GitHubAPI
 import GitHubSession
 import Squawk

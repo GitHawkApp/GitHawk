@@ -10,7 +10,6 @@ import UIKit
 import Tabman
 import Pageboy
 import TUSafariActivity
-import SafariServices
 import Squawk
 import ContextMenu
 
@@ -24,12 +23,6 @@ ContextMenuDelegate {
     private let controllers: [UIViewController]
     private var bookmarkNavController: BookmarkNavigationController?
     public private(set) var branch: String
-
-    var moreOptionsItem: UIBarButtonItem {
-        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))
-        rightItem.accessibilityLabel = Constants.Strings.moreOptions
-        return rightItem
-    }
 
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
@@ -79,11 +72,25 @@ ContextMenuDelegate {
             appearance.indicator.color = Styles.Colors.Blue.medium.color
         })
 
-        configureNavigationItems()
+        let moreItem = UIBarButtonItem(
+            image: UIImage(named: "bullets-hollow"),
+            target: self,
+            action: #selector(RepositoryViewController.onMore(sender:))
+        )
+        moreItem.accessibilityLabel = Constants.Strings.moreOptions
+        var items = [moreItem]
+        if let bookmarkItem = bookmarkNavController?.navigationItem {
+            items.append(bookmarkItem)
+        }
+        navigationItem.rightBarButtonItems = items
+
         let navigationTitle = NavigationTitleDropdownView()
         navigationItem.titleView = navigationTitle
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
-        let labelFormat = NSLocalizedString("Repository %@ by %@", comment: "Accessibility label for a repository navigation item")
+        let labelFormat = NSLocalizedString(
+            "Repository %@ by %@",
+            comment: "Accessibility label for a repository navigation item"
+        )
         let accessibilityLabel = String(format: labelFormat, arguments: [repo.name, repo.owner])
         navigationTitle.configure(title: repo.name, subtitle: repo.owner, accessibilityLabel: accessibilityLabel)
     }
@@ -106,15 +113,7 @@ ContextMenuDelegate {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
     }
 
-    func configureNavigationItems() {
-        var items = [moreOptionsItem]
-        if let bookmarkItem = bookmarkNavController?.navigationItem {
-            items.append(bookmarkItem)
-        }
-        navigationItem.rightBarButtonItems = items
-    }
-
-    func switchBranchAction() -> UIAlertAction {
+    var switchBranchAction: UIAlertAction {
         return UIAlertAction(
             title: NSLocalizedString("Switch Branch", comment: ""),
             style: .default
@@ -167,11 +166,12 @@ ContextMenuDelegate {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
 
         alert.addActions([
+            viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client),
             repo.hasIssuesEnabled ? newIssueAction() : nil,
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
-            switchBranchAction(),
+            switchBranchAction,
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.setSourceView(sender)

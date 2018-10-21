@@ -29,18 +29,6 @@ RepositoryBranchUpdatable {
     private var readme: RepositoryReadmeModel?
     private var branch: String
 
-//    lazy var _feed: Feed = { Feed(
-//        viewController: self,
-//        delegate: self,
-//        collectionView: HackScrollIndicatorInsetsCollectionView(
-//            frame: .zero,
-//            collectionViewLayout: ListCollectionViewLayout.basic()
-//        ))
-//    }()
-//    override var feed: Feed {
-//        return _feed
-//    }
-
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
@@ -50,12 +38,6 @@ RepositoryBranchUpdatable {
         )
         self.dataSource = self
         title = NSLocalizedString("Overview", comment: "")
-//        self.feed.collectionView.contentInset = UIEdgeInsets(
-//            top: Styles.Sizes.rowSpacing,
-//            left: Styles.Sizes.gutter,
-//            bottom: Styles.Sizes.rowSpacing,
-//            right: Styles.Sizes.gutter
-//        )
     }
 
     required init?(coder aDecoder: NSCoder) {

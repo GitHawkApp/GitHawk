@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SafariServices
 
 typealias AlertActionBlock = (UIAlertAction) -> Void
 
