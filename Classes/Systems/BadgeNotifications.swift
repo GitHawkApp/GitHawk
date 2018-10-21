@@ -158,4 +158,10 @@ final class BadgeNotifications {
         application.applicationIconBadgeNumber = isBadgeEnabled ? count : 0
     }
 
+    static func clear(for notification: NotificationViewModel) {
+        UNUserNotificationCenter.current().removeDeliveredNotifications(
+            withIdentifiers: [notification.identifier]
+        )
+    }
+
 }
