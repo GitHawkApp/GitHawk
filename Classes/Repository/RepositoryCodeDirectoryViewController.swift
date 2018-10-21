@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import TUSafariActivity
+import Squawk
 
 final class RepositoryCodeDirectoryViewController: BaseListViewController<NSNumber>,
 BaseListViewControllerDataSource,
@@ -123,7 +124,8 @@ RepositoryBranchUpdatable {
         path: path.path
         ) { [weak self] (result) in
             switch result {
-            case .error:
+            case .error(let error):
+                Squawk.show(error: error)
                 self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let files):
                 self?.files = files

@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import GitHubAPI
+import Squawk
 
 class HackScrollIndicatorInsetsCollectionView: UICollectionView {
     override var scrollIndicatorInsets: UIEdgeInsets {
@@ -97,7 +98,8 @@ RepositoryBranchUpdatable {
                         self?.update(animated: trueUnlessReduceMotionEnabled)
                     }
                 }
-            case .failure:
+            case .failure(let error):
+                Squawk.show(error: error)
                 self?.error(animated: trueUnlessReduceMotionEnabled)
             }
         }
