@@ -152,7 +152,7 @@ open class DropdownTitleView: UIControl {
     }
 
     override open var intrinsicContentSize: CGSize {
-        return UILayoutFittingExpandedSize
+        return UILayoutFittingCompressedSize
     }
 
     // MARK: Public API
