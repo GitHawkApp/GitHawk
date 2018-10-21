@@ -35,7 +35,7 @@ SearchBarSectionControllerDelegate {
         self.type = type
         self.label = label
         if let label = label {
-            previousSearchString += "label:\(label) "
+            previousSearchString += "label:\"\(label)\" "
         }
 
         super.init(
