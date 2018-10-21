@@ -8,6 +8,12 @@
 
 import IGListKit
 
+enum RepositoryIssueCIStatus: String {
+    case pending = "PENDING"
+    case failure = "FAILURE"
+    case success = "SUCCESS"
+}
+
 protocol RepositoryIssueSummaryType {
 
     var number: Int { get }
@@ -17,5 +23,6 @@ protocol RepositoryIssueSummaryType {
     var labelableFields: LabelableFields { get }
     var pullRequest: Bool { get }
     var title: String { get }
+    var ciStatus: RepositoryIssueCIStatus? { get }
 
 }

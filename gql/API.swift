@@ -14647,7 +14647,7 @@ public final class RepoFilesQuery: GraphQLQuery {
 
 public final class RepoSearchPagesQuery: GraphQLQuery {
   public static let operationString =
-    "query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {\n  search(query: $query, type: ISSUE, after: $after, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n  }\n}"
+    "query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {\n  search(query: $query, type: ISSUE, after: $after, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              status {\n                __typename\n                state\n              }\n            }\n          }\n        }\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString).appending(LabelableFields.fragmentString) }
 
@@ -14778,8 +14778,8 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
           return Node(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { (value: AsIssue.Author) -> Snapshot in value.snapshot }, "id": id, "labels": labels.flatMap { (value: AsIssue.Label) -> Snapshot in value.snapshot }, "title": title, "number": number, "issueState": issueState])
         }
 
-        public static func makePullRequest(createdAt: String, author: AsPullRequest.Author? = nil, id: GraphQLID, labels: AsPullRequest.Label? = nil, title: String, number: Int, pullRequestState: PullRequestState) -> Node {
-          return Node(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { (value: AsPullRequest.Author) -> Snapshot in value.snapshot }, "id": id, "labels": labels.flatMap { (value: AsPullRequest.Label) -> Snapshot in value.snapshot }, "title": title, "number": number, "pullRequestState": pullRequestState])
+        public static func makePullRequest(createdAt: String, author: AsPullRequest.Author? = nil, id: GraphQLID, labels: AsPullRequest.Label? = nil, title: String, number: Int, pullRequestState: PullRequestState, commits: AsPullRequest.Commit) -> Node {
+          return Node(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { (value: AsPullRequest.Author) -> Snapshot in value.snapshot }, "id": id, "labels": labels.flatMap { (value: AsPullRequest.Label) -> Snapshot in value.snapshot }, "title": title, "number": number, "pullRequestState": pullRequestState, "commits": commits.snapshot])
         }
 
         public var __typename: String {
@@ -15108,6 +15108,7 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
             GraphQLField("title", type: .nonNull(.scalar(String.self))),
             GraphQLField("number", type: .nonNull(.scalar(Int.self))),
             GraphQLField("state", alias: "pullRequestState", type: .nonNull(.scalar(PullRequestState.self))),
+            GraphQLField("commits", arguments: ["last": 1], type: .nonNull(.object(Commit.selections))),
           ]
 
           public var snapshot: Snapshot
@@ -15116,8 +15117,8 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(createdAt: String, author: Author? = nil, id: GraphQLID, labels: Label? = nil, title: String, number: Int, pullRequestState: PullRequestState) {
-            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "id": id, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "title": title, "number": number, "pullRequestState": pullRequestState])
+          public init(createdAt: String, author: Author? = nil, id: GraphQLID, labels: Label? = nil, title: String, number: Int, pullRequestState: PullRequestState, commits: Commit) {
+            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "id": id, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "title": title, "number": number, "pullRequestState": pullRequestState, "commits": commits.snapshot])
           }
 
           public var __typename: String {
@@ -15196,6 +15197,16 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "pullRequestState")
+            }
+          }
+
+          /// A list of commits present in this pull request's head branch not present in the base branch.
+          public var commits: Commit {
+            get {
+              return Commit(snapshot: snapshot["commits"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "commits")
             }
           }
 
@@ -15367,6 +15378,158 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
                 }
                 set {
                   snapshot.updateValue(newValue, forKey: "name")
+                }
+              }
+            }
+          }
+
+          public struct Commit: GraphQLSelectionSet {
+            public static let possibleTypes = ["PullRequestCommitConnection"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(nodes: [Node?]? = nil) {
+              self.init(snapshot: ["__typename": "PullRequestCommitConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// A list of nodes.
+            public var nodes: [Node?]? {
+              get {
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+              }
+              set {
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+              }
+            }
+
+            public struct Node: GraphQLSelectionSet {
+              public static let possibleTypes = ["PullRequestCommit"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("commit", type: .nonNull(.object(Commit.selections))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(commit: Commit) {
+                self.init(snapshot: ["__typename": "PullRequestCommit", "commit": commit.snapshot])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// The Git commit object
+              public var commit: Commit {
+                get {
+                  return Commit(snapshot: snapshot["commit"]! as! Snapshot)
+                }
+                set {
+                  snapshot.updateValue(newValue.snapshot, forKey: "commit")
+                }
+              }
+
+              public struct Commit: GraphQLSelectionSet {
+                public static let possibleTypes = ["Commit"]
+
+                public static let selections: [GraphQLSelection] = [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("status", type: .object(Status.selections)),
+                ]
+
+                public var snapshot: Snapshot
+
+                public init(snapshot: Snapshot) {
+                  self.snapshot = snapshot
+                }
+
+                public init(status: Status? = nil) {
+                  self.init(snapshot: ["__typename": "Commit", "status": status.flatMap { (value: Status) -> Snapshot in value.snapshot }])
+                }
+
+                public var __typename: String {
+                  get {
+                    return snapshot["__typename"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                /// Status information for this commit
+                public var status: Status? {
+                  get {
+                    return (snapshot["status"] as? Snapshot).flatMap { Status(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "status")
+                  }
+                }
+
+                public struct Status: GraphQLSelectionSet {
+                  public static let possibleTypes = ["Status"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("state", type: .nonNull(.scalar(StatusState.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public init(state: StatusState) {
+                    self.init(snapshot: ["__typename": "Status", "state": state])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  /// The combined commit status.
+                  public var state: StatusState {
+                    get {
+                      return snapshot["state"]! as! StatusState
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "state")
+                    }
+                  }
                 }
               }
             }

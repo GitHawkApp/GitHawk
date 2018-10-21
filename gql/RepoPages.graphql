@@ -16,6 +16,15 @@ query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {
         title
         number
         pullRequestState: state
+        commits(last: 1) {
+          nodes {
+            commit {
+              status {
+                state
+              }
+            }
+          }
+        }
       }
     }
     pageInfo {

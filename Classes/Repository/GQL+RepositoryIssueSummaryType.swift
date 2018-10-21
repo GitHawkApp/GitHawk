@@ -29,6 +29,10 @@ extension RepoSearchPagesQuery.Data.Search.Node.AsIssue: RepositoryIssueSummaryT
         }
     }
 
+    var ciStatus: RepositoryIssueCIStatus? {
+        return nil
+    }
+
 }
 
 extension RepoSearchPagesQuery.Data.Search.Node.AsPullRequest: RepositoryIssueSummaryType {
@@ -51,6 +55,13 @@ extension RepoSearchPagesQuery.Data.Search.Node.AsPullRequest: RepositoryIssueSu
         case .merged: return .merged
         case .open, .__unknown: return .open
         }
+    }
+
+    var ciStatus: RepositoryIssueCIStatus? {
+        guard let node = commits.nodes?.first,
+        let status = node?.commit.status
+            else { return nil }
+        return RepositoryIssueCIStatus(rawValue: status.state.rawValue)
     }
 
 }
