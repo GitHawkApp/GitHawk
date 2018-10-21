@@ -62,6 +62,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/DropdownTitleView</string>
+			<key>Title</key>
+			<string>DropdownTitleView (0.1.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/Fabric</string>
 			<key>Title</key>
 			<string>Fabric (1.7.2)</string>

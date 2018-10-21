@@ -8,6 +8,7 @@
 
 import UIKit
 import StyledTextKit
+import DropdownTitleView
 
 enum Styles {
 
@@ -125,6 +126,11 @@ enum Styles {
             [NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color]
         UISwitch.appearance().onTintColor = Styles.Colors.Green.medium.color
         UISearchBar.appearance().tintColor = Styles.Colors.Blue.medium.color
+        DropdownTitleView.appearance().chevronTintColor = Styles.Colors.Gray.medium.color
+        DropdownTitleView.appearance().titleColor = Styles.Colors.Gray.dark.color
+        DropdownTitleView.appearance().subtitleColor = Styles.Colors.Gray.light.color
+        DropdownTitleView.appearance().titleFont = Styles.Text.bodyBold.preferredFont
+        DropdownTitleView.appearance().subtitleFont = Styles.Text.secondaryBold.preferredFont
     }
 
 }

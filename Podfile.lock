@@ -11,6 +11,7 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - DateAgo (0.1.0)
+  - DropdownTitleView (0.1.0)
   - Fabric (1.7.2)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
@@ -66,6 +67,7 @@ DEPENDENCIES:
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
   - DateAgo (from `Local Pods/DateAgo`)
+  - DropdownTitleView (from `https://github.com/GitHawkApp/DropdownTitleView.git`, branch `master`)
   - Fabric
   - FBSnapshotTestCase
   - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
@@ -121,6 +123,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/GitHawkApp/ContextMenu.git
   DateAgo:
     :path: Local Pods/DateAgo
+  DropdownTitleView:
+    :branch: master
+    :git: https://github.com/GitHawkApp/DropdownTitleView.git
   FlatCache:
     :branch: master
     :git: https://github.com/GitHawkApp/FlatCache.git
@@ -158,6 +163,9 @@ CHECKOUT OPTIONS:
   ContextMenu:
     :commit: a6956a50277f2382b920058ea90f78a82caeaaa9
     :git: https://github.com/GitHawkApp/ContextMenu.git
+  DropdownTitleView:
+    :commit: c50b85680df92e7efc985f530c971ff7bb0e9ef7
+    :git: https://github.com/GitHawkApp/DropdownTitleView.git
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
     :git: https://github.com/GitHawkApp/FlatCache.git
@@ -189,6 +197,7 @@ SPEC CHECKSUMS:
   ContextMenu: 7c2853a894e09325dba222dbc87ba594ab775321
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   DateAgo: c678b6435627f2b267980bc6f0a9969389686691
+  DropdownTitleView: 063054a1200a16b9c15596e597e2f1c310caeff4
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
@@ -215,6 +224,6 @@ SPEC CHECKSUMS:
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: ad1a1bfa60ab2cc8e941a4bddf5239063f1bdeee
+PODFILE CHECKSUM: f20afa6a8f2119dd4614c7abb36f0ccc71ad9f48
 
 COCOAPODS: 1.5.3
