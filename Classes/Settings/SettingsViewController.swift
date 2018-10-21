@@ -39,13 +39,14 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var pushCell: UITableViewCell!
     @IBOutlet weak var pushSettingsButton: UIButton!
 
-  override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
         signatureSwitch.isOn = Signature.enabled
+        pushSettingsButton.accessibilityLabel = NSLocalizedString("How we send push notifications in GitHawk", comment: "")
 
         updateBadge()
 
