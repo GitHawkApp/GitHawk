@@ -235,7 +235,7 @@ class SearchViewController: UIViewController,
 
     // MARK: EmptyViewDelegate
 
-    func didTapRetry() {
+    func didTapRetry(view: EmptyView) {
         searchBar.resignFirstResponder()
 
         guard let term = searchTerm(for: searchBar.text) else { return }

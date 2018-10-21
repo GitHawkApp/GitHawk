@@ -621,8 +621,8 @@ final class IssuesViewController: MessageViewController,
 
     // MARK: EmptyViewDelegate
 
-    func didTapRetry() {
-        self.feed.refreshHead()
+    func didTapRetry(view: EmptyView) {
+        feed.refreshHead()
     }
 
     // MARK: MessageTextViewListener

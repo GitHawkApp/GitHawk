@@ -169,8 +169,8 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
     // MARK: EmptyViewDelegate
 
-    func didTapRetry() {
-        self.onRefresh()
+    func didTapRetry(view: EmptyView) {
+        onRefresh()
     }
 
 }

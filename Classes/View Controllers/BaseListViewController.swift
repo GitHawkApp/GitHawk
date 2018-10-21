@@ -78,7 +78,7 @@ LoadMoreSectionControllerDelegate {
     // MARK: Public API
 
     final func update(animated: Bool) {
-        self.feed.finishLoading(dismissRefresh: true, animated: animated)
+        feed.finishLoading(dismissRefresh: true, animated: animated)
     }
 
     final func update(
@@ -88,9 +88,9 @@ LoadMoreSectionControllerDelegate {
         ) {
         assert(Thread.isMainThread)
 
-        self.hasError = false
+        hasError = false
         self.page = page
-        self.feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
+        feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
     }
 
     final func error(
@@ -179,8 +179,11 @@ LoadMoreSectionControllerDelegate {
 
     // MARK: EmptyViewDelegate
 
-    func didTapRetry() {
-        self.feed.refreshHead()
+    func didTapRetry(view: EmptyView) {
+        // order is required to hide the error empty view while loading
+        feed.refreshHead()
+        hasError = false
+        feed.adapter.performUpdates(animated: false, completion: nil)
     }
 
     // MARK: LoadMoreSectionControllerDelegate

@@ -169,8 +169,11 @@ EmptyViewDelegate {
 
     // MARK: EmptyViewDelegate
 
-    func didTapRetry() {
-        self.feed.refreshHead()
+    func didTapRetry(view: EmptyView) {
+        // order is required to hide the error empty view while loading
+        feed.refreshHead()
+        hasError = false
+        feed.adapter.performUpdates(animated: false, completion: nil)
     }
 
 }

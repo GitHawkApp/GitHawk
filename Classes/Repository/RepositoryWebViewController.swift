@@ -133,8 +133,8 @@ extension RepositoryWebViewController: WKNavigationDelegate {
 
 extension RepositoryWebViewController: EmptyViewDelegate {
 
-    func didTapRetry() {
-        self.fetch()
+    func didTapRetry(view: EmptyView) {
+        fetch()
     }
 
 }

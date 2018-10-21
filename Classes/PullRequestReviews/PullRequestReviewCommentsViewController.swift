@@ -193,8 +193,8 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
 
     // MARK: EmptyViewDelegate
 
-    func didTapRetry() {
-        self.feed.refreshHead()
+    func didTapRetry(view: EmptyView) {
+        feed.refreshHead()
     }
 
     // MARK: IssueTextActionsViewSendDelegate
