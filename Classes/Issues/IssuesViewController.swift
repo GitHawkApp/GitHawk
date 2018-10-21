@@ -54,6 +54,7 @@ final class IssuesViewController: MessageViewController,
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
     private var actions: IssueTextActionsView?
+    private var issueType: RepositoryIssuesType?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -333,6 +334,7 @@ final class IssuesViewController: MessageViewController,
                 )
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
+                strongSelf.issueType = result.pullRequest ? .pullRequests : .issues
             default: break
             }
 
@@ -636,7 +638,8 @@ final class IssuesViewController: MessageViewController,
     // MARK: IssueLabelsSectionControllerDelegate
     
     func didTapIssueLabel(owner: String, repo: String, label: String) {
-        presentLabels(client: client, owner: owner, repo: repo, label: label)
+        guard let issueType = self.issueType else { return }
+        presentLabels(client: client, owner: owner, repo: repo, label: label, type: issueType)
     }
 
 }

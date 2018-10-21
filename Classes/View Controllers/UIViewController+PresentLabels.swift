@@ -10,13 +10,13 @@ import UIKit
 import GitHubAPI
 
 extension UIViewController {
-    func presentLabels(client: GithubClient, owner: String, repo: String, label: String) {
+    func presentLabels(client: GithubClient, owner: String, repo: String, label: String, type: RepositoryIssuesType) {
         let repositoryIssuesViewController =
             RepositoryIssuesViewController(
                 client: client,
                 owner: owner,
                 repo: repo,
-                type: .issues,
+                type: type,
                 label: label
         )
         
