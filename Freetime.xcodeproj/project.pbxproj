@@ -455,9 +455,12 @@
 		98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F3FD1F9CCFFE005A0266 /* ImageUploadTableViewController.swift */; };
 		98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F3FE1F9CCFFE005A0266 /* ImgurClient.swift */; };
 		98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F4021F9CD006005A0266 /* Image+Base64.swift */; };
+		BD158F39217EBBDB0051E8C2 /* EditIssueTitleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD158F38217EBBDB0051E8C2 /* EditIssueTitleTests.swift */; };
 		BD3761B0209E032500401DFB /* BookmarkNavigationItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3761AF209E032500401DFB /* BookmarkNavigationItemTests.swift */; };
+		BD52E5C82183F0C200F74F49 /* DetectShortlinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD52E5C72183F0C100F74F49 /* DetectShortlinkTests.swift */; };
 		BD67495C217A47BC00E8E4FD /* UIViewController+PresentLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67495B217A47BC00E8E4FD /* UIViewController+PresentLabels.swift */; };
 		BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */; };
+		BD9B3653217F940A00302EF0 /* IssuesViewController+UpdateIssueTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9B3652217F940A00302EF0 /* IssuesViewController+UpdateIssueTitle.swift */; };
 		BDB6AA66215FBC35009BB73C /* RepositoryBranchesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6AA5F215FBC35009BB73C /* RepositoryBranchesViewModel.swift */; };
 		BDB6AA67215FBC35009BB73C /* RepositoryBranchUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6AA60215FBC35009BB73C /* RepositoryBranchUpdatable.swift */; };
 		BDB6AA68215FBC35009BB73C /* RepositoryBranchesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6AA61215FBC35009BB73C /* RepositoryBranchesSectionController.swift */; };
@@ -465,6 +468,7 @@
 		BDB6AA6A215FBC35009BB73C /* RepositoryBranchesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6AA63215FBC35009BB73C /* RepositoryBranchesCell.swift */; };
 		BDB6AA6B215FBC35009BB73C /* GitHubClient+RepositoryBranches.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6AA64215FBC35009BB73C /* GitHubClient+RepositoryBranches.swift */; };
 		BDB6AA762165B8EA009BB73C /* SwitchBranches.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */; };
+		BDDC37EE217E1829006F69CA /* EditIssueTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDC37ED217E1829006F69CA /* EditIssueTitleViewController.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -1013,9 +1017,12 @@
 		A4D6EAEE85A1F4878338D48C /* Pods-FreetimeWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		ACAE4A11E9671879046F0CE7 /* Pods-FreetimeWatch.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch/Pods-FreetimeWatch.testflight.xcconfig"; sourceTree = "<group>"; };
 		B3C439BE890EECD7C0C692C5 /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
+		BD158F38217EBBDB0051E8C2 /* EditIssueTitleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIssueTitleTests.swift; sourceTree = "<group>"; };
 		BD3761AF209E032500401DFB /* BookmarkNavigationItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkNavigationItemTests.swift; sourceTree = "<group>"; };
+		BD52E5C72183F0C100F74F49 /* DetectShortlinkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetectShortlinkTests.swift; path = ../../../githawkproject2/GitHawk/FreetimeTests/DetectShortlinkTests.swift; sourceTree = "<group>"; };
 		BD67495B217A47BC00E8E4FD /* UIViewController+PresentLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentLabels.swift"; sourceTree = "<group>"; };
 		BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingURLPathTests.swift; sourceTree = "<group>"; };
+		BD9B3652217F940A00302EF0 /* IssuesViewController+UpdateIssueTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssuesViewController+UpdateIssueTitle.swift"; sourceTree = "<group>"; };
 		BDB6AA5F215FBC35009BB73C /* RepositoryBranchesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryBranchesViewModel.swift; sourceTree = "<group>"; };
 		BDB6AA60215FBC35009BB73C /* RepositoryBranchUpdatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryBranchUpdatable.swift; sourceTree = "<group>"; };
 		BDB6AA61215FBC35009BB73C /* RepositoryBranchesSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryBranchesSectionController.swift; sourceTree = "<group>"; };
@@ -1023,6 +1030,7 @@
 		BDB6AA63215FBC35009BB73C /* RepositoryBranchesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryBranchesCell.swift; sourceTree = "<group>"; };
 		BDB6AA64215FBC35009BB73C /* GitHubClient+RepositoryBranches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GitHubClient+RepositoryBranches.swift"; sourceTree = "<group>"; };
 		BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBranches.swift; sourceTree = "<group>"; };
+		BDDC37ED217E1829006F69CA /* EditIssueTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIssueTitleViewController.swift; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -1235,6 +1243,7 @@
 				292FCAC81EDFCC510026635E /* Comments */,
 				293A45A01F29953800DD1006 /* Commit */,
 				292CD3B91F0AF26900D3D57B /* DiffHunk */,
+				BDDC37EC217E180E006F69CA /* EditTitle */,
 				29AF1E801F8AAB1D0008A0EF /* EditComment */,
 				291929431F3EAAAF0012067B /* Files */,
 				29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */,
@@ -1247,6 +1256,7 @@
 				290D2A411F04D3470082E6CC /* IssueStatus.swift */,
 				295C31CE1F0AA67600521CED /* IssueStatus+ButtonState.swift */,
 				292FCAE91EDFCC510026635E /* IssuesViewController.swift */,
+				BD9B3652217F940A00302EF0 /* IssuesViewController+UpdateIssueTitle.swift */,
 				292FF8AF1F2FDC33009E63F7 /* IssueTextActionsView.swift */,
 				294563EF1EE5036A00DBCD35 /* IssueType.swift */,
 				292FCAEA1EDFCC510026635E /* IssueViewModels.swift */,
@@ -1609,12 +1619,14 @@
 			children = (
 				DCA5ED171FAEF3220072F074 /* Bookmark Tests */,
 				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
+				BD52E5C72183F0C100F74F49 /* DetectShortlinkTests.swift */,
 				2986B35D1FD462AA00E3CFC6 /* FilePathTests.swift */,
 				296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */,
 				297AE84E1EC0D58A00B44A1F /* Info.plist */,
 				DC60C6D41F983DF800241271 /* IssueLabelCellTests.swift */,
 				29A476B11ED24D99005D0953 /* IssueTests.swift */,
 				29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */,
+				BD158F38217EBBDB0051E8C2 /* EditIssueTitleTests.swift */,
 				29C295091EC7AFA500D46CD2 /* ListTestKit.swift */,
 				2977D8BE215AE12D0073F737 /* LocalNotificationCacheTests.swift */,
 				49AF91B0204B416500DFF325 /* MergeTests.swift */,
@@ -2183,6 +2195,14 @@
 				BDB6AA64215FBC35009BB73C /* GitHubClient+RepositoryBranches.swift */,
 			);
 			path = RepositoryBranches;
+			sourceTree = "<group>";
+		};
+		BDDC37EC217E180E006F69CA /* EditTitle */ = {
+			isa = PBXGroup;
+			children = (
+				BDDC37ED217E1829006F69CA /* EditIssueTitleViewController.swift */,
+			);
+			path = EditTitle;
 			sourceTree = "<group>";
 		};
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
@@ -2973,6 +2993,7 @@
 				DC63393B1F9F65EE00402A8D /* RepositoryAttributedString.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
 				297A6CE62027880C0027E03B /* MessageView+Styles.swift in Sources */,
+				BD9B3653217F940A00302EF0 /* IssuesViewController+UpdateIssueTitle.swift in Sources */,
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */,
@@ -3076,6 +3097,7 @@
 				D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */,
 				2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */,
 				292ACE181F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift in Sources */,
+				BDDC37EE217E1829006F69CA /* EditIssueTitleViewController.swift in Sources */,
 				DCA5ED1B1FAEF78B0072F074 /* BookmarkSectionController.swift in Sources */,
 				29A1053F216D9062004734A0 /* UNNotificationContent+Routable.swift in Sources */,
 				29693EE520FAA05F00336200 /* IssueAutocomplete.swift in Sources */,
@@ -3232,9 +3254,11 @@
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
 				49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */,
+				BD52E5C82183F0C200F74F49 /* DetectShortlinkTests.swift in Sources */,
 				2986B35F1FD462B300E3CFC6 /* FilePath.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
 				296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */,
+				BD158F39217EBBDB0051E8C2 /* EditIssueTitleTests.swift in Sources */,
 				BDB6AA762165B8EA009BB73C /* SwitchBranches.swift in Sources */,
 				DC5C02C71F9C71C400E80B9F /* SearchRecentViewModelTests.swift in Sources */,
 				DC60C6D31F983BB900241271 /* SignatureTests.swift in Sources */,

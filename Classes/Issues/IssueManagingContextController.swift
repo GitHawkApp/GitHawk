@@ -47,6 +47,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
     let client: GithubClient
     weak var viewController: UIViewController?
+    weak var editIssueTitleViewControllerDelegate: EditIssueTitleViewControllerDelegate?
 
     init(model: IssueDetailsModel, client: GithubClient) {
         let button = IssueManageButton()
@@ -78,6 +79,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         case lock
         case reopen
         case close
+        case editTitle
     }
 
     var actions: [Action] {
@@ -91,6 +93,16 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             if result.pullRequest {
                 actions.append(.reviewers)
             }
+            
+            let viewerCanUpdate =
+                editIssueTitleViewControllerDelegate?
+                .viewerCanUpdate
+                ?? false
+            
+            if viewerCanUpdate {
+                actions.append(.editTitle)
+            }
+            
             if result.labels.locked {
                 actions.append(.unlock)
             } else {
@@ -138,6 +150,9 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         case .close:
             title = Constants.Strings.close
             iconName = "x"
+        case .editTitle:
+            title = NSLocalizedString("Edit Title", comment: "")
+            iconName = "pencil"
         }
 
         // Lock always has the divider above it assuming you're a collaborator.
@@ -180,6 +195,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             case .lock: strongSelf.lock(true)
             case .reopen: strongSelf.close(false)
             case .close: strongSelf.close(true)
+            case .editTitle: strongSelf.presentEditTitleController()
             }
         }
     }
@@ -262,6 +278,18 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
                 )
             ),
             delegate: self
+        )
+    }
+    
+    func presentEditTitleController() {
+        guard let viewController = viewController else { return }
+        guard let delegate = editIssueTitleViewControllerDelegate else { return }
+        let controller = EditIssueTitleViewController(
+            delegate: delegate
+        )
+        ContextMenu.shared.show(
+            sourceViewController: viewController,
+            viewController: controller
         )
     }
 
