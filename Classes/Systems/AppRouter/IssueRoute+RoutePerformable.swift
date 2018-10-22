@@ -10,7 +10,7 @@ import Foundation
 import GitHubSession
 import GitHawkRoutes
 
-extension IssueNotificationRoute: RoutePerformable {
+extension IssueRoute: RoutePerformable {
     func perform(
         sessionManager: GitHubSessionManager,
         splitViewController: AppSplitViewController,
