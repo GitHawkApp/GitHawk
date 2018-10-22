@@ -52,7 +52,12 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
         view.addSubview(collectionView)
         collectionView.backgroundColor = .white
         collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = Styles.Sizes.listInsetLarge
+        collectionView.contentInset = UIEdgeInsets(
+            top: Styles.Sizes.rowSpacing,
+            left: Styles.Sizes.gutter,
+            bottom: Styles.Sizes.rowSpacing,
+            right: Styles.Sizes.gutter
+        )
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view)
         }
