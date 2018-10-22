@@ -11,7 +11,7 @@
   "summary": "GitHawk routing and deep links.",
   "source": {
     "git": "https://github.com/GitHawkApp/GitHawkRoutes.git",
-    "tag": "#{s.version}"
+    "tag": "0.1.0"
   },
   "source_files": "GitHawkRoutes/*.swift",
   "platforms": {
