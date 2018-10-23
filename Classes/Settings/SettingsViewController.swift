@@ -22,6 +22,7 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
     @IBOutlet weak var githubStatusCell: StyledTableCell!
     @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
+    @IBOutlet weak var tryTestFlightBetaCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var setDefaultReaction: StyledTableCell!
@@ -118,6 +119,8 @@ NewIssueTableViewControllerDelegate {
             onSetDefaultReaction()
         } else if cell === signOutCell {
             onSignOut()
+        } else if cell === tryTestFlightBetaCell {
+            onTryTestFlightBeta()
         }
     }
 
@@ -189,6 +192,12 @@ NewIssueTableViewControllerDelegate {
 
     func onSetDefaultReaction() {
         //showDefaultReactionMenu()
+    }
+
+    func onTryTestFlightBeta() {
+        guard let url = URL(string: "https://testflight.apple.com/join/QIVXLkkn")
+            else { fatalError("Failed to decode testflight beta URL") }
+        presentSafari(url: url)
     }
 
     func onSignOut() {
