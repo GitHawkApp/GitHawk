@@ -46,6 +46,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         messageLabel.snp.makeConstraints { make in
             make.centerX.equalTo(emojiLabel)
             make.top.equalTo(emojiLabel.snp.bottom).offset(Styles.Sizes.tableSectionSpacing)
+            make.height.greaterThanOrEqualTo(messageLabel.font.pointSize)
         }
 
         resetAnimations()
@@ -77,7 +78,9 @@ final class NoNewNotificationsCell: UICollectionViewCell {
             make.centerX.equalTo(messageLabel)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(buttonHeight)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-Styles.Sizes.tableSectionSpacing)
+            make.top.greaterThanOrEqualTo(messageLabel.snp.bottom)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-Styles.Sizes.tableSectionSpacing).priority(.low)
+            make.bottom.lessThanOrEqualTo(contentView.snp.bottom)
         }
 
     }
