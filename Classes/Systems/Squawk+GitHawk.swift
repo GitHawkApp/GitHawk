@@ -27,6 +27,17 @@ extension Squawk {
         )
     }
 
+    static func showAlreadyOnBeta(view: UIView? = window) {
+        let config = Squawk.Configuration(
+            text: NSLocalizedString("You're Already on Beta.👌", comment: ""),
+            backgroundColor: UIColor.black.withAlphaComponent(0.5),
+            insets: UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: Styles.Sizes.gutter, bottom: Styles.Sizes.rowSpacing, right: Styles.Sizes.gutter),
+            hintMargin: Styles.Sizes.rowSpacing
+        )
+        Squawk.shared.show(in: view, config: config)
+        triggerHaptic()
+    }
+
     static func showRevokeError(view: UIView? = window) {
         Squawk.shared.show(in: view, config: errorConfig(text: NSLocalizedString("Your access token was revoked.", comment: "")))
         triggerHaptic()

@@ -195,9 +195,13 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onTryTestFlightBeta() {
+        #if TESTFLIGHT
+        Squawk.showAlreadyOnBeta()
+        #else
         guard let url = URL(string: "https://testflight.apple.com/join/QIVXLkkn")
             else { fatalError("Failed to decode testflight beta URL") }
         presentSafari(url: url)
+        #endif
     }
 
     func onSignOut() {
