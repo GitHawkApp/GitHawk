@@ -9,8 +9,6 @@
 import Foundation
 import IGListKit
 
-
-
 final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, MarkdownStyledTextViewDelegate {
 
     private let issueModel: IssueDetailsModel
@@ -45,4 +43,3 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
     }
 
 }
-

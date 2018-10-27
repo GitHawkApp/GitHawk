@@ -35,8 +35,7 @@ final class IssuesViewController: MessageViewController,
     IssueTextActionsViewSendDelegate,
     EmptyViewDelegate,
     MessageTextViewListener,
-    IssueLabelTapSectionControllerDelegate
-{
+    IssueLabelTapSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -644,4 +643,3 @@ final class IssuesViewController: MessageViewController,
     }
 
 }
-
