@@ -29,7 +29,7 @@ extension Squawk {
 
     static func showAlreadyOnBeta(view: UIView? = window) {
         let config = Squawk.Configuration(
-            text: NSLocalizedString("You're are already using a TestFlight build. 👌", comment: ""),
+            text: NSLocalizedString("You're already using a TestFlight build. 👌", comment: ""),
             backgroundColor: UIColor.black.withAlphaComponent(0.5),
             insets: UIEdgeInsets(
                 top: Styles.Sizes.rowSpacing,
