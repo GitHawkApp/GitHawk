@@ -15,7 +15,7 @@ enum RepositoryIssuesType {
 }
 
 class RepositoryIssuesViewController: BaseListViewController<NSString>,
-BaseListViewControllerDataSource,
+    BaseListViewControllerDataSource,
 SearchBarSectionControllerDelegate {
 
     private var models = [ListDiffable]()
@@ -58,7 +58,7 @@ SearchBarSectionControllerDelegate {
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
-        
+
         let presentingInTabMan = label == nil
         if presentingInTabMan {
             // set the frame in -viewDidLoad is required when working with TabMan
@@ -139,7 +139,7 @@ SearchBarSectionControllerDelegate {
         case .issues: typeQuery = "is:issue"
         case .pullRequests: typeQuery = "is:pr"
         }
-        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)"
+        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
     }
 
 }

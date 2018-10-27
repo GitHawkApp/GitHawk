@@ -9,8 +9,6 @@
 import Foundation
 import IGListKit
 
-
-
 final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, MarkdownStyledTextViewDelegate {
 
     private let issueModel: IssueDetailsModel
@@ -35,7 +33,7 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
         cell.delegate = self
         return cell
     }
-    
+
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
         if case .label(let label) = attribute {
             tapDelegate?.didTapIssueLabel(owner: label.owner, repo: label.repo, label: label.label)
@@ -43,5 +41,5 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
             viewController?.handle(attribute: attribute)
         }
     }
-    
+
 }

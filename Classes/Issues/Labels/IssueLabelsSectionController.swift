@@ -9,13 +9,12 @@
 import UIKit
 import IGListKit
 
-
 protocol IssueLabelTapSectionControllerDelegate: class {
     func didTapIssueLabel(owner: String, repo: String, label: String)
 }
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
-ListBindingSectionControllerDataSource,
+    ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate {
 
     private let issue: IssueDetailsModel

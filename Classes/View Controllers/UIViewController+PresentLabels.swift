@@ -19,7 +19,7 @@ extension UIViewController {
                 type: type,
                 label: label
         )
-        
+
         navigationController?.pushViewController(
             repositoryIssuesViewController,
             animated: true
