@@ -486,7 +486,7 @@ final class IssuesViewController: MessageViewController,
             client: client,
             mergeCapable: viewerIsCollaborator,
             resultID: resultID
-        )
+            )
 
         // deprecated
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
@@ -635,12 +635,13 @@ final class IssuesViewController: MessageViewController,
 
     func didChangeSelection(textView: MessageTextView) {}
     func willChangeRange(textView: MessageTextView, to range: NSRange) {}
-    
+
     // MARK: IssueLabelsSectionControllerDelegate
-    
+
     func didTapIssueLabel(owner: String, repo: String, label: String) {
         guard let issueType = self.issueType else { return }
         presentLabels(client: client, owner: owner, repo: repo, label: label, type: issueType)
     }
 
 }
+
