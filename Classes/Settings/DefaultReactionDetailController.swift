@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DefaultReactionListener {
+    func didUpdateDefaultReaction()
+}
+
 class DefaultReactionDetailController: UITableViewController {
 
     @IBOutlet var thumbsUpCell: UITableViewCell!
@@ -17,6 +21,8 @@ class DefaultReactionDetailController: UITableViewController {
     @IBOutlet var confusedCell: UITableViewCell!
     @IBOutlet var heartCell: UITableViewCell!
     @IBOutlet var enabledSwitch: UISwitch!
+
+    var listener: DefaultReactionListener?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,10 +101,12 @@ class DefaultReactionDetailController: UITableViewController {
     private func updateDefault(reaction: ReactionContent) {
         UserDefaults.standard.setDefault(reaction: reaction)
         checkCurrentDefault()
+        listener?.didUpdateDefaultReaction()
     }
 
     private func disableReaction() {
         UserDefaults.standard.disableReaction()
+        listener?.didUpdateDefaultReaction()
     }
 
     private func updateSections() {

@@ -12,7 +12,7 @@ import GitHubSession
 import Squawk
 
 final class SettingsViewController: UITableViewController,
-NewIssueTableViewControllerDelegate {
+NewIssueTableViewControllerDelegate, DefaultReactionListener {
 
     // must be injected
     var sessionManager: GitHubSessionManager!
@@ -62,8 +62,7 @@ NewIssueTableViewControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
-            ?? NSLocalizedString("Off", comment: "")
+        updateDefaultReaction()
 
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
@@ -125,6 +124,11 @@ NewIssueTableViewControllerDelegate {
     }
 
     // MARK: Private API
+
+    func updateDefaultReaction() {
+        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
+            ?? NSLocalizedString("Off", comment: "")
+    }
 
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
@@ -191,7 +195,13 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onSetDefaultReaction() {
-        //showDefaultReactionMenu()
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: "DefaultReactionDetailController") as? DefaultReactionDetailController else {
+            fatalError("Cannot instantiate DefaultReactionDetailController instance")
+        }
+        viewController.listener = self
+        let navController = UINavigationController(rootViewController: viewController)
+        showDetailViewController(navController, sender: self)
     }
 
     func onTryTestFlightBeta() {
@@ -287,5 +297,11 @@ NewIssueTableViewControllerDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         let navigation = UINavigationController(rootViewController: issuesViewController)
         showDetailViewController(navigation, sender: nil)
+    }
+
+    // MARK: DefaultReactionListener
+
+    func didUpdateDefaultReaction() {
+        updateDefaultReaction()
     }
 }
