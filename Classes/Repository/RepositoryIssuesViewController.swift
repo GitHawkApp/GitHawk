@@ -139,7 +139,7 @@ SearchBarSectionControllerDelegate {
         case .issues: typeQuery = "is:issue"
         case .pullRequests: typeQuery = "is:pr"
         }
-        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)"
+        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
     }
 
 }
