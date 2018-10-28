@@ -159,6 +159,20 @@ ContextMenuDelegate {
             .newIssue(issueController: newIssueViewController)
     }
 
+    func workingCopyAction() -> UIAlertAction? {
+        guard let remote = self.repoUrl.absoluteString.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return nil}
+
+        guard let url = URL(string: "working-copy://show?remote=\(remote)") else { return nil }
+        guard UIApplication.shared.canOpenURL(url) else { return nil }
+
+        let title = NSLocalizedString("Working Copy", comment: "")
+        let action = UIAlertAction(title: title, style: .default,
+                                   handler: { _ in
+            UIApplication.shared.open(url)
+        })
+        return action
+    }
+
     @objc func onMore(sender: UIButton) {
         let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
         let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
@@ -173,6 +187,7 @@ ContextMenuDelegate {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
             switchBranchAction,
+            workingCopyAction(),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.setSourceView(sender)
