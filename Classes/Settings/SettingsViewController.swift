@@ -12,7 +12,7 @@ import GitHubSession
 import Squawk
 
 final class SettingsViewController: UITableViewController,
-NewIssueTableViewControllerDelegate, DefaultReactionListener {
+NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
 
     // must be injected
     var sessionManager: GitHubSessionManager!
@@ -199,7 +199,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionListener {
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "DefaultReactionDetailController") as? DefaultReactionDetailController else {
             fatalError("Cannot instantiate DefaultReactionDetailController instance")
         }
-        viewController.listener = self
+        viewController.delegate = self
         let navController = UINavigationController(rootViewController: viewController)
         showDetailViewController(navController, sender: self)
     }
@@ -299,7 +299,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionListener {
         showDetailViewController(navigation, sender: nil)
     }
 
-    // MARK: DefaultReactionListener
+    // MARK: DefaultReactionDelegate
 
     func didUpdateDefaultReaction() {
         updateDefaultReaction()
