@@ -44,15 +44,4 @@ enum SearchQuery: Codable {
     }
 }
 
-extension SearchQuery: Equatable {
-    static func == (lhs: SearchQuery, rhs: SearchQuery) -> Bool {
-        switch (lhs, rhs) {
-        case (let .search(lhsText), let .search(rhsText)):
-            return lhsText == rhsText
-        case (let .recentlyViewed(lhsRepo), let .recentlyViewed(rhsRepo)):
-            return lhsRepo == rhsRepo
-        default:
-            return false
-        }
-    }
-}
+extension SearchQuery: Equatable { }
