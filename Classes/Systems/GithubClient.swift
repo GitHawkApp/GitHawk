@@ -18,7 +18,7 @@ struct GithubClient {
     let userSession: GitHubUserSession?
     let cache = FlatCache()
     let bookmarksStore: BookmarkStore?
-    let client: Client
+    let client: ClientType
     let badge: BadgeNotifications
 
     init(userSession: GitHubUserSession? = nil) {

@@ -17,14 +17,14 @@ final class IssueAutocomplete: AutocompleteType {
         let title: String
     }
 
-    private let client: Client
+    private let client: ClientType
     private let owner: String
     private let repo: String
 
     private var cachedResults = [String: [Issue]]()
     private var results = [Issue]()
 
-    init(client: Client, owner: String, repo: String) {
+    init(client: ClientType, owner: String, repo: String) {
         self.client = client
         self.owner = owner
         self.repo = repo

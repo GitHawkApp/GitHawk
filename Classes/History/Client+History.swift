@@ -9,7 +9,7 @@
 import Foundation
 import GitHubAPI
 
-extension Client {
+extension ClientType {
 
     func fetchHistory(
         owner: String,

@@ -12,7 +12,7 @@ import GitHubSession
 
 final class SettingsAccountsViewController: UITableViewController, GitHubSessionListener {
 
-    private var client: Client!
+    private var client: ClientType!
     private var sessionManager: GitHubSessionManager!
     private var userSessions = [GitHubUserSession]()
 
@@ -23,7 +23,7 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
 
     // MARK: Public API
 
-    func config(client: Client, sessionManager: GitHubSessionManager) {
+    func config(client: ClientType, sessionManager: GitHubSessionManager) {
         self.client = client
         self.sessionManager = sessionManager
         sessionManager.addListener(listener: self)

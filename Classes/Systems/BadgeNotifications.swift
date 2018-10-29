@@ -75,9 +75,9 @@ final class BadgeNotifications {
         }
     }
 
-    private let client: Client
+    private let client: ClientType
 
-    init(client: Client) {
+    init(client: ClientType) {
         self.client = client
     }
 

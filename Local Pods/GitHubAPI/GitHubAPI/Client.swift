@@ -23,7 +23,7 @@ public protocol ClientDelegate: class {
     func didUnauthorize(client: Client)
 }
 
-public class Client {
+public class Client: ClientType {
 
     weak var delegate: ClientDelegate?
 
@@ -93,4 +93,18 @@ public class Client {
         }
     }
 
+}
+
+public protocol ClientType {
+    func send<T: HTTPRequest>(_ request: T, completion: @escaping (Result<T.ResponseType>) -> Void)
+    func query<T: GraphQLQuery, Q>(
+        _ query: T,
+        result: @escaping (T.Data) -> Q?,
+        completion: @escaping (Result<Q>) -> Void
+    ) -> Cancellable
+    func mutate<T: GraphQLMutation, Q>(
+        _ mutation: T,
+        result: @escaping (T.Data) -> Q?,
+        completion: @escaping (Result<Q>) -> Void
+    ) -> Cancellable
 }
