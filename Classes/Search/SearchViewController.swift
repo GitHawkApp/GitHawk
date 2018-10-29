@@ -22,8 +22,8 @@ class SearchViewController: UIViewController,
     SearchResultSectionControllerDelegate {
 
     private let client: GithubClient
-    private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
-    private let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
+    let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
+    let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
     private var recentStore = SearchRecentStore()
     private let debouncer = Debouncer()
     private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
@@ -34,7 +34,7 @@ class SearchViewController: UIViewController,
         case results([ListDiffable])
         case error
     }
-    private var state: State = .idle {
+    var state: State = .idle {
         willSet {
             // To facilitate side-effect free state transition, we should cancel any on-going networking.
             // The `loading` => `loading` state transition can only be triggered through search while typing.
@@ -56,8 +56,9 @@ class SearchViewController: UIViewController,
         return view
     }()
 
-    init(client: GithubClient) {
+    init(client: GithubClient, store: SearchRecentStore = SearchRecentStore()) {
         self.client = client
+        self.recentStore = store
         super.init(nibName: nil, bundle: nil)
     }
 

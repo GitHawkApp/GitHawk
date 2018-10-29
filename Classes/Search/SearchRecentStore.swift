@@ -12,7 +12,7 @@ class SearchRecentStore: Store {
 
     typealias Model = SearchQuery
 
-    let key = "com.freetime.SearchRecentStore.results"
+    let key: String
 
     let defaults = UserDefaults.standard
     var values: [SearchQuery]
@@ -21,7 +21,9 @@ class SearchRecentStore: Store {
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
 
-    init() {
+    init(key: String = "com.freetime.SearchRecentStore.results") {
+        self.key = key
+
         if let data = defaults.object(forKey: key) as? Data,
             let array = try? decoder.decode([SearchQuery].self, from: data) {
             values = array
