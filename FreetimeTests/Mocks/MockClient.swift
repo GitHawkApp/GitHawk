@@ -36,7 +36,7 @@ class MockClient: ClientType {
     private let apollo: ApolloClient
     private let token: String?
 
-    var success = true
+    private var didSend = false
 
     init() {
         let config = ConfiguredNetworkers(
@@ -49,27 +49,15 @@ class MockClient: ClientType {
     }
 
     func send<T>(_ request: T, completion: @escaping (Result<T.ResponseType>) -> Void) where T: HTTPRequest {
-        print("Seen")
+        didSend = true
     }
 
     func query<T, Q>(_ query: T, result: @escaping (T.Data) -> Q?, completion: @escaping (Result<Q>) -> Void) -> Cancellable where T : GraphQLQuery {
-        return apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
-            if let data = response?.data, let q = result(data) {
-                completion(.success(q))
-            } else {
-                completion(.failure(error ?? response?.errors?.first))
-            }
-        }
+        return MockCancellable()
     }
 
     func mutate<T, Q>(_ mutation: T, result: @escaping (T.Data) -> Q?, completion: @escaping (Result<Q>) -> Void) -> Cancellable where T : GraphQLMutation {
-        return apollo.perform(mutation: mutation) { (response, error) in
-            if let data = response?.data, let q = result(data) {
-                completion(.success(q))
-            } else {
-                completion(.failure(error ?? response?.errors?.first))
-            }
-        }
+        return MockCancellable()
     }
 
 }
