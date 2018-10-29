@@ -472,6 +472,10 @@
 		D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C2AEF41F9AA94600A95945 /* DotListView.swift */; };
 		D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */; };
 		D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */; };
+		DC002FF02187521E00A763C0 /* MockClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC002FEF2187521E00A763C0 /* MockClient.swift */; };
+		DC002FF221875DAE00A763C0 /* SearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC002FF121875DAE00A763C0 /* SearchViewControllerTests.swift */; };
+		DC002FF521877E2800A763C0 /* SearchRepoResultFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC002FF421877E2800A763C0 /* SearchRepoResultFactory.swift */; };
+		DC002FF721877E4E00A763C0 /* MockSearchRecentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC002FF621877E4E00A763C0 /* MockSearchRecentStore.swift */; };
 		DC3238911F9B9E1A007DD924 /* SearchRecentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3238901F9B9E1A007DD924 /* SearchRecentViewModel.swift */; };
 		DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3238921F9BA29D007DD924 /* SearchQuery.swift */; };
 		DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C02C21F9C6D0A00E80B9F /* SearchRecentStoreTests.swift */; };
@@ -1032,6 +1036,10 @@
 		D8C2AEF41F9AA94600A95945 /* DotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotListView.swift; sourceTree = "<group>"; };
 		D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+SourceView.swift"; sourceTree = "<group>"; };
 		D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+TightSpacing.swift"; sourceTree = "<group>"; };
+		DC002FEF2187521E00A763C0 /* MockClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockClient.swift; sourceTree = "<group>"; };
+		DC002FF121875DAE00A763C0 /* SearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewControllerTests.swift; sourceTree = "<group>"; };
+		DC002FF421877E2800A763C0 /* SearchRepoResultFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepoResultFactory.swift; sourceTree = "<group>"; };
+		DC002FF621877E4E00A763C0 /* MockSearchRecentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchRecentStore.swift; sourceTree = "<group>"; };
 		DC3238901F9B9E1A007DD924 /* SearchRecentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentViewModel.swift; sourceTree = "<group>"; };
 		DC3238921F9BA29D007DD924 /* SearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		DC5C02C21F9C6D0A00E80B9F /* SearchRecentStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRecentStoreTests.swift; sourceTree = "<group>"; };
@@ -1610,6 +1618,7 @@
 		297AE84B1EC0D58A00B44A1F /* FreetimeTests */ = {
 			isa = PBXGroup;
 			children = (
+				DC002FF321877E1C00A763C0 /* Factories */,
 				DCA5ED171FAEF3220072F074 /* Bookmark Tests */,
 				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
 				2986B35D1FD462AA00E3CFC6 /* FilePathTests.swift */,
@@ -2202,10 +2211,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DC002FF321877E1C00A763C0 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				DC002FF421877E2800A763C0 /* SearchRepoResultFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
 		DC60C6CC1F98344B00241271 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
 				DC60C6CD1F98346400241271 /* MockSearchEmptyViewDelegate.swift */,
+				DC002FEF2187521E00A763C0 /* MockClient.swift */,
+				DC002FF621877E4E00A763C0 /* MockSearchRecentStore.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2217,6 +2236,7 @@
 				DC60C6CA1F98341900241271 /* SearchEmptyViewTests.swift */,
 				DC5C02C41F9C6E3500E80B9F /* SearchQueryTests.swift */,
 				DC5C02C61F9C71C400E80B9F /* SearchRecentViewModelTests.swift */,
+				DC002FF121875DAE00A763C0 /* SearchViewControllerTests.swift */,
 			);
 			path = "Search Tests";
 			sourceTree = "<group>";
@@ -3228,6 +3248,7 @@
 				293A45761F296B7E00DD1006 /* IssueTests.swift in Sources */,
 				49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */,
 				DC60C6CE1F98346400241271 /* MockSearchEmptyViewDelegate.swift in Sources */,
+				DC002FF221875DAE00A763C0 /* SearchViewControllerTests.swift in Sources */,
 				DC60C6CB1F98341900241271 /* SearchEmptyViewTests.swift in Sources */,
 				293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */,
 				BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */,
@@ -3235,16 +3256,19 @@
 				2977D8BF215AE12D0073F737 /* LocalNotificationCacheTests.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
+				DC002FF521877E2800A763C0 /* SearchRepoResultFactory.swift in Sources */,
 				49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */,
 				2986B35F1FD462B300E3CFC6 /* FilePath.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
 				296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */,
 				BDB6AA762165B8EA009BB73C /* SwitchBranches.swift in Sources */,
 				DC5C02C71F9C71C400E80B9F /* SearchRecentViewModelTests.swift in Sources */,
+				DC002FF02187521E00A763C0 /* MockClient.swift in Sources */,
 				DC60C6D31F983BB900241271 /* SignatureTests.swift in Sources */,
 				DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */,
 				49FE18FF204B6508001681E8 /* SequenceTests.swift in Sources */,
 				DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */,
+				DC002FF721877E4E00A763C0 /* MockSearchRecentStore.swift in Sources */,
 				9870B9081FC74E300009719C /* SecretsTests.swift in Sources */,
 				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
 				2986B35E1FD462AA00E3CFC6 /* FilePathTests.swift in Sources */,
