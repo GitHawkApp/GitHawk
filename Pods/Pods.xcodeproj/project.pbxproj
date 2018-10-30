@@ -956,7 +956,6 @@
 		BD0974F8966CD350026A18D41FA50987 /* NYTPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E049427644A868EB91580E61F639F11 /* NYTPhotosDataSource.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BD157450589A43C987A9B6E7CF51BDFA /* IGListSupplementaryViewSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 420014FAFD233301CAC7EA310528C82C /* IGListSupplementaryViewSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD2189F21D59095F39C754142F9E640B /* FLEXFileBrowserSearchOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = B604C9BE258E6EB21039BCEEEF7ACCD6 /* FLEXFileBrowserSearchOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		BD52E7232184E34000F74F49 /* V3EditIssueTitleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD52E7222184E33F00F74F49 /* V3EditIssueTitleRequest.swift */; };
 		BDD7D2696958AAD8276768B1293E3A51 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF9BE5FB64F98550A2DBBC8F214E46D /* Foundation.framework */; };
 		BDFF4F63D125FFA4A937CF66C07976E6 /* ContextMenuDismissing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD94B548D763770E23D17158B435CF8 /* ContextMenuDismissing.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BE0C9DB3628D6A8A7AEF7F72A4F29354 /* GraphQLInputValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF64B8F943A2EF1252F05697B8A66B /* GraphQLInputValue.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -2987,7 +2986,7 @@
 		BC830CDE63C59D6F9CE9F0D11C8F94BD /* GitHubAPI-watchOS.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "GitHubAPI-watchOS.xcconfig"; path = "../GitHubAPI-watchOS/GitHubAPI-watchOS.xcconfig"; sourceTree = "<group>"; };
 		BCD8688D769B4FAB46DF3A9D0221F650 /* NYTPhotosOverlayView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NYTPhotosOverlayView.m; path = Pod/Classes/ios/NYTPhotosOverlayView.m; sourceTree = "<group>"; };
 		BD15F67E17172EC1BF089B41D330923B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		BD52E7222184E33F00F74F49 /* V3EditIssueTitleRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = V3EditIssueTitleRequest.swift; path = GitHubAPI/V3EditIssueTitleRequest.swift; sourceTree = "<group>"; };
+		BD52E7282185245D00F74F49 /* V3EditIssuetitleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3EditIssuetitleRequest.swift; sourceTree = "<group>"; };
 		BD6E6030D86E8ECBBE164BACD8DD41A1 /* vs.min.css */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.css; name = vs.min.css; path = Pod/Assets/styles/vs.min.css; sourceTree = "<group>"; };
 		BE1867C1C8B04B00DCD9C14D3388EB11 /* Promise.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Promise.swift; path = Sources/Apollo/Promise.swift; sourceTree = "<group>"; };
 		BE7F9E0972BE1EAD8D0F4ED84928B072 /* Node.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Node.swift; path = Source/Node.swift; sourceTree = "<group>"; };
@@ -5712,7 +5711,6 @@
 				8BAE6051E44DA797DE9BD0988082A04A /* ClientError.swift */,
 				AFA709D16571E92859C1B3F721ABD604 /* ConfiguredNetworkers.swift */,
 				C195D937DACEC8D3440B0EDFE5F82B07 /* GitHubAccessTokenRequest.swift */,
-				BD52E7222184E33F00F74F49 /* V3EditIssueTitleRequest.swift */,
 				19BD5DE93FA4EADCB4FEDBF9932C183F /* GitHubAPIStatusRequest.swift */,
 				04304EC63BAFD27C7BAA6305FA4EACAA /* HTTPRequest.swift */,
 				229A1241DBD8D8974696F357E36B2570 /* JSONResponse.swift */,
@@ -5724,6 +5722,7 @@
 				571651C7FFC778989881C78DA7B37720 /* String+V3Links.swift */,
 				DC8BF62D4477ADE5105EBED68837F539 /* V3AddPeopleRequest.swift */,
 				4E93BCE3B30D0E1F8D69C7D5391E53D5 /* V3AssigneesRequest.swift */,
+				BD52E7282185245D00F74F49 /* V3EditIssuetitleRequest.swift */,
 				7CE63778C0624B66CE588ACC4A824DCD /* V3Content.swift */,
 				10B77891A411D74893FB28B8B6CA5A3B /* V3CreateIssueRequest.swift */,
 				59C9D9598F687FCF05E6453E3222DBE3 /* V3DataResponse.swift */,
@@ -7543,6 +7542,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					20D1FC0D56A82A58EA5060203337B001 = {
+						LastSwiftMigration = 1010;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -8559,7 +8563,6 @@
 				384979659EBE3CFC0443F1074E5480C4 /* V3MarkNotificationsRequest.swift in Sources */,
 				2E76CE3DE6DBA6463A5C87DB122D8B5F /* V3MarkRepositoryNotificationsRequest.swift in Sources */,
 				D0A9B4D2311D70B8A8ED9CEFFFD0D127 /* V3MarkThreadsRequest.swift in Sources */,
-				BD52E7232184E34000F74F49 /* V3EditIssueTitleRequest.swift in Sources */,
 				C3D66075D67C4687CB1AF0E6CF87CA5C /* V3MergePullRequestReqeust.swift in Sources */,
 				EBCA99A03D0EC2323DA022833F6C432E /* V3Milestone.swift in Sources */,
 				AAC44C81965EEC5FCFA6CBC80AC6857A /* V3MilestoneRequest.swift in Sources */,
@@ -13115,6 +13118,7 @@
 			baseConfigurationReference = 7794FE48B7BC95371596593EF412B414 /* Pods-Freetime.testflight.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -13139,6 +13143,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13585,6 +13590,7 @@
 			baseConfigurationReference = 61C0AF7CCA5E3FEE9E9D52B8607EE7C0 /* Pods-Freetime.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -13610,6 +13616,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -13994,6 +14001,7 @@
 			baseConfigurationReference = 1BD142902A69983128EAC62CD704C315 /* Pods-Freetime.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -14018,6 +14026,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

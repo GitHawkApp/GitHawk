@@ -47,7 +47,6 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
     let client: GithubClient
     weak var viewController: UIViewController?
-    weak var editIssueTitleViewControllerDelegate: EditIssueTitleViewControllerDelegate?
 
     init(model: IssueDetailsModel, client: GithubClient) {
         let button = IssueManageButton()
@@ -93,15 +92,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             if result.pullRequest {
                 actions.append(.reviewers)
             }
-            
-            let viewerCanUpdate =
-                editIssueTitleViewControllerDelegate?
-                .viewerCanUpdate
-                ?? false
-            
-            if viewerCanUpdate {
-                actions.append(.editTitle)
-            }
+            actions += [.editTitle]
             
             if result.labels.locked {
                 actions.append(.unlock)
@@ -191,11 +182,15 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             case .milestone: strongSelf.presentContextMenu(with: strongSelf.newMilestonesController())
             case .assignees: strongSelf.presentContextMenu(with: strongSelf.newPeopleController(type: .assignee))
             case .reviewers: strongSelf.presentContextMenu(with: strongSelf.newPeopleController(type: .reviewer))
+            case .editTitle:
+                strongSelf.presentContextMenu(
+                    with: strongSelf.newEditTitleController(),
+                    backgroundColor: .white
+                )
             case .unlock: strongSelf.lock(false)
             case .lock: strongSelf.lock(true)
             case .reopen: strongSelf.close(false)
             case .close: strongSelf.close(true)
-            case .editTitle: strongSelf.presentEditTitleController()
             }
         }
     }
@@ -218,6 +213,12 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
                 hapticsStyle: .medium
             ),
             sourceView: sender
+        )
+    }
+    
+    func newEditTitleController() -> UIViewController {
+        return EditIssueTitleViewController(
+            issueTitle: result?.title.string.allText ?? ""
         )
     }
 
@@ -267,29 +268,20 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         )
     }
 
-    func presentContextMenu(with controller: UIViewController) {
+    func presentContextMenu(
+        with controller: UIViewController,
+        backgroundColor: UIColor = Styles.Colors.menuBackgroundColor.color
+    ) {
         guard let viewController = self.viewController else { return }
         ContextMenu.shared.show(
             sourceViewController: viewController,
             viewController: controller,
             options: ContextMenu.Options(
                 containerStyle: ContextMenu.ContainerStyle(
-                    backgroundColor: Styles.Colors.menuBackgroundColor.color
+                    backgroundColor: backgroundColor
                 )
             ),
             delegate: self
-        )
-    }
-    
-    func presentEditTitleController() {
-        guard let viewController = viewController else { return }
-        guard let delegate = editIssueTitleViewControllerDelegate else { return }
-        let controller = EditIssueTitleViewController(
-            delegate: delegate
-        )
-        ContextMenu.shared.show(
-            sourceViewController: viewController,
-            viewController: controller
         )
     }
 
@@ -315,6 +307,19 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             locked: doLock
         )
         Haptic.triggerNotification(.success)
+    }
+    
+    func didDismiss(controller: EditIssueTitleViewController) {
+        guard let title = controller.setTitle,
+            let previous = result else { return }
+        client.setTitle(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            title: title
+        )
+        
     }
 
     func didDismiss(selected labels: [RepositoryLabel]) {
@@ -367,9 +372,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             didDismiss(controller: people)
         } else if let labels = viewController as? LabelsViewController {
             didDismiss(selected: labels.selected)
+        } else if let editIssueTitle = viewController as? EditIssueTitleViewController {
+            didDismiss(controller: editIssueTitle)
         }
     }
 
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
-
 }

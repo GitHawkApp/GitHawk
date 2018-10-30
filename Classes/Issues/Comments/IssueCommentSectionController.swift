@@ -116,7 +116,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
 
     var editAction: UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
-        return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
+        return UIAlertAction(title: Constants.Strings.edit, style: .default, handler: { [weak self] _ in
             guard let strongSelf = self,
                 let object = strongSelf.object,
                 let number = object.number,

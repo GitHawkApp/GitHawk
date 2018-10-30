@@ -9,22 +9,17 @@
 import UIKit
 import GitHubAPI
 import SnapKit
+import Squawk
 
-protocol EditIssueTitleViewControllerDelegate: class {
-    func sendEditTitleRequest(newTitle: String, viewController: EditIssueTitleViewController)
-    var currentIssueTitle: String? { get }
-    var viewerCanUpdate: Bool { get }
-}
 
-class EditIssueTitleViewController: UIViewController {
-
-    private let textView = UITextView()
-    private let issueTitle: String
-    private weak var delegate: EditIssueTitleViewControllerDelegate?
+final class EditIssueTitleViewController: UIViewController {
     
-    init(delegate: EditIssueTitleViewControllerDelegate) {
-        self.delegate = delegate
-        self.issueTitle = delegate.currentIssueTitle ?? ""
+    private let issueTitle: String
+    private let textView = UITextView()
+    public private(set) var setTitle: String?
+    
+    init(issueTitle: String) {
+        self.issueTitle = issueTitle
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,7 +33,7 @@ class EditIssueTitleViewController: UIViewController {
             width: Styles.Sizes.contextMenuSize.width,
             height: 120
         )
-        title = NSLocalizedString("Edit", comment: "")
+        title = Constants.Strings.edit 
         
         view.addSubview(textView)
         textView.snp.makeConstraints { make in
@@ -53,7 +48,7 @@ class EditIssueTitleViewController: UIViewController {
             style: .plain,
             target: self,
             action: #selector(
-                EditIssueTitleViewController.onMenuCancel
+                EditIssueTitleViewController.onCancel
             )
         )
     }
@@ -65,29 +60,25 @@ class EditIssueTitleViewController: UIViewController {
     
     func setRightBarItemIdle() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Save", comment: ""),
+            title: Constants.Strings.save,
             style: .plain,
             target: self,
             action: #selector(
-                EditIssueTitleViewController.onMenuSave
+                EditIssueTitleViewController.onSave
             )
         )
     }
     
-    @objc func onMenuSave() {
-        textView.isEditable = false
+    @objc func onSave() {
         textView.resignFirstResponder()
-        guard textView.text != issueTitle else { return }
-        setRightBarItemSpinning()
-        delegate?.sendEditTitleRequest(
-            newTitle: textView.text,
-            viewController: self
-        )
-    }
-    
-    @objc func onMenuCancel() {
-        textView.resignFirstResponder()
+        if textView.text != issueTitle {
+            setTitle = textView.text
+        }
         dismiss(animated: true)
     }
     
+    @objc func onCancel() {
+        textView.resignFirstResponder()
+        dismiss(animated: true)
+    }
 }

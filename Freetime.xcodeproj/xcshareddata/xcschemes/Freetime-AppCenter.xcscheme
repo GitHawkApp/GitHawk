@@ -79,6 +79,16 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "GITHUB_CLIENT_ID"
+            value = "6b1cd65359f9aab074aa"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "GITHUB_CLIENT_SECRET"
+            value = "b7c871145720014dc39e2a08ed68e8063fdcfb15"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "NETWORK_RECORD_PATH"
             value = "$(PROJECT_DIR)"
             isEnabled = "YES">

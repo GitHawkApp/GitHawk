@@ -35,9 +35,7 @@ final class IssuesViewController: MessageViewController,
     IssueTextActionsViewSendDelegate,
     EmptyViewDelegate,
     MessageTextViewListener,
-    IssueLabelTapSectionControllerDelegate,
-    EditIssueTitleViewControllerDelegate
-{
+    IssueLabelTapSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -136,7 +134,6 @@ final class IssuesViewController: MessageViewController,
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
 
         manageController.viewController = self
-        manageController.editIssueTitleViewControllerDelegate = self 
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -288,13 +285,6 @@ final class IssuesViewController: MessageViewController,
         activityController.popoverPresentationController?.barButtonItem = sender
         present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
-    
-    var insetWidth: CGFloat {
-        // assumptions here, but the collectionview may not have been laid out or content size found
-        // assume the collectionview is pinned to the view's bounds
-        let contentInset = feed.collectionView.contentInset
-        return view.bounds.width - contentInset.left - contentInset.right
-    }
 
     func fetch(previous: Bool) {
         if !previous {
@@ -321,7 +311,10 @@ final class IssuesViewController: MessageViewController,
             }
         }
 
-        let width = insetWidth
+        // assumptions here, but the collectionview may not have been laid out or content size found
+        // assume the collectionview is pinned to the view's bounds
+        let contentInset = feed.collectionView.contentInset
+        let width = view.bounds.width - contentInset.left - contentInset.right
 
         client.fetch(
             owner: model.owner,
@@ -411,7 +404,7 @@ final class IssuesViewController: MessageViewController,
             metadata.append(IssueFileChangesModel(changes: changes))
         }
         // END metadata collection
-        
+
         objects.append(IssueTitleModel(string: current.title))
         objects += metadata
 
@@ -492,7 +485,7 @@ final class IssuesViewController: MessageViewController,
             client: client,
             mergeCapable: viewerIsCollaborator,
             resultID: resultID
-        )
+            )
 
         // deprecated
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
@@ -641,66 +634,12 @@ final class IssuesViewController: MessageViewController,
 
     func didChangeSelection(textView: MessageTextView) {}
     func willChangeRange(textView: MessageTextView, to range: NSRange) {}
-    
+
     // MARK: IssueLabelsSectionControllerDelegate
-    
+
     func didTapIssueLabel(owner: String, repo: String, label: String) {
         guard let issueType = self.issueType else { return }
         presentLabels(client: client, owner: owner, repo: repo, label: label, type: issueType)
     }
-    
-    // MARK: EditIssueTitleViewControllerDelegate
 
-    func sendEditTitleRequest(newTitle: String, viewController: EditIssueTitleViewController) {
-        let request = V3EditIssueTitleRequest(
-            owner: model.owner,
-            repo: model.repo,
-            issueNumber: model.number,
-            title: newTitle
-        )
-        
-        client.client.send(request) { [weak self] result in
-            switch result {
-            case .success:
-                guard let strongSelf = self else { return }
-                
-                // Update Bookmark with new title
-                if let bookmark = strongSelf.bookmark,
-                    let bookmarkStore = strongSelf.client.bookmarksStore {
-                    IssuesViewController.updateBookmarkTitle(
-                        newTitle: newTitle,
-                        bookmark: bookmark,
-                        bookmarkStore: bookmarkStore
-                    )
-                }
-                
-                // Update issueResult model and timeline
-                if let current = strongSelf.result {
-                    let issueResult = IssuesViewController.updateIssueResultModelTitle(
-                        newTitle: newTitle,
-                        oldTitle: strongSelf.currentIssueTitle ?? "",
-                        username: strongSelf.client.userSession?.username ?? Constants.Strings.unknown,
-                        issueResultModel: current,
-                        width: strongSelf.insetWidth
-                    )
-                    strongSelf.client.cache.set(value: issueResult)
-                }
-                
-            case .failure(let error):
-                Squawk.show(error: error)
-            }
-            
-            viewController.setRightBarItemIdle()
-            viewController.dismiss(animated: true)
-        }
-    }
-    
-    var currentIssueTitle: String? {
-        return result?.title.string.allText
-    }
-    
-    var viewerCanUpdate: Bool {
-        return result?.viewerCanUpdate ?? false
-    }
-    
 }

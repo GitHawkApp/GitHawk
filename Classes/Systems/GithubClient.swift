@@ -33,5 +33,4 @@ struct GithubClient {
             self.bookmarksStore = nil
         }
     }
-
 }

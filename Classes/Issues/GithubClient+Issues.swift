@@ -151,7 +151,7 @@ extension GithubClient {
                     let issueResult = IssueResult(
                         id: issueType.id,
                         pullRequest: issueType.pullRequest,
-                        title: titleStringSizing(title: issueType.title, contentSizeCategory: contentSizeCategory, width: width),
+                        title: titleStringSizing(title: issueType.title, contentSizeCategory: contentSizeCategory),
                         labels: IssueLabelsModel(
                             status: IssueLabelStatusModel(status: status, pullRequest: issueType.pullRequest),
                             locked: issueType.locked,
@@ -522,6 +522,58 @@ extension GithubClient {
                     cache.set(value: previous)
                     Squawk.show(error: error)
                 }
+            }
+        }
+    }
+    
+    func setTitle(
+        previous: IssueResult,
+        owner: String,
+        repo: String,
+        number: Int,
+        title: String
+    ) {
+        
+        let contentSizeCategory = UIContentSizeCategory.preferred
+        
+        let titleChangeString = IssueRenamedString(
+            previous: previous.title.string.allText,
+            current: title,
+            contentSizeCategory: contentSizeCategory,
+            width: 0
+        )
+        
+        let issueRenamedModel = IssueRenamedModel(
+            id: UUID().uuidString,
+            actor: userSession?.username ?? "",
+            date: Date(),
+            titleChangeString: titleChangeString
+        )
+        
+        let issueResult = previous.updated(
+            title: titleStringSizing(
+                title: title,
+                contentSizeCategory: contentSizeCategory
+            ),
+            timelinePages: previous.timelinePages(appending: [issueRenamedModel])
+        )
+        
+        let cache = self.cache
+        cache.set(value: issueResult)
+        
+        let request = V3SetIssueTitleRequest(
+            owner: owner,
+            repo: repo,
+            issueNumber: number,
+            title: title
+        )
+        
+        client.send(request) { result in
+            switch result {
+            case .success: break
+            case .failure(let error):
+                cache.set(value: previous)
+                Squawk.show(error: error)
             }
         }
     }
