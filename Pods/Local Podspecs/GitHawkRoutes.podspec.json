@@ -1,6 +1,6 @@
 {
   "name": "GitHawkRoutes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": {
     "type": "MIT"
   },
@@ -11,7 +11,7 @@
   "summary": "GitHawk routing and deep links.",
   "source": {
     "git": "https://github.com/GitHawkApp/GitHawkRoutes.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "source_files": "GitHawkRoutes/*.swift",
   "platforms": {

@@ -14,11 +14,8 @@ public extension UIApplication {
         githawk route: T,
         completion: ((Bool) -> Void)? = nil
         ) {
-        var components = URLComponents()
-        components.host = "freetime"
-        components.queryItems = route.encoded.map(URLQueryItem.init)
-        components.path = T.path
-        guard let url = components.url,
+
+        guard let url = URL.from(githawk: route),
             canOpenURL(url)
             else {
                 completion?(false)
