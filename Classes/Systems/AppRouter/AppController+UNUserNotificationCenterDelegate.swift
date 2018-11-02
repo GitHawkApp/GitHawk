@@ -33,7 +33,7 @@ extension AppController: UNUserNotificationCenterDelegate {
         case UNNotificationDismissActionIdentifier: break
         case UNNotificationDefaultActionIdentifier:
             if let (path, params) = response.notification.request.content.routableUserInfo {
-                handle(path: path, params: params)
+                router.handle(path: path, params: params)
             }
         default: print(response.actionIdentifier)
         }
