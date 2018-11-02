@@ -69,13 +69,13 @@ class DetectShortlinkTests: XCTestCase {
         XCTAssertEqual(containsLink.linkText, "#345")
         XCTAssertEqual(containsLink.issueNumber, 345)
         XCTAssertEqual(builder.allText, testString)
-        
+
         testString =
         """
         #345
         newLine
         """
-        
+
         builder = setupBuilder(with: testString)
         containsLink = checkForIssueLink(builder.styledTexts)[0]
         XCTAssertEqual(containsLink.linkText, "#345")
@@ -124,18 +124,18 @@ class DetectShortlinkTests: XCTestCase {
         XCTAssertEqual(containsLink.issueNumber, 4)
         XCTAssertEqual(builder.allText, testString)
     }
-    
+
     func test_ConsecutivePositiveMatches() {
         var testString = "#100 #150 #200"
         var builder = setupBuilder(with: testString)
         var links = checkForIssueLink(builder.styledTexts)
-        
+
         XCTAssertEqual(links[0].issueNumber, 100)
         XCTAssertEqual(links[0].linkText, "#100")
-        
+
         XCTAssertEqual(links[1].issueNumber, 150)
         XCTAssertEqual(links[1].linkText, "#150")
-        
+
         XCTAssertEqual(links[2].issueNumber, 200)
         XCTAssertEqual(links[2].linkText, "#200")
     }
@@ -158,3 +158,4 @@ class DetectShortlinkTests: XCTestCase {
         XCTAssertEqual(containsLink.count, 0)
     }
 }
+

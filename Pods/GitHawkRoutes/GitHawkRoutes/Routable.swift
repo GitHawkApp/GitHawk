@@ -11,5 +11,14 @@ import Foundation
 public protocol Routable {
     static func from(params: [String: String]) -> Self?
     var encoded: [String: String] { get }
-    static var path: String { get }
+}
+
+public extension Routable {
+
+    public static var path: String {
+        return String(describing: self)
+    }
+
+    public var encoded: [String: String] { return [:] }
+
 }
