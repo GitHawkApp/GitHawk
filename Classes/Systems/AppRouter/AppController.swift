@@ -11,14 +11,7 @@ import GitHubSession
 import GitHubAPI
 import GitHawkRoutes
 
-final class AppController: NSObject,
-LoginSplashViewControllerDelegate,
-GitHubSessionListener,
-RouterDelegate {
-
-    public private(set) lazy var router = {
-        return Router(delegate: self)
-    }()
+final class AppController: NSObject, LoginSplashViewControllerDelegate, GitHubSessionListener {
 
     private var splitViewController: AppSplitViewController!
     private let sessionManager = GitHubSessionManager()
@@ -26,6 +19,7 @@ RouterDelegate {
     private var appClient: GithubClient?
     private var settingsNavigationController: UINavigationController?
     private var watchAppSync: WatchAppUserSessionSync?
+    private var routes = [String: (Routable & RoutePerformable).Type]()
 
     override init() {
         super.init()
@@ -60,6 +54,34 @@ RouterDelegate {
         with completion: @escaping (UIBackgroundFetchResult) -> Void
         ) {
         appClient?.badge.fetch(application: application, handler: completion)
+    }
+
+    @discardableResult
+    func handle(url: URL) -> Bool {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            else { return false }
+        var params = [String: String]()
+        for item in components.queryItems ?? [] {
+            params[item.name] = item.value
+        }
+        return handle(path: url.path, params: params)
+    }
+
+    @discardableResult
+    func handle(path: String, params: [String: String]) -> Bool {
+        guard let routeType = routes[path],
+            let route = routeType.from(params: params),
+            let client = appClient
+            else { return false }
+        return route.perform(
+            sessionManager: sessionManager,
+            splitViewController: splitViewController,
+            client: client
+        )
+    }
+
+    func register<T: Routable & RoutePerformable>(route: T.Type) {
+        routes[T.path] = T.self
     }
 
     private func resetWatchSync(userSession: GitHubUserSession) {
@@ -138,17 +160,6 @@ RouterDelegate {
 
     func didLogout(manager: GitHubSessionManager) {
         showLogin(animated: trueUnlessReduceMotionEnabled)
-    }
-
-    // MARK: RouteHandlerDelegate
-
-    func perform(route: RoutePerformable, router: Router) -> Bool {
-        guard let client = appClient else { return false }
-        return route.perform(
-            sessionManager: sessionManager,
-            splitViewController: splitViewController,
-            client: client
-        )
     }
 
 }

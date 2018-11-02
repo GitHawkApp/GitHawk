@@ -22,9 +22,11 @@ public struct SwitchAccountShortcutRoute: Routable {
     }
 
     public var encoded: [String: String] {
-        return [
-            "username": username
-        ]
+        return ["username": username]
+    }
+
+    public static var path: String {
+        return "com.githawk.shortcut.switch"
     }
     
 }

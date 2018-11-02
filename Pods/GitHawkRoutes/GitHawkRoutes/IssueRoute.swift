@@ -28,6 +28,10 @@ public struct IssueRoute: Routable {
         return IssueRoute(owner: owner, repo: repo, number: number)
     }
 
+    public static var path: String {
+        return "com.githawk.issue"
+    }
+
     public var encoded: [String: String] {
         return [
             "owner": owner,
