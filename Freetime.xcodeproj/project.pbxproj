@@ -30,7 +30,6 @@
 		290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */; };
 		290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */; };
 		290CA778216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */; };
-		290CA77A216AFC1300DE04F8 /* AppController+SetupRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
@@ -271,6 +270,7 @@
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
 		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
+		2990B9DB218BF23D009865EB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990B9DA218BF23D009865EB /* Router.swift */; };
 		29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
 		299304691FBA8A88007B9737 /* IssueManagingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */; };
 		2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993046A1FBA8C04007B9737 /* IssueManagingExpansionCell.swift */; };
@@ -571,7 +571,6 @@
 		290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwitchAccountShortcutRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
 		290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkShortcutRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
 		290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePerformable+RoutePerformable.swift"; sourceTree = "<group>"; };
-		290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppController+SetupRoutes.swift"; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
@@ -819,6 +818,7 @@
 		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
 		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
+		2990B9DA218BF23D009865EB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MutableTraits.swift"; sourceTree = "<group>"; };
 		299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingSectionController.swift; sourceTree = "<group>"; };
 		2993046A1FBA8C04007B9737 /* IssueManagingExpansionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingExpansionCell.swift; sourceTree = "<group>"; };
@@ -1122,13 +1122,13 @@
 			isa = PBXGroup;
 			children = (
 				290CA7632169799600DE04F8 /* AppController.swift */,
-				290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */,
 				29A10544216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift */,
 				290CA76521697A7900DE04F8 /* AppSplitViewController.swift */,
 				290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */,
 				29A10540216D912F004734A0 /* IssueRoute+RoutePerformable.swift */,
 				2962505F217D53C000EA6164 /* RepoRoute+RoutePerformable.swift */,
 				290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */,
+				2990B9DA218BF23D009865EB /* Router.swift */,
 				290CA769216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift */,
 				290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */,
 				29A10542216D9381004734A0 /* UNMutableNotificationContent+Routable.swift */,
@@ -2815,6 +2815,7 @@
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				29B205FA217B8B9100E4DD9F /* PathCommitCell.swift in Sources */,
 				29AAB7171FB4A2AE001D5E6A /* BoundedImageSize.swift in Sources */,
+				2990B9DB218BF23D009865EB /* Router.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
 				29AF1E8C1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift in Sources */,
 				291929611F3FD2960012067B /* DiffString.swift in Sources */,
@@ -2950,7 +2951,6 @@
 				DCA5ED141FAEE8030072F074 /* Bookmark.swift in Sources */,
 				299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
-				290CA77A216AFC1300DE04F8 /* AppController+SetupRoutes.swift in Sources */,
 				29BBD82920CAC7D5004D62FE /* NotificationViewModel.swift in Sources */,
 				299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
