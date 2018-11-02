@@ -170,7 +170,7 @@ CHECKOUT OPTIONS:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
     :git: https://github.com/GitHawkApp/FlatCache.git
   GitHawkRoutes:
-    :commit: ade408cb1f5ddd7a8e9cc8d79eeae05a05a90ce4
+    :commit: 26e45170b4ba06843d7a034f4a321a5797c77ec8
     :git: https://github.com/GitHawkApp/GitHawkRoutes.git
   Highlightr:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c

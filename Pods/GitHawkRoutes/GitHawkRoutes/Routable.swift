@@ -13,9 +13,9 @@ public protocol Routable {
     var encoded: [String: String] { get }
 }
 
-extension Routable {
+public extension Routable {
 
-    static var path: String {
+    public static var path: String {
         return String(describing: self)
     }
 
