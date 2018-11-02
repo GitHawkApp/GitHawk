@@ -127,10 +127,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             title = Constants.Strings.reviewers
             iconName = "reviewer"
         case .unlock:
-            title =  Constants.Strings.unlock
+            title = NSLocalizedString("Unlock", comment: "")
             iconName = "key"
         case .lock:
-            title = Constants.Strings.lock
+            title = NSLocalizedString("Lock", comment: "")
             iconName = "lock"
         case .reopen:
             title = Constants.Strings.reopen
@@ -140,30 +140,20 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             iconName = "x"
         }
 
-        // Lock always has the divider above it assuming you're a collaborator.
-        // If you aren't a collaborator (Lock does not show), close has the divider above it.
         let separator: Bool
         switch action {
-        case .lock, .unlock: separator = true
-        case .reopen, .close: separator = permissions != .collaborator
+        case .reopen, .close: separator = true
         default: separator = false
         }
 
         let iconColor: UIColor
         switch action {
-        case .lock: iconColor = Styles.Colors.Gray.light.color
         case .close: iconColor = Styles.Colors.Red.medium.color
-        case .reopen: iconColor = Styles.Colors.Green.medium.color
         default: iconColor = Styles.Colors.Blue.medium.color
         }
 
-        return ContrastContextMenuItem(
-            title: title,
-            iconName: iconName,
-            iconColor: iconColor,
-            separator: separator,
-            action: actionBlock(action)
-        )
+        return ContrastContextMenuItem(title: title, iconName: iconName, iconColor: iconColor,
+                                       separator: separator, action: actionBlock(action))
 
     }
 
@@ -345,3 +335,4 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
 }
+

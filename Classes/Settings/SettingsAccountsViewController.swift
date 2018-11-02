@@ -116,6 +116,7 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
         tableView.reloadData()
     }
 
+    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}
     func didLogout(manager: GitHubSessionManager) {}
 
 }

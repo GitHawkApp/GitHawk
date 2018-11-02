@@ -14,12 +14,11 @@ class SearchViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-    EmptyViewDelegate,
-    InitialEmptyViewDelegate,
-    SearchRecentSectionControllerDelegate,
-    SearchRecentHeaderSectionControllerDelegate,
-    TabNavRootViewControllerType,
-    SearchResultSectionControllerDelegate {
+InitialEmptyViewDelegate,
+SearchRecentSectionControllerDelegate,
+SearchRecentHeaderSectionControllerDelegate,
+TabNavRootViewControllerType,
+SearchResultSectionControllerDelegate {
 
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
@@ -83,6 +82,7 @@ class SearchViewController: UIViewController,
 
         searchBar.delegate = self
         searchBar.placeholder = Constants.Strings.searchGitHub
+        searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
@@ -103,10 +103,6 @@ class SearchViewController: UIViewController,
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
-    }
-
-    func searchBarBecomeFirstResponder() {
-        searchBar.becomeFirstResponder()
     }
 
     // MARK: Data Loading/Paging
@@ -162,7 +158,7 @@ class SearchViewController: UIViewController,
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey {
-
+            
             return SearchNoResultsSectionController(
                 topInset: controlHeight,
                 layoutInsets: view.safeAreaInsets
@@ -193,10 +189,8 @@ class SearchViewController: UIViewController,
         case .error:
             let view = EmptyView()
             view.label.text = NSLocalizedString("Error finding results", comment: "")
-            view.delegate = self
-            view.button.isHidden = false
             return view
-        case .results:
+         case .results:
             return nil
         }
     }
@@ -231,15 +225,6 @@ class SearchViewController: UIViewController,
 
         state = .idle
         update(animated: false)
-    }
-
-    // MARK: EmptyViewDelegate
-
-    func didTapRetry(view: EmptyView) {
-        searchBar.resignFirstResponder()
-
-        guard let term = searchTerm(for: searchBar.text) else { return }
-        search(term: term)
     }
 
     // MARK: InitialEmptyViewDelegate

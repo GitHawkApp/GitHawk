@@ -1,24 +1,21 @@
 disabled_rules:
   - function_parameter_count
+  - line_length
+  - identifier_name
+  - type_name
   - function_body_length
   - type_body_length
   - force_try
   - force_cast
-  - cyclomatic_complexity
-  - identifier_name
-  - type_name
-  - line_length
-  - file_length
-  - large_tuple
-  - nesting
+  - trailing_whitespace
 
 included: 
   - Classes
   - FreetimeTests
-  - Local\ Pods
 excluded:
   - Pods
+  - Local Pods
   - Playgrounds
-  - Local\ Pods/SwipeCellKit
+  - Sample
 
 reporter: "xcode"

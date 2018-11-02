@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIScrollView {
-
+    
     func updateSafeInset(container view: UIView, base inset: UIEdgeInsets) {
         let safe = view.safeAreaInsets
         contentInset = UIEdgeInsets(

@@ -28,7 +28,7 @@ final class TabBarControllerDelegate: NSObject, UITabBarControllerDelegate {
             nav.transitionCoordinator?.viewController(forKey: UITransitionContextViewControllerKey.from) == nil,
             let root = nav.viewControllers.first as? TabNavRootViewControllerType {
             tapCount += 1
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.27, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.17, execute: {
                 let count = self.tapCount
 
                 // make sure that on the same VC that queued the tap-check

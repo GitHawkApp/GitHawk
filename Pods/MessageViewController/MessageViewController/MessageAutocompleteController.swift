@@ -31,13 +31,36 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     public private(set) var selection: Selection?
     
     /// Adds an additional space after the autocompleted text when true. Default value is `TRUE`
-    public var appendSpaceOnCompletion = true
+    open var appendSpaceOnCompletion = true
     
     /// The text attributes applied to highlighted substrings for each prefix
     private var autocompleteTextAttributes: [String: [NSAttributedStringKey: Any]] = [:]
     
     /// A key used for referencing which substrings were autocompletes
     private let NSAttributedAutocompleteKey = NSAttributedStringKey.init("com.messageviewcontroller.autocompletekey")
+
+    private var defaultTextAttributes: [NSAttributedStringKey: Any] {
+        return [
+            .font: textView.defaultFont,
+            .foregroundColor: textView.defaultTextColor,
+        ]
+    }
+    
+    /// A reference to `defaultTextAttributes` that adds the NSAttributedAutocompleteKey
+    private var typingTextAttributes: [NSAttributedStringKey: Any] {
+        var attributes = defaultTextAttributes
+        attributes[.paragraphStyle] = paragraphStyle
+        attributes[NSAttributedAutocompleteKey] = false
+        return attributes
+    }
+    
+    /// The NSAttributedStringKey.paragraphStyle value applied to attributed strings
+    private let paragraphStyle: NSMutableParagraphStyle = {
+        let style = NSMutableParagraphStyle()
+        style.paragraphSpacingBefore = 2
+        style.lineHeightMultiple = 1
+        return style
+    }()
 
     internal var registeredPrefixes = Set<String>()
     internal let border = CALayer()
@@ -98,6 +121,8 @@ public final class MessageAutocompleteController: MessageTextViewListener {
             location: selectedLocation,
             length: 0
         )
+
+        preserveTypingAttributes(for: textView)
     }
 
     internal func cancel() {
@@ -151,16 +176,16 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     }
 
     public func registerAutocomplete(prefix: String, attributes: [NSAttributedStringKey: Any]) {
-        registeredPrefixes.insert(prefix)
         autocompleteTextAttributes[prefix] = attributes
+        autocompleteTextAttributes[prefix]?[.paragraphStyle] = paragraphStyle
     }
 
     // MARK: Private API
     
     private func insertAutocomplete(_ autocomplete: String, at selection: Selection, for range: NSRange, keepPrefix: Bool) {
-        let defaultTypingTextAttributes = textView.typingAttributes.attributed
+        let defaultTypingTextAttributes = typingTextAttributes
 
-        var attrs = defaultTypingTextAttributes
+        var attrs = defaultTextAttributes
         attrs[NSAttributedAutocompleteKey] = true
 
         if let autoAttrs = autocompleteTextAttributes[selection.prefix] {
@@ -204,6 +229,15 @@ public final class MessageAutocompleteController: MessageTextViewListener {
             else { return }
         keyboardHeight = keyboardFrame.height
     }
+    
+    /// Ensures new text typed is not styled
+    ///
+    /// - Parameter textView: The `UITextView` to apply `typingTextAttributes` to
+    internal func preserveTypingAttributes(for textView: UITextView) {
+        var typingAttributes = [String: Any]()
+        typingTextAttributes.forEach { typingAttributes[$0.key.rawValue] = $0.value }
+        textView.typingAttributes = typingAttributes
+    }
 
     // MARK: MessageTextViewListener
 
@@ -211,7 +245,9 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         check()
     }
 
-    public func didChange(textView: MessageTextView) {}
+    public func didChange(textView: MessageTextView) {
+        preserveTypingAttributes(for: textView)
+    }
     
     public func willChangeRange(textView: MessageTextView, to range: NSRange) {
         
@@ -233,9 +269,11 @@ public final class MessageAutocompleteController: MessageTextViewListener {
                     // Only delete the first found range
                     defer { stop.pointee = true }
 
-                    let emptyString = NSAttributedString(string: "", attributes: textView.typingAttributes.attributed)
+                    let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
                     textView.attributedText = textView.attributedText.replacingCharacters(in: range, with: emptyString)
                     textView.selectedRange = NSRange(location: range.location, length: 0)
+                    self.textView.textViewDidChange(textView)
+                    self.preserveTypingAttributes(for: textView)
                 })
             }
         }

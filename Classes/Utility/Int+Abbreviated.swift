@@ -18,7 +18,7 @@ extension Int {
 
         // less than 1 million, abbreviate to thousands
         if self < 1_000_000 {
-            var n = Double(self)
+            var n = Double(self);
             n = Double( floor(n/100)/10 )
             return "\(n.description)k"
         }

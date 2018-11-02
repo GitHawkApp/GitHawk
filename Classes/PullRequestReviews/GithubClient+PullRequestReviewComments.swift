@@ -27,7 +27,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (Result<[ListDiffable]>) -> Void
+        completion: @escaping (Result<[ListDiffable]>) -> ()
         ) {
         let viewerUsername = userSession?.username
         let contentSizeCategory = UIContentSizeCategory.preferred
@@ -35,7 +35,7 @@ extension GithubClient {
         client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
             switch result {
             case .failure(let error):
-                Squawk.show(error: error)
+                Squawk.showGenericError()
                 completion(.error(error))
             case .success(let response):
                 struct Thread {
@@ -115,7 +115,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (Result<IssueCommentModel>) -> Void
+        completion: @escaping (Result<IssueCommentModel>) -> ()
         ) {
         let viewer = userSession?.username
         let contentSizeCategory = UIContentSizeCategory.preferred
@@ -144,7 +144,7 @@ extension GithubClient {
                     completion(.error(nil))
                 }
             case .failure(let error):
-                Squawk.show(error: error)
+                Squawk.showGenericError()
                 completion(.error(error))
             }
         }

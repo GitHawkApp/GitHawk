@@ -97,9 +97,9 @@ extension GithubClient {
         ) { result in
             switch result {
             case .success: break
-            case .failure(let error):
+            case .failure:
                 cache.set(value: previous)
-                Squawk.show(error: error)
+                Squawk.showGenericError()
             }
         }
     }

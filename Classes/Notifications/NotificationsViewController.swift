@@ -13,11 +13,13 @@ import Squawk
 
 final class NotificationsViewController: BaseListViewController2<Int>,
 BaseListViewController2DataSource,
+ForegroundHandlerDelegate,
 FlatCacheListener,
 TabNavRootViewControllerType,
 BaseListViewController2EmptyDataSource {
 
     private let modelController: NotificationModelController
+    private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
 
@@ -29,13 +31,11 @@ BaseListViewController2EmptyDataSource {
         self.modelController = modelController
         self.inboxType = inboxType
 
-        super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
-            backgroundThreshold: 5 * 60
-        )
-
+        super.init(emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""))
+        
         self.dataSource = self
         self.emptyDataSource = self
+        self.foreground.delegate = self
 
         switch inboxType {
         case .all: title = NSLocalizedString("All", comment: "")
@@ -101,9 +101,9 @@ BaseListViewController2EmptyDataSource {
                 ids.append($0.id)
             }
             rebuildAndUpdate(ids: ids, append: append, page: next, animated: animated)
-        case .error(let err):
+        case .error:
             error(animated: trueUnlessReduceMotionEnabled)
-            Squawk.show(error: err)
+            Squawk.showNetworkError()
         }
 
         // set after updating so self.models has already been changed
@@ -129,7 +129,7 @@ BaseListViewController2EmptyDataSource {
         let hasUnread = unread > 0
         navigationItem.rightBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unread)" : nil
-        BadgeNotifications.updateBadge(count: unread)
+        BadgeNotifications.update(count: unread)
     }
 
     @objc func onMore(sender: UIBarButtonItem) {
@@ -227,7 +227,7 @@ BaseListViewController2EmptyDataSource {
                 generator.notificationOccurred(.success)
 
                 // clear all badges
-                BadgeNotifications.updateBadge(count: 0)
+                BadgeNotifications.update(count: 0)
 
                 // change the spinner to the mark all item
                 // don't update state here; it is managed by `fetch`
@@ -282,21 +282,26 @@ BaseListViewController2EmptyDataSource {
         })
     }
 
+    // MARK: ForegroundHandlerDelegate
+
+    func didForeground(handler: ForegroundHandler) {
+        feed.refreshHead()
+    }
+
     // MARK: FlatCacheListener
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
         self.update(animated: trueUnlessReduceMotionEnabled)
         updateUnreadState()
     }
-
+    
     // MARK: TabNavRootViewControllerType
-
+    
     func didSingleTapTab() {
         feed.collectionView.scrollToTop(animated: true)
     }
-
+    
     func didDoubleTapTab() {
         didSingleTapTab()
     }
-
 }

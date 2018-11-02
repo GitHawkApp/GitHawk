@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 typealias AlertActionBlock = (UIAlertAction) -> Void
 
@@ -19,24 +20,6 @@ struct AlertAction {
     let rootViewController: UIViewController?
     let title: String?
     let style: UIAlertActionStyle
-
-    enum AlertShareType {
-        case shareUrl
-        case shareContent
-        case shareFilePath
-        case shareFileName
-        case `default`
-
-        var localizedString: String {
-            switch self {
-            case .shareUrl: return NSLocalizedString("Share URL", comment: "")
-            case .shareContent: return NSLocalizedString("Share Content", comment: "")
-            case .shareFilePath: return NSLocalizedString("Copy Path", comment: "")
-            case .shareFileName: return NSLocalizedString("Copy Name", comment: "")
-            case .default: return NSLocalizedString("Share", comment: "")
-            }
-        }
-    }
 
     // MARK: Init
 
@@ -54,24 +37,23 @@ struct AlertAction {
 
     func share(_ items: [Any],
                activities: [UIActivity]?,
-               type: AlertShareType = .default,
                buildActivityBlock: ((UIActivityViewController) -> Void)?) -> UIAlertAction {
-        return UIAlertAction(title: type.localizedString, style: .default) { _ in
+        return UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
             let activityController = UIActivityViewController(activityItems: items, applicationActivities: activities)
             buildActivityBlock?(activityController)
             self.rootViewController?.present(activityController, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
-    func view(client: GithubClient, repo: RepositoryDetails, icon: UIImage) -> UIAlertAction {
-        return UIAlertAction(title: repo.name, image: icon, style: .default) { _ in
+    func view(client: GithubClient, repo: RepositoryDetails) -> UIAlertAction {
+        return UIAlertAction(title: repo.name, style: .default) { _ in
             let repoViewController = RepositoryViewController(client: client, repo: repo)
             self.rootViewController?.show(repoViewController, sender: nil)
         }
     }
 
-    func view(owner: String, icon: UIImage) -> UIAlertAction {
-        return UIAlertAction(title: "@\(owner)", image: icon, style: .default) { _ in
+    func view(owner: String) -> UIAlertAction {
+        return UIAlertAction(title: "@\(owner)", style: .default) { _ in
             guard let url = URL(string: "https://github.com/\(owner)") else { return }
             self.rootViewController?.presentSafari(url: url)
         }

@@ -41,3 +41,4 @@ final class MilestoneSectionController: ListSwiftSectionController<MilestoneView
     }
 
 }
+

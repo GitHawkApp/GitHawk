@@ -64,10 +64,10 @@ final class UserAutocomplete: AutocompleteType {
         return prefix + results[index].login
     }
 
-    var highlightAttributes: [NSAttributedStringKey: Any]? {
+    var highlightAttributes: [NSAttributedStringKey : Any]? {
         return [
             .foregroundColor: Styles.Colors.Blue.medium.color,
-            .backgroundColor: Styles.Colors.Blue.medium.color.withAlphaComponent(0.1)
+            .backgroundColor: Styles.Colors.Blue.medium.color.withAlphaComponent(0.1),
         ]
     }
 

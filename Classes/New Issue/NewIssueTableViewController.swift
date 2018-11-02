@@ -121,7 +121,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     // MARK: Accessibility
 
     override func accessibilityPerformMagicTap() -> Bool {
-        guard titleText != nil else { return false }
+        guard let _ = titleText else { return false }
         onSend()
         return true
     }
@@ -167,8 +167,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
                 strongSelf.dismiss(animated: trueUnlessReduceMotionEnabled, completion: {
                     delegate?.didDismissAfterCreatingIssue(model: model)
                 })
-            case .failure(let error):
-                Squawk.show(error: error)
+            case .failure:
+                Squawk.showGenericError()
             }
         }
     }
@@ -198,10 +198,10 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             supportsImageUpload: true,
             showSendButton: false
         )
-
+        
         textActionsController.configure(client: client, textView: bodyField, actions: actions)
         textActionsController.viewController = self
-
+        
         bodyField.inputAccessoryView = actions
     }
 

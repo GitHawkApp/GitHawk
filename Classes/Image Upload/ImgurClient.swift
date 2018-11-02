@@ -14,13 +14,13 @@ final class ImgurClient {
     enum ImgurError: Error {
         // missingLink: - Received a valid response, but no link was available in the payload
         case missingLink
-
+        
         // endpointError: - We got an error back from Imgur, where the parameter is their response
         case endpointError(String)
-
+        
         // malformedResponse: - We got a response back from Imgur, but it did not contain values we expected
         case malformedResponse
-
+        
         // rateLimitExceeded: - We are too close to the Imgur rate limit, so no images are being permitted
         case rateLimitExceeded
     }
@@ -56,7 +56,7 @@ final class ImgurClient {
                 completion(ImgurError.malformedResponse)
                 return
             }
-
+            
             if let error = data["error"] as? String {
                 completion(ImgurError.endpointError(error))
                 return
@@ -73,7 +73,7 @@ final class ImgurClient {
                 completion(ImgurError.rateLimitExceeded)
                 return
             }
-
+            
             completion(nil)
         }
     }

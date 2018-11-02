@@ -19,13 +19,15 @@ struct GithubClient {
     let cache = FlatCache()
     let bookmarksStore: BookmarkStore?
     let client: Client
-    let badge: BadgeNotifications
 
-    init(userSession: GitHubUserSession? = nil) {
+    init(
+        apollo: ApolloClient,
+        networker: Alamofire.SessionManager,
+        userSession: GitHubUserSession? = nil
+        ) {
         self.userSession = userSession
 
-        self.client = Client.make(userSession: userSession)
-        self.badge = BadgeNotifications(client: self.client)
+        self.client = Client(httpPerformer: networker, apollo: apollo, token: userSession?.token)
 
         if let token = userSession?.token {
             self.bookmarksStore = BookmarkStore(token: token)

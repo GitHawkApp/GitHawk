@@ -26,7 +26,7 @@ func CodeBlockElement(
             string: trimmedText,
             attributes: [
                 .foregroundColor: Styles.Colors.Gray.dark.color,
-                .font: Styles.Text.code.font(contentSizeCategory: contentSizeCategory)
+                .font: Styles.Text.code.font(contentSizeCategory:contentSizeCategory)
             ]
         )
     }

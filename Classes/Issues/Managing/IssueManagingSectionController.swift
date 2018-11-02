@@ -19,37 +19,37 @@ ContextMenuDelegate {
     private enum Action {
         static let labels = IssueManagingActionModel(
             key: "tag",
-            label: Constants.Strings.labels,
+            label: NSLocalizedString("Labels", comment: ""),
             imageName: "tag",
             color: "3f88f7".color
         )
         static let milestone = IssueManagingActionModel(
             key: "milestone",
-            label: Constants.Strings.milestone,
+            label: NSLocalizedString("Milestone", comment: ""),
             imageName: "milestone",
             color: "6847ba".color
         )
         static let assignees = IssueManagingActionModel(
             key: "person",
-            label: Constants.Strings.assignees,
+            label: NSLocalizedString("Assignees", comment: ""),
             imageName: "person",
             color: "e77230".color
         )
         static let reviewers = IssueManagingActionModel(
             key: "reviewer",
-            label: Constants.Strings.reviewers,
+            label: NSLocalizedString("Reviewers", comment: ""),
             imageName: "reviewer",
             color: "50a451".color
         )
         static let lock = IssueManagingActionModel(
             key: "lock", // share key so lock/unlock just updates cell
-            label: Constants.Strings.lock,
+            label: NSLocalizedString("Lock", comment: ""),
             imageName: "lock",
             color: Styles.Colors.Gray.dark.color
         )
         static let unlock = IssueManagingActionModel(
             key: "lock", // share key so lock/unlock just updates cell
-            label: Constants.Strings.unlock,
+            label: NSLocalizedString("Unlock", comment: ""),
             imageName: "key",
             color: Styles.Colors.Gray.dark.color
         )
@@ -201,7 +201,7 @@ ContextMenuDelegate {
             models += [
                 Action.labels,
                 Action.milestone,
-                Action.assignees
+                Action.assignees,
             ]
             if object.pullRequest {
                 models.append(Action.reviewers)
@@ -255,7 +255,7 @@ ContextMenuDelegate {
         viewModel: Any
         ) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
-
+        
         guard updating == false,
             let viewModel = viewModel as? ListDiffable,
             let cell = collectionContext?.cellForItem(at: index, sectionController: self)

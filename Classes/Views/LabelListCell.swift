@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 
 final class LabelListCell: UICollectionViewCell, ListBindable {
-
+    
     static let reuse = "cell"
     static let font = Styles.Text.smallTitle.preferredFont
 
@@ -19,25 +19,25 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         ) -> CGSize {
         return string.size(font: font, xPadding: Styles.Sizes.labelTextPadding, yPadding: 3)
     }
-
+    
     private let nameLabel = UILabel()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
-
+        
         layer.cornerRadius = Styles.Sizes.labelCornerRadius
         contentView.layer.cornerRadius = Styles.Sizes.labelCornerRadius
-
+        
         nameLabel.font = LabelListCell.font
         contentView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.center.equalTo(contentView)
         }
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,9 +51,9 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         nameLabel.text = viewModel.name
         nameLabel.textColor = color.textOverlayColor
     }
-
+    
     // MARK: Public API
-
+    
     func configure(label: RepositoryLabel) {
         let color = UIColor.fromHex(label.color)
         backgroundColor = color
@@ -69,5 +69,5 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         }
         set { }
     }
-
+    
 }

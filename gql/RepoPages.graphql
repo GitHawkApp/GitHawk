@@ -16,20 +16,49 @@ query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {
         title
         number
         pullRequestState: state
-        commits(last: 1) {
-          nodes {
-            commit {
-              status {
-                state
-              }
-            }
-          }
-        }
       }
     }
     pageInfo {
       hasNextPage
       endCursor
+    }
+  }
+}
+
+query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {
+  repository(owner: $owner, name: $name) {
+    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {
+      nodes {
+        ...repoEventFields
+        ...nodeFields
+        ...labelableFields
+        title
+        number
+        state
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+
+query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $page_size: Int!) {
+  repository(owner: $owner, name: $name) {
+    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {
+      nodes {
+        ...repoEventFields
+        ...nodeFields
+        ...labelableFields
+        title
+        number
+        state
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 }

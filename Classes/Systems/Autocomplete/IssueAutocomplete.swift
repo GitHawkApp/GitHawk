@@ -56,11 +56,11 @@ final class IssueAutocomplete: AutocompleteType {
 
         client.query(
             IssueAutocompleteQuery(query: "repo:\(owner)/\(repo) \(word)", page_size: 20),
-            result: { $0 },
-            completion: { [weak self] result in
+            result: { $0 }
+        ) { [weak self] result in
             switch result {
-            case .failure(let error):
-                Squawk.show(error: error)
+            case .failure:
+                Squawk.showGenericError()
                 completion(false)
             case .success(let data):
                 guard let strongSelf = self else { return }
@@ -80,13 +80,13 @@ final class IssueAutocomplete: AutocompleteType {
                 }
                 completion(strongSelf.results.count > 0)
             }
-        })
+        }
     }
 
     func accept(index: Int) -> String? {
         return prefix + "\(results[index].number)"
     }
 
-    var highlightAttributes: [NSAttributedStringKey: Any]? { return nil }
+    var highlightAttributes: [NSAttributedStringKey : Any]? { return nil }
 
 }

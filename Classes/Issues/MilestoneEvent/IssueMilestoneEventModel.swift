@@ -88,3 +88,4 @@ final class IssueMilestoneEventModel: ListDiffable {
     }
 
 }
+

@@ -9,6 +9,7 @@
 import Foundation
 
 public protocol GitHubSessionListener: class {
+    func didReceiveRedirect(manager: GitHubSessionManager, code: String)
     func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool)
     func didLogout(manager: GitHubSessionManager)
 }
@@ -21,10 +22,10 @@ public class GitHubSessionManager: NSObject {
     private var listeners = [ListenerWrapper]()
 
     private enum Keys {
-        enum V1 { static let session = "com.github.sessionmanager.session.1" }
-        enum V2 { static let session = "com.github.sessionmanager.session.2" }
-        enum V3 { static let session = "com.github.sessionmanager.shared.session" }
-        static let latest = V3.session
+        enum v1 { static let session = "com.github.sessionmanager.session.1" }
+        enum v2 { static let session = "com.github.sessionmanager.session.2" }
+        enum v3 { static let session = "com.github.sessionmanager.shared.session" }
+        static let latest = v3.session
     }
 
     private let _userSessions = NSMutableOrderedSet()
@@ -40,21 +41,21 @@ public class GitHubSessionManager: NSObject {
         // if a migration occurs, immediately save to disk
         var migrated = false
 
-        if let v1data = nonSharedDefaults.object(forKey: Keys.V1.session) as? Data,
+        if let v1data = nonSharedDefaults.object(forKey: Keys.v1.session) as? Data,
             let session = NSKeyedUnarchiver.unarchiveObject(with: v1data) as? GitHubUserSession {
             _userSessions.add(session)
 
             // clear the outdated session format
-            nonSharedDefaults.removeObject(forKey: Keys.V1.session)
+            nonSharedDefaults.removeObject(forKey: Keys.v1.session)
             migrated = true
-        } else if let v2data = nonSharedDefaults.object(forKey: Keys.V2.session) as? Data,
+        } else if let v2data = nonSharedDefaults.object(forKey: Keys.v2.session) as? Data,
             let session = NSKeyedUnarchiver.unarchiveObject(with: v2data) as? NSOrderedSet {
             _userSessions.union(session)
 
             // clear the outdated session format
-            nonSharedDefaults.removeObject(forKey: Keys.V2.session)
+            nonSharedDefaults.removeObject(forKey: Keys.v2.session)
             migrated = true
-        } else if let v3data = defaults.object(forKey: Keys.V3.session) as? Data,
+        } else if let v3data = defaults.object(forKey: Keys.v3.session) as? Data,
             let session = NSKeyedUnarchiver.unarchiveObject(with: v3data) as? NSOrderedSet {
             _userSessions.union(session)
         }
@@ -107,6 +108,16 @@ public class GitHubSessionManager: NSObject {
             defaults.set(NSKeyedArchiver.archivedData(withRootObject: _userSessions), forKey: Keys.latest)
         } else {
             defaults.removeObject(forKey: Keys.latest)
+        }
+    }
+
+    public func receivedCodeRedirect(url: URL) {
+        guard let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
+            let index = items.index(where: { $0.name == "code" }),
+            let code = items[index].value
+            else { return }
+        for wrapper in listeners {
+            wrapper.listener?.didReceiveRedirect(manager: self, code: code)
         }
     }
 

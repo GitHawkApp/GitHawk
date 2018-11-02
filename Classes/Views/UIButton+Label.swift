@@ -10,7 +10,7 @@ import UIKit
 
 extension UIButton {
 
-    enum IssueState {
+    enum State {
         case merged
         case closed
         case open
@@ -36,7 +36,7 @@ extension UIButton {
 
     }
 
-    func config(pullRequest: Bool, state: IssueState) {
+    func config(pullRequest: Bool, state: State) {
 
         let prName = "git-pull-request-small"
 

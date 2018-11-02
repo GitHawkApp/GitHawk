@@ -15,33 +15,26 @@ enum RepositoryIssuesType {
 }
 
 class RepositoryIssuesViewController: BaseListViewController<NSString>,
-    BaseListViewControllerDataSource,
+BaseListViewControllerDataSource,
 SearchBarSectionControllerDelegate {
 
     private var models = [ListDiffable]()
-    private let owner: String
-    private let repo: String
+    private let repo: RepositoryDetails
     private let client: RepositoryClient
     private let type: RepositoryIssuesType
     private let searchKey: ListDiffable = "searchKey" as ListDiffable
     private let debouncer = Debouncer()
     private var previousSearchString = "is:open "
-    private var label: String?
 
-    init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType, label: String? = nil) {
-        self.owner = owner
+    init(client: GithubClient, repo: RepositoryDetails, type: RepositoryIssuesType) {
         self.repo = repo
-        self.client = RepositoryClient(githubClient: client, owner: owner, name: repo)
+        self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
         self.type = type
-        self.label = label
-        if let label = label {
-            previousSearchString += "label:\"\(label)\" "
-        }
 
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: "")
         )
-
+        
         self.dataSource = self
 
         switch type {
@@ -59,12 +52,9 @@ SearchBarSectionControllerDelegate {
 
         makeBackBarItemEmpty()
 
-        let presentingInTabMan = label == nil
-        if presentingInTabMan {
-            // set the frame in -viewDidLoad is required when working with TabMan
-            feed.collectionView.frame = view.bounds
-            feed.collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        // set the frame in -viewDidLoad is required when working with TabMan
+        feed.collectionView.frame = view.bounds
+        feed.collectionView.contentInsetAdjustmentBehavior = .never
     }
 
     // MARK: Overrides
@@ -115,7 +105,7 @@ SearchBarSectionControllerDelegate {
                 query: previousSearchString
             )
         }
-        return RepositorySummarySectionController(client: client.githubClient, owner: owner, repo: repo)
+        return RepositorySummarySectionController(client: client.githubClient, repo: repo)
     }
 
     func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
@@ -139,7 +129,7 @@ SearchBarSectionControllerDelegate {
         case .issues: typeQuery = "is:issue"
         case .pullRequests: typeQuery = "is:pr"
         }
-        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
+        return "repo:\(repo.owner)/\(repo.name) \(typeQuery) \(previousSearchString)"
     }
 
 }

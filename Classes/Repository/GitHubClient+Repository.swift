@@ -19,7 +19,7 @@ extension GithubClient {
         ) {
         let query = RepoFilesQuery(owner: owner, name: repo, branchAndPath: "\(branch):\(path)")
 
-        client.query(query, result: { $0.repository?.object?.asTree?.entries }, completion: { result in
+        client.query(query, result: { $0.repository?.object?.asTree?.entries }) { result in
             switch result {
             case .failure(let error):
                 completion(.error(error))
@@ -43,7 +43,7 @@ extension GithubClient {
                 blobs.sort { $0.name < $1.name }
                 completion(.success(trees + blobs))
             }
-        })
+        }
     }
 
     // different result type so handling non-text is treated differently
@@ -61,7 +61,7 @@ extension GithubClient {
         completion: @escaping (FileResult) -> Void
         ) {
         let query = RepoFileQuery(owner: owner, name: repo, branchAndPath: "\(branch):\(path)")
-        client.query(query, result: { $0.repository?.object?.asBlob }, completion: { result in
+        client.query(query, result: { $0.repository?.object?.asBlob }) { result in
             switch result {
             case .failure(let error):
                 completion(.error(error))
@@ -72,7 +72,7 @@ extension GithubClient {
                     completion(.nonUTF8)
                 }
             }
-        })
+        }
     }
 
 }

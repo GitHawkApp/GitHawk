@@ -32,7 +32,7 @@ final class BookmarkSectionController: ListGenericSectionController<BookmarkView
 
         return CGSize(
             width: width,
-            height: max(object.text.viewSize(in: width).height, Styles.Sizes.tableCellHeight + Styles.Sizes.rowSpacing * 2)
+            height: max(object.text.viewSize(in: width).height, Styles.Sizes.tableCellHeightLarge)
         )
     }
 

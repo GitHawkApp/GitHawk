@@ -51,15 +51,12 @@ final class NotificationModelController {
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
-        let badge = githubClient.badge
         let contentSizeCategory = UIContentSizeCategory.preferred
         // TODO move handling + parsing to a single method?
         if let repo = repo {
             githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
                 switch result {
                 case .success(let response):
-                    badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
-
                     CreateNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,
@@ -75,8 +72,6 @@ final class NotificationModelController {
             githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
                 switch result {
                 case .success(let response):
-                    badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
-
                     CreateNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,
@@ -101,7 +96,7 @@ final class NotificationModelController {
             return
         }
 
-        let content = "state comments{totalCount} viewerSubscription"
+        let content = "state comments{totalCount}"
         let notificationQueries: String = notifications.compactMap {
             guard let alias = $0.stateAlias else { return nil }
             return """
@@ -124,12 +119,10 @@ final class NotificationModelController {
                         let stateString = issueOrPullRequest["state"] as? String,
                         let state = NotificationViewModel.State(rawValue: stateString),
                         let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
-                        let commentCount = commentsJSON["totalCount"] as? Int,
-                        let subscription = issueOrPullRequest["viewerSubscription"] as? String {
+                        let commentCount = commentsJSON["totalCount"] as? Int {
                         var newNotification = notification
                         newNotification.state = state
                         newNotification.comments = commentCount
-                        newNotification.watching = subscription != "IGNORED"
                         updatedNotifications.append(newNotification)
                     } else {
                         updatedNotifications.append(notification)
@@ -188,7 +181,7 @@ final class NotificationModelController {
         model.watching = !notification.watching
         cache.set(value: model)
 
-        githubClient.client.send(V3SubscribeThreadRequest(id: model.v3id, ignore: !model.watching)) { result in
+        githubClient.client.send(V3SubscribeThreadRequest(id: model.v3id, ignore: model.watching)) { result in
             switch result {
             case .success:
                 Haptic.triggerSelection()

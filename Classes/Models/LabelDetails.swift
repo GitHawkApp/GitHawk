@@ -9,15 +9,15 @@
 import Foundation
 
 final class LabelDetails {
-
+    
     let owner: String
     let repo: String
     let label: String
-
+    
     init(owner: String, repo: String, label: String) {
         self.owner = owner
         self.repo = repo
         self.label = label
     }
-
+    
 }

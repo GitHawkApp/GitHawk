@@ -22,7 +22,6 @@ public final class MessageView: UIView, MessageTextViewListener {
     internal var leftButtonInset: CGFloat = 0
     internal var rightButtonInset: CGFloat = 0
     internal var ignoreLineHeight = false
-    internal var suppressKVO = false
     
     public enum ButtonPosition {
         case left
@@ -309,10 +308,7 @@ public final class MessageView: UIView, MessageTextViewListener {
             width: safeBounds.width - leftButtonMaxX - rightButtonSize.width - rightButtonInset,
             height: textViewHeight
         )
-
-        suppressKVO = true
         textView.frame = textViewFrame
-        suppressKVO = false
 
         // adjust by bottom offset so content is flush w/ text view
         let rightButtonFrame = CGRect(
@@ -332,7 +328,7 @@ public final class MessageView: UIView, MessageTextViewListener {
     }
 
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if suppressKVO == false, keyPath == UITextViewContentSizeKeyPath {
+        if keyPath == UITextViewContentSizeKeyPath {
             textViewContentSizeDidChange()
         }
     }

@@ -14,17 +14,17 @@ internal func processResponse<T: Request>(
     response: HTTPURLResponse? = nil,
     error: Error? = nil
     ) -> Result<T.ResponseType> {
-    guard error == nil else {
-        return .failure(error)
-    }
     guard let input = input as? T.ResponseType.InputType else {
         return .failure(ClientError.mismatchedInput)
+    }
+    guard error == nil else {
+        return .failure(ClientError.network(error))
     }
     do {
         let output = try T.ResponseType(input: input, response: response)
         return .success(output)
     } catch {
-        return .failure(error)
+        return .failure(ClientError.outputNil(error))
     }
 }
 

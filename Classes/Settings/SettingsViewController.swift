@@ -7,28 +7,30 @@
 //
 
 import UIKit
+import SafariServices
 import GitHubAPI
 import GitHubSession
 import Squawk
 
 final class SettingsViewController: UITableViewController,
-NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
+NewIssueTableViewControllerDelegate {
 
     // must be injected
     var sessionManager: GitHubSessionManager!
+    weak var rootNavigationManager: RootNavigationManager?
+
     var client: GithubClient!
 
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
     @IBOutlet weak var githubStatusCell: StyledTableCell!
     @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
-    @IBOutlet weak var tryTestFlightBetaCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var setDefaultReaction: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
-    @IBOutlet weak var badgeSwitch: UISwitch!
-    @IBOutlet weak var badgeSettingsButton: UIButton!
+    @IBOutlet weak var backgroundFetchSwitch: UISwitch!
+    @IBOutlet weak var openSettingsButton: UIButton!
     @IBOutlet weak var badgeCell: UITableViewCell!
     @IBOutlet weak var markReadSwitch: UISwitch!
     @IBOutlet weak var accountsCell: StyledTableCell!
@@ -36,18 +38,14 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     @IBOutlet weak var apiStatusView: UIView!
     @IBOutlet weak var signatureSwitch: UISwitch!
     @IBOutlet weak var defaultReactionLabel: UILabel!
-    @IBOutlet weak var pushSwitch: UISwitch!
-    @IBOutlet weak var pushCell: UITableViewCell!
-    @IBOutlet weak var pushSettingsButton: UIButton!
-
-    override func viewDidLoad() {
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
         signatureSwitch.isOn = Signature.enabled
-        pushSettingsButton.accessibilityLabel = NSLocalizedString("How we send push notifications in GitHawk", comment: "")
 
         updateBadge()
 
@@ -61,8 +59,9 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        updateDefaultReaction()
+      
+        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
+            ?? NSLocalizedString("Off", comment: "")
 
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
@@ -118,24 +117,17 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             onSetDefaultReaction()
         } else if cell === signOutCell {
             onSignOut()
-        } else if cell === tryTestFlightBetaCell {
-            onTryTestFlightBeta()
         }
     }
 
     // MARK: Private API
-
-    func updateDefaultReaction() {
-        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
-            ?? NSLocalizedString("Off", comment: "")
-    }
 
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
             else { fatalError("Should always create GitHub issue URL") }
         // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
         UIApplication.shared.open(url, options: [:])
-
+        
     }
 
     func onAccounts() {
@@ -146,13 +138,13 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             self.navigationController?.showDetailViewController(navigationController, sender: self)
         }
     }
-
+    
     func onGitHubStatus() {
         guard let url = URL(string: "https://status.github.com/messages")
             else { fatalError("Should always create GitHub Status URL") }
         presentSafari(url: url)
     }
-
+  
     func onReviewOnAppStore() {
         guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1252320249?action=write-review")
             else { fatalError("Should always be valid app store URL") }
@@ -163,7 +155,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
 
     func onReportBug() {
         guard let viewController = NewIssueTableViewController.create(
-                client: GithubClient(userSession: sessionManager.focusedUserSession),
+                client: newGithubClient(userSession: sessionManager.focusedUserSession),
                 owner: "GitHawkApp",
                 repo: "GitHawk",
                 signature: .bugReport
@@ -190,33 +182,16 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             hasIssuesEnabled: true
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navController = UINavigationController(rootViewController: repoViewController)
-        showDetailViewController(navController, sender: self)
+        navigationController?.showDetailViewController(repoViewController, sender: self)
     }
-
+  
     func onSetDefaultReaction() {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "DefaultReactionDetailController") as? DefaultReactionDetailController else {
-            fatalError("Cannot instantiate DefaultReactionDetailController instance")
-        }
-        viewController.delegate = self
-        let navController = UINavigationController(rootViewController: viewController)
-        showDetailViewController(navController, sender: self)
-    }
-
-    func onTryTestFlightBeta() {
-        #if TESTFLIGHT
-        Squawk.showAlreadyOnBeta()
-        #else
-        guard let url = URL(string: "https://testflight.apple.com/join/QIVXLkkn")
-            else { fatalError("Failed to decode testflight beta URL") }
-        presentSafari(url: url)
-        #endif
+        //showDefaultReactionMenu()
     }
 
     func onSignOut() {
         let title = NSLocalizedString("Are you sure?", comment: "")
-        let message = NSLocalizedString("All of your accounts will be signed out, and their bookmarks will be removed. Do you want to continue?", comment: "")
+        let message = NSLocalizedString("All of your accounts will be signed out. Do you want to continue?", comment: "")
         let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
         alert.addActions([
             AlertAction.cancel(),
@@ -236,43 +211,33 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     }
 
     @objc func updateBadge() {
-        BadgeNotifications.check { result in
-            let showSwitches: Bool
-            let pushEnabled: Bool
-            let badgeEnabled: Bool
-
-            switch result {
-            case .error:
-                showSwitches = false
-                pushEnabled = false
-                badgeEnabled = false
-            case .success(let badge, let push):
-                showSwitches = true
-                pushEnabled = push
-                badgeEnabled = badge
+        BadgeNotifications.check { state in
+            let authorized: Bool
+            let enabled: Bool
+            switch state {
+            case .initial:
+                // throwing switch will prompt
+                authorized = true
+                enabled = false
+            case .denied:
+                authorized = false
+                enabled = false
+            case .disabled:
+                authorized = true
+                enabled = false
+            case .enabled:
+                authorized = true
+                enabled = true
             }
-
-            self.badgeCell.accessoryType = showSwitches ? .none : .disclosureIndicator
-            self.badgeSettingsButton.isHidden = showSwitches
-            self.badgeSwitch.isHidden = !showSwitches
-            self.badgeSwitch.isOn = badgeEnabled
-
-            self.pushCell.accessoryType = showSwitches ? .none : .disclosureIndicator
-            self.pushSettingsButton.isHidden = showSwitches
-            self.pushSwitch.isHidden = !showSwitches
-            self.pushSwitch.isOn = pushEnabled
+            self.badgeCell.accessoryType = authorized ? .none : .disclosureIndicator
+            self.openSettingsButton.isHidden = authorized
+            self.backgroundFetchSwitch.isHidden = !authorized
+            self.backgroundFetchSwitch.isOn = enabled
         }
     }
 
-    @IBAction func onBadgeChanged() {
-        BadgeNotifications.isBadgeEnabled = badgeSwitch.isOn
-        BadgeNotifications.configure { _ in
-            self.updateBadge()
-        }
-    }
-
-    @IBAction func onPushChanged() {
-        BadgeNotifications.isLocalNotificationEnabled = pushSwitch.isOn
+    @IBAction func onBackgroundFetchChanged() {
+        BadgeNotifications.isEnabled = backgroundFetchSwitch.isOn
         BadgeNotifications.configure { _ in
             self.updateBadge()
         }
@@ -291,21 +256,11 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
         Signature.enabled = signatureSwitch.isOn
     }
 
-    @IBAction func onPushNotificationsInfo(_ sender: Any) {
-        showContextualMenu(PushNotificationsDisclaimerViewController())
-    }
-
     // MARK: NewIssueTableViewControllerDelegate
 
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
         let issuesViewController = IssuesViewController(client: client, model: model)
         let navigation = UINavigationController(rootViewController: issuesViewController)
         showDetailViewController(navigation, sender: nil)
-    }
-
-    // MARK: DefaultReactionDelegate
-
-    func didUpdateDefaultReaction() {
-        updateDefaultReaction()
     }
 }

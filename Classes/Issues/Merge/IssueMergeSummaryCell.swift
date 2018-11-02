@@ -74,5 +74,5 @@ final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
         imageView.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
         accessibilityLabel = .localizedStringWithFormat("%@. (state: %@)", viewModel.title, viewModel.state.description)
     }
-
+    
 }

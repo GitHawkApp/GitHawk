@@ -47,7 +47,7 @@ final class AddCommentClient {
         let mutation = AddCommentMutation(subject_id: subjectId, body: bodyWithSignature)
         client.client.mutate(mutation, result: { data in
             data.addComment?.commentEdge.node
-        }, completion: { result in
+        }) { result in
             switch result {
             case .success(let commentNode):
                 let fragments = commentNode.fragments
@@ -61,13 +61,13 @@ final class AddCommentClient {
                         viewerCanDelete: fragments.deletableFields.viewerCanDelete
                     )
                 }
-            case .failure(let error):
+            case .failure:
                 for listener in self.listeners {
                     listener.listener?.didFailSendingComment(client: self, subjectId: subjectId, body: body)
                 }
-                Squawk.show(error: error)
+                Squawk.showGenericError()
             }
-        })
+        }
     }
 
 }

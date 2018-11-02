@@ -36,7 +36,7 @@ class ClippedContainerViewController: UIViewController {
         view.layer.shadowColor = UIColor.black.cgColor
         view.backgroundColor = options.containerStyle.backgroundColor
 
-        if options.containerStyle.motionEffect && UIAccessibility.isReduceMotionEnabled == false {
+        if options.containerStyle.motionEffect && UIAccessibilityIsReduceMotionEnabled() == false {
             let amount = 12
             let tiltX = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
             tiltX.minimumRelativeValue = -amount
@@ -68,9 +68,9 @@ class ClippedContainerViewController: UIViewController {
         navigationBar.setBackgroundImage(image, for: .any, barMetrics: .default)
         navigationBar.shadowImage = image
 
-        addChild(containedViewController)
+        addChildViewController(containedViewController)
         view.addSubview(containedViewController.view)
-        containedViewController.didMove(toParent: self)
+        containedViewController.didMove(toParentViewController: self)
 
         preferredContentSize = containedViewController.preferredContentSize
     }

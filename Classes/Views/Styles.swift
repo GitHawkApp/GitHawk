@@ -8,7 +8,6 @@
 
 import UIKit
 import StyledTextKit
-import DropdownTitleView
 
 enum Styles {
 
@@ -68,8 +67,6 @@ enum Styles {
         static let code = TextStyle(font: .name("Courier"), size: 16)
         static let codeBold = TextStyle(font: .name("Courier-Bold"), size: 16)
         static let secondaryCode = TextStyle(font: .name("Courier"), size: 13)
-        static let secondaryCodeBold = TextStyle(font: .name("Courier-Bold"), size: 13)
-        static let finePrint = TextStyle(size: 12)
 
         static let h1 = TextStyle(font: .system(.bold), size: 24)
         static let h2 = TextStyle(font: .system(.bold), size: 20)
@@ -124,13 +121,6 @@ enum Styles {
         UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
         UINavigationBar.appearance().titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color]
-        UISwitch.appearance().onTintColor = Styles.Colors.Green.medium.color
-        UISearchBar.appearance().tintColor = Styles.Colors.Blue.medium.color
-        DropdownTitleView.appearance().chevronTintColor = Styles.Colors.Gray.medium.color
-        DropdownTitleView.appearance().titleColor = Styles.Colors.Gray.dark.color
-        DropdownTitleView.appearance().subtitleColor = Styles.Colors.Gray.light.color
-        DropdownTitleView.appearance().titleFont = Styles.Text.bodyBold.preferredFont
-        DropdownTitleView.appearance().subtitleFont = Styles.Text.secondaryBold.preferredFont
     }
 
 }

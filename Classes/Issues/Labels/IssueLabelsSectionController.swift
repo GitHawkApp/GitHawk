@@ -9,22 +9,16 @@
 import UIKit
 import IGListKit
 
-protocol IssueLabelTapSectionControllerDelegate: class {
-    func didTapIssueLabel(owner: String, repo: String, label: String)
-}
-
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
-    ListBindingSectionControllerDataSource,
+ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate {
 
     private let issue: IssueDetailsModel
     private var sizeCache = [String: CGSize]()
     private let lockedModel = Constants.Strings.locked
-    private weak var tapDelegate: IssueLabelTapSectionControllerDelegate?
 
-    init(issue: IssueDetailsModel, tapDelegate: IssueLabelTapSectionControllerDelegate) {
+    init(issue: IssueDetailsModel) {
         self.issue = issue
-        self.tapDelegate = tapDelegate
         super.init()
         minimumInteritemSpacing = Styles.Sizes.labelSpacing
         minimumLineSpacing = Styles.Sizes.labelSpacing
@@ -103,7 +97,8 @@ ListBindingSectionControllerSelectionDelegate {
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         guard let viewModel = viewModel as? RepositoryLabel else { return }
-        tapDelegate?.didTapIssueLabel(owner: issue.owner, repo: issue.repo, label: viewModel.name)
+        viewController?.presentLabels(owner: issue.owner, repo: issue.repo, label: viewModel.name)
     }
 
 }
+

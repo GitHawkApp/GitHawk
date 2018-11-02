@@ -33,7 +33,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
         imageView.accessibilityIgnoresInvertColors = true
-
+        
         imageView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(IssueCommentDetailCell.onTapAvatar))

@@ -22,8 +22,8 @@ def testing_pods
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Tabman', '~> 1.8'
-  pod 'ImageAlertAction'
-  pod 'FMDB'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database' 
 
   # prerelease pods
   pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'
@@ -34,8 +34,6 @@ def testing_pods
   pod 'ContextMenu', :git => 'https://github.com/GitHawkApp/ContextMenu.git', :branch => 'master'
   pod 'cmark-gfm-swift', :git => 'https://github.com/GitHawkApp/cmark-gfm-swift.git', :branch => 'master'
   pod 'Squawk', :git => 'https://github.com/GitHawkApp/Squawk.git', :branch => 'master'
-  pod 'GitHawkRoutes', :git => 'https://github.com/GitHawkApp/GitHawkRoutes.git', :branch => 'master'
-  pod 'DropdownTitleView', :git => 'https://github.com/GitHawkApp/DropdownTitleView.git', :branch => 'master'
 
   # debugging pods
   pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
@@ -76,12 +74,4 @@ end
 
 post_install do |installer|
   system("sh tools/generateAcknowledgements.sh")
-  
-  installer.pods_project.targets.each do |target|  
-    target.build_configurations.each do |config|  
-        if config.build_settings['SDKROOT'] == 'watchos'  
-          config.build_settings['WATCHOS_DEPLOYMENT_TARGET'] = '4.2'  
-        end  
-    end  
-end  
 end

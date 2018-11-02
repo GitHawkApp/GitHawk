@@ -34,7 +34,7 @@ private extension TextElement {
     func build(
         _ builder: StyledTextBuilder,
         options: CMarkOptions,
-        context: CMarkContext = CMarkContext()
+        context: CMarkContext
         ) -> StyledTextBuilder {
         builder.save()
         defer { builder.restore() }
@@ -104,7 +104,7 @@ private extension Sequence where Iterator.Element == TextElement {
     func build(
         _ builder: StyledTextBuilder,
         options: CMarkOptions,
-        context: CMarkContext = CMarkContext()
+        context: CMarkContext
         ) -> StyledTextBuilder {
         forEach { $0.build(builder, options: options, context: context) }
         return builder
@@ -116,7 +116,7 @@ private extension ListElement {
     func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
         switch self {
         case .text(let text):
-            text.build(builder, options: options)
+            text.build(builder, options: options, context: CMarkContext())
         case .list(let children, let type, let level):
             children.build(builder, options: options, type: type, level: level)
         }
@@ -139,7 +139,7 @@ private extension Array where Iterator.Element == TextLine {
     @discardableResult
     func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
         forEach({ el in
-            el.build(builder, options: options)
+            el.build(builder, options: options, context: CMarkContext())
         }, joined: { _ in
             builder.add(text: "\n")
         })
@@ -153,15 +153,21 @@ private extension Array where Iterator.Element == [ListElement] {
         _ builder: StyledTextBuilder,
         options: CMarkOptions,
         type: ListType,
-        level: Int = 0
+        level: Int
         ) -> StyledTextBuilder {
         builder.save()
         defer { builder.restore() }
 
-        // unicode character to newline without creating a new paragraph to avoid NSParagraphStyle spacing
-        let newline = "\u{2028}"
+        let paragraphStyle = ((builder.tipAttributes?[.paragraphStyle] as? NSParagraphStyle)?.mutableCopy() as? NSMutableParagraphStyle)
+            ?? NSMutableParagraphStyle()
+        paragraphStyle.firstLineHeadIndent = CGFloat(level) * 18
 
         for (i, c) in enumerated() {
+            // tighten spacing for the list after the first paragraph
+            if i > 0 || level > 0 {
+                paragraphStyle.paragraphSpacingBefore = 2
+            }
+
             let tick: String
             switch type {
             case .ordered:
@@ -171,22 +177,17 @@ private extension Array where Iterator.Element == [ListElement] {
                     ? Constants.Strings.bullet
                     : Constants.Strings.bulletHollow
             }
-
-            var spaces = ""
-            for _ in 0..<level {
-                spaces += "  "
-            }
-            builder.add(text: "\(spaces)\(tick) ")
+            builder.add(text: "\(tick) ", attributes: [.paragraphStyle: paragraphStyle])
 
             c.forEach({ cc in
                 cc.build(builder, options: options)
             }, joined: { _ in
-                builder.add(text: newline)
+                builder.add(text: "\n")
             })
 
             // never append whitespace on the last element
             if i != count - 1 {
-                builder.add(text: newline)
+                builder.add(text: "\n")
             }
         }
         return builder
@@ -203,7 +204,8 @@ private extension TableRow {
                 $0.build(
                     StyledTextBuilder.markdownBase(isRoot: options.isRoot)
                         .add(traits: .traitBold),
-                    options: options
+                    options: options,
+                    context: CMarkContext()
                 )
             }
         case .row(let cells):
@@ -211,7 +213,8 @@ private extension TableRow {
                 $0.build(
                     StyledTextBuilder.markdownBase(isRoot: options.isRoot)
                         .add(attributes: [.backgroundColor: backgroundColor]),
-                    options: options
+                    options: options,
+                    context: CMarkContext()
                 )
             }
         }
@@ -238,41 +241,55 @@ private extension Array where Iterator.Element == TableRow {
     }
 }
 
-private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiffable] {
-    var models = [ListDiffable]()
-    var runningBuilder: StyledTextBuilder?
-
-    let makeBuilder: () -> StyledTextBuilder = {
-        let builder: StyledTextBuilder
-        if let current = runningBuilder {
-            builder = current
-                .add(text: "\n")
-        } else {
-            builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
-        }
-        runningBuilder = builder
-        return builder
-    }
-
-    let endRunningText: (Bool) -> Void = { isLast in
-        if let builder = runningBuilder {
-            models.append(StyledTextRenderer(
-                string: builder.build(renderMode: .preserve),
-                contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentTextCell.inset(isLast: isLast),
-                backgroundColor: .white
-                ).warm(width: options.width))
-        }
-        runningBuilder = nil
-    }
-
-    for (i, el) in elements.enumerated() {
-        let isLast = i == elements.count - 1
-
-        switch el {
+private extension Element {
+    func model(_ options: CMarkOptions, lastElement: Bool) -> ListDiffable? {
+        switch self {
         case .text(let items):
-            items.build(makeBuilder(), options: options)
+            return StyledTextRenderer(
+                string: items.build(
+                    StyledTextBuilder.markdownBase(isRoot: options.isRoot),
+                    options: options,
+                    context: CMarkContext()
+                    ).build(renderMode: .preserve),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
+                backgroundColor: .white
+                ).warm(width: options.width)
+        case .quote(let items, let level):
+            let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
+                .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
+            let string = StyledTextRenderer(
+                string: items.build(builder, options: options, context: CMarkContext()).build(renderMode: .preserve),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentQuoteCell.inset(quoteLevel: level),
+                backgroundColor: .white
+                ).warm(width: options.width)
+            return IssueCommentQuoteModel(level: level, string: string)
+        case .image(let title, let href):
+            guard let url = URL(string: href) else { return nil }
+            if url.pathExtension.lowercased() == "svg" {
+                // hack to workaround the SDWebImage not supporting svg images
+                // just render it in a webview
+                return IssueCommentHtmlModel(html: "<img src=\(href) />")
+            } else {
+                return IssueCommentImageModel(url: url, title: title)
+            }
+        case .html(let text):
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else { return nil }
+            let baseURL: URL?
+            if let branch = options.branch {
+                baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/\(branch)/")
+            } else {
+                baseURL = nil
+            }
+            return IssueCommentHtmlModel(html: trimmed, baseURL: baseURL)
+        case .hr:
+            return IssueCommentHrModel()
+        case .codeBlock(let text, let language):
+            return CodeBlockElement(text: text, language: language, contentSizeCategory: options.contentSizeCategory)
         case .heading(let text, let level):
+            let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
             let style: TextStyle
             switch level {
             case 1: style = Styles.Text.h1
@@ -282,68 +299,27 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
             case 5: style = Styles.Text.h5
             default: style = Styles.Text.h6.with(foreground: Styles.Colors.Gray.medium.color)
             }
-
-            let builder = makeBuilder()
-                .save()
-                .add(style: style)
-
-            // add bottom spacing
-            builder.add(attributes: [.baselineOffset: 12])
-            text.build(builder, options: options)
-
-            builder.restore()
-        case .list(let items, let type):
-            items.build(makeBuilder(), options: options, type: type)
-        case .quote(let items, let level):
-            endRunningText(isLast)
-
-            let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
-                .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
-            let string = StyledTextRenderer(
-                string: items.build(builder, options: options).build(renderMode: .preserve),
+            builder.add(style: style)
+            return StyledTextRenderer(
+                string: text.build(builder, options: options, context: CMarkContext()).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentQuoteCell.inset(quoteLevel: level),
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
                 backgroundColor: .white
                 ).warm(width: options.width)
-            models.append(IssueCommentQuoteModel(level: level, string: string))
-        case .image(let title, let href):
-            endRunningText(isLast)
-
-            guard let url = URL(string: href) else { continue }
-            if url.pathExtension.lowercased() == "svg" {
-                // hack to workaround the SDWebImage not supporting svg images
-                // just render it in a webview
-                models.append(IssueCommentHtmlModel(html: "<img src=\(href) />"))
-            } else {
-                models.append(IssueCommentImageModel(url: url, title: title))
-            }
-        case .html(let text):
-            endRunningText(isLast)
-
-            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !trimmed.isEmpty else { continue }
-            let baseURL: URL?
-            if let branch = options.branch {
-                baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/\(branch)/")
-            } else {
-                baseURL = nil
-            }
-            models.append(IssueCommentHtmlModel(html: trimmed, baseURL: baseURL))
-        case .hr:
-            endRunningText(isLast)
-
-            models.append(IssueCommentHrModel())
-        case .codeBlock(let text, let language):
-            endRunningText(isLast)
-
-            models.append(CodeBlockElement(
-                text: text,
-                language: language,
-                contentSizeCategory: options.contentSizeCategory
-            ))
+        case .list(let items, let type):
+            let builder = items.build(
+                StyledTextBuilder.markdownBase(isRoot: options.isRoot),
+                options: options,
+                type: type,
+                level: 0
+            )
+            return StyledTextRenderer(
+                string: builder.build(renderMode: .preserve),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
+                backgroundColor: .white
+                ).warm(width: options.width)
         case .table(let rows):
-            endRunningText(isLast)
-
             var buckets = [TableBucket]()
             var rowHeights = [CGFloat]()
 
@@ -352,13 +328,9 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
                 fillBuckets(rows: $0.cells, buckets: &buckets, rowHeights: &rowHeights, fill: $0.fill)
             }
 
-            models.append(IssueCommentTableModel(buckets: buckets, rowHeights: rowHeights))
+            return IssueCommentTableModel(buckets: buckets, rowHeights: rowHeights)
         }
     }
-
-    endRunningText(true)
-
-    return models
 }
 
 private func emptyDescription(options: CMarkOptions) -> ListDiffable {
@@ -401,10 +373,18 @@ func MarkdownModels(
         isRoot: isRoot
     )
 
-    let models = makeModels(elements: node.flatElements, options: options)
+    var models = [ListDiffable]()
+    let elements = node.flatElements
+    let count = elements.count
+    for (i, el) in elements.enumerated() {
+        if let model = el.model(options, lastElement: i == count - 1) {
+            models.append(model)
+        }
+    }
     if models.count == 0 {
         return [emptyDescription(options: options)]
     } else {
         return models
     }
 }
+

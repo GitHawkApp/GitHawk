@@ -8,9 +8,8 @@
 
 import UIKit
 import Squawk
-import TUSafariActivity
 
-final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegate {
+final class RepositoryCodeBlobViewController: UIViewController {
 
     private let client: GithubClient
     private let branch: String
@@ -20,13 +19,9 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
     private let feedRefresh = FeedRefresh()
     private let emptyView = EmptyView()
     private var sharingPayload: Any?
-    private var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/blob/\(branch)/\(path.path)")!
-    }
-
-    private lazy var moreOptionsItem: UIBarButtonItem = {
+    private lazy var sharingButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
+            barButtonSystemItem: .action,
             target: self,
             action: #selector(RepositoryCodeBlobViewController.onShare(sender:)))
         barButtonItem.isEnabled = false
@@ -60,15 +55,13 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         view.backgroundColor = .white
 
         emptyView.isHidden = true
-        emptyView.delegate = self
-        emptyView.button.isHidden = false
         view.addSubview(emptyView)
         view.addSubview(codeView)
 
         codeView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
-        navigationItem.rightBarButtonItem = moreOptionsItem
+        navigationItem.rightBarButtonItem = sharingButton
 
         fetch()
         feedRefresh.beginRefreshing()
@@ -82,7 +75,7 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         } else {
             frame = view.bounds
         }
-
+        
         emptyView.frame = frame
         codeView.frame = frame
     }
@@ -95,44 +88,19 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
     func didFetchPayload(_ payload: Any) {
         sharingPayload = payload
-        moreOptionsItem.isEnabled = true
+        sharingButton.isEnabled = true
     }
 
     @objc func onRefresh() {
         fetch()
     }
 
-    @objc func onShare(sender: UIButton) {
-        let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
-        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
+    @objc func onShare(sender: UIBarButtonItem) {
+        guard let payload = sharingPayload else { return }
+        let activityController = UIActivityViewController(activityItems: [payload], applicationActivities: nil)
+        activityController.popoverPresentationController?.barButtonItem = sender
 
-        weak var weakSelf = self
-        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
-        var actions = [
-            viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client, path: path),
-            AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction.cancel()
-        ]
-
-        if let name = self.path.components.last {
-            actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            }, at: 1)
-        }
-        if let payload = self.sharingPayload {
-            actions.insert(AlertAction(alertBuilder).share([payload], activities: nil, type: .shareContent) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            }, at: actions.endIndex - 1)
-        }
-
-        alert.addActions(actions)
-        alert.popoverPresentationController?.setSourceView(sender)
-        present(alert, animated: trueUnlessReduceMotionEnabled)
+        present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch() {
@@ -148,9 +116,9 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
                 self?.handle(text: text)
             case .nonUTF8:
                 self?.error(cannotLoad: true)
-            case .error(let error):
+            case .error:
                 self?.error(cannotLoad: false)
-                Squawk.show(error: error)
+                Squawk.showGenericError()
             }
         }
     }
@@ -166,12 +134,6 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         emptyView.isHidden = true
         didFetchPayload(text)
         codeView.set(code: text)
-    }
-
-    // MARK: EmptyViewDelegate
-
-    func didTapRetry(view: EmptyView) {
-        onRefresh()
     }
 
 }

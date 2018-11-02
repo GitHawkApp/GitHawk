@@ -73,7 +73,7 @@ final class MergeButton: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = bounds
@@ -89,7 +89,7 @@ final class MergeButton: UIView {
             : Styles.Colors.Gray.light.color)
             .withAlphaComponent(loading ? 0.2 : 1)
         alpha = enabled ? 1 : 0.3
-
+        
         if enabled && !loading {
             guard gradientLayer.superlayer == nil else { return }
             gradientLayer.cornerRadius = layer.cornerRadius
@@ -98,14 +98,14 @@ final class MergeButton: UIView {
                 Styles.Colors.Green.medium.color.cgColor
             ]
             layer.addSublayer(gradientLayer)
-
+            
             [mergeLabel, optionIconView, optionBorder, activityView].forEach {
                 bringSubview(toFront: $0)
             }
         } else {
             gradientLayer.removeFromSuperlayer()
         }
-
+        
         let titleColor = enabled ? .white : Styles.Colors.Gray.dark.color
         mergeLabel.textColor = titleColor
         optionIconView.tintColor = titleColor

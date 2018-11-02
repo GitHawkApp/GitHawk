@@ -57,11 +57,11 @@ extension GithubClient {
         let cache = self.cache
         let contentSizeCategory = UIContentSizeCategory.preferred
 
-        client.query(query, result: { $0.repository }, completion: { result in
+        client.query(query, result: { $0.repository }) { result in
             switch result {
-            case .failure(let error):
-                completion(.error(error))
-                Squawk.show(error: error)
+            case .failure:
+                completion(.error(nil))
+                Squawk.showGenericError()
             case .success(let repository):
                 let issueOrPullRequest = repository.issueOrPullRequest
                 guard let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest else {
@@ -124,7 +124,7 @@ extension GithubClient {
                     } else {
                         milestoneModel = nil
                     }
-
+                    
                     let targetBranchModel: IssueTargetBranchModel?
                     if let baseBranchRef = issueType.targetBranch {
                         targetBranchModel = IssueTargetBranchModel(
@@ -147,6 +147,7 @@ extension GithubClient {
                     if repository.rebaseMergeAllowed {
                         availableMergeTypes.append(.rebase)
                     }
+
 
                     let issueResult = IssueResult(
                         id: issueType.id,
@@ -178,7 +179,7 @@ extension GithubClient {
                     }
                 }
             }
-        })
+        }
     }
 
     func react(
@@ -192,9 +193,13 @@ extension GithubClient {
             switch result {
             case .success(let data):
                 completion(createIssueReactions(reactions: data))
-            case .failure(let error):
+            case .failure(let err):
                 completion(nil)
-                Squawk.show(error: error)
+                if let message = err?.localizedDescription {
+                    Squawk.showError(message: message)
+                } else {
+                    Squawk.showGenericError()
+                }
             }
         }
 
@@ -247,9 +252,9 @@ extension GithubClient {
         client.send(V3SetIssueStatusRequest(owner: owner, repo: repo, number: number, state: stateString)) { result in
             switch result {
             case .success: break
-            case .failure(let error):
+            case .failure:
                 cache.set(value: previous)
-                Squawk.show(error: error)
+                Squawk.showGenericError()
             }
         }
     }
@@ -289,10 +294,10 @@ extension GithubClient {
             switch result {
             case .success:
                 completion?(.success(true))
-            case .failure(let error):
+            case .failure:
                 cache.set(value: previous)
-                Squawk.show(error: error)
-                completion?(.error(error))
+                Squawk.showGenericError()
+                completion?(.error(nil))
             }
         }
     }
@@ -400,9 +405,9 @@ extension GithubClient {
         ) { result in
             switch result {
             case .success: break
-            case .failure(let error):
+            case .failure:
                 cache.set(value: previous)
-                Squawk.show(error: error)
+                Squawk.showGenericError()
             }
         }
     }
@@ -498,9 +503,9 @@ extension GithubClient {
             ) { result in
                 switch result {
                 case .success: break
-                case .failure(let error):
+                case .failure:
                     cache.set(value: previous)
-                    Squawk.show(error: error)
+                    Squawk.showGenericError()
                 }
             }
         }
@@ -518,9 +523,9 @@ extension GithubClient {
             ) { result in
                 switch result {
                 case .success: break
-                case .failure(let error):
+                case .failure:
                     cache.set(value: previous)
-                    Squawk.show(error: error)
+                    Squawk.showGenericError()
                 }
             }
         }

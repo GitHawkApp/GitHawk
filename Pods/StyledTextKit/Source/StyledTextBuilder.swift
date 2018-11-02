@@ -132,12 +132,28 @@ public final class StyledTextBuilder: Hashable, Equatable {
     }
     
     @discardableResult
-    public func add(
-        image: UIImage,
-        options: [StyledText.ImageFitOptions] = [.fit, .center],
-        attributes: [NSAttributedStringKey: Any]? = nil
-        ) -> StyledTextBuilder {
-        return add(storage: .image(image, options), attributes: attributes)
+    public func add(image: UIImage) -> StyledTextBuilder {
+        guard let tipStyle = savedStyles.last else { return self }
+        
+        let font = tipStyle.font(contentSizeCategory: .medium)
+        let imageSize = CGSize(width: font.pointSize, height: font.pointSize)
+        let mid = font.descender + font.capHeight
+        let bounds = CGRect(x: 0,
+                            y: round(font.descender - imageSize.height / 2 + mid + 1),
+                            width: imageSize.width,
+                            height: imageSize.height)
+        
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = image
+        textAttachment.bounds = bounds
+        
+        let textAttributes: [NSAttributedStringKey: Any] = [
+            .font: font,
+            .kern: 1.0
+        ]
+        
+        let attributedString = NSAttributedString(attachment: textAttachment)
+        return add(storage: .attributedText(attributedString), traits: nil, attributes: textAttributes)
     }
 
     @discardableResult

@@ -42,7 +42,7 @@ final class IssueReferencedCell: StyledTextViewCell {
     func configure(_ model: IssueReferencedModel) {
         set(renderer: model.string)
 
-        let buttonState: UIButton.IssueState
+        let buttonState: UIButton.State
         switch model.state {
         case .closed: buttonState = .closed
         case .merged: buttonState = .merged

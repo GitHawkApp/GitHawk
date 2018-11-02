@@ -32,14 +32,6 @@ public extension V3NotificationSubject {
         case number(Int)
         case hash(String)
         case release(String)
-
-        public var string: String {
-            switch self {
-            case .number(let n): return "#\(n)"
-            case .hash(let h): return h
-            case .release(let r): return r
-            }
-        }
     }
 
     var identifier: Identifier? {

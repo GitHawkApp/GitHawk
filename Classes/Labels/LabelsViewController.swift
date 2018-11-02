@@ -10,9 +10,7 @@ import UIKit
 import IGListKit
 import Squawk
 
-final class LabelsViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
-LabelSectionControllerDelegate {
+final class LabelsViewController: BaseListViewController2<String>, BaseListViewController2DataSource {
 
     private let selectedLabels: Set<RepositoryLabel>
     private var labels = [RepositoryLabel]()
@@ -32,7 +30,6 @@ LabelSectionControllerDelegate {
         preferredContentSize = Styles.Sizes.contextMenuSize
         title = Constants.Strings.labels
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
-        feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
 
@@ -44,7 +41,6 @@ LabelSectionControllerDelegate {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         addMenuDoneButton()
-        addMenuClearButton()
     }
 
     // MARK: Public API
@@ -58,37 +54,12 @@ LabelSectionControllerDelegate {
         }
     }
 
-    func addMenuClearButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: Constants.Strings.clear,
-            style: .plain,
-            target: self,
-            action: #selector(onMenuClear)
-        )
-        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
-        navigationItem.leftBarButtonItem?.isEnabled = selectedLabels.count > 0
-    }
-
-    func updateClearButtonEnabled() {
-        navigationItem.leftBarButtonItem?.isEnabled = selected.count > 0
-    }
-
-    @objc func onMenuClear() {
-        self.selected.forEach {
-            if let sectionController: LabelSectionController = feed.swiftAdapter.sectionController(for: $0) {
-                sectionController.didSelectItem(at: 0)
-            }
-        }
-
-        updateClearButtonEnabled()
-    }
-
     // MARK: Overrides
 
     override func fetch(page: String?) {
         client.client.query(request, result: { data in
             data.repository?.labels?.nodes
-        }, completion: { [weak self] result in
+        }) { [weak self] result in
             switch result {
             case .success(let nodes):
                 self?.labels = nodes.compactMap {
@@ -96,27 +67,18 @@ LabelSectionControllerDelegate {
                     return RepositoryLabel(color: node.color, name: node.name)
                 }.sorted { $0.name < $1.name }
                 self?.update(animated: true)
-            case .failure(let error):
-                Squawk.show(error: error)
+            case .failure:
+                Squawk.showGenericError()
             }
-        })
+        }
     }
 
     // MARK: BaseListViewController2DataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return labels.map { [selectedLabels] label in
-            ListSwiftPair.pair(label) {
-                let controller = LabelSectionController(selected: selectedLabels.contains(label))
-                controller.delegate = self
-                return controller
-            }
+            ListSwiftPair.pair(label) { LabelSectionController(selected: selectedLabels.contains(label)) }
         }
     }
 
-    // MARK: LabelSectionControllerDelegate
-
-    func didSelect(controller: LabelSectionController) {
-        updateClearButtonEnabled()
-    }
 }

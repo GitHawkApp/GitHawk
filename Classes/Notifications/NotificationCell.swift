@@ -148,9 +148,7 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         readLayer.path = UIBezierPath(ovalIn: readButton.bounds).cgPath
         readLayer.bounds = readButton.bounds
         readLayer.position = convert(readButton.center, from: readButton.superview)
-        readLayer.transform = CATransform3DMakeScale(30, 30, 30)
-        // keep the read layer in front
-        readLayer.superlayer?.addSublayer(readLayer)
+        readLayer.transform = CATransform3DMakeScale(20, 20, 20)
         CATransaction.commit()
     }
 
@@ -243,13 +241,11 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
             self.dimViews(dim: true)
         }
 
-        // keep the read layer in front
-        readLayer.superlayer?.addSublayer(readLayer)
         hideReadLayer(hide: false)
 
         let scale = CABasicAnimation(keyPath: "transform.scale")
         scale.fromValue = 1
-        scale.duration = 0.33
+        scale.duration = 0.27
         scale.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
 
         let fade = CABasicAnimation(keyPath: "opacity")

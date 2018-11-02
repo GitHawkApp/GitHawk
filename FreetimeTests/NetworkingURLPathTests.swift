@@ -11,9 +11,9 @@ import XCTest
 @testable import Freetime
 
 class UrlPathComponents: XCTestCase {
-
+    
     func DISABLED_test_addReviewers() {
-
+        
         //test that add reviewers request gets a 401 unauthorized response instead of a 404
         //Issue #1829: add reviewers was receiving a 404 response
         let addReviewersRequest = V3AddPeopleRequest(owner: "GitHawkApp",
@@ -22,18 +22,18 @@ class UrlPathComponents: XCTestCase {
                                                      type: .reviewers,
                                                      add: true,
                                                      people: [])
-
-        let githubclient = GithubClient()
+        
+        let githubclient = newGithubClient()
         let promise = expectation(description: "completion handler invoked")
         var requestResponse: GitHubAPI.Result<V3StatusCodeResponse<V3StatusCode200or201>>?
-
+        
         githubclient.client.send(addReviewersRequest) { response in
             requestResponse = response
             promise.fulfill()
         }
-
+        
         waitForExpectations(timeout: 5, handler: nil)
-
+        
         switch requestResponse! {
         case .failure(let error):
             let clientError = error as! GitHubAPI.ClientError
@@ -45,9 +45,9 @@ class UrlPathComponents: XCTestCase {
             XCTFail("Response should be ResponseType.failure(GitHubAPI.ClientError.unauthorized) i.e. 401 response")
         }
     }
-
+    
     func DISABLED_test_addAssignees() {
-
+        
         //test that add reviewers request gets a 401 unauthorized response
         let addAssigneesRequest = V3AddPeopleRequest(owner: "GitHawkApp",
                                                      repo: "GitHawk",
@@ -55,18 +55,18 @@ class UrlPathComponents: XCTestCase {
                                                      type: .assignees,
                                                      add: true,
                                                      people: [])
-
-        let githubclient = GithubClient()
+        
+        let githubclient = newGithubClient()
         let promise = expectation(description: "completion handler invoked")
         var requestResponse: GitHubAPI.Result<V3StatusCodeResponse<V3StatusCode200or201>>?
-
+        
         githubclient.client.send(addAssigneesRequest) { response in
             requestResponse = response
             promise.fulfill()
         }
-
+        
         waitForExpectations(timeout: 5, handler: nil)
-
+        
         switch requestResponse! {
         case .failure(let error):
             let clientError = error as! GitHubAPI.ClientError
@@ -79,3 +79,4 @@ class UrlPathComponents: XCTestCase {
         }
     }
 }
+

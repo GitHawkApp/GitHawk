@@ -32,8 +32,6 @@ enum Constants {
         static let reopened = NSLocalizedString("Reopened", comment: "")
         static let unknown = NSLocalizedString("Unknown", comment: "")
         static let merged = NSLocalizedString("Merged", comment: "")
-        static let unlock = NSLocalizedString("Unlock", comment: "")
-        static let lock = NSLocalizedString("Lock", comment: "")
         static let locked = NSLocalizedString("Locked", comment: "")
         static let newIssue = NSLocalizedString("New Issue", comment: "")
         static let bullet = "\u{2022}"
@@ -55,7 +53,5 @@ enum Constants {
         static let milestone = NSLocalizedString("Milestone", comment: "")
         static let assignees = NSLocalizedString("Assignees", comment: "")
         static let reviewers = NSLocalizedString("Reviewers", comment: "")
-        static let reviewGitHubAccess = NSLocalizedString("Review GitHub Access", comment: "")
-        static let clear = NSLocalizedString("Clear", comment: "")
     }
 }

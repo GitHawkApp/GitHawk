@@ -18,7 +18,7 @@ final class SearchRecentCell: SwipeSelectableCell {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
-
+        
         backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit

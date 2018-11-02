@@ -51,5 +51,5 @@ final class IssueMergeButtonCell: CardCollectionViewCell, ListBindable {
         }
         mergeButton.configure(title: title, enabled: viewModel.enabled, loading: viewModel.loading)
     }
-
+    
 }

@@ -79,7 +79,7 @@ final class RepositorySummaryCell: SelectableCell {
         titleView.reposition(for: contentView.bounds.width)
         resizeLabelListView(labels: labelListView.labels, cacheKey: labelListView.labels.reduce("", {$0 + $1.name}))
     }
-
+    
     private func resizeLabelListView(labels: [RepositoryLabel], cacheKey: String) {
         let width = contentView.frame.width - (Styles.Sizes.columnSpacing * 2)
         let height = LabelListView.height(width: width, labels: labels, cacheKey: cacheKey)

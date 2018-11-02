@@ -28,7 +28,7 @@ final class IssueNeckLoadSectionController: ListSectionController {
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: LoadMoreCell.self, for: self, at: index) as? LoadMoreCell
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueNeckLoadCell.self, for: self, at: index) as? IssueNeckLoadCell
             else { fatalError("Missing collection context, cell incorrect type, or object missing") }
         cell.configure(loading: loadingOverride)
         return cell

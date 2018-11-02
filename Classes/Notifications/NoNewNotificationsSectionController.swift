@@ -8,28 +8,32 @@
 
 import UIKit
 import IGListKit
+import Crashlytics
 
-final class NoNewNotificationSectionController: ListSwiftSectionController<String>,
-NoNewNotificationsCellReviewAccessDelegate {
+final class NoNewNotificationSectionController: ListSwiftSectionController<String> {
 
     private let layoutInsets: UIEdgeInsets
-    private let loader = InboxZeroLoader()
+    private let client = NotificationEmptyMessageClient()
+
+    enum State {
+        case loading
+        case success(NotificationEmptyMessageClient.Message)
+        case error
+    }
+    private var state: State = .loading
 
     init(layoutInsets: UIEdgeInsets) {
         self.layoutInsets = layoutInsets
         super.init()
-        loader.load { [weak self] success in
-            if success {
-                self?.update()
-            }
+        client.fetch { [weak self] (result) in
+            self?.handleFinished(result)
         }
     }
 
     override func createBinders(from value: String) -> [ListBinder] {
-        let latest = loader.message()
         return [
             binder(
-                latest.emoji,
+                value,
                 cellType: ListCellType.class(NoNewNotificationsCell.self),
                 size: { [layoutInsets] in
                     return CGSize(
@@ -38,26 +42,36 @@ NoNewNotificationsCellReviewAccessDelegate {
                     )
             },
                 configure: { [weak self] in
-                    guard let strongSelf = self else { return }
-                    // accessing the value seems to be required for this to compile
+                    // TODO accessing the value seems to be required for this to compile
                     print($1.value)
-                    $0.configure(
-                        emoji: latest.emoji,
-                        message: latest.message,
-                        reviewGitHubAccessDelegate: strongSelf
-                    )
+                    self?.configure($0)
                 })
         ]
     }
 
-    // MARK: NoNewNotificationsCellReviewAccessDelegate
+    // MARK: Private API
 
-    func didTapReviewAccess(cell: NoNewNotificationsCell) {
-        //copied/pasted from SettingsViewController... could consolidate
-        guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
-            else { fatalError("Should always create GitHub issue URL") }
-        // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
-        UIApplication.shared.open(url)
+    private func configure(_ cell: NoNewNotificationsCell) {
+        switch state {
+        case .loading: break
+        case .success(let message): cell.configure(emoji: message.emoji, message: message.text)
+        case .error: cell.configure(emoji: "🎉", message: NSLocalizedString("Inbox zero!", comment: ""))
+        }
+    }
+
+    private func handleFinished(_ result: Result<NotificationEmptyMessageClient.Message>) {
+        switch result {
+        case .success(let message):
+            state = .success(message)
+        case .error(let error):
+            state = .error
+            let msg = error?.localizedDescription ?? ""
+            Answers.logCustomEvent(withName: "fb-fetch-error", customAttributes: ["error": msg])
+        }
+
+        guard let cell = collectionContext?.cellForItem(at: 0, sectionController: self) as? NoNewNotificationsCell
+            else { return }
+        configure(cell)
     }
 
 }

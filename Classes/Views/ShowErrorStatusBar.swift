@@ -12,7 +12,7 @@ import Squawk
 func ShowErrorStatusBar(graphQLErrors: [Error]?, networkError: Error?) {
     if networkError != nil {
         Squawk.showNetworkError()
-    } else if let graphQL = graphQLErrors?.first {
-        Squawk.show(error: graphQL)
+    } else if graphQLErrors != nil && graphQLErrors!.count > 0 {
+        Squawk.showGenericError()
     }
 }

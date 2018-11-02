@@ -22,7 +22,7 @@ final class IssueAssigneeAvatarCell: UICollectionViewCell {
         imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
         imageView.clipsToBounds = true
         imageView.accessibilityIgnoresInvertColors = true
-
+        
         contentView.addSubview(imageView)
     }
 

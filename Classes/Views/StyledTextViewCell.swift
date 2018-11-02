@@ -18,6 +18,8 @@ class StyledTextViewCell: UICollectionViewCell {
         textView.gesturableAttributes = MarkdownAttribute.all
         contentView.addSubview(textView)
         isAccessibilityElement = true
+//        clipsToBounds = false
+//        textView.clipsToBounds = false
     }
 
     required init?(coder aDecoder: NSCoder) {

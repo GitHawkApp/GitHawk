@@ -10,7 +10,8 @@ import UIKit
 import SnapKit
 
 final class IssueTargetBranchCell: StyledTextViewCell {
-
+    
     static let inset = UIEdgeInsets.zero
-
+    
 }
+

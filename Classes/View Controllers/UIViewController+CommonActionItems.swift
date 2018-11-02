@@ -10,16 +10,15 @@ import UIKit
 
 extension UIViewController {
 
-    func action(owner: String, icon: UIImage = UIImage()) -> UIAlertAction? {
+    func action(owner: String) -> UIAlertAction? {
         weak var weakSelf = self
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(owner: owner, icon: icon)
+            .view(owner: owner)
     }
 
     func action(
         owner: String,
         repo: String,
-        icon: UIImage,
         branch: String,
         issuesEnabled: Bool,
         client: GithubClient
@@ -32,7 +31,7 @@ extension UIViewController {
         )
         weak var weakSelf = self
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(client: client, repo: repo, icon: icon)
+            .view(client: client, repo: repo)
     }
 
 }

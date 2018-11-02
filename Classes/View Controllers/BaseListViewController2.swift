@@ -20,27 +20,19 @@ protocol BaseListViewController2EmptyDataSource: class {
 class BaseListViewController2<PageType: CustomStringConvertible>: UIViewController,
 ListSwiftAdapterDataSource,
 FeedDelegate,
-LoadMoreSectionController2Delegate,
-ListSwiftAdapterEmptyViewSource,
-EmptyViewDelegate {
+LoadMoreSectionController2Delegate {
 
     private let emptyErrorMessage: String
-    private let backgroundThreshold: CFTimeInterval?
 
     public weak var dataSource: BaseListViewController2DataSource?
     public weak var emptyDataSource: BaseListViewController2EmptyDataSource?
 
-    public private(set) lazy var feed: Feed = { Feed(
-        viewController: self,
-        delegate: self,
-        backgroundThreshold: backgroundThreshold
-        ) }()
+    public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var page: PageType?
     private var hasError = false
 
-    init(emptyErrorMessage: String, backgroundThreshold: CFTimeInterval? = nil) {
+    init(emptyErrorMessage: String) {
         self.emptyErrorMessage = emptyErrorMessage
-        self.backgroundThreshold = backgroundThreshold
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -52,7 +44,6 @@ EmptyViewDelegate {
         super.viewDidLoad()
         feed.viewDidLoad()
         feed.swiftAdapter.dataSource = self
-        feed.swiftAdapter.emptyViewSource = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -155,25 +146,5 @@ EmptyViewDelegate {
     func didSelect(controller: LoadMoreSectionController2) {
         fetch(page: page)
     }
-
-    // MARK: ListSwiftAdapterEmptyViewSource
-
-    func emptyView(adapter: ListSwiftAdapter) -> UIView? {
-        guard hasError else { return nil }
-        let empty = EmptyView()
-        empty.label.text = emptyErrorMessage
-        empty.delegate = self
-        empty.button.isHidden = false
-        return empty
-    }
-
-    // MARK: EmptyViewDelegate
-
-    func didTapRetry(view: EmptyView) {
-        // order is required to hide the error empty view while loading
-        feed.refreshHead()
-        hasError = false
-        feed.adapter.performUpdates(animated: false, completion: nil)
-    }
-
+    
 }
