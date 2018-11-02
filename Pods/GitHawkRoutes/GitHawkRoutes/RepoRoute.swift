@@ -28,6 +28,10 @@ public struct RepoRoute: Routable {
         return RepoRoute(owner: owner, repo: repo, branch: branch)
     }
 
+    public static var path: String {
+        return "com.githawk.repo"
+    }
+
     public var encoded: [String: String] {
         return [
             "owner": owner,
