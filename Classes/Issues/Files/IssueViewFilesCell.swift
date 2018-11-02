@@ -66,7 +66,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
             ))
         }
         label.attributedText = attributedText
-        
+
         accessibilityLabel = NSLocalizedString(
             "View Files",
             comment: "The accessibility label for the View Files button in a pull request.")

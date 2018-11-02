@@ -22,7 +22,7 @@ enum GithubHighlighting {
         let fixedLanguage = language.isEmpty ? nil : language
         return shared?.highlight(code, as: fixedLanguage, fastRender: true)
     }
-    
+
     static func highlight(_ code: String) -> NSAttributedString? {
         return shared?.highlight(code)
     }

@@ -10,7 +10,6 @@ import Foundation
 import StyledTextKit
 
 func CreateNotification(title: String, width: CGFloat, contentSizeCategory: UIContentSizeCategory) -> StyledTextRenderer {
-    // TODO add owner/repo #
     let builder = StyledTextBuilder(styledText: StyledText(
         text: title,
         style: Styles.Text.body

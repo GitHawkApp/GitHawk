@@ -123,10 +123,10 @@ MessageTextViewListener {
             supportsImageUpload: true,
             showSendButton: false
         )
-        
+
         textActionsController.configure(client: client, textView: textView, actions: actions)
         textActionsController.viewController = self
-        
+
         textView.inputAccessoryView = actions
     }
 
@@ -173,7 +173,9 @@ MessageTextViewListener {
         ) { [weak self] result in
             switch result {
             case .success: self?.didSave(markdown: markdown)
-            case .failure: self?.error()
+            case .failure(let error):
+                self?.setRightBarItemIdle()
+                Squawk.show(error: error)
             }
         }
     }
@@ -181,11 +183,6 @@ MessageTextViewListener {
     func didSave(markdown: String) {
         navigationItem.rightBarButtonItem = nil
         delegate?.didEditComment(viewController: self, markdown: markdown)
-    }
-
-    func error() {
-        setRightBarItemIdle()
-        Squawk.showGenericError()
     }
 
     // MARK: MessageTextViewListener

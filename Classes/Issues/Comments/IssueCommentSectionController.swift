@@ -20,8 +20,7 @@ protocol IssueCommentSectionControllerDelegate: class {
     )
 }
 
-final class IssueCommentSectionController:
-    ListBindingSectionController<IssueCommentModel>,
+final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
@@ -93,7 +92,7 @@ final class IssueCommentSectionController:
         weak var weakSelf = self
 
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf?.viewController })
-            .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
+            .share([url], activities: [TUSafariActivity()], type: .shareUrl) { $0.popoverPresentationController?.sourceView = sender }
     }
 
     var deleteAction: UIAlertAction? {
@@ -261,11 +260,10 @@ final class IssueCommentSectionController:
             commentID: "\(number)")
         ) { [weak self] result in
             switch result {
-            case .failure:
+            case .failure(let error):
                 self?.hasBeenDeleted = false
                 self?.update(animated: trueUnlessReduceMotionEnabled)
-
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             case .success: break // Don't need to handle success since updated optimistically
             }
         }
@@ -297,9 +295,9 @@ final class IssueCommentSectionController:
         ) { [weak self] result in
             switch result {
             case .success: break
-            case .failure:
+            case .failure(let error):
                 self?.edit(markdown: originalMarkdown)
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             }
         }
     }
@@ -374,7 +372,6 @@ final class IssueCommentSectionController:
             let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
-        // TODO need to update PR tail model?
         if viewModel === tailModel {
             guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
                 else { fatalError("Cell not bindable") }
@@ -406,7 +403,7 @@ final class IssueCommentSectionController:
         } else if let cell = cell as? IssueCommentReactionCell {
             cell.delegate = self
         }
-        
+
         if let object = self.object,
             !object.asReviewComment,
             let cell = cell as? IssueCommentBaseCell {
@@ -440,15 +437,15 @@ final class IssueCommentSectionController:
         }
         uncollapse()
     }
-    
+
     // MARK: IssueCommentDoubleTapDelegate
-    
+
     func didDoubleTap(cell: IssueCommentBaseCell) {
         guard let reaction = ReactionContent.defaultReaction else { return }
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)
             else { return }
-        
+
         react(
             cell: collectionContext?.cellForItem(at: numberOfItems() - 1, sectionController: self) as? IssueCommentReactionCell,
             content: reaction,
@@ -559,11 +556,9 @@ final class IssueCommentSectionController:
             else { return }
 
         var index = -1
-        for (i, model) in viewModels.reversed().enumerated() {
-            if model is IssueCommentReactionViewModel {
-                index = viewModels.count - 1 - i
-                break
-            }
+        for (i, model) in viewModels.reversed().enumerated() where model is IssueCommentReactionViewModel {
+            index = viewModels.count - 1 - i
+            break
         }
 
         guard index >= 0 else { return }

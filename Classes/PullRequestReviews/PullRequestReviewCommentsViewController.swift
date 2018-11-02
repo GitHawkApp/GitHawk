@@ -16,6 +16,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     PullRequestReviewReplySectionControllerDelegate,
+    EmptyViewDelegate,
     IssueTextActionsViewSendDelegate {
 
     private let model: IssueDetailsModel
@@ -127,7 +128,8 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         width: insetWidth
         ) { [weak self] (result) in
             switch result {
-            case .error: Squawk.showGenericError()
+            case .error(let error):
+                Squawk.show(error: error)
             case .success(let models):
                 self?.results = models
                 self?.feed.finishLoading(dismissRefresh: true, animated: true)
@@ -169,8 +171,10 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         case .idle:
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Error loading review comments.", comment: "")
+            emptyView.delegate = self
+            emptyView.button.isHidden = false
             return emptyView
-        case .loadingNext:
+        case .loadingNext, .initial:
             return nil
         case .loading:
             return EmptyLoadingView()
@@ -185,6 +189,12 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         feed.adapter.scroll(to: reply, padding: Styles.Sizes.rowSpacing)
 
         focusedReplyModel = reply
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry(view: EmptyView) {
+        feed.refreshHead()
     }
 
     // MARK: IssueTextActionsViewSendDelegate

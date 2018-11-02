@@ -48,5 +48,5 @@ class FilePathTests: XCTestCase {
         XCTAssertEqual(FilePath(components: ["foo", "bar"]).appending("baz.swift").path, "foo/bar/baz.swift")
         XCTAssertEqual(FilePath(components: ["foo", "bar", "bang"]).appending("baz.swift").path, "foo/bar/bang/baz.swift")
     }
-    
+
 }

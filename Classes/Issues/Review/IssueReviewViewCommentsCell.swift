@@ -16,7 +16,7 @@ protocol IssueReviewViewCommentsCellDelegate: class {
 
 final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
 
-    weak var delegate: IssueReviewViewCommentsCellDelegate? = nil
+    weak var delegate: IssueReviewViewCommentsCellDelegate?
 
     private let button = UIButton()
 

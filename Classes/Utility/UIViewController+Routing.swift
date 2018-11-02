@@ -19,7 +19,6 @@ extension UIViewController {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         case .username(let username): presentProfile(login: username)
-        case .label(let label): presentLabels(owner: label.owner, repo: label.repo, label: label.label)
         case .commit(let commit): presentCommit(owner: commit.owner, repo: commit.repo, hash: commit.hash)
         default: return false
         }

@@ -32,13 +32,17 @@ final class CodeView: UITextView {
 
     // MARK: Public API
     func set(code: String, language: String? = nil) {
-        if let language = language,
-            let highlighted = GithubHighlighting.highlight(code, as: language) {
-            set(attributedCode: highlighted)
-        } else {
-            // Automatic language detection
-            if let highlighted = GithubHighlighting.highlight(code) {
-                set(attributedCode: highlighted)
+        DispatchQueue.global().async {
+            let maybeHighlighted: NSAttributedString?
+            if let language = language {
+                maybeHighlighted = GithubHighlighting.highlight(code, as: language)
+            } else {
+                // Automatic language detection
+                maybeHighlighted = GithubHighlighting.highlight(code)
+            }
+            guard let highlighted = maybeHighlighted else { return }
+            DispatchQueue.main.async { [weak self] in
+                self?.set(attributedCode: highlighted)
             }
         }
     }

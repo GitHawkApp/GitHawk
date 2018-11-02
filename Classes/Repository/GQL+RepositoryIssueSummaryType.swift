@@ -8,53 +8,6 @@
 
 import Foundation
 
-extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummaryType {
-
-    var labelableFields: LabelableFields {
-        return fragments.labelableFields
-    }
-
-    var repoEventFields: RepoEventFields {
-        return fragments.repoEventFields
-    }
-
-    var pullRequest: Bool {
-        return false
-    }
-
-    var status: IssueStatus {
-        switch state {
-        case .closed: return .closed
-        case .open, .__unknown: return .open
-        }
-    }
-
-}
-
-extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: RepositoryIssueSummaryType {
-
-    var labelableFields: LabelableFields {
-        return fragments.labelableFields
-    }
-
-    var repoEventFields: RepoEventFields {
-        return fragments.repoEventFields
-    }
-
-    var pullRequest: Bool {
-        return true
-    }
-
-    var status: IssueStatus {
-        switch state {
-        case .closed: return .closed
-        case .merged: return .merged
-        case .open, .__unknown: return .open
-        }
-    }
-
-}
-
 extension RepoSearchPagesQuery.Data.Search.Node.AsIssue: RepositoryIssueSummaryType {
 
     var labelableFields: LabelableFields {
@@ -74,6 +27,10 @@ extension RepoSearchPagesQuery.Data.Search.Node.AsIssue: RepositoryIssueSummaryT
         case .closed: return .closed
         case .open, .__unknown: return .open
         }
+    }
+
+    var ciStatus: RepositoryIssueCIStatus? {
+        return nil
     }
 
 }
@@ -98,6 +55,13 @@ extension RepoSearchPagesQuery.Data.Search.Node.AsPullRequest: RepositoryIssueSu
         case .merged: return .merged
         case .open, .__unknown: return .open
         }
+    }
+
+    var ciStatus: RepositoryIssueCIStatus? {
+        guard let node = commits.nodes?.first,
+        let status = node?.commit.status
+            else { return nil }
+        return RepositoryIssueCIStatus(rawValue: status.state.rawValue)
     }
 
 }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DefaultReactionDelegate: class {
+    func didUpdateDefaultReaction()
+}
+
 class DefaultReactionDetailController: UITableViewController {
 
     @IBOutlet var thumbsUpCell: UITableViewCell!
@@ -17,6 +21,8 @@ class DefaultReactionDetailController: UITableViewController {
     @IBOutlet var confusedCell: UITableViewCell!
     @IBOutlet var heartCell: UITableViewCell!
     @IBOutlet var enabledSwitch: UISwitch!
+
+    weak var delegate: DefaultReactionDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +41,7 @@ class DefaultReactionDetailController: UITableViewController {
         }
 
         let cell: UITableViewCell
-        switch (reaction) {
+        switch reaction {
         case .thumbsUp, .__unknown: cell = thumbsUpCell
         case .thumbsDown: cell = thumbsDownCell
         case .laugh: cell = laughCell
@@ -84,7 +90,7 @@ class DefaultReactionDetailController: UITableViewController {
     }
 
     @IBAction func toggleDefaultReaction(_ sender: Any) {
-        if(enabledSwitch.isOn) {
+        if enabledSwitch.isOn {
             updateDefault(reaction: .thumbsUp)
         } else {
             disableReaction()
@@ -95,15 +101,17 @@ class DefaultReactionDetailController: UITableViewController {
     private func updateDefault(reaction: ReactionContent) {
         UserDefaults.standard.setDefault(reaction: reaction)
         checkCurrentDefault()
+        delegate?.didUpdateDefaultReaction()
     }
 
     private func disableReaction() {
         UserDefaults.standard.disableReaction()
+        delegate?.didUpdateDefaultReaction()
     }
 
     private func updateSections() {
         tableView.performBatchUpdates({
-            if(enabledSwitch.isOn) {
+            if enabledSwitch.isOn {
                 self.tableView.insertSections(IndexSet(integer: 1), with: .top)
             } else {
                 self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
@@ -111,5 +119,3 @@ class DefaultReactionDetailController: UITableViewController {
         }, completion: nil)
     }
 }
-
-

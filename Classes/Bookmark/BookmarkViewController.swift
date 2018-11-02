@@ -76,7 +76,6 @@ TabNavRootViewControllerType {
 
         searchBar.delegate = self
         searchBar.placeholder = Constants.Strings.searchBookmarks
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
@@ -99,11 +98,10 @@ TabNavRootViewControllerType {
             collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
     }
-  
+
     override func viewWillDisappear(_ animated: Bool) {
       searchBar.resignFirstResponder()
     }
-
 
     private func update(animated: Bool) {
         adapter.performUpdates(animated: animated)

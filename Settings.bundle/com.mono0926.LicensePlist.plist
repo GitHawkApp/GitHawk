@@ -48,7 +48,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/ContextMenu</string>
 			<key>Title</key>
-			<string>ContextMenu (0.2.0)</string>
+			<string>ContextMenu (0.3.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -57,6 +57,14 @@
 			<string>com.mono0926.LicensePlist/Crashlytics</string>
 			<key>Title</key>
 			<string>Crashlytics (3.9.3)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/DropdownTitleView</string>
+			<key>Title</key>
+			<string>DropdownTitleView (0.1.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -73,46 +81,6 @@
 			<string>com.mono0926.LicensePlist/FBSnapshotTestCase</string>
 			<key>Title</key>
 			<string>FBSnapshotTestCase (2.1.4)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/Firebase</string>
-			<key>Title</key>
-			<string>Firebase (4.13.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/FirebaseAnalytics</string>
-			<key>Title</key>
-			<string>FirebaseAnalytics (4.2.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/FirebaseCore</string>
-			<key>Title</key>
-			<string>FirebaseCore (4.0.20)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/FirebaseDatabase</string>
-			<key>Title</key>
-			<string>FirebaseDatabase (4.1.5)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/FirebaseInstanceID</string>
-			<key>Title</key>
-			<string>FirebaseInstanceID (2.0.10)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -142,9 +110,17 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/GoogleToolboxForMac</string>
+			<string>com.mono0926.LicensePlist/FMDB</string>
 			<key>Title</key>
-			<string>GoogleToolboxForMac (2.1.4)</string>
+			<string>FMDB (2.7.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/GitHawkRoutes</string>
+			<key>Title</key>
+			<string>GitHawkRoutes (0.1.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -174,9 +150,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/leveldb-library</string>
+			<string>com.mono0926.LicensePlist/ImageAlertAction</string>
 			<key>Title</key>
-			<string>leveldb-library (1.20)</string>
+			<string>ImageAlertAction (1.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -185,14 +161,6 @@
 			<string>com.mono0926.LicensePlist/MessageViewController</string>
 			<key>Title</key>
 			<string>MessageViewController (0.2.1)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/nanopb</string>
-			<key>Title</key>
-			<string>nanopb (0.3.8)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -248,7 +216,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SwiftLint</string>
 			<key>Title</key>
-			<string>SwiftLint (0.24.0)</string>
+			<string>SwiftLint (0.27.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

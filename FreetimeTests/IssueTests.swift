@@ -248,7 +248,7 @@ class IssueTests: XCTestCase {
     func test_whenCheckmarks() {
         let body = [
             "- [ ] foo",
-            "- [x] bar",
+            "- [x] bar"
         ].joined(separator: "\r\n")
         let models = MarkdownModels(
             body,
@@ -265,12 +265,11 @@ class IssueTests: XCTestCase {
         XCTAssertNotNil(attrText.attributes(at: 2, effectiveRange: nil)[.attachment])
         XCTAssertNotNil(attrText.attributes(at: 11, effectiveRange: nil)[.attachment])
     }
-    
+
     func test_linkContainingBrackets() {
-        
+
         // Issue #120
         // the [\\[Pitch\\] slashes at one point rendered incorrectly as \[Pitch\] instead of [Pitch]
-        
         let body = "...adoption.\r\n\r\nSee: [\\[Pitch\\] Introducing the \"Unwrap or Die\" operator to the standard library](https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20170626/037730.html)"
         let models = MarkdownModels(
             body,
@@ -281,18 +280,18 @@ class IssueTests: XCTestCase {
             contentSizeCategory: .large,
             isRoot: false
         )
-        
-        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "See: [Pitch] Introducing the \"Unwrap or Die\" operator to the standard library")
+
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "...adoption.\nSee: [Pitch] Introducing the \"Unwrap or Die\" operator to the standard library")
     }
-    
+
     func test_URLThatContainsIssueReferenceLinkInDescription() {
-        
+
         // issue 1593: the issue reference link inside the link description was apparently the reason the link wasn't rendered correctly
         // the url was rendered as "[apple/swift-evolution#793](github.com/apple/swift-evolution/pull/793)"
         // instead of "apple/swift-evolution#793"
-        
+
         let body = "This is the implementation for [apple/swift-evolution#793](https://github.com/apple/swift-evolution/pull/793)\r\n\r\nNote: One of the new tests fails..."
-        
+
         let models = MarkdownModels(
             body,
             owner: "owner",
@@ -302,10 +301,8 @@ class IssueTests: XCTestCase {
             contentSizeCategory: .large,
             isRoot: false
         )
-        
-        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "This is the implementation for apple/swift-evolution#793")
-        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "Note: One of the new tests fails...")
-        
+
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "This is the implementation for apple/swift-evolution#793\nNote: One of the new tests fails...")
     }
 
 }

@@ -94,12 +94,28 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     private let gradientWidth = Styles.Sizes.gutter
     private let sendButtonGradientLayer = CAGradientLayer()
     private let sendButton = UIButton()
+    private let activityIndicator = UIActivityIndicatorView(
+        activityIndicatorStyle: UIActivityIndicatorViewStyle.gray
+    )
 
     public var sendButtonEnabled: Bool {
         get { return sendButton.isEnabled }
         set {
             sendButton.isEnabled = newValue
             sendButton.alpha = newValue ? 1 : 0.25
+        }
+    }
+
+    public var isProcessing: Bool = false {
+        didSet {
+            sendButton.isEnabled = !isProcessing
+            if isProcessing {
+                activityIndicator.startAnimating()
+                sendButton.isHidden = true
+            } else {
+                activityIndicator.stopAnimating()
+                sendButton.isHidden = false
+            }
         }
     }
 
@@ -130,6 +146,9 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
             sendButton.setImage(UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
             sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
             addSubview(sendButton)
+
+            activityIndicator.hidesWhenStopped = true
+            addSubview(activityIndicator)
         }
     }
 
@@ -155,6 +174,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
                 width: gradientWidth,
                 height: height
             )
+            activityIndicator.center = sendButton.center
             // put collection view beneath the gradient layer
             collectionView.frame = CGRect(x: 0, y: 0, width: sendButton.frame.minX, height: height)
         } else {
@@ -163,6 +183,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     }
 
     @objc private func onSend() {
+        isProcessing = true
         sendDelegate?.didSend(for: self)
     }
 

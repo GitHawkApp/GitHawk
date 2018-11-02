@@ -40,4 +40,3 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
     }
 
 }
-

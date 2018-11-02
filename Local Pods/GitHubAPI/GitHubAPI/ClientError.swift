@@ -11,6 +11,17 @@ import Foundation
 public enum ClientError: Error {
     case unauthorized
     case mismatchedInput
-    case outputNil(Error?)
-    case network(Error?)
+}
+
+extension ClientError: LocalizedError {
+
+    public var localizedDescription: String {
+        switch self {
+        case .unauthorized:
+            return NSLocalizedString("You are unauthorized to make this request.", comment: "")
+        case .mismatchedInput:
+            return NSLocalizedString("There was an error parsing this response.", comment: "")
+        }
+    }
+
 }
