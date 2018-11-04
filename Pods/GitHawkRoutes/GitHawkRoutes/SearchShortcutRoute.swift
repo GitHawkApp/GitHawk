@@ -15,11 +15,5 @@ public struct SearchShortcutRoute: Routable {
     public static func from(params: [String: String]) -> SearchShortcutRoute? {
         return SearchShortcutRoute()
     }
-
-    public var encoded: [String: String] { return [:] }
-
-    public static var path: String {
-        return "com.githawk.shortcut.search"
-    }
     
 }

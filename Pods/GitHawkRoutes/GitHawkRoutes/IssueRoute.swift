@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct IssueNotificationRoute: Routable {
+public struct IssueRoute: Routable {
 
     public let owner: String
     public let repo: String
@@ -20,16 +20,12 @@ public struct IssueNotificationRoute: Routable {
         self.number = number
     }
 
-    public static func from(params: [String: String]) -> IssueNotificationRoute? {
+    public static func from(params: [String: String]) -> IssueRoute? {
         guard let owner = params["owner"],
             let repo = params["repo"],
             let number = (params["number"] as NSString?)?.integerValue
             else { return nil }
-        return IssueNotificationRoute(owner: owner, repo: repo, number: number)
-    }
-
-    public static var path: String {
-        return "com.githawk.issue-notifications"
+        return IssueRoute(owner: owner, repo: repo, number: number)
     }
 
     public var encoded: [String: String] {

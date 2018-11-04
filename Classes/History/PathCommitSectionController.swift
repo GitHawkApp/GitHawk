@@ -34,4 +34,3 @@ final class PathCommitSectionController: ListSwiftSectionController<PathCommitMo
     }
 
 }
-

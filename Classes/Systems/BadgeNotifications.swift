@@ -138,7 +138,7 @@ final class BadgeNotifications {
             // currently only handling issues
             if let identifier = $0.subject.identifier,
                 case .number(let n) = identifier {
-                content.set(route: IssueNotificationRoute(
+                content.set(route: IssueRoute(
                     owner: $0.repository.owner.login,
                     repo: $0.repository.name,
                     number: n

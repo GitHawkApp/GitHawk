@@ -12,7 +12,7 @@ import GitHubSession
 import Squawk
 
 final class SettingsViewController: UITableViewController,
-NewIssueTableViewControllerDelegate {
+NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
 
     // must be injected
     var sessionManager: GitHubSessionManager!
@@ -22,6 +22,7 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
     @IBOutlet weak var githubStatusCell: StyledTableCell!
     @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
+    @IBOutlet weak var tryTestFlightBetaCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var setDefaultReaction: StyledTableCell!
@@ -61,8 +62,7 @@ NewIssueTableViewControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
-            ?? NSLocalizedString("Off", comment: "")
+        updateDefaultReaction()
 
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
@@ -118,10 +118,17 @@ NewIssueTableViewControllerDelegate {
             onSetDefaultReaction()
         } else if cell === signOutCell {
             onSignOut()
+        } else if cell === tryTestFlightBetaCell {
+            onTryTestFlightBeta()
         }
     }
 
     // MARK: Private API
+
+    func updateDefaultReaction() {
+        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
+            ?? NSLocalizedString("Off", comment: "")
+    }
 
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
@@ -188,7 +195,23 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onSetDefaultReaction() {
-        //showDefaultReactionMenu()
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: "DefaultReactionDetailController") as? DefaultReactionDetailController else {
+            fatalError("Cannot instantiate DefaultReactionDetailController instance")
+        }
+        viewController.delegate = self
+        let navController = UINavigationController(rootViewController: viewController)
+        showDetailViewController(navController, sender: self)
+    }
+
+    func onTryTestFlightBeta() {
+        #if TESTFLIGHT
+        Squawk.showAlreadyOnBeta()
+        #else
+        guard let url = URL(string: "https://testflight.apple.com/join/QIVXLkkn")
+            else { fatalError("Failed to decode testflight beta URL") }
+        presentSafari(url: url)
+        #endif
     }
 
     func onSignOut() {
@@ -278,5 +301,11 @@ NewIssueTableViewControllerDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         let navigation = UINavigationController(rootViewController: issuesViewController)
         showDetailViewController(navigation, sender: nil)
+    }
+
+    // MARK: DefaultReactionDelegate
+
+    func didUpdateDefaultReaction() {
+        updateDefaultReaction()
     }
 }

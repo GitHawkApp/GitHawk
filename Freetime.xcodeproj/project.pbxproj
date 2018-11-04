@@ -25,12 +25,11 @@
 		290CA7642169799600DE04F8 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA7632169799600DE04F8 /* AppController.swift */; };
 		290CA76621697A7900DE04F8 /* AppSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76521697A7900DE04F8 /* AppSplitViewController.swift */; };
 		290CA768216984F000DE04F8 /* Client+GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA767216984F000DE04F8 /* Client+GithubUserSession.swift */; };
-		290CA76A216AC82700DE04F8 /* SearchShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */; };
+		290CA76A216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA769216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift */; };
 		290CA770216AE91300DE04F8 /* UITabBarController+SelectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */; };
-		290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */; };
-		290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */; };
-		290CA778216AFAE600DE04F8 /* RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA777216AFAE600DE04F8 /* RoutePerformable.swift */; };
-		290CA77A216AFC1300DE04F8 /* AppController+SetupRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */; };
+		290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */; };
+		290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */; };
+		290CA778216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
@@ -206,6 +205,7 @@
 		295C31D11F0AA72000521CED /* IssueStatusEvent+ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C31D01F0AA72000521CED /* IssueStatusEvent+ButtonState.swift */; };
 		295F52AA1EF1BB86000B53CF /* Test.md in Resources */ = {isa = PBXBuildFile; fileRef = 295F52A61EF1B9D2000B53CF /* Test.md */; };
 		29622B45210520E6000C428D /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29622B44210520E6000C428D /* CardCollectionViewCell.swift */; };
+		29625060217D53C000EA6164 /* RepoRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962505F217D53C000EA6164 /* RepoRoute+RoutePerformable.swift */; };
 		2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */; };
 		2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
 		2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
@@ -270,6 +270,7 @@
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
 		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
+		2990B9DB218BF23D009865EB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990B9DA218BF23D009865EB /* Router.swift */; };
 		29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
 		299304691FBA8A88007B9737 /* IssueManagingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */; };
 		2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993046A1FBA8C04007B9737 /* IssueManagingExpansionCell.swift */; };
@@ -301,7 +302,7 @@
 		29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */; };
 		29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */; };
 		29A1053F216D9062004734A0 /* UNNotificationContent+Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1053E216D9062004734A0 /* UNNotificationContent+Routable.swift */; };
-		29A10541216D912F004734A0 /* IssueNotificationRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A10540216D912F004734A0 /* IssueNotificationRoute.swift */; };
+		29A10541216D912F004734A0 /* IssueRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A10540216D912F004734A0 /* IssueRoute+RoutePerformable.swift */; };
 		29A10543216D9381004734A0 /* UNMutableNotificationContent+Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A10542216D9381004734A0 /* UNMutableNotificationContent+Routable.swift */; };
 		29A10545216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A10544216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
@@ -566,12 +567,11 @@
 		290CA7632169799600DE04F8 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		290CA76521697A7900DE04F8 /* AppSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSplitViewController.swift; sourceTree = "<group>"; };
 		290CA767216984F000DE04F8 /* Client+GithubUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+GithubUserSession.swift"; sourceTree = "<group>"; };
-		290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShortcutRoute.swift; sourceTree = "<group>"; };
+		290CA769216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchShortcutRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
 		290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+SelectType.swift"; sourceTree = "<group>"; };
-		290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchAccountShortcutRoute.swift; sourceTree = "<group>"; };
-		290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkShortcutRoute.swift; sourceTree = "<group>"; };
-		290CA777216AFAE600DE04F8 /* RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePerformable.swift; sourceTree = "<group>"; };
-		290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppController+SetupRoutes.swift"; sourceTree = "<group>"; };
+		290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwitchAccountShortcutRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
+		290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkShortcutRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
+		290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePerformable+RoutePerformable.swift"; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
@@ -748,6 +748,7 @@
 		295F52A61EF1B9D2000B53CF /* Test.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Test.md; sourceTree = "<group>"; };
 		295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29622B44210520E6000C428D /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
+		2962505F217D53C000EA6164 /* RepoRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepoRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
 		2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIMenuController+Reactions.swift"; sourceTree = "<group>"; };
 		2963A9331EE2118E0066509C /* ResponderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderButton.swift; sourceTree = "<group>"; };
 		2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LabelableFields+IssueLabelModel.swift"; sourceTree = "<group>"; };
@@ -818,6 +819,7 @@
 		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
 		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
+		2990B9DA218BF23D009865EB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MutableTraits.swift"; sourceTree = "<group>"; };
 		299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingSectionController.swift; sourceTree = "<group>"; };
 		2993046A1FBA8C04007B9737 /* IssueManagingExpansionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingExpansionCell.swift; sourceTree = "<group>"; };
@@ -850,7 +852,7 @@
 		29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitModel.swift; sourceTree = "<group>"; };
 		29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitSectionController.swift; sourceTree = "<group>"; };
 		29A1053E216D9062004734A0 /* UNNotificationContent+Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNNotificationContent+Routable.swift"; sourceTree = "<group>"; };
-		29A10540216D912F004734A0 /* IssueNotificationRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueNotificationRoute.swift; sourceTree = "<group>"; };
+		29A10540216D912F004734A0 /* IssueRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssueRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
 		29A10542216D9381004734A0 /* UNMutableNotificationContent+Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNMutableNotificationContent+Routable.swift"; sourceTree = "<group>"; };
 		29A10544216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppController+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -1122,14 +1124,15 @@
 			isa = PBXGroup;
 			children = (
 				290CA7632169799600DE04F8 /* AppController.swift */,
-				290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */,
 				29A10544216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift */,
 				290CA76521697A7900DE04F8 /* AppSplitViewController.swift */,
-				290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */,
-				29A10540216D912F004734A0 /* IssueNotificationRoute.swift */,
-				290CA777216AFAE600DE04F8 /* RoutePerformable.swift */,
-				290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */,
-				290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */,
+				290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */,
+				29A10540216D912F004734A0 /* IssueRoute+RoutePerformable.swift */,
+				2962505F217D53C000EA6164 /* RepoRoute+RoutePerformable.swift */,
+				290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */,
+				2990B9DA218BF23D009865EB /* Router.swift */,
+				290CA769216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift */,
+				290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */,
 				29A10542216D9381004734A0 /* UNMutableNotificationContent+Routable.swift */,
 				29A1053E216D9062004734A0 /* UNNotificationContent+Routable.swift */,
 			);
@@ -2823,11 +2826,13 @@
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				29B205FA217B8B9100E4DD9F /* PathCommitCell.swift in Sources */,
 				29AAB7171FB4A2AE001D5E6A /* BoundedImageSize.swift in Sources */,
+				2990B9DB218BF23D009865EB /* Router.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
 				29AF1E8C1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift in Sources */,
 				291929611F3FD2960012067B /* DiffString.swift in Sources */,
 				290744B51F250A6800FD9E48 /* EmojiAutocomplete.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
+				29625060217D53C000EA6164 /* RepoRoute+RoutePerformable.swift in Sources */,
 				29F3A18420CADA3A00645CB7 /* NotificationsViewController.swift in Sources */,
 				2957777B200129EB00DDD785 /* Int+Abbreviated.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
@@ -2881,7 +2886,7 @@
 				2967DC56211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift in Sources */,
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
-				29A10541216D912F004734A0 /* IssueNotificationRoute.swift in Sources */,
+				29A10541216D912F004734A0 /* IssueRoute+RoutePerformable.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
@@ -2957,7 +2962,6 @@
 				DCA5ED141FAEE8030072F074 /* Bookmark.swift in Sources */,
 				299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
-				290CA77A216AFC1300DE04F8 /* AppController+SetupRoutes.swift in Sources */,
 				29BBD82920CAC7D5004D62FE /* NotificationViewModel.swift in Sources */,
 				299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
@@ -2987,7 +2991,7 @@
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */,
-				290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute.swift in Sources */,
+				290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift in Sources */,
 				297A372C1F1700BC0081C04E /* IssueRequestModel.swift in Sources */,
 				297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */,
 				29F7F05C1F2A751B00F6075D /* IssueResult.swift in Sources */,
@@ -3106,13 +3110,13 @@
 				2905AFAF1F7357FA0015AE32 /* RepositoryViewController.swift in Sources */,
 				2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */,
 				BDB6AA69215FBC35009BB73C /* RepositoryBranchesViewController.swift in Sources */,
-				290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift in Sources */,
+				290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift in Sources */,
 				293189281F5391F700EF0911 /* Result.swift in Sources */,
-				290CA778216AFAE600DE04F8 /* RoutePerformable.swift in Sources */,
+				290CA778216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift in Sources */,
 				295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
-				290CA76A216AC82700DE04F8 /* SearchShortcutRoute.swift in Sources */,
+				290CA76A216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift in Sources */,
 				986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */,
 				DC60C6DC1F99414E00241271 /* IsCancellationError.swift in Sources */,
 				29CC29311FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift in Sources */,
