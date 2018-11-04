@@ -66,7 +66,11 @@ UICollectionViewDelegateFlowLayout {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentTableModel else { return }
-        self.model = viewModel
+        configure(with: viewModel)
+    }
+
+    func configure(with model: IssueCommentTableModel) {
+        self.model = model
         collectionView.reloadData()
     }
 

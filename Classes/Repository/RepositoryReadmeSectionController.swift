@@ -8,9 +8,9 @@
 
 import Foundation
 import IGListKit
+import StyledTextKit
 
-final class RepositoryReadmeSectionController: ListBindingSectionController<RepositoryReadmeModel>,
-ListBindingSectionControllerDataSource {
+final class RepositoryReadmeSectionController: ListSwiftSectionController<RepositoryReadmeModel> {
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -24,58 +24,132 @@ ListBindingSectionControllerDataSource {
 
     override init() {
         super.init()
-        dataSource = self
         inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
     }
 
-    // MARK: ListBindingSectionControllerDataSource
-
-    func sectionController(
-        _ sectionController: ListBindingSectionController<ListDiffable>,
-        viewModelsFor object: Any
-        ) -> [ListDiffable] {
-        return self.object?.models ?? []
-    }
-
-    func sectionController(
-        _ sectionController: ListBindingSectionController<ListDiffable>,
-        sizeForViewModel viewModel: Any,
-        at index: Int
-        ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
-            else { fatalError("Missing context") }
-        let insetWidth = width - inset.left - inset.right
-        let height = BodyHeightForComment(
-            viewModel: viewModel,
-            width: insetWidth,
-            webviewCache: webviewCache,
-            imageCache: imageCache
-        )
-        return CGSize(width: insetWidth, height: height)
-    }
-
-    func sectionController(
-        _ sectionController: ListBindingSectionController<ListDiffable>,
-        cellForViewModel viewModel: Any,
-        at index: Int
-        ) -> UICollectionViewCell & ListBindable {
-        guard let context = self.collectionContext else { fatalError("Missing context") }
-
-        let cellClass: AnyClass = CellTypeForComment(viewModel: viewModel)
-        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
-            else { fatalError("Cell not bindable") }
-
-        ExtraCommentCellConfigure(
-            cell: cell,
-            imageDelegate: photoHandler,
-            htmlDelegate: webviewCache,
-            htmlNavigationDelegate: viewController,
-            htmlImageDelegate: photoHandler,
-            markdownDelegate: viewController,
-            imageHeightDelegate: imageCache
-        )
-
-        return cell
+    override func createBinders(from value: RepositoryReadmeModel) -> [ListBinder] {
+        let inset = self.inset
+        return value.models.compactMap {
+            if let model = $0 as? IssueCommentImageModel {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentImageCell.self),
+                    size: { [imageCache] context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        return CGSize(
+                            width: width,
+                            height: imageCache.height(model: context.value, width: width)
+                        )
+                    },
+                    configure: { [imageCache, photoHandler] (cell, context) in
+                        cell.delegate = photoHandler
+                        cell.heightDelegate = imageCache
+                        cell.configure(with: context.value)
+                })
+            } else if let model = $0 as? IssueCommentCodeBlockModel {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentCodeBlockCell.self),
+                    size: { context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        let inset = IssueCommentCodeBlockCell.scrollViewInset
+                        return CGSize(
+                            width: width,
+                            height: context.value.contentSize.height + inset.top + inset.bottom
+                        )
+                    },
+                    configure: {
+                        $0.configure(with: $1.value)
+                })
+            } else if let model = $0 as? IssueCommentSummaryModel {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentSummaryCell.self),
+                    size: { context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        return CGSize(
+                            width: width,
+                            height: Styles.Sizes.tableCellHeight
+                        )
+                },
+                    configure: {
+                        $0.configure(with: $1.value)
+                })
+            } else if let model = $0 as? IssueCommentQuoteModel {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentQuoteCell.self),
+                    size: { context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        return CGSize(
+                            width: width,
+                            height: context.value.string.viewSize(in: width).height
+                        )
+                },
+                    configure: {
+                        $0.configure(with: $1.value)
+                })
+            } else if let model = $0 as? IssueCommentHtmlModel {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentHtmlCell.self),
+                    size: { [webviewCache] context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        return CGSize(
+                            width: width,
+                            height: webviewCache.height(model: context.value, width: width)
+                        )
+                },
+                    configure: { [webviewCache, viewController, photoHandler] (cell, context) in
+                        cell.delegate = webviewCache
+                        cell.navigationDelegate = viewController
+                        cell.imageDelegate = photoHandler
+                        cell.configure(with: context.value)
+                })
+            } else if let model = $0 as? IssueCommentHrModel {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentHrCell.self),
+                    size: { context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        return CGSize(
+                            width: width,
+                            height: 3.0 + IssueCommentHrCell.inset.top + IssueCommentHrCell.inset.bottom
+                        )
+                })
+            } else if let model = $0 as? StyledTextRenderer {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentTextCell.self),
+                    size: { context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        return CGSize(
+                            width: width,
+                            height: context.value.viewSize(in: width).height
+                        )
+                    },
+                    configure: { [viewController] (cell, context) in
+                        cell.textView.tapDelegate = viewController
+                        cell.configure(with: context.value)
+                })
+            } else if let model = $0 as? IssueCommentTableModel {
+                return binder(
+                    model,
+                    cellType: ListCellType.class(IssueCommentTableCell.self),
+                    size: { context in
+                        let width = context.collection.containerSize.width - inset.left - inset.right
+                        return CGSize(
+                            width: width,
+                            height: context.value.size.height
+                        )
+                    },
+                    configure: { [viewController] (cell, context) in
+                        cell.delegate = viewController
+                        cell.configure(with: context.value)
+                })
+            }
+            return nil
+        }
     }
 
 }
