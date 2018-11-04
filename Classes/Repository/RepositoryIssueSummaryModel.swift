@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 import StyledTextKit
 
-class RepositoryIssueSummaryModel: ListDiffable {
+final class RepositoryIssueSummaryModel: ListDiffable, ListSwiftDiffable {
 
     let id: String
     let title: StyledTextRenderer
@@ -49,6 +49,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
     }
 
     // MARK: ListDiffable
+    // TODO REMOVE
 
     func diffIdentifier() -> NSObjectProtocol {
         return id as NSObjectProtocol
@@ -67,4 +68,24 @@ class RepositoryIssueSummaryModel: ListDiffable {
             && labelSummary == object.labelSummary
             && ciStatus == object.ciStatus
     }
+
+    // MARK: ListSwiftDiffable
+
+    var identifier: String {
+        return id
+    }
+
+    func isEqual(to value: ListSwiftDiffable) -> Bool {
+        guard let object = value as? RepositoryIssueSummaryModel else { return false }
+        return id == object.id
+            && number == object.number
+            && pullRequest == object.pullRequest
+            && status == object.status
+            && author == object.author
+            && created == object.created
+            && title.string == object.title.string
+            && labelSummary == object.labelSummary
+            && ciStatus == object.ciStatus
+    }
+
 }

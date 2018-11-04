@@ -17,6 +17,10 @@ protocol BaseListViewController2EmptyDataSource: class {
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair
 }
 
+protocol BaseListViewController2HeaderDataSource: class {
+    func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair
+}
+
 class BaseListViewController2<PageType: CustomStringConvertible>: UIViewController,
 ListSwiftAdapterDataSource,
 FeedDelegate,
@@ -29,6 +33,7 @@ EmptyViewDelegate {
 
     public weak var dataSource: BaseListViewController2DataSource?
     public weak var emptyDataSource: BaseListViewController2EmptyDataSource?
+    public weak var headerDataSource: BaseListViewController2HeaderDataSource?
 
     public private(set) lazy var feed: Feed = { Feed(
         viewController: self,
@@ -132,21 +137,25 @@ EmptyViewDelegate {
             return []
         }
 
+        let listModels: [ListSwiftPair]
         if let emptyDataSource = self.emptyDataSource,
             hasNoObjects,
             feed.status == .idle {
-            return [emptyDataSource.emptyModel(for: adapter)]
-        }
-
-        if let page = self.page?.description {
+            listModels = [emptyDataSource.emptyModel(for: adapter)]
+        } else if let page = self.page?.description {
             let pagePair = ListSwiftPair.pair(page) { [weak self] in
                 let controller = LoadMoreSectionController2()
                 controller.delegate = self
                 return controller
             }
-            return models + [pagePair]
+            listModels = models + [pagePair]
         } else {
-            return models
+            listModels = models
+        }
+        if let header = headerDataSource?.headerModel(for: adapter) {
+            return [header] + listModels
+        } else {
+            return listModels
         }
     }
 

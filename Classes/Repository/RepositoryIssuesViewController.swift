@@ -14,11 +14,13 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
-class RepositoryIssuesViewController: BaseListViewController<NSString>,
-    BaseListViewControllerDataSource,
+final class RepositoryIssuesViewController: BaseListViewController2<String>,
+    BaseListViewController2DataSource,
+    BaseListViewController2EmptyDataSource,
+    BaseListViewController2HeaderDataSource,
 SearchBarSectionControllerDelegate {
 
-    private var models = [ListDiffable]()
+    private var models = [RepositoryIssueSummaryModel]()
     private let owner: String
     private let repo: String
     private let client: RepositoryClient
@@ -43,6 +45,8 @@ SearchBarSectionControllerDelegate {
         )
 
         self.dataSource = self
+        self.emptyDataSource = self
+        self.headerDataSource = self
 
         switch type {
         case .issues: title = NSLocalizedString("Issues", comment: "")
@@ -69,7 +73,7 @@ SearchBarSectionControllerDelegate {
 
     // MARK: Overrides
 
-    override func fetch(page: NSString?) {
+    override func fetch(page: String?) {
         client.searchIssues(
             query: fullQueryString,
             nextPage: page as String?,
@@ -80,11 +84,11 @@ SearchBarSectionControllerDelegate {
                 self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let payload):
                 if page != nil {
-                    self?.models += payload.models as [ListDiffable]
+                    self?.models += payload.models
                 } else {
                     self?.models = payload.models
                 }
-                self?.update(page: payload.nextPage as NSString?, animated: trueUnlessReduceMotionEnabled)
+                self?.update(page: payload.nextPage, animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
@@ -97,37 +101,44 @@ SearchBarSectionControllerDelegate {
         debouncer.action = { [weak self] in self?.fetch(page: nil) }
     }
 
-    // MARK: BaseListViewControllerDataSource
+    // MARK: BaseListViewController2HeaderDataSource
 
-    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return [searchKey]
-    }
-
-    func models(listAdapter: ListAdapter) -> [ListDiffable] {
-        return models
-    }
-
-    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
-        if let object = model as? ListDiffable, object === searchKey {
-            return SearchBarSectionController(
+    func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        return ListSwiftPair.pair("header", { [weak self, previousSearchString] in
+            SearchBarSectionController(
                 placeholder: Constants.Strings.search,
                 delegate: self,
                 query: previousSearchString
             )
-        }
-        return RepositorySummarySectionController(client: client.githubClient, owner: owner, repo: repo)
+        })
     }
 
-    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
+    // MARK: BaseListViewController2DataSource
+
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        return models.map { [client, owner, repo] model in
+            ListSwiftPair.pair(model, {
+                RepositorySummarySectionController(
+                    client: client.githubClient,
+                    owner: owner,
+                    repo: repo
+                )
+            })
+        }
+    }
+
+    // MARK: BaseListViewController2EmptyDataSource
+
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        let layoutInsets = view.safeAreaInsets
         let empty: RepositoryEmptyResultsType
         switch type {
         case .issues: empty = .issues
         case .pullRequests: empty = .pullRequests
         }
-        return RepositoryEmptyResultsSectionController(
-            layoutInsets: view.safeAreaInsets,
-            type: empty
-        )
+        return ListSwiftPair.pair("empty") {
+            RepositoryEmptyResultsSectionController2(layoutInsets: layoutInsets, type: empty)
+        }
     }
 
     // MARK: Private API

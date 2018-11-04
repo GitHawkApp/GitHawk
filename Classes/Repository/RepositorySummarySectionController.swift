@@ -8,7 +8,7 @@
 
 import IGListKit
 
-final class RepositorySummarySectionController: ListGenericSectionController<RepositoryIssueSummaryModel> {
+final class RepositorySummarySectionController: ListSwiftSectionController<RepositoryIssueSummaryModel> {
 
     private let client: GithubClient
     private let owner: String
@@ -21,44 +21,46 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
         super.init()
     }
 
-    override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width,
-            let object = object else {
-                fatalError("Missing context or object")
-        }
+    override func createBinders(from value: RepositoryIssueSummaryModel) -> [ListBinder] {
+        return [
+            binder(value, cellType: ListCellType.class(RepositorySummaryCell.self), size: {
+                let width = $0.collection.containerSize.width
+                let object = $0.value
+                let labelListViewHeightAndSpacing: CGFloat = {
+                    guard object.labels.count > 0 else { return 0 }
+                    let labelListViewWidth = width - (Styles.Sizes.columnSpacing * 2)
+                    let labelListViewHeight = LabelListView.height(
+                        width: labelListViewWidth,
+                        labels: object.labels,
+                        cacheKey: object.labelSummary
+                    )
+                    return labelListViewHeight + Styles.Sizes.rowSpacing
+                }()
 
-        let labelListViewHeightAndSpacing: CGFloat = {
-            guard object.labels.count > 0 else { return 0 }
-            let labelListViewWidth = width - (Styles.Sizes.columnSpacing * 2)
-            let labelListViewHeight = LabelListView.height(width: labelListViewWidth,
-                                                           labels: object.labels,
-                                                           cacheKey: object.labelSummary)
-            return labelListViewHeight + Styles.Sizes.rowSpacing
-        }()
-
-        let height = object.title.viewSize(in: width).height
-            + Styles.Text.secondary.preferredFont.lineHeight
-            + Styles.Sizes.gutter
-            + labelListViewHeightAndSpacing
-        return CGSize(width: width, height: ceil(height))
-    }
-
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: RepositorySummaryCell.self, for: self, at: index) as? RepositorySummaryCell,
-            let object = self.object else {
-                fatalError("Missing context, object, or cell is wrong type")
-        }
-
-        cell.configure(object)
-        return cell
-    }
-
-    override func didSelectItem(at index: Int) {
-        guard let number = self.object?.number else { return }
-        let issueModel = IssueDetailsModel(owner: owner, repo: repo, number: number)
-        let controller = IssuesViewController(client: client, model: issueModel)
-        viewController?.view.endEditing(false) // resign keyboard if it was triggered to become active by SearchBar 
-        viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+                let height = object.title.viewSize(in: width).height
+                    + Styles.Text.secondary.preferredFont.lineHeight
+                    + Styles.Sizes.gutter
+                    + labelListViewHeightAndSpacing
+                return CGSize(width: width, height: ceil(height))
+            },
+                   configure: {
+                    $0.configure($1.value)
+            }, didSelect: { [weak self] context in
+                guard let `self` = self else { return }
+                let issueModel = IssueDetailsModel(
+                    owner: self.owner,
+                    repo: self.repo,
+                    number: context.value.number
+                )
+                let controller = IssuesViewController(client: self.client, model: issueModel)
+                // resign keyboard if it was triggered to become active by SearchBar
+                self.viewController?.view.endEditing(false)
+                self.viewController?.navigationController?.pushViewController(
+                    controller,
+                    animated: trueUnlessReduceMotionEnabled
+                )
+            })
+        ]
     }
 
 }
