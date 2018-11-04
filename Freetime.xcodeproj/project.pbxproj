@@ -361,6 +361,9 @@
 		29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FBE1F12EF4000A59ED5 /* IssueReferencedCell.swift */; };
 		29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FBF1F12EF4000A59ED5 /* IssueReferencedModel.swift */; };
 		29C53FC41F12EF4000A59ED5 /* IssueReferencedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FC01F12EF4000A59ED5 /* IssueReferencedSectionController.swift */; };
+		29C62F9B218F406A001724B2 /* IssueFilesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C62F9A218F406A001724B2 /* IssueFilesSectionController.swift */; };
+		29C62F9E218F42B7001724B2 /* EmptyMessageSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C62F9D218F42B7001724B2 /* EmptyMessageSectionController.swift */; };
+		29C62FA0218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C62F9F218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift */; };
 		29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */; };
 		29C8F9AD208C02860075931C /* LoadMoreSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */; };
 		29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AE208C02BE0075931C /* String+ListSwift.swift */; };
@@ -912,6 +915,9 @@
 		29C53FBE1F12EF4000A59ED5 /* IssueReferencedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCell.swift; sourceTree = "<group>"; };
 		29C53FBF1F12EF4000A59ED5 /* IssueReferencedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedModel.swift; sourceTree = "<group>"; };
 		29C53FC01F12EF4000A59ED5 /* IssueReferencedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedSectionController.swift; sourceTree = "<group>"; };
+		29C62F9A218F406A001724B2 /* IssueFilesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilesSectionController.swift; sourceTree = "<group>"; };
+		29C62F9D218F42B7001724B2 /* EmptyMessageSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageSectionController.swift; sourceTree = "<group>"; };
+		29C62F9F218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeDirectorySectionController.swift; sourceTree = "<group>"; };
 		29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController2.swift; sourceTree = "<group>"; };
 		29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreSectionController2.swift; sourceTree = "<group>"; };
 		29C8F9AE208C02BE0075931C /* String+ListSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListSwift.swift"; sourceTree = "<group>"; };
@@ -1143,6 +1149,7 @@
 				29B94E681FCB36A000715D7E /* File+ListDiffable.swift */,
 				291929521F3F9E490012067B /* IssueFileCell.swift */,
 				29B94E6C1FCB472400715D7E /* IssueFileChangesModel.swift */,
+				29C62F9A218F406A001724B2 /* IssueFilesSectionController.swift */,
 				291929501F3F76B10012067B /* IssueFilesViewController.swift */,
 				2919295E1F3FD1F40012067B /* IssuePatchContentViewController.swift */,
 				2919294A1F3EAD890012067B /* IssueViewFilesCell.swift */,
@@ -1693,8 +1700,9 @@
 		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7BBFEE551F8A8A0400C68E47 /* SearchBar */,
+				29C62F9C218F42A6001724B2 /* Empty */,
 				29DA1E7C1F5DF2960050C64B /* LoadMore */,
+				7BBFEE551F8A8A0400C68E47 /* SearchBar */,
 				298BA0941EC947F100B01946 /* SegmentedControl */,
 			);
 			path = "Section Controllers";
@@ -1964,6 +1972,14 @@
 			path = ReferencedCommit;
 			sourceTree = "<group>";
 		};
+		29C62F9C218F42A6001724B2 /* Empty */ = {
+			isa = PBXGroup;
+			children = (
+				29C62F9D218F42B7001724B2 /* EmptyMessageSectionController.swift */,
+			);
+			path = Empty;
+			sourceTree = "<group>";
+		};
 		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -2108,6 +2124,7 @@
 				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
 				29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */,
 				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
+				29C62F9F218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift */,
 				750986592048959D00D1E37A /* RepositoryWebViewController.swift */,
 				295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */,
 				29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */,
@@ -3136,10 +3153,12 @@
 				DCA5ED0E1FAED91F0072F074 /* BookmarkViewController.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
 				D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */,
+				29C62F9B218F406A001724B2 /* IssueFilesSectionController.swift in Sources */,
 				294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */,
 				297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */,
 				29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
+				29C62FA0218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift in Sources */,
 				29792B191FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift in Sources */,
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
@@ -3174,6 +3193,7 @@
 				29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
 				2977788A20B306F200F2AFC2 /* LabelLayoutManager.swift in Sources */,
+				29C62F9E218F42B7001724B2 /* EmptyMessageSectionController.swift in Sources */,
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,
 				2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */,
 				29A10543216D9381004734A0 /* UNMutableNotificationContent+Routable.swift in Sources */,
