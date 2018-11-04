@@ -162,19 +162,17 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     }
 
     func onReportBug() {
-        guard let viewController = NewIssueTableViewController.create(
-                client: GithubClient(userSession: sessionManager.focusedUserSession),
-                owner: "GitHawkApp",
-                repo: "GitHawk",
-                signature: .bugReport
-            ) else {
-                Squawk.showGenericError()
-                return
-        }
-        viewController.delegate = self
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.modalPresentationStyle = .formSheet
-        present(navController, animated: trueUnlessReduceMotionEnabled)
+        showTemplateOptions()
+    }
+
+    func showTemplateOptions() {
+        client.createNewIssue(
+            owner: "GitHawkApp",
+            repo: "GitHawk",
+            session: sessionManager.focusedUserSession,
+            mainViewController: self,
+            delegate: self
+        )
     }
 
     func onViewSource() {

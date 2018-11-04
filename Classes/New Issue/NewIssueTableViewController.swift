@@ -51,6 +51,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
 
+    private var template: String = ""
     private var client: GithubClient!
     private var owner: String!
     private var repo: String!
@@ -85,6 +86,26 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return viewController
     }
 
+    static func createWithTemplate(
+        client: GithubClient,
+        owner: String,
+        repo: String,
+        template: String,
+        signature: IssueSignatureType? = nil) -> NewIssueTableViewController? {
+
+        let storyboard = UIStoryboard(name: "NewIssue", bundle: nil)
+
+        let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
+        viewController?.hidesBottomBarWhenPushed = true
+        viewController?.client = client
+        viewController?.owner = owner
+        viewController?.repo = repo
+        viewController?.template = template
+        viewController?.signature = signature
+
+        return viewController
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,6 +127,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
         setupInputView()
+        bodyField.text = template
 
         // Update title to use localization
         title = Constants.Strings.newIssue

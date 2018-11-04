@@ -142,21 +142,16 @@ ContextMenuDelegate {
     }
 
     func newIssueAction() -> UIAlertAction? {
-        guard let newIssueViewController = NewIssueTableViewController.create(
-            client: client,
-            owner: repo.owner,
-            repo: repo.name,
-            signature: .sentWithGitHawk)
-        else {
-            Squawk.showGenericError()
-            return nil
+        let action = UIAlertAction(title: "New Issue", style: UIAlertActionStyle.default) { _ in
+            self.client.createNewIssue(
+                owner: self.repo.owner,
+                repo: self.repo.name,
+                session: nil,
+                mainViewController: self,
+                delegate: self
+            )
         }
-
-        newIssueViewController.delegate = self
-        weak var weakSelf = self
-
-        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .newIssue(issueController: newIssueViewController)
+        return action
     }
 
     func workingCopyAction() -> UIAlertAction? {

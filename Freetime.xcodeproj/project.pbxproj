@@ -2161,6 +2161,7 @@
 			children = (
 				98B5A0811F6C73D6000617D6 /* NewIssue.storyboard */,
 				98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */,
+				C0DEB1DC218E7BFB00B6FEFD /* IssueTemplates.swift */,
 			);
 			path = "New Issue";
 			sourceTree = "<group>";
@@ -2948,6 +2949,7 @@
 				29F3A18820CBFF8700645CB7 /* CreateNotificationTitle.swift in Sources */,
 				292EB08D1F1FF58D0046865D /* IssueMilestoneEventModel.swift in Sources */,
 				292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */,
+				C0DEB1DD218E7BFB00B6FEFD /* IssueTemplates.swift in Sources */,
 				DCA5ED141FAEE8030072F074 /* Bookmark.swift in Sources */,
 				299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
