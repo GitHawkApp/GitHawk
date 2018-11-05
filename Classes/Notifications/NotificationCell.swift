@@ -188,7 +188,8 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         case .pending: tintColor = Styles.Colors.Blue.medium.color
         }
         iconImageView.tintColor = tintColor
-        iconImageView.image = model.type.icon.withRenderingMode(.alwaysTemplate)
+        iconImageView.image = model.type.icon(merged: model.state == .merged)?
+            .withRenderingMode(.alwaysTemplate)
 
         let hasComments = model.comments > 0
         commentButton.alpha = hasComments ? 1 : 0.3
