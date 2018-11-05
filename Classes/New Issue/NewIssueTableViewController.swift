@@ -51,7 +51,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
 
-    private var template: String = ""
+    private var template = ""
     private var client: GithubClient!
     private var owner: String!
     private var repo: String!
