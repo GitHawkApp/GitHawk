@@ -12,25 +12,31 @@ import GitHubSession
 import Squawk
 
 struct IssueTemplate {
-    let title:String
-    let template:String
+    let title: String
+    let template: String
+}
+
+struct IssueTemplateDetails {
+    let owner: String
+    let repo: String
+    let session: GitHubUserSession?
+    let viewController: UIViewController
+    weak var delegate: NewIssueTableViewControllerDelegate?
 }
 
 enum IssueTemplateHelper {
 
-    static private func matchesForRegexInText(
-        regex: String!,
-        text: String!) -> [String] {
 
+    static private func matches(
+        regex: String,
+        text: String) -> [String] {
         do {
-            let regex = try NSRegularExpression(pattern: regex, options: [])
-            let nsString = text as NSString
-
+            let regex = try NSRegularExpression(pattern: regex)
+            let str = text as NSString
             let results = regex.matches(
                 in: text,
-                options: [],
-                range: NSMakeRange(0, nsString.length))
-            return results.map { nsString.substring(with: $0.range)}
+                range: NSMakeRange(0, str.length))
+            return results.map { str.substring(with: $0.range)}
 
         } catch let error as NSError {
             print("invalid regex: \(error.localizedDescription)")
@@ -38,26 +44,17 @@ enum IssueTemplateHelper {
         }
     }
 
-    static func getNameAndDescriptionFromTemplateFile(file: String) -> (name: String?, about: String?) {
-
-        let names = IssueTemplateHelper.matchesForRegexInText(regex: "(?<=name:).*", text: file)
-        let abouts = IssueTemplateHelper.matchesForRegexInText(regex: "(?<=about:).*", text: file)
-        let name = names.count > 0
-            ? names[0].trimmingCharacters(in: .whitespaces)
-            : nil
-        let about = abouts.count > 0
-            ? abouts[0].trimmingCharacters(in: .whitespaces)
-            : nil
+    static func getNameAndDescription(fromTemplatefile file: String) -> (name: String?, about: String?) {
+        let names = IssueTemplateHelper.matches(regex: "(?<=name:).*", text: file)
+        let abouts = IssueTemplateHelper.matches(regex: "(?<=about:).*", text: file)
+        let name = names.first?.trimmingCharacters(in: .whitespaces)
+        let about = abouts.first?.trimmingCharacters(in: .whitespaces)
         return (name, about)
     }
 
     static func showIssueAlert(
         with templates: [IssueTemplate],
-        owner: String,
-        repo: String,
-        session: GitHubUserSession?,
-        mainViewController: UIViewController,
-        delegate: NewIssueTableViewControllerDelegate) {
+        details: IssueTemplateDetails) -> UIAlertController {
 
         let alertView = UIAlertController(
             title: NSLocalizedString("New Issue", comment: ""),
@@ -73,31 +70,59 @@ enum IssueTemplateHelper {
                     handler: { _ in
 
                         guard let viewController = NewIssueTableViewController.createWithTemplate(
-                            client: GithubClient(userSession: session),
-                            owner: owner,
-                            repo: repo,
+                            client: GithubClient(userSession: details.session),
+                            owner: details.owner,
+                            repo: details.repo,
                             template: template.template,
                             signature: template.title == "Bug Report" ? .bugReport : .sentWithGitHawk
                             ) else {
-                                Squawk.showGenericError()
+                                assertionFailure("Failed to create NewIssueTableViewController")
                                 return
                         }
-                        viewController.delegate = delegate
+                        viewController.delegate = details.delegate
                         let navController = UINavigationController(rootViewController: viewController)
                         navController.modalPresentationStyle = .formSheet
-                        mainViewController.present(navController, animated: trueUnlessReduceMotionEnabled)
+                        details.viewController.present(navController, animated: trueUnlessReduceMotionEnabled)
                 }))
         }
 
         alertView.addAction(
             UIAlertAction(
-                title: "Dismiss",
-                style: UIAlertActionStyle.cancel,
+                title: NSLocalizedString("Dismiss", comment: ""),
+                style: .cancel,
                 handler: { _ in
-                    alertView.dismiss(animated: true, completion: nil)
+                    alertView.dismiss(animated: trueUnlessReduceMotionEnabled)
             })
         )
-        mainViewController.present(alertView, animated: true, completion: nil)
+        return alertView
+    }
+
+    static func present(
+        withTemplates sortedTemplates: [IssueTemplate],
+        details: IssueTemplateDetails) {
+        if sortedTemplates.count > 0 {
+            // Templates exists...
+            let alertView = IssueTemplateHelper.showIssueAlert(
+                with: sortedTemplates,
+                details: details
+            )
+            details.viewController.present(alertView, animated: trueUnlessReduceMotionEnabled)
+        } else {
+            // No templates exists, show blank new issue view controller
+            guard let viewController = NewIssueTableViewController.create(
+                client: GithubClient(userSession: details.session),
+                owner: details.owner,
+                repo: details.repo,
+                signature: .sentWithGitHawk
+                ) else {
+                    assertionFailure("Failed to create NewIssueTableViewController")
+                    return
+            }
+            viewController.delegate = details.delegate
+            let navController = UINavigationController(rootViewController: viewController)
+            navController.modalPresentationStyle = .formSheet
+            details.viewController.present(navController, animated: trueUnlessReduceMotionEnabled)
+        }
     }
 }
 
@@ -126,7 +151,7 @@ extension GithubClient {
         }
     }
 
-    private func createTemplateWith(
+    private func createTemplate(withOwner
         owner: String,
         repo: String,
         filename: String,
@@ -135,7 +160,7 @@ extension GithubClient {
         fetchTemplateFile(owner: owner, repo: repo, filename: filename) { (result) in
             switch result {
             case .success(let file):
-                let nameAndDescription = IssueTemplateHelper.getNameAndDescriptionFromTemplateFile(file: file)
+                let nameAndDescription = IssueTemplateHelper.getNameAndDescription(fromTemplatefile: file)
                 if let name = nameAndDescription.name {
                     completion(.success(IssueTemplate(title: name, template: file)))
                 } else {
@@ -155,7 +180,18 @@ extension GithubClient {
         delegate: NewIssueTableViewControllerDelegate) {
 
         var templates: [IssueTemplate] = []
+
+        // Create group.
+        // We need this since we will be making multiple async calls inside a for-loop.
         let templateGroup = DispatchGroup()
+
+        let details = IssueTemplateDetails(
+            owner: owner,
+            repo: repo,
+            session: session,
+            viewController: mainViewController,
+            delegate: delegate
+        )
 
         self.fetchFiles(
             owner: owner,
@@ -166,7 +202,7 @@ extension GithubClient {
                 case .success(let files):
                     for file in files {
                         templateGroup.enter()
-                        self.createTemplateWith(owner: owner, repo: repo, filename: file.name, completion: {
+                        self.createTemplate(withOwner: owner, repo: repo, filename: file.name, completion: {
                             switch $0 {
                             case .success(let template):
                                 templates.append(template)
@@ -187,33 +223,10 @@ extension GithubClient {
 
                     // Sort lexicographically
                     let sortedTemplates = templates.sorted(by: {$0.title < $1.title })
-
-                    if sortedTemplates.count > 0 {
-                        // Templates exists...
-                        IssueTemplateHelper.showIssueAlert(
-                            with: sortedTemplates,
-                            owner: owner,
-                            repo: repo,
-                            session: session,
-                            mainViewController: mainViewController,
-                            delegate: delegate
-                        )
-                    } else {
-                        // No templates exists, show blank new issue view controller
-                        guard let viewController = NewIssueTableViewController.create(
-                            client: GithubClient(userSession: session),
-                            owner: owner,
-                            repo: repo,
-                            signature: .sentWithGitHawk
-                            ) else {
-                                Squawk.showGenericError()
-                                return
-                        }
-                        viewController.delegate = delegate
-                        let navController = UINavigationController(rootViewController: viewController)
-                        navController.modalPresentationStyle = .formSheet
-                        mainViewController.present(navController, animated: trueUnlessReduceMotionEnabled)
-                    }
+                    IssueTemplateHelper.present(
+                        withTemplates: sortedTemplates,
+                        details: details
+                    )
                 }
         }
     }

@@ -70,11 +70,14 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return raw
     }
 
-    static func create(client: GithubClient,
-                       owner: String,
-                       repo: String,
-                       signature: IssueSignatureType? = nil) -> NewIssueTableViewController? {
-        let storyboard = UIStoryboard(name: "NewIssue", bundle: nil)
+    static func create(
+        client: GithubClient,
+        owner: String,
+        repo: String,
+        signature: IssueSignatureType? = nil
+        ) -> NewIssueTableViewController? {
+        
+        let storyboard = UIStoryboard(name: NSLocalizedString("NewIssue", comment: ""), bundle: nil)
 
         let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
         viewController?.hidesBottomBarWhenPushed = true
@@ -91,9 +94,10 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         owner: String,
         repo: String,
         template: String,
-        signature: IssueSignatureType? = nil) -> NewIssueTableViewController? {
+        signature: IssueSignatureType? = nil
+        ) -> NewIssueTableViewController? {
 
-        let storyboard = UIStoryboard(name: "NewIssue", bundle: nil)
+        let storyboard = UIStoryboard(name: NSLocalizedString("NewIssue", comment: ""), bundle: nil)
 
         let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
         viewController?.hidesBottomBarWhenPushed = true
