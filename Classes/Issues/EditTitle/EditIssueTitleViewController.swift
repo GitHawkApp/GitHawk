@@ -42,7 +42,15 @@ final class EditIssueTitleViewController: UIViewController {
         textView.textContainerInset = Styles.Sizes.textViewInset
         textView.text = issueTitle
         
-        setRightBarItemIdle()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: Constants.Strings.save,
+            style: .plain,
+            target: self,
+            action: #selector(
+                EditIssueTitleViewController.onSave
+            )
+        )
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: Constants.Strings.cancel,
             style: .plain,
@@ -57,18 +65,7 @@ final class EditIssueTitleViewController: UIViewController {
         super.viewDidAppear(animated)
         textView.becomeFirstResponder()
     }
-    
-    func setRightBarItemIdle() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: Constants.Strings.save,
-            style: .plain,
-            target: self,
-            action: #selector(
-                EditIssueTitleViewController.onSave
-            )
-        )
-    }
-    
+
     @objc func onSave() {
         textView.resignFirstResponder()
         if textView.text != issueTitle {

@@ -319,7 +319,6 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             number: model.number,
             title: title
         )
-        
     }
 
     func didDismiss(selected labels: [RepositoryLabel]) {
