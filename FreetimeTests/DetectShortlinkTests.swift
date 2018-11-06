@@ -123,12 +123,36 @@ class DetectShortlinkTests: XCTestCase {
         XCTAssertEqual(containsLink.linkText, "#4")
         XCTAssertEqual(containsLink.issueNumber, 4)
         XCTAssertEqual(builder.allText, testString)
+        
+        // dash in repository name
+        testString = "Unibeautify/unibeautify-cli#115"
+        builder = setupBuilder(with: testString)
+        containsLink = checkForIssueLink(builder.styledTexts)[0]
+        XCTAssertEqual(containsLink.linkText, "Unibeautify/unibeautify-cli#115")
+        XCTAssertEqual(containsLink.issueNumber, 115)
+        XCTAssertEqual(builder.allText, testString)
+        
+        //leading underscore
+        testString = "_#115"
+        builder = setupBuilder(with: testString)
+        containsLink = checkForIssueLink(builder.styledTexts)[0]
+        XCTAssertEqual(containsLink.linkText, "#115")
+        XCTAssertEqual(containsLink.issueNumber, 115)
+        XCTAssertEqual(builder.allText, testString)
+        
+        //trailing underscore
+        testString = "#115_"
+        builder = setupBuilder(with: testString)
+        containsLink = checkForIssueLink(builder.styledTexts)[0]
+        XCTAssertEqual(containsLink.linkText, "#115")
+        XCTAssertEqual(containsLink.issueNumber, 115)
+        XCTAssertEqual(builder.allText, testString)
     }
 
     func test_ConsecutivePositiveMatches() {
-        var testString = "#100 #150 #200"
-        var builder = setupBuilder(with: testString)
-        var links = checkForIssueLink(builder.styledTexts)
+        let testString = "#100 #150 #200"
+        let builder = setupBuilder(with: testString)
+        let links = checkForIssueLink(builder.styledTexts)
 
         XCTAssertEqual(links[0].issueNumber, 100)
         XCTAssertEqual(links[0].linkText, "#100")
@@ -154,6 +178,15 @@ class DetectShortlinkTests: XCTestCase {
         XCTAssertEqual(containsLink.count, 0)
 
         builder = setupBuilder(with: "f#123")
+        containsLink = checkForIssueLink(builder.styledTexts)
+        XCTAssertEqual(containsLink.count, 0)
+        
+        // format should be f/f/#123
+        builder = setupBuilder(with: "f/#123")
+        containsLink = checkForIssueLink(builder.styledTexts)
+        XCTAssertEqual(containsLink.count, 0)
+        
+        builder = setupBuilder(with: "1#1")
         containsLink = checkForIssueLink(builder.styledTexts)
         XCTAssertEqual(containsLink.count, 0)
     }
