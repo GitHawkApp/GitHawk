@@ -10,8 +10,8 @@ import UIKit
 import IGListKit
 import Squawk
 
-final class LabelsViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class LabelsViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 LabelSectionControllerDelegate {
 
     private let selectedLabels: Set<RepositoryLabel>
@@ -102,7 +102,7 @@ LabelSectionControllerDelegate {
         })
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return labels.map { [selectedLabels] label in

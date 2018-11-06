@@ -11,9 +11,9 @@ import IGListKit
 import GitHubAPI
 import Squawk
 
-final class RepositoryOverviewViewController: BaseListViewController2<String>,
-    BaseListViewController2DataSource,
-    BaseListViewController2EmptyDataSource,
+final class RepositoryOverviewViewController: BaseListViewController<String>,
+    BaseListViewControllerDataSource,
+    BaseListViewControllerEmptyDataSource,
 RepositoryBranchUpdatable {
 
     private let repo: RepositoryDetails
@@ -79,14 +79,14 @@ RepositoryBranchUpdatable {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         guard let readme = self.readme else { return [] }
         return [ListSwiftPair.pair(readme) { RepositoryReadmeSectionController() }]
     }
 
-    // MARK: BaseListViewController2EmptyDataSource
+    // MARK: BaseListViewControllerEmptyDataSource
 
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         let layoutInsets = view.safeAreaInsets

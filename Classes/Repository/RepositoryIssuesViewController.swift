@@ -14,10 +14,10 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
-final class RepositoryIssuesViewController: BaseListViewController2<String>,
-    BaseListViewController2DataSource,
-    BaseListViewController2EmptyDataSource,
-    BaseListViewController2HeaderDataSource,
+final class RepositoryIssuesViewController: BaseListViewController<String>,
+    BaseListViewControllerDataSource,
+    BaseListViewControllerEmptyDataSource,
+    BaseListViewControllerHeaderDataSource,
 SearchBarSectionControllerDelegate {
 
     private var models = [RepositoryIssueSummaryModel]()
@@ -101,7 +101,7 @@ SearchBarSectionControllerDelegate {
         debouncer.action = { [weak self] in self?.fetch(page: nil) }
     }
 
-    // MARK: BaseListViewController2HeaderDataSource
+    // MARK: BaseListViewControllerHeaderDataSource
 
     func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         return ListSwiftPair.pair("header", { [weak self, previousSearchString] in
@@ -113,7 +113,7 @@ SearchBarSectionControllerDelegate {
         })
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return models.map { [client, owner, repo] model in
@@ -127,7 +127,7 @@ SearchBarSectionControllerDelegate {
         }
     }
 
-    // MARK: BaseListViewController2EmptyDataSource
+    // MARK: BaseListViewControllerEmptyDataSource
 
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         let layoutInsets = view.safeAreaInsets

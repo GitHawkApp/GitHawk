@@ -11,8 +11,8 @@ import IGListKit
 import Squawk
 import DropdownTitleView
 
-final class PathHistoryViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource {
+final class PathHistoryViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource {
 
     private let viewModel: PathHistoryViewModel
     private var models = [PathCommitModel]()
@@ -68,7 +68,7 @@ BaseListViewController2DataSource {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return models.map { ListSwiftPair.pair($0, { PathCommitSectionController() }) }

@@ -11,8 +11,8 @@ import IGListKit
 import GitHubAPI
 import Squawk
 
-final class PeopleViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class PeopleViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 PeopleSectionControllerDelegate {
 
     enum PeopleType {
@@ -160,7 +160,7 @@ PeopleSectionControllerDelegate {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return users
