@@ -81,11 +81,15 @@ final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
+        configure(with: viewModel)
+    }
+
+    func configure(with model: IssueCommentImageModel) {
         imageView.image = nil
         imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         spinner.startAnimating()
 
-        let imageURL = viewModel.url
+        let imageURL = model.url
         imageView.sd_setImage(with: imageURL) { [weak self] (image, _, _, url) in
             guard let strongSelf = self else { return }
             strongSelf.imageView.backgroundColor = .clear

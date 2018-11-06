@@ -60,19 +60,22 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentQuoteModel else { return }
+        configure(with: viewModel)
+    }
 
+    func configure(with model: IssueCommentQuoteModel) {
         // hack, remove all border views and add them again
         for border in borders {
             border.removeFromSuperview()
         }
         borders.removeAll()
-        for _ in 0..<viewModel.level {
+        for _ in 0..<model.level {
             let border = UIView()
             border.backgroundColor = Styles.Colors.Gray.light.color
             contentView.addSubview(border)
             borders.append(border)
         }
-        textView.configure(with: viewModel.string, width: contentView.bounds.width)
+        textView.configure(with: model.string, width: contentView.bounds.width)
         setNeedsLayout()
     }
 

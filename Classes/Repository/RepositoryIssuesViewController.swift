@@ -125,7 +125,6 @@ SearchBarSectionControllerDelegate {
         case .pullRequests: empty = .pullRequests
         }
         return RepositoryEmptyResultsSectionController(
-            topInset: 0,
             layoutInsets: view.safeAreaInsets,
             type: empty
         )

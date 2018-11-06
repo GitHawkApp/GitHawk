@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 import StyledTextKit
 
-final class IssueCommentCodeBlockModel: NSObject, ListDiffable {
+final class IssueCommentCodeBlockModel: NSObject, ListDiffable, ListSwiftDiffable {
 
     let code: StyledTextRenderer
     let language: String?
@@ -37,6 +37,16 @@ final class IssueCommentCodeBlockModel: NSObject, ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return isEqual(object)
+    }
+
+    // MARK: ListSwiftDiffable
+
+    var identifier: String {
+        return description
+    }
+
+    func isEqual(to value: ListSwiftDiffable) -> Bool {
+        return true
     }
 
 }

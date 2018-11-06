@@ -162,8 +162,12 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentHtmlModel else { return }
-        body = viewModel.html
-        webViewBaseURL = viewModel.baseURL
+        configure(with: viewModel)
+    }
+
+    func configure(with model: IssueCommentHtmlModel) {
+        body = model.html
+        webViewBaseURL = model.baseURL
 
         let html = IssueCommentHtmlCell.htmlHead + body + IssueCommentHtmlCell.htmlTail
         webView.loadHTMLString(html, baseURL: webViewBaseURL)
