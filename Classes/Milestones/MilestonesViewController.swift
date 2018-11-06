@@ -10,8 +10,8 @@ import UIKit
 import Squawk
 import IGListKit
 
-final class MilestonesViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class MilestonesViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 MilestoneSectionControllerDelegate {
 
     public private(set) var selected: Milestone? = nil {
@@ -96,7 +96,7 @@ MilestoneSectionControllerDelegate {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return milestones.map { [dateFormatter, selected] milestone in

@@ -11,9 +11,9 @@ import IGListKit
 import TUSafariActivity
 import Squawk
 
-final class RepositoryCodeDirectoryViewController: BaseListViewController2<Int>,
-BaseListViewController2DataSource,
-BaseListViewController2EmptyDataSource,
+final class RepositoryCodeDirectoryViewController: BaseListViewController<Int>,
+BaseListViewControllerDataSource,
+BaseListViewControllerEmptyDataSource,
 RepositoryCodeDirectorySectionControllerDelegate,
 RepositoryBranchUpdatable {
 
@@ -166,7 +166,7 @@ RepositoryBranchUpdatable {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return files.map {
@@ -174,7 +174,7 @@ RepositoryBranchUpdatable {
         }
     }
 
-    // MARK: BaseListViewController2EmptyDataSource
+    // MARK: BaseListViewControllerEmptyDataSource
 
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         return ListSwiftPair.pair(NSLocalizedString("No files found.", comment: ""), {

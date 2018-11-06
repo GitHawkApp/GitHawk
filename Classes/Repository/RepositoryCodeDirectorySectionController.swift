@@ -45,5 +45,5 @@ final class RepositoryCodeDirectorySectionController: ListSwiftSectionController
             })
         ]
     }
-    
+
 }

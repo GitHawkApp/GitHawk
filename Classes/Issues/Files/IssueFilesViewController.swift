@@ -10,9 +10,9 @@ import UIKit
 import IGListKit
 import GitHubAPI
 
-final class IssueFilesViewController: BaseListViewController2<Int>,
-    BaseListViewController2DataSource,
-    BaseListViewController2EmptyDataSource {
+final class IssueFilesViewController: BaseListViewController<Int>,
+    BaseListViewControllerDataSource,
+    BaseListViewControllerEmptyDataSource {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -69,13 +69,13 @@ final class IssueFilesViewController: BaseListViewController2<Int>,
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return files.map { ListSwiftPair.pair($0, { IssueFilesSectionController() }) }
     }
 
-    // MARK: BaseListViewController2EmptyDataSource
+    // MARK: BaseListViewControllerEmptyDataSource
 
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         return ListSwiftPair.pair(NSLocalizedString("No changes found.", comment: ""), {

@@ -9,19 +9,7 @@
 import Foundation
 import IGListKit
 
-extension File: ListDiffable, ListSwiftDiffable {
-
-    func diffIdentifier() -> NSObjectProtocol {
-        return (filename + sha) as NSObjectProtocol
-    }
-
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        // assume that if the sha is the same, its the same patch
-        return true
-    }
-
-    // MARK: ListSwiftDiffable
+extension File: ListSwiftDiffable {
 
     var identifier: String {
         return filename + sha
