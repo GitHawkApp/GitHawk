@@ -74,7 +74,7 @@ final class BookmarkCell: SwipeSelectableCell {
     }
 
     func configure(viewModel: BookmarkViewModel, height: CGFloat) {
-        imageView.image = viewModel.bookmark.type.icon.withRenderingMode(.alwaysTemplate)
+        imageView.image = viewModel.bookmark.type.icon()?.withRenderingMode(.alwaysTemplate)
         textView.configure(with: viewModel.text, width: contentView.bounds.width)
 
         // set "Owner/Repo #123" on the detail label if issue/PR, otherwise clear and collapse it
