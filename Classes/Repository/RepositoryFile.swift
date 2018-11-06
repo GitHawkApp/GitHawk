@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class RepositoryFile: ListDiffable {
+final class RepositoryFile: ListDiffable, ListSwiftDiffable {
 
     let name: String
     let isDirectory: Bool
@@ -27,6 +27,16 @@ final class RepositoryFile: ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         // assume cannot change between blob and dir
+        return true
+    }
+
+    // MARK: ListSwiftDiffable
+
+    var identifier: String {
+        return name
+    }
+
+    func isEqual(to value: ListSwiftDiffable) -> Bool {
         return true
     }
 
