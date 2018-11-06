@@ -8,7 +8,10 @@
 
 import Foundation
 
-final class LabelListView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+final class LabelListView: UIView,
+UICollectionViewDataSource,
+UICollectionViewDelegate,
+UICollectionViewDelegateFlowLayout {
 
     private static var cache = [String: CGFloat]()
 
