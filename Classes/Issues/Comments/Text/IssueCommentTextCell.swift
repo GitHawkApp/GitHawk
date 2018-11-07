@@ -50,7 +50,11 @@ final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? StyledTextRenderer else { return }
-        textView.configure(with: viewModel, width: contentView.bounds.width)
+        configure(with: viewModel)
+    }
+
+    func configure(with model: StyledTextRenderer) {
+        textView.configure(with: model, width: contentView.bounds.width)
     }
 
 }

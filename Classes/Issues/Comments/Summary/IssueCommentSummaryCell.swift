@@ -34,7 +34,11 @@ final class IssueCommentSummaryCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentSummaryModel else { return }
-        label.text = "▶ \(viewModel.summary)"
+        configure(with: viewModel)
+    }
+
+    func configure(with model: IssueCommentSummaryModel) {
+        label.text = "▶ \(model.summary)"
     }
 
 }

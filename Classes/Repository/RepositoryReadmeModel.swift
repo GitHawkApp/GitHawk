@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class RepositoryReadmeModel: ListDiffable {
+final class RepositoryReadmeModel: ListSwiftDiffable {
 
     let models: [ListDiffable]
 
@@ -17,14 +17,13 @@ final class RepositoryReadmeModel: ListDiffable {
         self.models = models
     }
 
-    // MARK: ListDiffable
+    // MARK: ListSwiftDiffable
 
-    func diffIdentifier() -> NSObjectProtocol {
-        return "readme" as NSObjectProtocol
+    var identifier: String {
+        return "readme"
     }
 
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        // for use w/ binding SC
+    func isEqual(to value: ListSwiftDiffable) -> Bool {
         return true
     }
 

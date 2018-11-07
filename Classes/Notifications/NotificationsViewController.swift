@@ -11,11 +11,11 @@ import IGListKit
 import FlatCache
 import Squawk
 
-final class NotificationsViewController: BaseListViewController2<Int>,
-BaseListViewController2DataSource,
+final class NotificationsViewController: BaseListViewController<Int>,
+BaseListViewControllerDataSource,
 FlatCacheListener,
 TabNavRootViewControllerType,
-BaseListViewController2EmptyDataSource {
+BaseListViewControllerEmptyDataSource {
 
     private let modelController: NotificationModelController
     private let inboxType: InboxType
@@ -261,7 +261,7 @@ BaseListViewController2EmptyDataSource {
         update(page: page, animated: animated)
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return notificationIDs.compactMap { id in
@@ -273,7 +273,7 @@ BaseListViewController2EmptyDataSource {
         }
     }
 
-    // MARK: BaseListViewController2EmptyDataSource
+    // MARK: BaseListViewControllerEmptyDataSource
 
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         let layoutInsets = view.safeAreaInsets

@@ -9,18 +9,19 @@
 import UIKit
 
 extension NotificationType {
-    var icon: UIImage {
-        let image: UIImage
-
-        switch self {
-        case .repo: image = #imageLiteral(resourceName: "repo")
-        case .commit: image = #imageLiteral(resourceName: "git-commit")
-        case .issue: image = #imageLiteral(resourceName: "issue-opened")
-        case .pullRequest: image = #imageLiteral(resourceName: "git-pull-request")
-        case .release: image = #imageLiteral(resourceName: "tag")
-        case .securityVulnerability: image = #imageLiteral(resourceName: "alert")
+    func icon(merged: Bool = false) -> UIImage? {
+        if merged {
+            return UIImage(named: "git-merge")
         }
-
-        return image
+        let name: String
+        switch self {
+        case .repo: name = "repo"
+        case .commit: name = "git-commit"
+        case .issue: name = "issue-opened"
+        case .pullRequest: name = "git-pull-request"
+        case .release: name = "tag"
+        case .securityVulnerability: name = "alert"
+        }
+        return UIImage(named: name)
     }
 }

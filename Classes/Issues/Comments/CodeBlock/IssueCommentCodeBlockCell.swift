@@ -64,11 +64,13 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentCodeBlockModel else { return }
+        configure(with: viewModel)
+    }
 
-        let contentSize = viewModel.contentSize
+    func configure(with model: IssueCommentCodeBlockModel) {
+        let contentSize = model.contentSize
         scrollView.contentSize = contentSize
-
-        textView.configure(with: viewModel.code, width: 0)
+        textView.configure(with: model.code, width: 0)
     }
 
 }
