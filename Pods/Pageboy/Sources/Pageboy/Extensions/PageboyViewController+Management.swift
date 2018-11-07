@@ -30,7 +30,6 @@ public extension PageboyViewController {
         updateViewControllers(to: [currentViewController],
                               animated: false,
                               async: false,
-                              force: false,
                               completion: nil)
     }
 }
@@ -44,15 +43,10 @@ internal extension PageboyViewController {
                                direction: NavigationDirection = .forward,
                                animated: Bool,
                                async: Bool,
-                               force: Bool,
                                completion: TransitionOperation.Completion?) {
-        guard let pageViewController = self.pageViewController else {
+        guard let pageViewController = self.pageViewController, !isUpdatingViewControllers else {
             return
         }
-        if isUpdatingViewControllers && !force {
-            return
-        }
-        
         
         targetIndex = toIndex
         isUpdatingViewControllers = true
@@ -70,7 +64,7 @@ internal extension PageboyViewController {
         let animateUpdate = animated ? !isUsingCustomTransition : false
         let updateBlock = {
             pageViewController.setViewControllers(viewControllers,
-                                                  direction: direction.layoutNormalized(isRtL: self.view.layoutIsRightToLeft).pageViewControllerNavDirection,
+                                                  direction: direction.pageViewControllerNavDirection,
                                                   animated: animateUpdate,
                                                   completion:
                 { (finished) in
@@ -157,7 +151,7 @@ internal extension PageboyViewController {
                 return
         }
         
-        updateViewControllers(to: [viewController], animated: false, async: false, force: false) { _ in
+        updateViewControllers(to: [viewController], animated: false, async: false) { _ in
             self.currentIndex = defaultIndex
             self.delegate?.pageboyViewController(self,
                                                  didReloadWith: viewController,

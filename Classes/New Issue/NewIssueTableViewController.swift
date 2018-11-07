@@ -51,6 +51,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
 
+    private var template = ""
     private var client: GithubClient!
     private var owner: String!
     private var repo: String!
@@ -69,17 +70,41 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return raw
     }
 
-    static func create(client: GithubClient,
-                       owner: String,
-                       repo: String,
-                       signature: IssueSignatureType? = nil) -> NewIssueTableViewController? {
-        let storyboard = UIStoryboard(name: "NewIssue", bundle: nil)
+    static func create(
+        client: GithubClient,
+        owner: String,
+        repo: String,
+        signature: IssueSignatureType? = nil
+        ) -> NewIssueTableViewController? {
+        
+        let storyboard = UIStoryboard(name: NSLocalizedString("NewIssue", comment: ""), bundle: nil)
 
         let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
         viewController?.hidesBottomBarWhenPushed = true
         viewController?.client = client
         viewController?.owner = owner
         viewController?.repo = repo
+        viewController?.signature = signature
+
+        return viewController
+    }
+
+    static func createWithTemplate(
+        client: GithubClient,
+        owner: String,
+        repo: String,
+        template: String,
+        signature: IssueSignatureType? = nil
+        ) -> NewIssueTableViewController? {
+
+        let storyboard = UIStoryboard(name: NSLocalizedString("NewIssue", comment: ""), bundle: nil)
+
+        let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
+        viewController?.hidesBottomBarWhenPushed = true
+        viewController?.client = client
+        viewController?.owner = owner
+        viewController?.repo = repo
+        viewController?.template = template
         viewController?.signature = signature
 
         return viewController
@@ -106,6 +131,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
         setupInputView()
+        bodyField.text = template
 
         // Update title to use localization
         title = Constants.Strings.newIssue
@@ -121,7 +147,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     // MARK: Accessibility
 
     override func accessibilityPerformMagicTap() -> Bool {
-        guard let _ = titleText else { return false }
+        guard titleText != nil else { return false }
         onSend()
         return true
     }
@@ -167,8 +193,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
                 strongSelf.dismiss(animated: trueUnlessReduceMotionEnabled, completion: {
                     delegate?.didDismissAfterCreatingIssue(model: model)
                 })
-            case .failure:
-                Squawk.showGenericError()
+            case .failure(let error):
+                Squawk.show(error: error)
             }
         }
     }
@@ -195,12 +221,13 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             repo: repo,
             owner: owner,
             addBorder: true,
-            supportsImageUpload: true
+            supportsImageUpload: true,
+            showSendButton: false
         )
-        
+
         textActionsController.configure(client: client, textView: bodyField, actions: actions)
         textActionsController.viewController = self
-        
+
         bodyField.inputAccessoryView = actions
     }
 

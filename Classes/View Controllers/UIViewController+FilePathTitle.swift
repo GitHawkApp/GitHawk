@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DropdownTitleView
 
 extension UIViewController {
 
@@ -31,10 +32,16 @@ extension UIViewController {
             accessibilityLabel = nil
         }
 
-        let navigationTitle = NavigationTitleDropdownView()
-        navigationTitle.configure(title: filePath.current, subtitle: filePath.basePath, accessibilityLabel: accessibilityLabel)
-        navigationTitle.addTarget(target, action: action, for: .touchUpInside)
-        navigationItem.titleView = navigationTitle
+        if let title = filePath.current {
+            let navigationTitle = DropdownTitleView()
+            navigationTitle.configure(
+                title: title,
+                subtitle: filePath.basePath,
+                accessibilityLabel: accessibilityLabel
+            )
+            navigationTitle.addTarget(target, action: action, for: .touchUpInside)
+            navigationItem.titleView = navigationTitle
+        }
     }
 
     private func popFileViewControllers(count: Int) {

@@ -10,7 +10,6 @@ import IGListKit
 
 protocol SearchResultSectionControllerDelegate: class {
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails)
-
 }
 
 final class SearchResultSectionController: ListGenericSectionController<SearchRepoResult> {
@@ -41,7 +40,7 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
 
     override func didSelectItem(at index: Int) {
         guard let object = object else { return }
-        
+
         let repo = RepositoryDetails(
             owner: object.owner,
             name: object.name,

@@ -1,0 +1,11 @@
+query fetchRepositoryBranches($owner:String!, $name:String!) {
+    repository(owner: $owner, name: $name) {
+        refs(first: 50, refPrefix:"refs/heads/") {
+            edges {
+                node {
+                    name
+                }
+            }
+        }
+    }
+}

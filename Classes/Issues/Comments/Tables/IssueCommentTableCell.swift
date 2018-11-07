@@ -52,7 +52,14 @@ UICollectionViewDelegateFlowLayout {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = contentView.bounds
+        if let model = self.model {
+            collectionView.frame = CGRect(
+                x: 0,
+                y: 0,
+                width: bounds.width,
+                height: model.size.height
+            )
+        }
     }
 
     // MARK: ListBindable

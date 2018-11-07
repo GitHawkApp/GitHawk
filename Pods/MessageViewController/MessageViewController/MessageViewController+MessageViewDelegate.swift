@@ -12,7 +12,7 @@ extension MessageViewController: MessageViewDelegate {
 
     internal func sizeDidChange(messageView: MessageView) {
         UIView.animate(withDuration: 0.25) {
-            self.layout()
+            self.layout(updateOffset: true)
         }
     }
 

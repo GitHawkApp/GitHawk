@@ -9,12 +9,14 @@
 import Foundation
 import IGListKit
 
-final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel> {
+final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, MarkdownStyledTextViewDelegate {
 
     private let issueModel: IssueDetailsModel
-    
-    init(issueModel: IssueDetailsModel) {
+    private weak var tapDelegate: IssueLabelTapSectionControllerDelegate?
+
+    init(issueModel: IssueDetailsModel, tapDelegate: IssueLabelTapSectionControllerDelegate) {
         self.issueModel = issueModel
+        self.tapDelegate = tapDelegate
         super.init()
     }
 
@@ -28,8 +30,16 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
             let object = self.object
             else { fatalError("Missing collection context, cell incorrect type, or object missing") }
         cell.configure(object)
-        cell.delegate = viewController
+        cell.delegate = self
         return cell
+    }
+
+    func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
+        if case .label(let label) = attribute {
+            tapDelegate?.didTapIssueLabel(owner: label.owner, repo: label.repo, label: label.label)
+        } else {
+            viewController?.handle(attribute: attribute)
+        }
     }
 
 }

@@ -5,47 +5,30 @@ PODS:
   - Apollo (0.8.0):
     - Apollo/Core (= 0.8.0)
   - Apollo/Core (0.8.0)
-  - AutoInsetter (1.2.5)
+  - AutoInsetter (1.2.3)
   - cmark-gfm-swift (0.1.0)
-  - ContextMenu (0.2.0)
+  - ContextMenu (0.3.1)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - DateAgo (0.1.0)
+  - DropdownTitleView (0.1.0)
   - Fabric (1.7.2)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - Firebase/Core (4.13.0):
-    - FirebaseAnalytics (= 4.2.0)
-    - FirebaseCore (= 4.0.20)
-  - Firebase/Database (4.13.0):
-    - Firebase/Core
-    - FirebaseDatabase (= 4.1.5)
-  - FirebaseAnalytics (4.2.0):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - nanopb (~> 0.3)
-  - FirebaseCore (4.0.20):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseDatabase (4.1.5):
-    - FirebaseAnalytics (~> 4.1)
-    - FirebaseCore (~> 4.0)
-    - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.10):
-    - FirebaseCore (~> 4.0)
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
+  - FMDB (2.7.2):
+    - FMDB/standard (= 2.7.2)
+  - FMDB/standard (2.7.2)
+  - GitHawkRoutes (0.1.1)
   - GitHubAPI (0.1.0):
     - Alamofire (~> 4.4.0)
     - Apollo (~> 0.8.0)
   - GitHubSession (0.1.0)
-  - GoogleToolboxForMac/Defines (2.1.4)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
-    - GoogleToolboxForMac/Defines (= 2.1.4)
   - Highlightr (1.1.0)
   - HTMLString (4.0.1)
   - IGListKit/Default (3.3.0):
@@ -53,13 +36,8 @@ PODS:
   - IGListKit/Diffing (3.3.0)
   - IGListKit/Swift (3.3.0):
     - IGListKit/Default
-  - leveldb-library (1.20)
+  - ImageAlertAction (1.0.0)
   - MessageViewController (0.2.1)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
   - NYTPhotoViewer (1.1.0):
     - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
     - NYTPhotoViewer/Core (= 1.1.0)
@@ -67,7 +45,7 @@ PODS:
     - FLAnimatedImage (~> 1.0.8)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.5.4)
+  - Pageboy (2.5.1)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
@@ -76,9 +54,9 @@ PODS:
   - Squawk (0.1.0)
   - StringHelpers (0.1.0)
   - StyledTextKit (0.1.1)
-  - SwiftLint (0.24.0)
+  - SwiftLint (0.27.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.9.2):
+  - Tabman (1.8.2):
     - AutoInsetter (~> 1.2.0)
     - Pageboy (~> 2.5.0)
   - TUSafariActivity (1.0.4)
@@ -89,17 +67,19 @@ DEPENDENCIES:
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
   - DateAgo (from `Local Pods/DateAgo`)
+  - DropdownTitleView (from `https://github.com/GitHawkApp/DropdownTitleView.git`, branch `master`)
   - Fabric
   - FBSnapshotTestCase
-  - Firebase/Core
-  - Firebase/Database
   - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
   - FLEX (~> 2.0)
+  - FMDB
+  - GitHawkRoutes (from `https://github.com/GitHawkApp/GitHawkRoutes.git`, branch `master`)
   - GitHubAPI (from `Local Pods/GitHubAPI`)
   - GitHubSession (from `Local Pods/GitHubSession`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
   - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
+  - ImageAlertAction
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
@@ -121,17 +101,11 @@ SPEC REPOS:
     - Crashlytics
     - Fabric
     - FBSnapshotTestCase
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseCore
-    - FirebaseDatabase
-    - FirebaseInstanceID
     - FLAnimatedImage
     - FLEX
-    - GoogleToolboxForMac
+    - FMDB
     - HTMLString
-    - leveldb-library
-    - nanopb
+    - ImageAlertAction
     - NYTPhotoViewer
     - Pageboy
     - SDWebImage
@@ -149,9 +123,15 @@ EXTERNAL SOURCES:
     :git: https://github.com/GitHawkApp/ContextMenu.git
   DateAgo:
     :path: Local Pods/DateAgo
+  DropdownTitleView:
+    :branch: master
+    :git: https://github.com/GitHawkApp/DropdownTitleView.git
   FlatCache:
     :branch: master
     :git: https://github.com/GitHawkApp/FlatCache.git
+  GitHawkRoutes:
+    :branch: master
+    :git: https://github.com/GitHawkApp/GitHawkRoutes.git
   GitHubAPI:
     :path: Local Pods/GitHubAPI
   GitHubSession:
@@ -178,14 +158,20 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   cmark-gfm-swift:
-    :commit: 3c9a75d7346aa2cb73bdc4b4459783a8850ec144
+    :commit: 74cc625beed7cbcec5c1c50f2aba807e9246a73a
     :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
-    :commit: e7cf153f3c6b0d6145d0035ad2f78451c5d557d7
+    :commit: a6956a50277f2382b920058ea90f78a82caeaaa9
     :git: https://github.com/GitHawkApp/ContextMenu.git
+  DropdownTitleView:
+    :commit: 5d6e0eb1f422a185353dabcd673b04c9ac1d7100
+    :git: https://github.com/GitHawkApp/DropdownTitleView.git
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
     :git: https://github.com/GitHawkApp/FlatCache.git
+  GitHawkRoutes:
+    :commit: 26e45170b4ba06843d7a034f4a321a5797c77ec8
+    :git: https://github.com/GitHawkApp/GitHawkRoutes.git
   Highlightr:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
@@ -193,55 +179,51 @@ CHECKOUT OPTIONS:
     :commit: 5c1c92b600f0d8094f22fff48e26ded323568194
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: ca6935cf8fc779aedd20e46c9a8b3bb3733e0ee7
+    :commit: 89b13d60e88882cbd3cba66efe75d85fadc13621
     :git: https://github.com/GitHawkApp/MessageViewController.git
   Squawk:
     :commit: 88d671bbe86e3c18d54e094fac97df12a3054d53
     :git: https://github.com/GitHawkApp/Squawk.git
   StyledTextKit:
-    :commit: d15f77a32203daafd71e14e6f5911528e932aca5
+    :commit: 8583c80e742f886e541c5ec500b7be6f5e7a233f
     :git: https://github.com/GitHawkApp/StyledTextKit.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
-  AutoInsetter: c125e1f99180d7796ccc4f73995bbd467effcb73
-  cmark-gfm-swift: 8f7ffcd7d4ef6c0eeae5515c724fcde620e1028e
-  ContextMenu: cdc8c03a3a682bee74f493dfa9dfb55fdc2b19a2
+  AutoInsetter: 1a8f8ad5e7da8e993970b3809cfb8e8e330f4db1
+  cmark-gfm-swift: 9915dfe0cd7feda740ab01fc2a1882989b6d5128
+  ContextMenu: 7c2853a894e09325dba222dbc87ba594ab775321
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   DateAgo: c678b6435627f2b267980bc6f0a9969389686691
+  DropdownTitleView: 063054a1200a16b9c15596e597e2f1c310caeff4
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
-  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
-  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
-  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
-  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
+  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  GitHawkRoutes: 468138c117a6fbe79bdd9ba7390bf45d363bc69b
   GitHubAPI: 44a907f9699210536d65179d3d0dc0dc70dde7a1
   GitHubSession: 60c7bbd84fb915a0bd911a367c9661418ccfd7ae
-  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
-  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  ImageAlertAction: a32a5053978ef2cffbc96f192d4ca2a24c774dd5
   MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: 46d743783414a18f8b27a988485e0ed2ea219ff7
+  Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Squawk: 7dbe029a1de47153a1722a98b787f755f2df2b3e
   StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
   StyledTextKit: ea9a28a86955c16ea27f1a1a9278b004966f2bf6
-  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
+  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
-  Tabman: a09f7d7aa62b231ec475ca9eb9171f7cc973a3d7
+  Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: abbecf20cfdc6b5d77e2ea4902ef4861ffd9a762
+PODFILE CHECKSUM: f20afa6a8f2119dd4614c7abb36f0ccc71ad9f48
 
 COCOAPODS: 1.5.3

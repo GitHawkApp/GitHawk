@@ -8,70 +8,67 @@
 
 import Foundation
 import GitHubSession
+import GitHawkRoutes
+
+extension UIApplicationShortcutItem {
+
+    var params: [String: String] {
+        var params = [String: String]()
+        userInfo?.forEach {
+            if let value = $1 as? String {
+                params[$0] = value
+            }
+        }
+        return params
+    }
+
+    static func from<T: Routable>(
+        route: T,
+        localizedTitle: String,
+        localizedSubtitle: String? = nil,
+        icon: UIApplicationShortcutIcon? = nil
+        ) -> UIApplicationShortcutItem {
+        return UIApplicationShortcutItem(
+            type: T.path,
+            localizedTitle: localizedTitle,
+            localizedSubtitle: localizedSubtitle,
+            icon: icon,
+            userInfo: route.encoded
+        )
+    }
+
+}
 
 struct ShortcutHandler {
 
-    enum Items: String {
-        case search
-        case bookmarks
-        case switchAccount
+    static func configure(sessionUsernames: [String]) {
+        UIApplication.shared.shortcutItems = generateItems(sessionUsernames: sessionUsernames)
     }
 
-    static func configure(application: UIApplication, sessionManager: GitHubSessionManager) {
-        application.shortcutItems = generateItems(sessionManager: sessionManager)
-    }
+    private static func generateItems(sessionUsernames: [String]) -> [UIApplicationShortcutItem] {
+        guard sessionUsernames.count > 0 else { return [] }
 
-    static func handle(
-        route: Route,
-        sessionManager: GitHubSessionManager,
-        navigationManager: RootNavigationManager
-        ) -> Bool {
-        switch route {
-        case .tab(let tab):
-            navigationManager.selectViewController(atTab: tab)
-            return true
-        case .switchAccount(let sessionIndex):
-            if let index = sessionIndex {
-                let session = sessionManager.userSessions[index]
-                sessionManager.focus(session, dismiss: false)
-            }
-            return true
-        }
-    }
+        var items = [
+            UIApplicationShortcutItem.from(
+                route: SearchShortcutRoute(),
+                localizedTitle: Constants.Strings.search,
+                icon: UIApplicationShortcutIcon(templateImageName: "search")
+            ),
+            UIApplicationShortcutItem.from(
+                route: BookmarkShortcutRoute(),
+                localizedTitle: Constants.Strings.bookmarks,
+                icon: UIApplicationShortcutIcon(templateImageName: "bookmark")
+            )
+        ]
 
-    private static func generateItems(sessionManager: GitHubSessionManager) -> [UIApplicationShortcutItem] {
-        var items: [UIApplicationShortcutItem] = []
-
-        // Search
-        let searchIcon = UIApplicationShortcutIcon(templateImageName: Items.search.rawValue)
-        let searchItem = UIApplicationShortcutItem(type: Items.search.rawValue,
-                                                   localizedTitle: Constants.Strings.search,
-                                                   localizedSubtitle: nil,
-                                                   icon: searchIcon)
-        items.append(searchItem)
-
-        // Bookmarks
-        let bookmarkIcon = UIApplicationShortcutIcon(templateImageName: "bookmark")
-        let bookmarkItem = UIApplicationShortcutItem(type: Items.bookmarks.rawValue,
-                                                     localizedTitle: Constants.Strings.bookmarks,
-                                                     localizedSubtitle: nil,
-                                                     icon: bookmarkIcon)
-        items.append(bookmarkItem)
-
-        // Switchuser
-        if sessionManager.userSessions.count > 1 {
-            let userSession = sessionManager.userSessions[1]
-            if let username = userSession.username {
-                let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
-                let userItem = UIApplicationShortcutItem(
-                    type: Items.switchAccount.rawValue,
-                    localizedTitle: NSLocalizedString("Switch Account", comment: ""),
-                    localizedSubtitle: username,
-                    icon: userIcon,
-                    userInfo: ["sessionIndex": 1]
-                )
-                items.append(userItem)
-            }
+        if sessionUsernames.count > 1 {
+            let username = sessionUsernames[1]
+            items.append(UIApplicationShortcutItem.from(
+                route: SwitchAccountShortcutRoute(username: username),
+                localizedTitle: NSLocalizedString("Switch Account", comment: ""),
+                localizedSubtitle: username,
+                icon: UIApplicationShortcutIcon(templateImageName: "organization")
+            ))
         }
 
         return items

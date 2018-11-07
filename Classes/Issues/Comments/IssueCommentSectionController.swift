@@ -11,6 +11,7 @@ import IGListKit
 import TUSafariActivity
 import Squawk
 import GitHubAPI
+import ContextMenu
 
 protocol IssueCommentSectionControllerDelegate: class {
     func didSelectReply(
@@ -19,15 +20,15 @@ protocol IssueCommentSectionControllerDelegate: class {
     )
 }
 
-final class IssueCommentSectionController:
-    ListBindingSectionController<IssueCommentModel>,
+final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
     IssueCommentReactionCellDelegate,
     EditCommentViewControllerDelegate,
     MarkdownStyledTextViewDelegate,
-    IssueCommentDoubleTapDelegate {
+    IssueCommentDoubleTapDelegate,
+    ContextMenuDelegate {
 
     private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
 
@@ -37,7 +38,6 @@ final class IssueCommentSectionController:
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
     private let autocomplete: IssueCommentAutocomplete
-    private var menuVisible = false
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -92,7 +92,7 @@ final class IssueCommentSectionController:
         weak var weakSelf = self
 
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf?.viewController })
-            .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
+            .share([url], activities: [TUSafariActivity()], type: .shareUrl) { $0.popoverPresentationController?.sourceView = sender }
     }
 
     var deleteAction: UIAlertAction? {
@@ -183,7 +183,7 @@ final class IssueCommentSectionController:
 
     @discardableResult
     private func uncollapse() -> Bool {
-        guard collapsed, !menuVisible else { return false }
+        guard collapsed else { return false }
         collapsed = false
         clearCollapseCells()
         collectionContext?.invalidateLayout(for: self, completion: nil)
@@ -218,7 +218,8 @@ final class IssueCommentSectionController:
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
         let bodyModels = MarkdownModels(
-            markdown,
+            // strip githawk signatures on edit
+            CheckIfSentWithGitHawk(markdown: markdown).markdown,
             owner: model.owner,
             repo: model.repo,
             width: width,
@@ -259,11 +260,10 @@ final class IssueCommentSectionController:
             commentID: "\(number)")
         ) { [weak self] result in
             switch result {
-            case .failure:
+            case .failure(let error):
                 self?.hasBeenDeleted = false
                 self?.update(animated: trueUnlessReduceMotionEnabled)
-
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             case .success: break // Don't need to handle success since updated optimistically
             }
         }
@@ -295,9 +295,9 @@ final class IssueCommentSectionController:
         ) { [weak self] result in
             switch result {
             case .success: break
-            case .failure:
+            case .failure(let error):
                 self?.edit(markdown: originalMarkdown)
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             }
         }
     }
@@ -372,7 +372,6 @@ final class IssueCommentSectionController:
             let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
-        // TODO need to update PR tail model?
         if viewModel === tailModel {
             guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
                 else { fatalError("Cell not bindable") }
@@ -404,7 +403,7 @@ final class IssueCommentSectionController:
         } else if let cell = cell as? IssueCommentReactionCell {
             cell.delegate = self
         }
-        
+
         if let object = self.object,
             !object.asReviewComment,
             let cell = cell as? IssueCommentBaseCell {
@@ -438,15 +437,15 @@ final class IssueCommentSectionController:
         }
         uncollapse()
     }
-    
+
     // MARK: IssueCommentDoubleTapDelegate
-    
+
     func didDoubleTap(cell: IssueCommentBaseCell) {
-        let reaction = ReactionContent.thumbsUp
+        guard let reaction = ReactionContent.defaultReaction else { return }
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)
             else { return }
-        
+
         react(
             cell: collectionContext?.cellForItem(at: numberOfItems() - 1, sectionController: self) as? IssueCommentReactionCell,
             content: reaction,
@@ -466,14 +465,6 @@ final class IssueCommentSectionController:
     }
 
     // MARK: IssueCommentReactionCellDelegate
-
-    func willShowMenu(cell: IssueCommentReactionCell) {
-        menuVisible = true
-    }
-
-    func didHideMenu(cell: IssueCommentReactionCell) {
-        menuVisible = false
-    }
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
         // don't add a reaction if already reacted
@@ -517,6 +508,26 @@ final class IssueCommentSectionController:
         viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
+    func didTapAddReaction(cell: IssueCommentReactionCell, sender: UIView) {
+        guard let viewController = self.viewController else { return }
+        ContextMenu.shared.show(
+            sourceViewController: viewController,
+            viewController: ReactionsMenuViewController(),
+            options: ContextMenu.Options(
+                durations: ContextMenu.AnimationDurations(present: 0.2),
+                containerStyle: ContextMenu.ContainerStyle(
+                    xPadding: -4,
+                    yPadding: 8,
+                    backgroundColor: Styles.Colors.menuBackgroundColor.color
+                ),
+                menuStyle: .minimal,
+                hapticsStyle: .medium
+            ),
+            sourceView: sender,
+            delegate: self
+        )
+    }
+
     // MARK: MarkdownStyledTextViewDelegate
 
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
@@ -532,6 +543,30 @@ final class IssueCommentSectionController:
 
     func didCancel(viewController: EditCommentViewController) {
         viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
+    }
+
+    // MARK: ContextMenuDelegate
+
+    func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {}
+
+    func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {
+        guard let reactionViewController = viewController as? ReactionsMenuViewController,
+            let reaction = reactionViewController.selectedReaction,
+            let reactions = reactionMutation ?? self.object?.reactions
+            else { return }
+
+        var index = -1
+        for (i, model) in viewModels.reversed().enumerated() where model is IssueCommentReactionViewModel {
+            index = viewModels.count - 1 - i
+            break
+        }
+
+        guard index >= 0 else { return }
+        react(
+            cell: collectionContext?.cellForItem(at: index, sectionController: self) as? IssueCommentReactionCell,
+            content: reaction,
+            isAdd: !reactions.viewerDidReact(reaction: reaction)
+        )
     }
 
 }

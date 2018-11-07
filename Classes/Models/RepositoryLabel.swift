@@ -40,7 +40,7 @@ final class RepositoryLabel: ListDiffable, Hashable, Equatable, ListSwiftDiffabl
 
     // MARK: Equatable
 
-    static func ==(lhs: RepositoryLabel, rhs: RepositoryLabel) -> Bool {
+    static func == (lhs: RepositoryLabel, rhs: RepositoryLabel) -> Bool {
         if lhs === rhs { return true }
         return lhs.color == rhs.color
         && lhs.name == rhs.name
