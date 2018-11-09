@@ -10,6 +10,10 @@ import Foundation
 
 enum Constants {
 
+    enum GitHawk {
+        static let owner = "GitHawkApp"
+        static let name = "GitHawk"
+    }
     enum Filepaths {
         static let githubIssue = ".github/ISSUE_TEMPLATE"
     }

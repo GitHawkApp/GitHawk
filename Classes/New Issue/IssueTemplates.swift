@@ -72,7 +72,7 @@ enum IssueTemplateHelper {
                             owner: details.repo.owner,
                             repo: details.repo.name,
                             template: template.template,
-                            signature: template.title == "Bug Report" ? .bugReport : .sentWithGitHawk
+                            signature: details.repo.owner == Constants.GitHawk.owner ? .bugReport : .sentWithGitHawk
                             ) else {
                                 assertionFailure("Failed to create NewIssueTableViewController")
                                 return
