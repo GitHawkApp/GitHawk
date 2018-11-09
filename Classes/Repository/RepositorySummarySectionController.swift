@@ -13,11 +13,13 @@ final class RepositorySummarySectionController: ListSwiftSectionController<Repos
     private let client: GithubClient
     private let owner: String
     private let repo: String
+    private weak var tapDelegate: LabelListViewTapDelegate?
 
-    init(client: GithubClient, owner: String, repo: String) {
+    init(client: GithubClient, owner: String, repo: String, tapDelegate: LabelListViewTapDelegate?) {
         self.client = client
         self.owner = owner
         self.repo = repo
+        self.tapDelegate = tapDelegate
         super.init()
     }
 
@@ -44,7 +46,7 @@ final class RepositorySummarySectionController: ListSwiftSectionController<Repos
                 return CGSize(width: width, height: ceil(height))
             },
                    configure: {
-                    $0.configure($1.value)
+                    $0.configure($1.value, tapDelegate: self.tapDelegate)
             }, didSelect: { [weak self] context in
                 guard let `self` = self else { return }
                 let issueModel = IssueDetailsModel(
