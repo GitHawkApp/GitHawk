@@ -17,15 +17,13 @@ struct IssueTemplate {
 }
 
 struct IssueTemplateDetails {
-    let owner: String
-    let repo: String
+    let repo: RepositoryDetails
     let session: GitHubUserSession?
     let viewController: UIViewController
     weak var delegate: NewIssueTableViewControllerDelegate?
 }
 
 enum IssueTemplateHelper {
-
 
     static private func matches(
         regex: String,
@@ -71,8 +69,8 @@ enum IssueTemplateHelper {
 
                         guard let viewController = NewIssueTableViewController.createWithTemplate(
                             client: GithubClient(userSession: details.session),
-                            owner: details.owner,
-                            repo: details.repo,
+                            owner: details.repo.owner,
+                            repo: details.repo.name,
                             template: template.template,
                             signature: template.title == "Bug Report" ? .bugReport : .sentWithGitHawk
                             ) else {
@@ -111,8 +109,8 @@ enum IssueTemplateHelper {
             // No templates exists, show blank new issue view controller
             guard let viewController = NewIssueTableViewController.create(
                 client: GithubClient(userSession: details.session),
-                owner: details.owner,
-                repo: details.repo,
+                owner: details.repo.owner,
+                repo: details.repo.name,
                 signature: .sentWithGitHawk
                 ) else {
                     assertionFailure("Failed to create NewIssueTableViewController")
@@ -129,35 +127,30 @@ enum IssueTemplateHelper {
 extension GithubClient {
 
     private func fetchTemplateFile(
-        owner: String,
-        repo: String,
+        repo: RepositoryDetails,
         filename: String,
         completion: @escaping (Result<String>) -> Void
         ) {
 
         self.fetchFile(
-            owner: owner,
-            repo: repo,
-            branch: "master",
-            path: ".github/ISSUE_TEMPLATE/\(filename)") { (result) in
+            owner: repo.owner,
+            repo: repo.name,
+            branch: repo.defaultBranch,
+            path: "\(Constants.Filepaths.githubIssue)/\(filename)") { (result) in
                 switch result {
-                case .success(let file):
-                    completion(.success(file))
-                case .error(let error):
-                    completion(.error(error))
-                case .nonUTF8:
-                    completion(.error(nil))
+                case .success(let file): completion(.success(file))
+                case .error(let error):  completion(.error(error))
+                case .nonUTF8:           completion(.error(nil))
                 }
         }
     }
 
-    private func createTemplate(withOwner
-        owner: String,
-        repo: String,
+    private func createTemplate(
+        repo: RepositoryDetails,
         filename: String,
         completion: @escaping (Result<IssueTemplate>) -> Void
         ) {
-        fetchTemplateFile(owner: owner, repo: repo, filename: filename) { (result) in
+        fetchTemplateFile(repo: repo, filename: filename) { (result) in
             switch result {
             case .success(let file):
                 let nameAndDescription = IssueTemplateHelper.getNameAndDescription(fromTemplatefile: file)
@@ -173,8 +166,7 @@ extension GithubClient {
     }
 
     func createNewIssue(
-        owner: String,
-        repo: String,
+        repo: RepositoryDetails,
         session: GitHubUserSession?,
         mainViewController: UIViewController,
         delegate: NewIssueTableViewControllerDelegate) {
@@ -186,7 +178,6 @@ extension GithubClient {
         let templateGroup = DispatchGroup()
 
         let details = IssueTemplateDetails(
-            owner: owner,
             repo: repo,
             session: session,
             viewController: mainViewController,
@@ -194,15 +185,18 @@ extension GithubClient {
         )
 
         self.fetchFiles(
-            owner: owner,
-            repo: repo,
-            branch: "master",
-            path: ".github/ISSUE_TEMPLATE") { (result) in
+            owner: repo.owner,
+            repo: repo.name,
+            branch: repo.defaultBranch,
+            path: Constants.Filepaths.githubIssue) { (result) in
                 switch result {
                 case .success(let files):
                     for file in files {
                         templateGroup.enter()
-                        self.createTemplate(withOwner: owner, repo: repo, filename: file.name, completion: {
+                        self.createTemplate(
+                            repo: repo,
+                            filename: file.name,
+                            completion: {
                             switch $0 {
                             case .success(let template):
                                 templates.append(template)

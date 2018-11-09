@@ -166,9 +166,14 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     }
 
     func showTemplateOptions() {
-        client.createNewIssue(
+        let repo = RepositoryDetails(
             owner: "GitHawkApp",
-            repo: "GitHawk",
+            name: "GitHawk",
+            defaultBranch: "master",
+            hasIssuesEnabled: true
+        )
+        client.createNewIssue(
+            repo: repo,
             session: sessionManager.focusedUserSession,
             mainViewController: self,
             delegate: self

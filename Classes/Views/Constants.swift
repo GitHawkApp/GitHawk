@@ -10,6 +10,9 @@ import Foundation
 
 enum Constants {
 
+    enum Filepaths {
+        static let githubIssue = ".github/ISSUE_TEMPLATE"
+    }
     enum URLs {
         static let website = "http://www.githawk.com/"
         static let blog = "http://blog.githawk.com/"

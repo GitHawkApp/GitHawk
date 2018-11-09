@@ -144,8 +144,7 @@ ContextMenuDelegate {
     func newIssueAction() -> UIAlertAction? {
         let action = UIAlertAction(title: "New Issue", style: .default) { _ in
             self.client.createNewIssue(
-                owner: self.repo.owner,
-                repo: self.repo.name,
+                repo: self.repo,
                 session: nil,
                 mainViewController: self,
                 delegate: self
