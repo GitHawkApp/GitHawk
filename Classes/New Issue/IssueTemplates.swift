@@ -169,7 +169,9 @@ extension GithubClient {
         repo: RepositoryDetails,
         session: GitHubUserSession?,
         mainViewController: UIViewController,
-        delegate: NewIssueTableViewControllerDelegate) {
+        delegate: NewIssueTableViewControllerDelegate,
+        completion: @escaping () -> Void
+        ) {
 
         var templates: [IssueTemplate] = []
 
@@ -210,11 +212,12 @@ extension GithubClient {
                     }
                 case .error(let error):
                     Squawk.show(error: error)
+                    completion()
                 }
 
                 // Wait for async calls in for-loop to finish up
                 templateGroup.notify(queue: .main) {
-
+                    completion()
                     // Sort lexicographically
                     let sortedTemplates = templates.sorted(by: {$0.title < $1.title })
                     IssueTemplateHelper.present(

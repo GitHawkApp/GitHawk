@@ -23,7 +23,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     @IBOutlet weak var githubStatusCell: StyledTableCell!
     @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
     @IBOutlet weak var tryTestFlightBetaCell: StyledTableCell!
-    @IBOutlet weak var reportBugCell: StyledTableCell!
+    @IBOutlet weak var reportBugCell: SpinnerTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var setDefaultReaction: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
@@ -172,12 +172,15 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             defaultBranch: "master",
             hasIssuesEnabled: true
         )
+
+        reportBugCell.showSpinner()
         client.createNewIssue(
-            repo: repo,
-            session: sessionManager.focusedUserSession,
-            mainViewController: self,
-            delegate: self
-        )
+        repo: repo,
+        session: sessionManager.focusedUserSession,
+        mainViewController: self,
+        delegate: self) {
+            self.reportBugCell.stopSpinner()
+        }
     }
 
     func onViewSource() {

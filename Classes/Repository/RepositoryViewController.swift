@@ -147,8 +147,10 @@ ContextMenuDelegate {
                 repo: self.repo,
                 session: nil,
                 mainViewController: self,
-                delegate: self
-            )
+                delegate: self,
+                completion: {
+
+            })
         }
         return action
     }
