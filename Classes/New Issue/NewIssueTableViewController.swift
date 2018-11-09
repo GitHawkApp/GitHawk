@@ -74,29 +74,10 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         client: GithubClient,
         owner: String,
         repo: String,
+        template: String = "",
         signature: IssueSignatureType? = nil
         ) -> NewIssueTableViewController? {
         
-        let storyboard = UIStoryboard(name: NSLocalizedString("NewIssue", comment: ""), bundle: nil)
-
-        let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
-        viewController?.hidesBottomBarWhenPushed = true
-        viewController?.client = client
-        viewController?.owner = owner
-        viewController?.repo = repo
-        viewController?.signature = signature
-
-        return viewController
-    }
-
-    static func createWithTemplate(
-        client: GithubClient,
-        owner: String,
-        repo: String,
-        template: String,
-        signature: IssueSignatureType? = nil
-        ) -> NewIssueTableViewController? {
-
         let storyboard = UIStoryboard(name: NSLocalizedString("NewIssue", comment: ""), bundle: nil)
 
         let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController

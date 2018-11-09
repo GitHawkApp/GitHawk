@@ -67,7 +67,7 @@ enum IssueTemplateHelper {
                     style: .default,
                     handler: { _ in
 
-                        guard let viewController = NewIssueTableViewController.createWithTemplate(
+                        guard let viewController = NewIssueTableViewController.create(
                             client: GithubClient(userSession: details.session),
                             owner: details.repo.owner,
                             repo: details.repo.name,
