@@ -67,11 +67,8 @@ extension UIView {
 
     func safeContentWidth(with collectionView: UICollectionView) -> CGFloat {
         let inset = collectionView.adjustedContentInset
-        let frame = convert(collectionView.frame, from: collectionView)
         let width = bounds.width
-        return width
-            - (inset.left + inset.right)
-            - (width - frame.width)
+        return width - (inset.left + inset.right)
     }
 
 }
