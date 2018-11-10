@@ -40,7 +40,6 @@ extension ListCollectionContext {
     // width of the CONTENT in a cell which should adjust insets (e.g. notch)
     func safeContentWidth(with inset: UIEdgeInsets = .zero) -> CGFloat {
         return insetContainerSize.width
-            - (containerInset.left + containerInset.right)
             - (inset.left + inset.right)
     }
 
