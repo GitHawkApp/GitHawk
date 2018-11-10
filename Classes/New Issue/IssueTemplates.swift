@@ -100,8 +100,15 @@ enum IssueTemplateHelper {
         details: IssueTemplateDetails) {
         if sortedTemplates.count > 0 {
             // Templates exists...
+            var templates = sortedTemplates
+            templates.append(
+                IssueTemplate(
+                    title: NSLocalizedString("Regular Issue", comment: ""),
+                    template: ""
+                )
+            )
             let alertView = IssueTemplateHelper.showIssueAlert(
-                with: sortedTemplates,
+                with: templates,
                 details: details
             )
             details.viewController.present(alertView, animated: trueUnlessReduceMotionEnabled)
