@@ -51,7 +51,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
 
-    private var template = ""
+    private var template: String?
     private var client: GithubClient!
     private var owner: String!
     private var repo: String!
@@ -74,7 +74,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         client: GithubClient,
         owner: String,
         repo: String,
-        template: String = "",
+        template: String? = nil,
         signature: IssueSignatureType? = nil
         ) -> NewIssueTableViewController? {
         

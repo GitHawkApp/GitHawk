@@ -218,7 +218,7 @@ extension GithubClient {
                         })
                     }
                 case .error(let error):
-                    Squawk.show(error: error)
+                    if let err = error { Squawk.show(error: err)  }
                     completion()
                 }
 
