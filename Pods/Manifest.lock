@@ -78,7 +78,7 @@ DEPENDENCIES:
   - GitHubSession (from `Local Pods/GitHubSession`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
-  - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
+  - IGListKit/Swift (from `https://github.com/GitHawkApp/IGListKit.git`, branch `fix-layout-insets`)
   - ImageAlertAction
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
@@ -140,8 +140,8 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :branch: swift
-    :git: https://github.com/Instagram/IGListKit.git
+    :branch: fix-layout-insets
+    :git: https://github.com/GitHawkApp/IGListKit.git
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
@@ -176,8 +176,8 @@ CHECKOUT OPTIONS:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 5c1c92b600f0d8094f22fff48e26ded323568194
-    :git: https://github.com/Instagram/IGListKit.git
+    :commit: 34773b673601ad8cb5fb2df8196ca619cdc243d0
+    :git: https://github.com/GitHawkApp/IGListKit.git
   MessageViewController:
     :commit: 89b13d60e88882cbd3cba66efe75d85fadc13621
     :git: https://github.com/GitHawkApp/MessageViewController.git
@@ -224,6 +224,6 @@ SPEC CHECKSUMS:
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: f20afa6a8f2119dd4614c7abb36f0ccc71ad9f48
+PODFILE CHECKSUM: b5bd8560e88c037b764c7b3203d281c615582533
 
 COCOAPODS: 1.5.3
