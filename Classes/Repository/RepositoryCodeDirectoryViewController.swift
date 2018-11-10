@@ -22,8 +22,11 @@ RepositoryBranchUpdatable {
     private let path: FilePath
     private let repo: RepositoryDetails
     private var files = [RepositoryFile]()
-    private var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/tree/\(branch)/\(path.path)")!
+    private var repoUrl: URL? {
+        return URLBuilder.github()
+            .add(paths: [repo.owner, repo.name, "tree", branch])
+            .add(paths: path.components)
+            .url
     }
     private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
@@ -98,12 +101,15 @@ RepositoryBranchUpdatable {
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client, path: path),
             AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
                 $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction.cancel()
+            }
         ]
+
+        if let url = repoUrl {
+            actions.append(AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            })
+        }
+        actions.append(AlertAction.cancel())
 
         if let name = self.path.components.last {
             actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {

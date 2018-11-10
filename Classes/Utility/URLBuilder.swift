@@ -13,21 +13,33 @@ final class URLBuilder {
     private var components = URLComponents()
     private var pathComponents = [String]()
 
-    init(host: String, https: Bool = true) {
+    init(host: String, scheme: String) {
         components.host = host
-        components.scheme = https ? "https" : "http"
+        components.scheme = scheme
+    }
+
+    convenience init(host: String, https: Bool = true) {
+        self.init(host: host, scheme: https ? "https" : "http")
     }
 
     static func github() -> URLBuilder {
         return URLBuilder(host: "github.com", https: true)
     }
 
-    func add(path: String) -> URLBuilder {
-        pathComponents.append(path)
+    @discardableResult
+    func add(path: LosslessStringConvertible) -> URLBuilder {
+        pathComponents.append(String(describing: path))
         return self
     }
 
-    func add(query item: String, value: LosslessStringConvertible) -> URLBuilder {
+    @discardableResult
+    func add(paths: [LosslessStringConvertible]) -> URLBuilder {
+        paths.forEach { self.add(path: $0) }
+        return self
+    }
+
+    @discardableResult
+    func add(item: String, value: LosslessStringConvertible) -> URLBuilder {
         var items = components.queryItems ?? []
         items.append(URLQueryItem(name: item, value: String(describing: value)))
         components.queryItems = items

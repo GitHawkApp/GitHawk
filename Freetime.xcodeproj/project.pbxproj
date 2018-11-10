@@ -52,6 +52,8 @@
 		291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929661F3FF9C50012067B /* BadgeNotifications.swift */; };
 		291E987B21973B8F00E5EED9 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E987A21973B8F00E5EED9 /* URLBuilder.swift */; };
 		291E987D21973FA700E5EED9 /* URLBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E987C21973FA700E5EED9 /* URLBuilderTests.swift */; };
+		291E987F2197515C00E5EED9 /* UIApplication+ReviewAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E987E2197515C00E5EED9 /* UIApplication+ReviewAccess.swift */; };
+		291E988121975FCB00E5EED9 /* UIApplication+WriteReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E988021975FCB00E5EED9 /* UIApplication+WriteReview.swift */; };
 		29242810210A50BE001F5980 /* SpacerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924280F210A50BE001F5980 /* SpacerModel.swift */; };
 		29242812210A5148001F5980 /* SpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29242811210A5148001F5980 /* SpacerCell.swift */; };
 		29242814210A51B5001F5980 /* SpacerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29242813210A51B5001F5980 /* SpacerSectionController.swift */; };
@@ -599,6 +601,8 @@
 		291929661F3FF9C50012067B /* BadgeNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNotifications.swift; sourceTree = "<group>"; };
 		291E987A21973B8F00E5EED9 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		291E987C21973FA700E5EED9 /* URLBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilderTests.swift; sourceTree = "<group>"; };
+		291E987E2197515C00E5EED9 /* UIApplication+ReviewAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ReviewAccess.swift"; sourceTree = "<group>"; };
+		291E988021975FCB00E5EED9 /* UIApplication+WriteReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+WriteReview.swift"; sourceTree = "<group>"; };
 		2924280F210A50BE001F5980 /* SpacerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerModel.swift; sourceTree = "<group>"; };
 		29242811210A5148001F5980 /* SpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerCell.swift; sourceTree = "<group>"; };
 		29242813210A51B5001F5980 /* SpacerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerSectionController.swift; sourceTree = "<group>"; };
@@ -2178,6 +2182,8 @@
 				98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */,
 				299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */,
 				291E987A21973B8F00E5EED9 /* URLBuilder.swift */,
+				291E987E2197515C00E5EED9 /* UIApplication+ReviewAccess.swift */,
+				291E988021975FCB00E5EED9 /* UIApplication+WriteReview.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -3096,6 +3102,7 @@
 				29DAA7AF20202BEA0029277A /* PullRequestReviewReplyModel.swift in Sources */,
 				29B94E691FCB36A000715D7E /* File+ListDiffable.swift in Sources */,
 				986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */,
+				291E988121975FCB00E5EED9 /* UIApplication+WriteReview.swift in Sources */,
 				292AD6B2217236C200273D80 /* PushNotificationsDisclaimerViewController.swift in Sources */,
 				295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */,
 				292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */,
@@ -3210,6 +3217,7 @@
 				29B205FE217B971300E4DD9F /* String+FirstLine.swift in Sources */,
 				29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */,
 				98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */,
+				291E987F2197515C00E5EED9 /* UIApplication+ReviewAccess.swift in Sources */,
 				29C167671ECA005500439D62 /* Constants.swift in Sources */,
 				291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */,
 				29B205F2217B7B5A00E4DD9F /* PathHistoryViewController.swift in Sources */,

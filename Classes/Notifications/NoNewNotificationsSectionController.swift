@@ -53,11 +53,7 @@ NoNewNotificationsCellReviewAccessDelegate {
     // MARK: NoNewNotificationsCellReviewAccessDelegate
 
     func didTapReviewAccess(cell: NoNewNotificationsCell) {
-        //copied/pasted from SettingsViewController... could consolidate
-        guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
-            else { fatalError("Should always create GitHub issue URL") }
-        // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
-        UIApplication.shared.open(url)
+        UIApplication.shared.openReviewAccess()
     }
 
 }

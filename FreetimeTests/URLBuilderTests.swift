@@ -48,4 +48,23 @@ class URLBuilderTests: XCTestCase {
         )
     }
 
+    func test_withNonStrings() {
+        let builder = URLBuilder(host: "github.com")
+            .add(path: 42)
+            .add(path: 0.0)
+        XCTAssertEqual(builder.url!.absoluteString, "https://github.com/42/0.0")
+    }
+
+    func test_withItems() {
+        // URL(string: "https://github.com/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
+        let builder = URLBuilder.github()
+            .add(paths: ["login", "oauth", "authorize"])
+            .add(item: "client_id", value: 1234)
+            .add(item: "scope", value: "user+repo+notifications")
+        XCTAssertEqual(
+            builder.url!.absoluteString,
+            "https://github.com/login/oauth/authorize?client_id=1234&scope=user+repo+notifications"
+        )
+    }
+
 }

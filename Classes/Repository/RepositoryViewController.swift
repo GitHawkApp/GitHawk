@@ -110,8 +110,8 @@ ContextMenuDelegate {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+    var repoUrl: URL? {
+        return URLBuilder.github().add(paths: [repo.owner, repo.name]).url
     }
 
     var switchBranchAction: UIAlertAction {
@@ -160,9 +160,12 @@ ContextMenuDelegate {
     }
 
     func workingCopyAction() -> UIAlertAction? {
-        guard let remote = self.repoUrl.absoluteString.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return nil}
+        guard let remote = repoUrl?.absoluteString
+            .addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)
+            else { return nil}
 
-        guard let url = URL(string: "working-copy://show?remote=\(remote)") else { return nil }
+        guard let url = URL(string: "working-copy://show?remote=\(remote)")
+            else { return nil }
         guard UIApplication.shared.canOpenURL(url) else { return nil }
 
         let title = NSLocalizedString("Working Copy", comment: "")
@@ -183,13 +186,17 @@ ContextMenuDelegate {
         alert.addActions([
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client),
             repo.hasIssuesEnabled ? newIssueAction() : nil,
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
+        ])
+        if let url = repoUrl {
+            alert.add(action: AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
                 $0.popoverPresentationController?.setSourceView(sender)
-            },
+            })
+        }
+        alert.addActions([
             switchBranchAction,
             workingCopyAction(),
             AlertAction.cancel()
-        ])
+            ])
         alert.popoverPresentationController?.setSourceView(sender)
 
         present(alert, animated: trueUnlessReduceMotionEnabled)

@@ -72,7 +72,7 @@ struct AlertAction {
 
     func view(owner: String, icon: UIImage) -> UIAlertAction {
         return UIAlertAction(title: "@\(owner)", image: icon, style: .default) { _ in
-            guard let url = URL(string: "https://github.com/\(owner)") else { return }
+            guard let url = URLBuilder.github().add(path: owner).url else { return }
             self.rootViewController?.presentSafari(url: url)
         }
     }

@@ -324,7 +324,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
             guard !trimmed.isEmpty else { continue }
             let baseURL: URL?
             if let branch = options.branch {
-                baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/\(branch)/")
+                baseURL = URLBuilder.github().add(paths: [options.owner, options.repo, "raw", branch]).url
             } else {
                 baseURL = nil
             }
