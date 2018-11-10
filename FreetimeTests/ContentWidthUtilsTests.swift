@@ -87,19 +87,19 @@ class ContentWidthUtilsTests: XCTestCase {
     func test_collectionViewFrameWidth() {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
         let collectionView = AdjustableCollectionView.make()
-        collectionView.frame = view.frame.insetBy(dx: 10, dy: 10)
+        collectionView.frame = view.frame
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         view.addSubview(collectionView)
-        XCTAssertEqual(view.safeContentWidth(with: collectionView), 240)
+        XCTAssertEqual(view.safeContentWidth(with: collectionView), 260)
     }
 
     func test_listKit() {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
         let collectionView = AdjustableCollectionView.make()
-        collectionView.frame = view.frame.insetBy(dx: 10, dy: 10)
+        collectionView.frame = view.frame
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         view.addSubview(collectionView)
-        XCTAssertEqual(view.safeContentWidth(with: collectionView), 240)
+        XCTAssertEqual(view.safeContentWidth(with: collectionView), 260)
 
         let controller = InsetTestController()
         controller.adapter.collectionView = collectionView
