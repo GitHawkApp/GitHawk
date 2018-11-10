@@ -216,7 +216,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     }
 
     func edit(markdown: String) {
-        guard let width = collectionContext?.insetContainerSize.width else { return }
+        let width = collectionContext.cellWidth()
         let bodyModels = MarkdownModels(
             // strip githawk signatures on edit
             CheckIfSentWithGitHawk(markdown: markdown).markdown,
@@ -340,7 +340,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
-        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
+        let width = collectionContext.cellWidth()
 
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {

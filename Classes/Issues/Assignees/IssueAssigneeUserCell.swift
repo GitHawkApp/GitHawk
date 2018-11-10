@@ -49,7 +49,7 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: ListBindable

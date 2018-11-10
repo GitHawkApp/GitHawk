@@ -26,6 +26,7 @@ final class WidthCache<KeyType: Hashable, DataType> {
     // MARK: Private API
 
     func mergedKey(key: KeyType, width: CGFloat) -> String {
+//        return "\(key.hashValue)\(floor(width))"
         return "\(key.hashValue)\(width)"
     }
 

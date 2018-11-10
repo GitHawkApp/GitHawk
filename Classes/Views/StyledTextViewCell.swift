@@ -26,7 +26,7 @@ class StyledTextViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
         textView.reposition(for: contentView.bounds.width)
     }
 

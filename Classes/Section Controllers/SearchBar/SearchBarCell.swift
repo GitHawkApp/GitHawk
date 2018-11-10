@@ -44,7 +44,7 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: Public API

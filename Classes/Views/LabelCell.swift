@@ -34,7 +34,7 @@ final class LabelCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
 }

@@ -52,7 +52,7 @@ final class BookmarkCell: SwipeSelectableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
 
         let bounds = contentView.bounds
         textView.reposition(for: bounds.width)

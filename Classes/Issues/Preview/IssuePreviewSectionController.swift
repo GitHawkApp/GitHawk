@@ -38,14 +38,13 @@ ListBindingSectionControllerDataSource {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Missing context") }
         let height = BodyHeightForComment(
             viewModel: viewModel,
-            width: width,
+            width: collectionContext.safeContentWidth(),
             webviewCache: webviewCache,
             imageCache: imageCache
         )
-        return CGSize(width: width, height: height)
+        return collectionContext.cellSize(with: height)
     }
 
     func sectionController(

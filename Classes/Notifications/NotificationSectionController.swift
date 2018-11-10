@@ -26,10 +26,8 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
                 value,
                 cellType: ListCellType.class(NotificationCell.self),
                 size: {
-                    let width = $0.collection.containerSize.width
-                    return CGSize(
-                        width: width,
-                        height: $0.value.title.viewSize(in: width).height
+                    return $0.collection.cellSize(with:
+                        $0.value.title.viewSize(in: $0.collection.safeContentWidth()).height
                     )
             },
                 configure: { [weak self] in

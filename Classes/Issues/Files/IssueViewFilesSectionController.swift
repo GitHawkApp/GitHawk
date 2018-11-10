@@ -21,10 +21,8 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(
-            width: width,
-            height: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
+        return collectionContext.cellSize(
+            with: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
         )
     }
 

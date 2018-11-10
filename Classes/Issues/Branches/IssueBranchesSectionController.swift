@@ -19,8 +19,9 @@ final class IssueTargetBranchSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: self.object?.targetBranchText.viewSize(in: width).height ?? 0)
+        return collectionContext.cellSize(
+            with: object?.targetBranchText.viewSize(in: collectionContext.safeContentWidth()).height ?? 0
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

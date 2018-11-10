@@ -225,11 +225,8 @@ ContextMenuDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let containerWidth = collectionContext?.insetContainerSize.width
-            else { fatalError("Collection context must be set") }
-
+        let containerWidth = collectionContext.cellWidth()
         let height = IssueManagingActionCell.height
-
         let rawRowCount = min(CGFloat(viewModels.count), floor(containerWidth / (height + minimumInteritemSpacing)))
         return CGSize(
             width: floor((containerWidth - (rawRowCount - 1) * minimumInteritemSpacing) / rawRowCount),

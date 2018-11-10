@@ -42,7 +42,7 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
             markdown,
             owner: owner,
             repo: repo,
-            width: view.bounds.width,
+            width: view.safeContentWidth(with: collectionView),
             viewerCanUpdate: false,
             contentSizeCategory: UIContentSizeCategory.preferred,
             isRoot: false

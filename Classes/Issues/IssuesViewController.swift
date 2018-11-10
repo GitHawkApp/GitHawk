@@ -311,16 +311,11 @@ final class IssuesViewController: MessageViewController,
             }
         }
 
-        // assumptions here, but the collectionview may not have been laid out or content size found
-        // assume the collectionview is pinned to the view's bounds
-        let contentInset = feed.collectionView.contentInset
-        let width = view.bounds.width - contentInset.left - contentInset.right
-
         client.fetch(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            width: width,
+            width: view.safeContentWidth(with: feed.collectionView),
             prependResult: previous ? result : nil
         ) { [weak self] resultType in
             guard let strongSelf = self else { return }
@@ -539,7 +534,7 @@ final class IssuesViewController: MessageViewController,
                 commentFields: commentFields,
                 reactionFields: reactionFields,
                 contentSizeCategory: UIContentSizeCategory.preferred,
-                width: view.bounds.width,
+                width: view.safeContentWidth(with: feed.collectionView),
                 owner: model.owner,
                 repo: model.repo,
                 threadState: .single,

@@ -131,7 +131,10 @@ class SearchViewController: UIViewController,
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
 
-        let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
+        let request = client.search(
+            query: term,
+            containerWidth: view.safeContentWidth(with: collectionView)
+        ) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: trueUnlessReduceMotionEnabled)
         }

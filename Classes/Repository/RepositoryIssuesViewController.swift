@@ -77,7 +77,7 @@ SearchBarSectionControllerDelegate {
         client.searchIssues(
             query: fullQueryString,
             nextPage: page as String?,
-            containerWidth: view.bounds.width
+            containerWidth: view.safeContentWidth(with: feed.collectionView)
         ) { [weak self] (result: Result<RepositoryClient.RepositoryPayload>) in
             switch result {
             case .error:
