@@ -139,7 +139,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             let accountsController = navigationController.topViewController as? SettingsAccountsViewController,
             let client = self.client {
             accountsController.config(client: client.client, sessionManager: sessionManager)
-            self.navigationController?.showDetailViewController(navigationController, sender: self)
+            route_detail(to: navigationController)
         }
     }
 
@@ -181,9 +181,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             defaultBranch: "master",
             hasIssuesEnabled: true
         )
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navController = UINavigationController(rootViewController: repoViewController)
-        showDetailViewController(navController, sender: self)
+        route_detail(to: RepositoryViewController(client: client, repo: repo))
     }
 
     func onSetDefaultReaction() {
@@ -192,8 +190,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             fatalError("Cannot instantiate DefaultReactionDetailController instance")
         }
         viewController.delegate = self
-        let navController = UINavigationController(rootViewController: viewController)
-        showDetailViewController(navController, sender: self)
+        route_detail(to: viewController)
     }
 
     func onTryTestFlightBeta() {
@@ -290,9 +287,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     // MARK: NewIssueTableViewControllerDelegate
 
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
-        let issuesViewController = IssuesViewController(client: client, model: model)
-        let navigation = UINavigationController(rootViewController: issuesViewController)
-        showDetailViewController(navigation, sender: nil)
+        route_detail(to: IssuesViewController(client: client, model: model))
     }
 
     // MARK: DefaultReactionDelegate

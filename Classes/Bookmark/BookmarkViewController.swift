@@ -149,8 +149,7 @@ TabNavRootViewControllerType {
         default:
             return
         }
-        let navigation = UINavigationController(rootViewController: destinationViewController)
-        showDetailViewController(navigation, sender: nil)
+        route_detail(to: destinationViewController)
     }
 
     func didDelete(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
