@@ -74,6 +74,7 @@ ContextMenuDelegate {
 
         super.viewDidLoad()
 
+        navigationController?.navigationBar.backgroundColor = .white
         view.backgroundColor = .white
         makeBackBarItemEmpty()
         delegate = self
