@@ -11,8 +11,7 @@ import UIKit
 
 
 extension String {
-    func matches(
-        regex: String) -> [String] {
+    func matches(regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex)
             let str = self as NSString
@@ -23,8 +22,7 @@ extension String {
                     length: str.length
                 )
             )
-            return results.map { str.substring(with: $0.range)}
-
+            return results.map { str.substring(with: $0.range) }
         } catch let error as NSError {
             print("invalid regex: \(error.localizedDescription)")
             return []

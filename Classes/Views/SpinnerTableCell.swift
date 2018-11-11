@@ -10,8 +10,8 @@ import UIKit
 
 final class SpinnerTableCell: StyledTableCell {
 
-    let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    var indicatorHolder: UITableViewCellAccessoryType?
+    private let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    private var indicatorHolder: UITableViewCellAccessoryType?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,12 +23,12 @@ final class SpinnerTableCell: StyledTableCell {
         activity.hidesWhenStopped = true
     }
 
-    public func showSpinner() {
+    func startSpinner() {
         indicatorHolder = self.accessoryType
         self.accessoryType = .none
         activity.startAnimating()
     }
-    public func stopSpinner() {
+    func stopSpinner() {
         activity.stopAnimating()
         self.accessoryType = indicatorHolder ?? .none
     }
