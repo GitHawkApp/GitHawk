@@ -52,13 +52,12 @@ final class RepositorySummarySectionController: ListSwiftSectionController<Repos
                     repo: self.repo,
                     number: context.value.number
                 )
-                let controller = IssuesViewController(client: self.client, model: issueModel)
                 // resign keyboard if it was triggered to become active by SearchBar
                 self.viewController?.view.endEditing(false)
-                self.viewController?.navigationController?.pushViewController(
-                    controller,
-                    animated: trueUnlessReduceMotionEnabled
-                )
+                self.viewController?.route_push(to: IssuesViewController(
+                    client: self.client,
+                    model: issueModel
+                ))
             })
         ]
     }

@@ -23,9 +23,12 @@ extension IssueTextActionsView {
             IssueTextActionOperation(
                 icon: UIImage(named: "bar-eye"),
                 operation: .execute({ [weak viewController] in
-                let controller = IssuePreviewViewController(markdown: getMarkdownBlock(), owner: owner, repo: repo)
-                viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
-            }),
+                    viewController?.route_push(to: IssuePreviewViewController(
+                        markdown: getMarkdownBlock(),
+                        owner: owner,
+                        repo: repo
+                    ))
+                }),
                 name: NSLocalizedString("Message Preview", comment: "The name of the action for previewing a message from the markdown actions bar")),
             IssueTextActionOperation(
                 icon: UIImage(named: "bar-mention"),
@@ -72,7 +75,7 @@ extension IssueTextActionsView {
                             UIMenuController.shared.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
                         }
                     })
-                ]),
+                    ]),
                 name: NSLocalizedString("Wrap text as URL", comment: "The name of the action to wrap text in a markdown URL from the markdown actions bar"))
         ]
 
@@ -93,3 +96,4 @@ extension IssueTextActionsView {
     }
 
 }
+

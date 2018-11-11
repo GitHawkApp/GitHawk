@@ -87,14 +87,11 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
         case .hash(let hash):
             viewController?.presentCommit(owner: model.owner, repo: model.repo, hash: hash)
         case .number(let number):
-
-            let controller = IssuesViewController(
+            viewController?.route_detail(to: IssuesViewController(
                 client: modelController.githubClient,
                 model: IssueDetailsModel(owner: model.owner, repo: model.repo, number: number),
                 scrollToBottom: true
-            )
-            let navigation = UINavigationController(rootViewController: controller)
-            viewController?.showDetailViewController(navigation, sender: nil)
+            ))
         case .release(let release):
             showRelease(release, model: model)
         }

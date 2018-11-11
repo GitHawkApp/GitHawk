@@ -149,12 +149,11 @@ MarkdownStyledTextViewDelegate {
     // MARK: IssueReviewViewCommentsCellDelegate
 
     func didTapViewComments(cell: IssueReviewViewCommentsCell) {
-        let controller = PullRequestReviewCommentsViewController(
+        viewController?.route_push(to: PullRequestReviewCommentsViewController(
             model: model,
             client: client,
             autocomplete: autocomplete
-        )
-        viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
 }

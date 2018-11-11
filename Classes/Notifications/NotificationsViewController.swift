@@ -160,19 +160,17 @@ BaseListViewControllerEmptyDataSource {
     }
 
     func pushRepoNotifications(owner: String, repo: String) {
-        let controller = NotificationsViewController(
+        route_push(to: NotificationsViewController(
             modelController: modelController,
             inboxType: .repo(Repository(owner: owner, name: repo))
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
     func onViewAll() {
-        let controller = NotificationsViewController(
+        route_push(to: NotificationsViewController(
             modelController: modelController,
             inboxType: .all
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
     func resetRightBarItem(updatingState updateState: Bool = true) {

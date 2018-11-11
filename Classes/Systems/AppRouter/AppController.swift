@@ -87,6 +87,8 @@ RouterPropsSource {
             newBookmarksRootViewController(client: appClient),
             settingsNavigationController ?? UINavigationController() // satisfy compiler
             ])
+        // recursively update all new children
+        splitViewController.router = router
     }
 
     private func showLogin(animated: Bool) {

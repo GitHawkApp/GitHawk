@@ -18,7 +18,7 @@ private func register<T: Routable & RoutePerformable>(
 
 extension UIViewController {
     private static var RouterAssocObjectKey = "RouterAssocObjectKey"
-    fileprivate var router: Router? {
+    var router: Router? {
         get {
             return objc_getAssociatedObject(
                 self,
@@ -32,6 +32,8 @@ extension UIViewController {
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
+            // recursively set to all VCs
+            childViewControllers.forEach { $0.router = newValue }
         }
     }
 
@@ -135,15 +137,13 @@ final class Router: NSObject {
     }
 
     private func detail(controller: UIViewController, split: UISplitViewController) {
-        controller.router = self
         let wrapped: UINavigationController
         if let controller = controller as? UINavigationController {
-            controller.viewControllers.forEach { $0.router = self }
             wrapped = controller
         } else {
             wrapped = UINavigationController(rootViewController: controller)
-            wrapped.router = self
         }
+        controller.router = self
         split.showDetailViewController(wrapped, sender: nil)
     }
 

@@ -125,13 +125,12 @@ IndicatorInfoProvider {
     }
 
     private func showDirectory(at path: FilePath) {
-        let controller = RepositoryCodeDirectoryViewController(
+        route_push(to: RepositoryCodeDirectoryViewController(
             client: client,
             repo: repo,
             branch: branch,
             path: path
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
     private func showFile(at path: FilePath) {
@@ -150,7 +149,7 @@ IndicatorInfoProvider {
                 path: path
             )
         }
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        route_push(to: controller)
     }
 
     // MARK: Overrides
