@@ -14,10 +14,6 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
-protocol SetSearchBarTextSectionControllerDelegate: class {
-    func append(query: String)
-}
-
 final class RepositoryIssuesViewController: BaseListViewController<String>,
     BaseListViewControllerDataSource,
     BaseListViewControllerEmptyDataSource,
@@ -34,7 +30,6 @@ LabelListViewTapDelegate {
     private let debouncer = Debouncer()
     private var previousSearchString = "is:open "
     private var label: String?
-    private weak var setSearchBarTextSectionControllerDelegate: SetSearchBarTextSectionControllerDelegate?
 
     init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType, label: String? = nil) {
         self.owner = owner
@@ -110,14 +105,13 @@ LabelListViewTapDelegate {
     // MARK: BaseListViewControllerHeaderDataSource
 
     func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
-        return ListSwiftPair.pair("header", { [weak self, previousSearchString] in
-            let sectionController = SearchBarSectionController(
+        return ListSwiftPair.pair(SearchBarSectionController.listSwiftId, {
+            [weak self, previousSearchString] in
+            return SearchBarSectionController(
                 placeholder: Constants.Strings.search,
                 delegate: self,
                 query: previousSearchString
             )
-            self?.setSearchBarTextSectionControllerDelegate = sectionController
-            return sectionController
         })
     }
 
@@ -161,11 +155,19 @@ LabelListViewTapDelegate {
         return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
     }
     
+    private var searchBarSectionController: SearchBarSectionController? {
+        return feed.swiftAdapter.sectionController(
+            for: SearchBarSectionController.listSwiftId
+        )
+    }
+    
     // Mark: LabelListViewTapDelegate
     
     func didTap(label: String) {
-        guard previousSearchString.range(of: label) == nil else { return }
-        setSearchBarTextSectionControllerDelegate?.append(query: " label:\(label)")
+        guard let controller = searchBarSectionController,
+            previousSearchString.range(of: label) == nil
+            else { return }
+        controller.set(query: "\(previousSearchString) label:\(label)")
     }
     
 }

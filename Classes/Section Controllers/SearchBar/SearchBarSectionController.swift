@@ -13,17 +13,13 @@ protocol SearchBarSectionControllerDelegate: class {
     func didChangeSelection(sectionController: SearchBarSectionController, query: String)
 }
 
-protocol SetSearchBarTextDelegate: class {
-    func append(query: String)
-}
-
-final class SearchBarSectionController: ListSwiftSectionController<String>, SearchBarCellDelegate, SetSearchBarTextSectionControllerDelegate {
+final class SearchBarSectionController: ListSwiftSectionController<String>, SearchBarCellDelegate {
     
+    static let listSwiftId = "header"
     public private(set) var query: String
-
     private weak var delegate: SearchBarSectionControllerDelegate?
     private let placeholder: String
-    private weak var setSearchBarTextDelegate: SetSearchBarTextDelegate?
+    private weak var searchBarCell: SearchBarCell?
 
     init(placeholder: String, delegate: SearchBarSectionControllerDelegate?, query: String = "") {
         self.delegate = delegate
@@ -40,7 +36,7 @@ final class SearchBarSectionController: ListSwiftSectionController<String>, Sear
                 guard let `self` = self else { return }
                 cell.delegate = self
                 cell.configure(query: self.query, placeholder: self.placeholder)
-                self.setSearchBarTextDelegate = cell 
+                self.searchBarCell = cell
             })
         ]
     }
@@ -52,9 +48,11 @@ final class SearchBarSectionController: ListSwiftSectionController<String>, Sear
         self.delegate?.didChangeSelection(sectionController: self, query: query)
     }
     
-    // MARK: SetSearchBarTextDelegate
+    // MARK: Public API
     
-    func append(query: String) {
-        setSearchBarTextDelegate?.append(query: query)
+    func set(query: String) {
+        searchBarCell?.configure(query: query, placeholder: placeholder)
+        self.query = query 
+        delegate?.didChangeSelection(sectionController: self, query: query)
     }
 }

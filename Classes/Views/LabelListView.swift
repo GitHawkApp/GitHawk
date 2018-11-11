@@ -20,6 +20,11 @@ UICollectionViewDelegateFlowLayout {
     private static var cache = [String: CGFloat]()
     private weak var tapDelegate: LabelListViewTapDelegate?
 
+    static func labelTextTotalWidth(labels: [RepositoryLabel]) -> CGFloat {
+        let interitemSpacing = labels.count > 1 ? CGFloat(labels.count - 1) * Styles.Sizes.labelSpacing : 0.0
+        return labels.reduce(0, { $0 + LabelListCell.size($1.name).width }) + interitemSpacing
+    }
+
     static func height(width: CGFloat, labels: [RepositoryLabel], cacheKey: String) -> CGFloat {
         let key = "\(cacheKey)\(width)"
         if let cachedHeight = LabelListView.cache[key] {
@@ -27,9 +32,7 @@ UICollectionViewDelegateFlowLayout {
         }
 
         let rowHeight = LabelListCell.size(labels.first?.name ?? "").height
-        let interitemSpacing = labels.count > 1 ? CGFloat(labels.count - 1) * Styles.Sizes.labelSpacing : 0.0
-        let labelTextTotalWidth = labels.reduce(0, { $0 + LabelListCell.size($1.name).width }) + interitemSpacing
-        let labelRows = ceil(labelTextTotalWidth / width)
+        let labelRows = ceil(LabelListView.labelTextTotalWidth(labels: labels) / width)
         let rowSpacing = labelRows > 1 ? (labelRows - 1) * Styles.Sizes.labelSpacing : 0.0
 
         let height = ceil((rowHeight * labelRows) + rowSpacing)
@@ -64,15 +67,14 @@ UICollectionViewDelegateFlowLayout {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = bounds
+        collectionView.frame = CGRect(
+            x: bounds.minX,
+            y: bounds.minY,
+            width: min(LabelListView.labelTextTotalWidth(labels: labels), bounds.width),
+            height: bounds.height
+        )
     }
 
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let lastCell = collectionView.cellForItem(at: [0, labels.count - 1])
-            else { return self }
-        return point.x > lastCell.frame.maxX ? self : super.hitTest(point, with: event)
-    }
-    
     // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
