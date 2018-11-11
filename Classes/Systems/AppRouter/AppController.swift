@@ -14,10 +14,10 @@ import GitHawkRoutes
 final class AppController: NSObject,
 LoginSplashViewControllerDelegate,
 GitHubSessionListener,
-RouterDelegate {
+RouterPropsSource {
 
     public private(set) lazy var router = {
-        return Router(delegate: self)
+        return Router(propsSource: self)
     }()
 
     private var splitViewController: AppSplitViewController!
@@ -87,6 +87,8 @@ RouterDelegate {
             newBookmarksRootViewController(client: appClient),
             settingsNavigationController ?? UINavigationController() // satisfy compiler
             ])
+        // recursively update all new children
+        splitViewController.router = router
     }
 
     private func showLogin(animated: Bool) {
@@ -140,11 +142,11 @@ RouterDelegate {
         showLogin(animated: trueUnlessReduceMotionEnabled)
     }
 
-    // MARK: RouteHandlerDelegate
+    // MARK: RouterPropsSource
 
-    func perform(route: RoutePerformable, router: Router) -> Bool {
-        guard let client = appClient else { return false }
-        return route.perform(
+    func props(for router: Router) -> RoutePerformableProps? {
+        guard let client = appClient else { return nil }
+        return RoutePerformableProps(
             sessionManager: sessionManager,
             splitViewController: splitViewController,
             client: client

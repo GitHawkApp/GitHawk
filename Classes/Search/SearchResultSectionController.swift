@@ -50,10 +50,10 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
         )
 
         delegate?.didSelect(sectionController: self, repo: repo)
-
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navigation = UINavigationController(rootViewController: repoViewController)
-        viewController?.showDetailViewController(navigation, sender: nil)
+        viewController?.route_detail(to: RepositoryViewController(
+            client: client,
+            repo: repo
+        ))
     }
 
 }

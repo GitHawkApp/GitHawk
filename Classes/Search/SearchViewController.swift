@@ -284,9 +284,7 @@ class SearchViewController: UIViewController,
         // otherwise pushing the next view controller wont be animated
         update(animated: trueUnlessReduceMotionEnabled)
 
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navigation = UINavigationController(rootViewController: repoViewController)
-        showDetailViewController(navigation, sender: nil)
+        route_detail(to: RepositoryViewController(client: client, repo: repo))
     }
 
     // MARK: SearchRecentHeaderSectionControllerDelegate

@@ -359,12 +359,11 @@ final class IssuesViewController: MessageViewController,
     }
 
     func onPreview() {
-        let controller = IssuePreviewViewController(
+        route_push(to: IssuePreviewViewController(
             markdown: messageView.text,
             owner: model.owner,
             repo: model.repo
-        )
-        showDetailViewController(controller, sender: nil)
+        ))
     }
 
     @objc func onNavigationTitle(sender: UIView) {
