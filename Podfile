@@ -21,7 +21,7 @@ def testing_pods
   pod 'SwiftLint'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Tabman', '~> 1.8'
+  pod 'XLPagerTabStrip', '~> 8.1'
   pod 'ImageAlertAction'
   pod 'FMDB'
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import XLPagerTabStrip
 
 enum RepositoryIssuesType {
     case issues
@@ -18,7 +19,8 @@ final class RepositoryIssuesViewController: BaseListViewController<String>,
     BaseListViewControllerDataSource,
     BaseListViewControllerEmptyDataSource,
     BaseListViewControllerHeaderDataSource,
-SearchBarSectionControllerDelegate {
+    SearchBarSectionControllerDelegate,
+IndicatorInfoProvider {
 
     private var models = [RepositoryIssueSummaryModel]()
     private let owner: String
@@ -150,6 +152,12 @@ SearchBarSectionControllerDelegate {
         case .pullRequests: typeQuery = "is:pr"
         }
         return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
+    }
+
+    // MARK: IndicatorInfoProvider
+
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: title)
     }
 
 }

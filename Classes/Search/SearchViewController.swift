@@ -95,6 +95,13 @@ class SearchViewController: UIViewController,
         rz_smoothlyDeselectRows(collectionView: collectionView)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // https://stackoverflow.com/a/47976999
+        navigationController?.view.setNeedsLayout()
+        navigationController?.view.layoutIfNeeded()
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 

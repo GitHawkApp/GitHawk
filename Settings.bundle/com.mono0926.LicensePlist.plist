@@ -30,14 +30,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/AutoInsetter</string>
-			<key>Title</key>
-			<string>AutoInsetter (1.2.3)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/cmark-gfm-swift</string>
 			<key>Title</key>
 			<string>cmark-gfm-swift (0.1.0)</string>
@@ -174,14 +166,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/Pageboy</string>
-			<key>Title</key>
-			<string>Pageboy (2.5.1)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/SDWebImage</string>
 			<key>Title</key>
 			<string>SDWebImage (4.0.0)</string>
@@ -230,17 +214,17 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/Tabman</string>
+			<string>com.mono0926.LicensePlist/TUSafariActivity</string>
 			<key>Title</key>
-			<string>Tabman (1.8.2)</string>
+			<string>TUSafariActivity (1.0.4)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/TUSafariActivity</string>
+			<string>com.mono0926.LicensePlist/XLPagerTabStrip</string>
 			<key>Title</key>
-			<string>TUSafariActivity (1.0.4)</string>
+			<string>XLPagerTabStrip</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
