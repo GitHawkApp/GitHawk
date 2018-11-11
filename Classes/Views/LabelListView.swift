@@ -8,12 +8,17 @@
 
 import Foundation
 
+protocol LabelListViewTapDelegate: class {
+    func didTap(label: String)
+}
+
 final class LabelListView: UIView,
 UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout {
 
     private static var cache = [String: CGFloat]()
+    private weak var tapDelegate: LabelListViewTapDelegate?
 
     static func height(width: CGFloat, labels: [RepositoryLabel], cacheKey: String) -> CGFloat {
         let key = "\(cacheKey)\(width)"
@@ -42,7 +47,6 @@ UICollectionViewDelegateFlowLayout {
         collectionView.register(LabelListCell.self, forCellWithReuseIdentifier: LabelListCell.reuse)
         collectionView.backgroundColor = UIColor.clear
         collectionView.isScrollEnabled = false
-        collectionView.isUserInteractionEnabled = false
         return collectionView
     }()
 
@@ -63,6 +67,18 @@ UICollectionViewDelegateFlowLayout {
         collectionView.frame = bounds
     }
 
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard let lastCell = collectionView.cellForItem(at: [0, labels.count - 1])
+            else { return self }
+        return point.x > lastCell.frame.maxX ? self : super.hitTest(point, with: event)
+    }
+    
+    // MARK: UICollectionViewDelegate
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        tapDelegate?.didTap(label: labels[indexPath.row].name)
+    }
+    
     // MARK: UICollectionViewDataSource
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,8 +99,9 @@ UICollectionViewDelegateFlowLayout {
 
     // MARK: Public API
 
-    func configure(labels: [RepositoryLabel]) {
+    func configure(labels: [RepositoryLabel], tapDelegate: LabelListViewTapDelegate?) {
         self.labels = labels
+        self.tapDelegate = tapDelegate
         collectionView.reloadData()
     }
 }

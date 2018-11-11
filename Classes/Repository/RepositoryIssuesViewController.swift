@@ -14,11 +14,16 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
+protocol SetSearchBarTextSectionControllerDelegate: class {
+    func append(query: String)
+}
+
 final class RepositoryIssuesViewController: BaseListViewController<String>,
     BaseListViewControllerDataSource,
     BaseListViewControllerEmptyDataSource,
     BaseListViewControllerHeaderDataSource,
-SearchBarSectionControllerDelegate {
+SearchBarSectionControllerDelegate,
+LabelListViewTapDelegate {
 
     private var models = [RepositoryIssueSummaryModel]()
     private let owner: String
@@ -29,6 +34,7 @@ SearchBarSectionControllerDelegate {
     private let debouncer = Debouncer()
     private var previousSearchString = "is:open "
     private var label: String?
+    private weak var setSearchBarTextSectionControllerDelegate: SetSearchBarTextSectionControllerDelegate?
 
     init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType, label: String? = nil) {
         self.owner = owner
@@ -105,23 +111,26 @@ SearchBarSectionControllerDelegate {
 
     func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         return ListSwiftPair.pair("header", { [weak self, previousSearchString] in
-            SearchBarSectionController(
+            let sectionController = SearchBarSectionController(
                 placeholder: Constants.Strings.search,
                 delegate: self,
                 query: previousSearchString
             )
+            self?.setSearchBarTextSectionControllerDelegate = sectionController
+            return sectionController
         })
     }
 
     // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
-        return models.map { [client, owner, repo] model in
+        return models.map { [weak self, client, owner, repo] model in
             ListSwiftPair.pair(model, {
                 RepositorySummarySectionController(
                     client: client.githubClient,
                     owner: owner,
-                    repo: repo
+                    repo: repo,
+                    tapDelegate: self
                 )
             })
         }
@@ -151,5 +160,12 @@ SearchBarSectionControllerDelegate {
         }
         return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
     }
-
+    
+    // Mark: LabelListViewTapDelegate
+    
+    func didTap(label: String) {
+        guard previousSearchString.range(of: label) == nil else { return }
+        setSearchBarTextSectionControllerDelegate?.append(query: " label:\(label)")
+    }
+    
 }

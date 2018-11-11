@@ -93,7 +93,7 @@ final class RepositorySummaryCell: SelectableCell {
 
     // MARK: Public API
 
-    func configure(_ model: RepositoryIssueSummaryModel) {
+    func configure(_ model: RepositoryIssueSummaryModel, tapDelegate: LabelListViewTapDelegate?) {
         titleView.configure(with: model.title, width: contentView.bounds.width)
 
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
@@ -118,7 +118,7 @@ final class RepositorySummaryCell: SelectableCell {
 
         if model.labels.count > 0 {
             labelListView.isHidden = false
-            labelListView.configure(labels: model.labels)
+            labelListView.configure(labels: model.labels, tapDelegate: tapDelegate)
             resizeLabelListView(labels: model.labels, cacheKey: model.labelSummary)
         } else {
             labelListView.isHidden = true
