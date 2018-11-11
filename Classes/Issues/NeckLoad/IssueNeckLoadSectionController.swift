@@ -23,8 +23,7 @@ final class IssueNeckLoadSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        return collectionContext.cellSize(with: Styles.Sizes.tableCellHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

@@ -40,7 +40,7 @@ final class LoadMoreCell: SelectableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     override var accessibilityLabel: String? {

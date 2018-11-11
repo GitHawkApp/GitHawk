@@ -22,10 +22,7 @@ final class MilestoneSectionController: ListSwiftSectionController<MilestoneView
                 value,
                 cellType: ListCellType.class(MilestoneCell2.self),
                 size: {
-                    return CGSize(
-                        width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeightLarge
-                    )
+                    return $0.collection.cellSize(with: Styles.Sizes.tableCellHeightLarge)
             },
                 configure: {
                     $0.label.text = $1.value.title

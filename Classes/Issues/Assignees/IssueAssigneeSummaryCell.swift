@@ -54,7 +54,7 @@ final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewData
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
 
         let height = contentView.bounds.height
         let size = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero

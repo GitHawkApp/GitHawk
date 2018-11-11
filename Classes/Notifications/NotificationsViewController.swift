@@ -71,7 +71,7 @@ BaseListViewControllerEmptyDataSource {
     }
 
     override func fetch(page: Int?) {
-        let width = view.bounds.width
+        let width = view.safeContentWidth(with: feed.collectionView)
         let showAll = inboxType.showAll
 
         let repo: Repository?

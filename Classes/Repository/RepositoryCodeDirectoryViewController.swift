@@ -10,12 +10,14 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 import Squawk
+import XLPagerTabStrip
 
 final class RepositoryCodeDirectoryViewController: BaseListViewController<Int>,
-BaseListViewControllerDataSource,
-BaseListViewControllerEmptyDataSource,
-RepositoryCodeDirectorySectionControllerDelegate,
-RepositoryBranchUpdatable {
+    BaseListViewControllerDataSource,
+    BaseListViewControllerEmptyDataSource,
+    RepositoryCodeDirectorySectionControllerDelegate,
+    RepositoryBranchUpdatable,
+IndicatorInfoProvider {
 
     private let client: GithubClient
     private var branch: String
@@ -205,6 +207,12 @@ RepositoryBranchUpdatable {
         guard self.branch != newBranch else { return }
         self.branch = newBranch
         fetch(page: nil)
+    }
+
+    // MARK: IndicatorInfoProvider
+
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: title)
     }
 
 }

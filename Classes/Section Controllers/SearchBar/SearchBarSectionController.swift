@@ -30,7 +30,7 @@ final class SearchBarSectionController: ListSwiftSectionController<String>, Sear
     override func createBinders(from value: String) -> [ListBinder] {
         return [
             binder(value, cellType: ListCellType.class(SearchBarCell.self), size: {
-                return CGSize(width: $0.collection.containerSize.width, height: 56)
+                return $0.collection.cellSize(with: 56)
             }, configure: { [weak self] (cell, _) in
                 guard let `self` = self else { return }
                 cell.delegate = self

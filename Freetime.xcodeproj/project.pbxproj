@@ -50,6 +50,8 @@
 		291929611F3FD2960012067B /* DiffString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929601F3FD2960012067B /* DiffString.swift */; };
 		291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929621F3FF0DA0012067B /* StyledTableCell.swift */; };
 		291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929661F3FF9C50012067B /* BadgeNotifications.swift */; };
+		291E98832197697400E5EED9 /* ContentWidthUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E98822197697400E5EED9 /* ContentWidthUtils.swift */; };
+		291E988521976B5600E5EED9 /* ContentWidthUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E988421976B5600E5EED9 /* ContentWidthUtilsTests.swift */; };
 		291E987B21973B8F00E5EED9 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E987A21973B8F00E5EED9 /* URLBuilder.swift */; };
 		291E987D21973FA700E5EED9 /* URLBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E987C21973FA700E5EED9 /* URLBuilderTests.swift */; };
 		291E987F2197515C00E5EED9 /* UIApplication+ReviewAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E987E2197515C00E5EED9 /* UIApplication+ReviewAccess.swift */; };
@@ -264,7 +266,6 @@
 		2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033D1F51E93500BE90F4 /* RatingSectionController.swift */; };
 		298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033F1F51E93B00BE90F4 /* RatingCell.swift */; };
 		2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
-		2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */; };
 		2986B3581FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986B3571FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift */; };
 		2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986B3591FD30F0B00E3CFC6 /* IssueManagingModel.swift */; };
 		2986B35C1FD4618900E3CFC6 /* FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986B35B1FD4618900E3CFC6 /* FilePath.swift */; };
@@ -599,6 +600,8 @@
 		291929601F3FD2960012067B /* DiffString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffString.swift; sourceTree = "<group>"; };
 		291929621F3FF0DA0012067B /* StyledTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledTableCell.swift; sourceTree = "<group>"; };
 		291929661F3FF9C50012067B /* BadgeNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNotifications.swift; sourceTree = "<group>"; };
+		291E98822197697400E5EED9 /* ContentWidthUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentWidthUtils.swift; sourceTree = "<group>"; };
+		291E988421976B5600E5EED9 /* ContentWidthUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentWidthUtilsTests.swift; sourceTree = "<group>"; };
 		291E987A21973B8F00E5EED9 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		291E987C21973FA700E5EED9 /* URLBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilderTests.swift; sourceTree = "<group>"; };
 		291E987E2197515C00E5EED9 /* UIApplication+ReviewAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ReviewAccess.swift"; sourceTree = "<group>"; };
@@ -820,7 +823,6 @@
 		2980033F1F51E93B00BE90F4 /* RatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
 		2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEmoji.swift; sourceTree = "<group>"; };
 		2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTests.swift; sourceTree = "<group>"; };
-		2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+SafeAreaContentView.swift"; sourceTree = "<group>"; };
 		2986B3571FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueManagingExpansionModel.swift; sourceTree = "<group>"; };
 		2986B3591FD30F0B00E3CFC6 /* IssueManagingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingModel.swift; sourceTree = "<group>"; };
 		2986B35B1FD4618900E3CFC6 /* FilePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePath.swift; sourceTree = "<group>"; };
@@ -1629,6 +1631,7 @@
 			isa = PBXGroup;
 			children = (
 				DCA5ED171FAEF3220072F074 /* Bookmark Tests */,
+				291E988421976B5600E5EED9 /* ContentWidthUtilsTests.swift */,
 				BD1DC657218DFE3C004DAC42 /* DetectShortlinkTests.swift */,
 				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
 				2986B35D1FD462AA00E3CFC6 /* FilePathTests.swift */,
@@ -1800,6 +1803,7 @@
 				29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */,
 				29B94E661FCB2D4600715D7E /* CodeView.swift */,
 				29C167661ECA005500439D62 /* Constants.swift */,
+				291E98822197697400E5EED9 /* ContentWidthUtils.swift */,
 				29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */,
 				291929601F3FD2960012067B /* DiffString.swift */,
 				D8C2AEF41F9AA94600A95945 /* DotListView.swift */,
@@ -1832,7 +1836,6 @@
 				29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */,
 				D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */,
 				2958406E1EE9F21E007723C6 /* UIButton+Label.swift */,
-				2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */,
 				297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */,
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
@@ -2591,7 +2594,6 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo-iOS/Apollo.framework",
-				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/ContextMenu/ContextMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/DateAgo-iOS/DateAgo.framework",
 				"${BUILT_PRODUCTS_DIR}/DropdownTitleView/DropdownTitleView.framework",
@@ -2608,7 +2610,6 @@
 				"${BUILT_PRODUCTS_DIR}/ImageAlertAction/ImageAlertAction.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageViewController/MessageViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
-				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Squawk/Squawk.framework",
@@ -2616,7 +2617,7 @@
 				"${BUILT_PRODUCTS_DIR}/StyledTextKit/StyledTextKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
-				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/cmark-gfm-swift/cmark_gfm_swift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2624,7 +2625,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ContextMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateAgo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropdownTitleView.framework",
@@ -2641,7 +2641,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageAlertAction.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Squawk.framework",
@@ -2649,7 +2648,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StyledTextKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/cmark_gfm_swift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2727,7 +2726,6 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo-iOS/Apollo.framework",
-				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/ContextMenu/ContextMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/DateAgo-iOS/DateAgo.framework",
 				"${BUILT_PRODUCTS_DIR}/DropdownTitleView/DropdownTitleView.framework",
@@ -2744,7 +2742,6 @@
 				"${BUILT_PRODUCTS_DIR}/ImageAlertAction/ImageAlertAction.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageViewController/MessageViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
-				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Squawk/Squawk.framework",
@@ -2752,7 +2749,7 @@
 				"${BUILT_PRODUCTS_DIR}/StyledTextKit/StyledTextKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
-				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/cmark-gfm-swift/cmark_gfm_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
 			);
@@ -2761,7 +2758,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ContextMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateAgo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropdownTitleView.framework",
@@ -2778,7 +2774,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageAlertAction.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Squawk.framework",
@@ -2786,7 +2781,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StyledTextKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/cmark_gfm_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
 			);
@@ -3174,6 +3169,7 @@
 				294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */,
 				297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */,
 				29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */,
+				291E98832197697400E5EED9 /* ContentWidthUtils.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
 				29C62FA0218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift in Sources */,
 				29792B191FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift in Sources */,
@@ -3250,7 +3246,6 @@
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
 				7BBFEE591F8A8A0400C68E47 /* SearchBarCell.swift in Sources */,
 				4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */,
-				2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */,
 				29351EA02079246400FF8C17 /* CodeBlockModel.swift in Sources */,
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
 				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
@@ -3269,6 +3264,7 @@
 				DC60C6CB1F98341900241271 /* SearchEmptyViewTests.swift in Sources */,
 				293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */,
 				BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */,
+				291E988521976B5600E5EED9 /* ContentWidthUtilsTests.swift in Sources */,
 				BD3761B0209E032500401DFB /* BookmarkNavigationItemTests.swift in Sources */,
 				2977D8BF215AE12D0073F737 /* LocalNotificationCacheTests.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,

@@ -71,8 +71,6 @@ MarkdownStyledTextViewDelegate {
         ) -> CGSize {
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Missing context") }
-        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
-
         // use default if IssueReviewDetailsModel
         let height: CGFloat
         if viewModel === tailModel {
@@ -82,12 +80,12 @@ MarkdownStyledTextViewDelegate {
         } else {
             height = BodyHeightForComment(
                 viewModel: viewModel,
-                width: width,
+                width: collectionContext.safeContentWidth(),
                 webviewCache: webviewCache,
                 imageCache: imageCache
             )
         }
-        return CGSize(width: width, height: height)
+        return collectionContext.cellSize(with: height)
     }
 
     func sectionController(

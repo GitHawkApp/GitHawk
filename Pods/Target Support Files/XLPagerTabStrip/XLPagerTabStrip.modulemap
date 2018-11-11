@@ -1,0 +1,6 @@
+framework module XLPagerTabStrip {
+  umbrella header "XLPagerTabStrip-umbrella.h"
+
+  export *
+  module * { export * }
+}

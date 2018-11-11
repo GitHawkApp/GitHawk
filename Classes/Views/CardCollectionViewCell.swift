@@ -48,7 +48,7 @@ class CardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate 
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
 
         let bounds = contentView.frame
         let inset = borderLayer.lineWidth / 2

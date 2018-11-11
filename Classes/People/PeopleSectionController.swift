@@ -29,10 +29,7 @@ final class PeopleSectionController: ListSwiftSectionController<IssueAssigneeVie
                 value,
                 cellType: ListCellType.class(PeopleCell.self),
                 size: {
-                    return CGSize(
-                        width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeightLarge
-                    )
+                    return $0.collection.cellSize(with: Styles.Sizes.tableCellHeightLarge)
             },
                 configure: { [weak self] in
                     $0.configure(

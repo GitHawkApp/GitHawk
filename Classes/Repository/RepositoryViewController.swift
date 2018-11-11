@@ -7,15 +7,13 @@
 //
 
 import UIKit
-import Tabman
-import Pageboy
+import XLPagerTabStrip
 import TUSafariActivity
 import Squawk
 import ContextMenu
 import DropdownTitleView
 
-class RepositoryViewController: TabmanViewController,
-PageboyViewControllerDataSource,
+class RepositoryViewController: ButtonBarPagerTabStripViewController,
 NewIssueTableViewControllerDelegate,
 ContextMenuDelegate {
 
@@ -57,21 +55,28 @@ ContextMenuDelegate {
     }
 
     override func viewDidLoad() {
+        settings.style.buttonBarBackgroundColor = .white
+        settings.style.buttonBarItemBackgroundColor = .white
+        settings.style.selectedBarBackgroundColor = Styles.Colors.Blue.medium.color
+        settings.style.buttonBarItemFont = Styles.Text.body.preferredFont
+        settings.style.selectedBarHeight = 2.0
+        settings.style.buttonBarItemTitleColor = Styles.Colors.Gray.medium.color
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
+        settings.style.buttonBarHeight = 44
+
+        pagerBehaviour = .common(skipIntermediateViewControllers: true)
+        changeCurrentIndex = { (oldCell, newCell, animated) in
+            oldCell?.label.textColor = Styles.Colors.Gray.medium.color
+            newCell?.label.textColor = Styles.Colors.Blue.medium.color
+        }
+
+        edgesForExtendedLayout = []
+
         super.viewDidLoad()
 
         view.backgroundColor = .white
-
         makeBackBarItemEmpty()
-
-        dataSource = self
         delegate = self
-        bar.items = controllers.map { Item(title: $0.title ?? "" ) }
-        bar.appearance = TabmanBar.Appearance({ appearance in
-            appearance.text.font = Styles.Text.button.preferredFont
-            appearance.state.color = Styles.Colors.Gray.light.color
-            appearance.state.selectedColor = Styles.Colors.Blue.medium.color
-            appearance.indicator.color = Styles.Colors.Blue.medium.color
-        })
 
         let moreItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -202,18 +207,10 @@ ContextMenuDelegate {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    // MARK: PageboyViewControllerDataSource
+    // MARK: ButtonBarPagerTabStripViewController Overrides
 
-    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-        return controllers.count
-    }
-
-    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-        return controllers[index]
-    }
-
-    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        return controllers
     }
 
     // MARK: NewIssueTableViewControllerDelegate

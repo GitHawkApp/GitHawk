@@ -29,10 +29,7 @@ final class RepositoryCodeDirectorySectionController: ListSwiftSectionController
     override func createBinders(from value: RepositoryFile) -> [ListBinder] {
         return [
             binder(value, cellType: ListCellType.class(RepositoryFileCell.self), size: {
-                return CGSize(
-                    width: $0.collection.containerSize.width,
-                    height: Styles.Sizes.tableCellHeight
-                )
+                return $0.collection.cellSize(with: Styles.Sizes.tableCellHeight)
             }, configure: {
                 $0.configure(path: $1.value.name, isDirectory: $1.value.isDirectory)
             }, didSelect: { [weak self] context in
