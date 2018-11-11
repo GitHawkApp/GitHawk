@@ -11,14 +11,11 @@ import GitHubSession
 import GitHawkRoutes
 
 extension SearchShortcutRoute: RoutePerformable {
-    func perform(
-        sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController,
-        client: GithubClient
-        ) -> Bool {
-        guard let controller = splitViewController.masterTabBarController?.selectTab(of: SearchViewController.self)
-            else { return false }
+    func perform(props: RoutePerformableProps) -> RoutePerformableResult {
+        guard let controller = props.splitViewController.masterTabBarController?
+            .selectTab(of: SearchViewController.self)
+            else { return .error }
         controller.searchBarBecomeFirstResponder()
-        return true
+        return .custom
     }
 }
