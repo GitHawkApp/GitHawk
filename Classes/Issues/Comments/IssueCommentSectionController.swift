@@ -87,7 +87,9 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     func shareAction(sender: UIView) -> UIAlertAction? {
         let attribute = object?.asReviewComment == true ? "#discussion_r" : "#issuecomment-"
         guard let number = object?.number,
-            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)\(attribute)\(number)")
+            let url = URLBuilder.github().add(
+                paths: [model.owner, model.repo, "issues", model.number, attribute, number]
+                ).url
         else { return nil }
         weak var weakSelf = self
 
@@ -216,7 +218,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     }
 
     func edit(markdown: String) {
-        guard let width = collectionContext?.insetContainerSize.width else { return }
+        let width = collectionContext.cellWidth()
         let bodyModels = MarkdownModels(
             // strip githawk signatures on edit
             CheckIfSentWithGitHawk(markdown: markdown).markdown,
@@ -340,8 +342,6 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
-        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
-
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
@@ -354,13 +354,12 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         } else {
             height = BodyHeightForComment(
                 viewModel: viewModel,
-                width: width,
+                width: collectionContext.safeContentWidth(),
                 webviewCache: webviewCache,
                 imageCache: imageCache
             )
         }
-
-        return CGSize(width: width, height: height)
+        return collectionContext.cellSize(with: height)
     }
 
     func sectionController(

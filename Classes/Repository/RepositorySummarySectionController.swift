@@ -24,7 +24,7 @@ final class RepositorySummarySectionController: ListSwiftSectionController<Repos
     override func createBinders(from value: RepositoryIssueSummaryModel) -> [ListBinder] {
         return [
             binder(value, cellType: ListCellType.class(RepositorySummaryCell.self), size: {
-                let width = $0.collection.containerSize.width
+                let width = $0.collection.safeContentWidth()
                 let object = $0.value
                 let labelListViewHeightAndSpacing: CGFloat = {
                     guard object.labels.count > 0 else { return 0 }
@@ -41,7 +41,7 @@ final class RepositorySummarySectionController: ListSwiftSectionController<Repos
                     + Styles.Text.secondary.preferredFont.lineHeight
                     + Styles.Sizes.gutter
                     + labelListViewHeightAndSpacing
-                return CGSize(width: width, height: ceil(height))
+                return $0.collection.cellSize(with: ceil(height))
             },
                    configure: {
                     $0.configure($1.value)

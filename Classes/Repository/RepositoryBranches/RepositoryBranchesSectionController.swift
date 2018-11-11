@@ -23,10 +23,7 @@ final class RepositoryBranchSectionController: ListSwiftSectionController<Reposi
                 value,
                 cellType: ListCellType.class(RepositoryBranchCell.self),
                 size: {
-                    return CGSize(
-                        width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeightLarge
-                    )
+                    return $0.collection.cellSize(with: Styles.Sizes.tableCellHeightLarge)
             },
                 configure: {
                     $0.label.text = $1.value.branch

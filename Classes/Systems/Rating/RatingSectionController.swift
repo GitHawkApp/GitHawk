@@ -23,9 +23,7 @@ final class RatingSectionController: ListSectionController, RatingCellDelegate {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
-            else { fatalError("Missing context") }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight * 3)
+        return collectionContext.cellSize(with: Styles.Sizes.tableCellHeight * 3)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

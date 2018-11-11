@@ -37,11 +37,7 @@ final class LoadMoreSectionController2: ListSwiftSectionController<String> {
                 LoadMoreModel(loading: loading),
                 cellType: ListCellType.class(LoadMoreCell.self),
                 size: {
-                    return CGSize(
-                        width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeight
-                    )
-
+                    return $0.collection.cellSize(with: Styles.Sizes.tableCellHeight)
             },
                 configure: {
                     $0.configure(loading: $1.value.loading)

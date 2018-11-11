@@ -10,14 +10,14 @@ import UIKit
 import IGListKit
 import Apollo
 
-class BookmarkViewController: UIViewController,
+final class BookmarkViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-BookmarkHeaderSectionControllerDelegate,
-StoreListener,
-BookmarkSectionControllerDelegate,
-InitialEmptyViewDelegate,
+    BookmarkHeaderSectionControllerDelegate,
+    StoreListener,
+    BookmarkSectionControllerDelegate,
+    InitialEmptyViewDelegate,
 TabNavRootViewControllerType {
 
     private let client: GithubClient
@@ -100,7 +100,10 @@ TabNavRootViewControllerType {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-      searchBar.resignFirstResponder()
+        searchBar.resignFirstResponder()
+        // https://stackoverflow.com/a/47976999
+        navigationController?.view.setNeedsLayout()
+        navigationController?.view.layoutIfNeeded()
     }
 
     private func update(animated: Bool) {
@@ -160,7 +163,7 @@ TabNavRootViewControllerType {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         let contentSizeCategory = UIContentSizeCategory.preferred
-        let width = view.bounds.width
+        let width = view.safeContentWidth(with: collectionView)
         var bookmarks: [ListDiffable]
         switch state {
         case .idle:
@@ -244,7 +247,7 @@ TabNavRootViewControllerType {
                 self?.update(animated: false)
             },
             AlertAction.cancel()
-        ])
+            ])
 
         present(alert, animated: true)
     }

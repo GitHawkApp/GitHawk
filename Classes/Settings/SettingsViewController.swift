@@ -131,11 +131,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     }
 
     func onReviewAccess() {
-        guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
-            else { fatalError("Should always create GitHub issue URL") }
-        // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
-        UIApplication.shared.open(url, options: [:])
-
+        UIApplication.shared.openReviewAccess()
     }
 
     func onAccounts() {
@@ -148,17 +144,13 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     }
 
     func onGitHubStatus() {
-        guard let url = URL(string: "https://status.github.com/messages")
-            else { fatalError("Should always create GitHub Status URL") }
+        guard let url = URLBuilder(host: "status.github.com").add(path: "messages").url
+            else { return }
         presentSafari(url: url)
     }
 
     func onReviewOnAppStore() {
-        guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1252320249?action=write-review")
-            else { fatalError("Should always be valid app store URL") }
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        }
+        UIApplication.shared.openWriteReview()
     }
 
     func onReportBug() {
@@ -206,8 +198,8 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
         #if TESTFLIGHT
         Squawk.showAlreadyOnBeta()
         #else
-        guard let url = URL(string: "https://testflight.apple.com/join/QIVXLkkn")
-            else { fatalError("Failed to decode testflight beta URL") }
+        guard let url = URLBuilder.init(host: "testflight.apple.com").add(paths: ["join", "QIVXLkkn"]).url
+            else { return }
         presentSafari(url: url)
         #endif
     }

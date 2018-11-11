@@ -21,12 +21,12 @@ def testing_pods
   pod 'SwiftLint'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Tabman', '~> 1.8'
+  pod 'XLPagerTabStrip', '~> 8.1'
   pod 'ImageAlertAction'
   pod 'FMDB'
 
   # prerelease pods
-  pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'
+  pod 'IGListKit/Swift', :git => 'https://github.com/GitHawkApp/IGListKit.git', :branch => 'fix-layout-insets'
   pod 'StyledTextKit', :git => 'https://github.com/GitHawkApp/StyledTextKit.git', :branch => 'master'
   pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
   pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch => 'master'

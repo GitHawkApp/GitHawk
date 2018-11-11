@@ -40,18 +40,13 @@ BaseListViewControllerDataSource {
     }
 
     override func fetch(page: String?) {
-        // assumptions here, but the collectionview may not have been laid out or content size found
-        // assume the collectionview is pinned to the view's bounds
-        let contentInset = feed.collectionView.contentInset
-        let width = view.bounds.width - contentInset.left - contentInset.right
-
         viewModel.client.client.fetchHistory(
             owner: viewModel.owner,
             repo: viewModel.repo,
             branch: viewModel.branch,
             path: viewModel.path?.path,
             cursor: page,
-            width: width,
+            width: view.safeContentWidth(with: feed.collectionView),
             contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
         ) { [weak self] result in
                 switch result {

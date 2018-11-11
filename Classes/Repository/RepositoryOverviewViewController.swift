@@ -10,11 +10,13 @@ import UIKit
 import IGListKit
 import GitHubAPI
 import Squawk
+import XLPagerTabStrip
 
 final class RepositoryOverviewViewController: BaseListViewController<String>,
     BaseListViewControllerDataSource,
     BaseListViewControllerEmptyDataSource,
-RepositoryBranchUpdatable {
+    RepositoryBranchUpdatable,
+IndicatorInfoProvider {
 
     private let repo: RepositoryDetails
     private let client: RepositoryClient
@@ -46,7 +48,7 @@ RepositoryBranchUpdatable {
 
     override func fetch(page: String?) {
         let repo = self.repo
-        let width = view.bounds.width - Styles.Sizes.gutter * 2
+        let width = view.safeContentWidth(with: feed.collectionView)
         let contentSizeCategory = UIContentSizeCategory.preferred
         let branch = self.branch
 
@@ -101,6 +103,12 @@ RepositoryBranchUpdatable {
         guard self.branch != newBranch else { return }
         self.branch = newBranch
         fetch(page: nil)
+    }
+
+    // MARK: IndicatorInfoProvider
+
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: title)
     }
 
 }

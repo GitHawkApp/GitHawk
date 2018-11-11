@@ -35,18 +35,4 @@ final class RepositoryEmptyResultsSectionController2: ListSwiftSectionController
         ]
     }
 
-//    override func sizeForItem(at index: Int) -> CGSize {
-//        guard let size = collectionContext?.containerSize else { fatalError("Missing context") }
-//        return CGSize(width: size.width, height: size.height - topInset - layoutInsets.top - layoutInsets.bottom)
-//    }
-//
-//    override func cellForItem(at index: Int) -> UICollectionViewCell {
-//        guard let cell = collectionContext?.dequeueReusableCell(of: RepositoryEmptyResultsCell.self, for: self, at: index) as? RepositoryEmptyResultsCell else {
-//            fatalError("Missing context, object, or cell is wrong type")
-//        }
-//
-//        cell.configure(type)
-//        return cell
-//    }
-
 }

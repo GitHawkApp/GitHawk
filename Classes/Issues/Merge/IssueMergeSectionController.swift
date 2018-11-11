@@ -145,14 +145,12 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width
-            else { fatalError() }
         let height: CGFloat
         switch viewModel {
         case is IssueMergeButtonModel: height = Styles.Sizes.tableCellHeightLarge
         default: height = Styles.Sizes.tableCellHeight
         }
-        return CGSize(width: width, height: height)
+        return collectionContext.cellSize(with: height)
     }
 
     func sectionController(

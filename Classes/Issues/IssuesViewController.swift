@@ -208,12 +208,13 @@ final class IssuesViewController: MessageViewController,
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let informator = HandoffInformator(
-            activityName: "viewIssue",
-            activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
-            url: externalURL
-        )
-        setupUserActivity(with: informator)
+        if let url = externalURL {
+            setupUserActivity(with: HandoffInformator(
+                activityName: "viewIssue",
+                activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
+                url: url
+            ))
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -243,8 +244,8 @@ final class IssuesViewController: MessageViewController,
 
     // MARK: Private API
 
-    var externalURL: URL {
-        return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
+    var externalURL: URL? {
+        return URLBuilder.github().add(paths: [model.owner, model.repo, "issues", model.number]).url
     }
 
     var bookmark: Bookmark? {
@@ -278,8 +279,9 @@ final class IssuesViewController: MessageViewController,
     }
 
     @objc func onMore(sender: UIBarButtonItem) {
+        guard let url = externalURL else { return }
         let activityController = UIActivityViewController(
-            activityItems: [externalURL],
+            activityItems: [url],
             applicationActivities: [TUSafariActivity()]
         )
         activityController.popoverPresentationController?.barButtonItem = sender
@@ -311,16 +313,11 @@ final class IssuesViewController: MessageViewController,
             }
         }
 
-        // assumptions here, but the collectionview may not have been laid out or content size found
-        // assume the collectionview is pinned to the view's bounds
-        let contentInset = feed.collectionView.contentInset
-        let width = view.bounds.width - contentInset.left - contentInset.right
-
         client.fetch(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            width: width,
+            width: view.safeContentWidth(with: feed.collectionView),
             prependResult: previous ? result : nil
         ) { [weak self] resultType in
             guard let strongSelf = self else { return }
@@ -539,7 +536,7 @@ final class IssuesViewController: MessageViewController,
                 commentFields: commentFields,
                 reactionFields: reactionFields,
                 contentSizeCategory: UIContentSizeCategory.preferred,
-                width: view.bounds.width,
+                width: view.safeContentWidth(with: feed.collectionView),
                 owner: model.owner,
                 repo: model.repo,
                 threadState: .single,

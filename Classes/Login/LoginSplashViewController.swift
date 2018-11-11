@@ -11,7 +11,11 @@ import SafariServices
 import GitHubAPI
 import GitHubSession
 
-private let loginURL = URL(string: "https://github.com/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
+private let loginURL = URLBuilder.github()
+    .add(paths: ["login", "oauth", "authorize"])
+    .add(item: "client_id", value: Secrets.GitHub.clientId)
+    .add(item: "scope", value: "user+repo+notifications")
+    .url!
 private let callbackURLScheme = "freetime://"
 
 protocol LoginSplashViewControllerDelegate: class {

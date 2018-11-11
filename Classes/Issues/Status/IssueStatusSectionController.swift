@@ -12,9 +12,10 @@ import IGListKit
 final class IssueStatusSectionController: ListGenericSectionController<IssueStatusModel> {
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width
-            else { fatalError("Collection context must be set") }
-        return CGSize(width: floor(width / 2), height: Styles.Sizes.labelEventHeight)
+        return CGSize(
+            width: floor(collectionContext.cellWidth() / 2),
+            height: Styles.Sizes.labelEventHeight
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
