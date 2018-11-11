@@ -110,8 +110,8 @@ class ContentWidthUtilsTests: XCTestCase {
         XCTAssertNotNil(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
 
         let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as! InsetTestCell
-        XCTAssertEqual(cell.bounds.size, CGSize(width: 260, height: 100))
-        XCTAssertEqual(cell.contentView.frame, CGRect(x: 20, y: 0, width: 240, height: 100))
+        XCTAssertEqual(cell.bounds.size, CGSize(width: 280, height: 100))
+        XCTAssertEqual(cell.contentView.frame, CGRect(x: 20, y: 0, width: 260, height: 100))
     }
 
 }
