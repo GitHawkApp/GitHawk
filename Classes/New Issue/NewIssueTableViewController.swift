@@ -78,7 +78,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         signature: IssueSignatureType? = nil
         ) -> NewIssueTableViewController? {
         
-        let storyboard = UIStoryboard(name: NSLocalizedString("NewIssue", comment: ""), bundle: nil)
+        let storyboard = UIStoryboard(name: "NewIssue", bundle: nil)
 
         let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
         viewController?.hidesBottomBarWhenPushed = true
