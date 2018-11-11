@@ -53,7 +53,7 @@ extension GithubClient {
                         if let range = file.range(of: textToClean) {
                             cleanedFile = file.replacingOccurrences(
                                 of: textToClean,
-                                with: Constants.Strings.emptyString,
+                                with: "",
                                 options: .literal,
                                 range: range
                             )

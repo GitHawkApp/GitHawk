@@ -71,7 +71,5 @@ enum Constants {
         static let reviewers = NSLocalizedString("Reviewers", comment: "")
         static let reviewGitHubAccess = NSLocalizedString("Review GitHub Access", comment: "")
         static let clear = NSLocalizedString("Clear", comment: "")
-        static let emptyString = NSLocalizedString("", comment: "")
-
     }
 }

@@ -147,7 +147,7 @@ ContextMenuDelegate {
     }
 
     func newIssueAction() -> UIAlertAction? {
-        let action = UIAlertAction(title: "New Issue", style: .default) { _ in
+        let action = UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { _ in
             self.client.createNewIssue(
                 repo: self.repo,
                 session: nil,

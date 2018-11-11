@@ -23,7 +23,7 @@ extension String {
                 )
             )
             return results.map { str.substring(with: $0.range) }
-        } catch let error as NSError {
+        } catch let error {
             print("invalid regex: \(error.localizedDescription)")
             return []
         }
