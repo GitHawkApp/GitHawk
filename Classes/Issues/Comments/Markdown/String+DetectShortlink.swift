@@ -16,7 +16,7 @@ extension NSRange {
     }
 }
 
-private let regex = try! NSRegularExpression(pattern: "(^|\\s|[^a-zA-Z])((\\w+)/(\\w+))?#([0-9]+)(?![a-zA-Z0-9])", options: [])
+private let regex = try! NSRegularExpression(pattern: "(^|\\s|[^a-zA-Z0-9/])(([\\w|-]+)/([\\w|-]+))?#([0-9]+)(?![a-zA-Z0-9])", options: [])
 extension String {
     func detectAndHandleShortlink(owner: String, repo: String, builder: StyledTextBuilder) {
         let matches = regex.matches(in: self, options: [], range: nsrange)

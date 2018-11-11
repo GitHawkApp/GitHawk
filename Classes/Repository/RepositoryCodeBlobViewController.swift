@@ -20,8 +20,14 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
     private let feedRefresh = FeedRefresh()
     private let emptyView = EmptyView()
     private var sharingPayload: Any?
-    private var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/blob/\(branch)/\(path.path)")!
+    private var repoUrl: URL? {
+        let builder = URLBuilder.github()
+            .add(path: repo.owner)
+            .add(path: repo.name)
+            .add(path: "blob")
+            .add(path: branch)
+        path.components.forEach { builder.add(path: $0) }
+        return builder.url
     }
 
     private lazy var moreOptionsItem: UIBarButtonItem = {
@@ -112,12 +118,15 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client, path: path),
             AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
                 $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction.cancel()
+            }
         ]
+
+        if let url = repoUrl {
+            actions.append(AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            })
+        }
+        actions.append(AlertAction.cancel())
 
         if let name = self.path.components.last {
             actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {

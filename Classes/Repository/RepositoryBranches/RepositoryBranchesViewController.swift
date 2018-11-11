@@ -10,8 +10,8 @@ import UIKit
 import Squawk
 import IGListKit
 
-final class RepositoryBranchesViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class RepositoryBranchesViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 RepositoryBranchSectionControllerDelegate {
 
     private let owner: String

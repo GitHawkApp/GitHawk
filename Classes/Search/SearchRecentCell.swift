@@ -49,7 +49,7 @@ final class SearchRecentCell: SwipeSelectableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: Public API

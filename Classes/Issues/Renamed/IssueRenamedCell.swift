@@ -57,7 +57,7 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
         titleView.reposition(for: contentView.bounds.width)
     }
 

@@ -38,13 +38,14 @@ final class Router {
 
     @discardableResult
     func handle(url: URL) -> Bool {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+            let host = components.host
             else { return false }
         var params = [String: String]()
         for item in components.queryItems ?? [] {
             params[item.name] = item.value
         }
-        return handle(path: url.path, params: params)
+        return handle(path: host, params: params)
     }
 
     @discardableResult

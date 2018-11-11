@@ -17,9 +17,8 @@ final class PathCommitSectionController: ListSwiftSectionController<PathCommitMo
                 value,
                 cellType: ListCellType.class(PathCommitCell.self),
                 size: {
-                    return CGSize(
-                        width: $0.collection.containerSize.width,
-                        height: $0.value.text.viewSize(in: $0.collection.insetContainerSize.width).height
+                    return $0.collection.cellSize(
+                        with: $0.value.text.viewSize(in: $0.collection.safeContentWidth()).height
                     )
             },
                 configure: {

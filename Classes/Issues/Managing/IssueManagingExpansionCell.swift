@@ -64,7 +64,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     override var isSelected: Bool {

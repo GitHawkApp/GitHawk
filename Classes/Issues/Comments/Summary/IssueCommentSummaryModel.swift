@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentSummaryModel: ListDiffable {
+final class IssueCommentSummaryModel: ListDiffable, ListSwiftDiffable {
 
     let summary: String
 
@@ -24,6 +24,16 @@ final class IssueCommentSummaryModel: ListDiffable {
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        return true
+    }
+
+    // MARK: ListSwiftDiffable
+
+    var identifier: String {
+        return summary
+    }
+
+    func isEqual(to value: ListSwiftDiffable) -> Bool {
         return true
     }
 

@@ -95,6 +95,13 @@ class SearchViewController: UIViewController,
         rz_smoothlyDeselectRows(collectionView: collectionView)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // https://stackoverflow.com/a/47976999
+        navigationController?.view.setNeedsLayout()
+        navigationController?.view.layoutIfNeeded()
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
@@ -131,7 +138,10 @@ class SearchViewController: UIViewController,
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
 
-        let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
+        let request = client.search(
+            query: term,
+            containerWidth: view.safeContentWidth(with: collectionView)
+        ) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: trueUnlessReduceMotionEnabled)
         }

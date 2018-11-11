@@ -22,8 +22,7 @@ final class PullRequestReviewReplySectionController: ListGenericSectionControlle
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { return .zero }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        return collectionContext.cellSize(with: Styles.Sizes.tableCellHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
