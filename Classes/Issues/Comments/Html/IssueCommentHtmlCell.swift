@@ -124,6 +124,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
         webView.backgroundColor = .white
         webView.delegate = self
+        webView.scrollView.isScrollEnabled = false
         webView.scrollView.bounces = false
 
         let scrollView = webView.scrollView
