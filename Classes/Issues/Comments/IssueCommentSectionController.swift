@@ -87,7 +87,9 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     func shareAction(sender: UIView) -> UIAlertAction? {
         let attribute = object?.asReviewComment == true ? "#discussion_r" : "#issuecomment-"
         guard let number = object?.number,
-            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)\(attribute)\(number)")
+            let url = URLBuilder.github().add(
+                paths: [model.owner, model.repo, "issues", model.number, attribute, number]
+                ).url
         else { return nil }
         weak var weakSelf = self
 

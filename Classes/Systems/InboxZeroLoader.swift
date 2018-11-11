@@ -29,9 +29,9 @@ final class InboxZeroLoader {
     }()
 
     private var url: URL? {
-        return URL(
-            string: "https://raw.githubusercontent.com/GitHawkApp/Holidays/master/locales/holidays-\(Locale.current.identifier).json"
-        )
+        return URLBuilder(host: "raw.githubusercontent.com").add(paths: [
+            "GitHawkApp", "Holidays", "master", "locales", "holidays-\(Locale.current.identifier).json"
+            ]).url
     }
 
     func load(completion: @escaping (Bool) -> Void) {

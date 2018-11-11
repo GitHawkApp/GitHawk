@@ -17,21 +17,22 @@ extension UIViewController {
     }
 
     func presentProfile(login: String) {
-        present(CreateProfileViewController(login: login), animated: trueUnlessReduceMotionEnabled)
+        guard let controller = CreateProfileViewController(login: login) else { return }
+        present(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func presentCommit(owner: String, repo: String, hash: String) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/commit/\(hash)") else { return }
+        guard let url = URLBuilder.github().add(paths: [owner, repo, "commit", hash]).url else { return }
         presentSafari(url: url)
     }
 
     func presentRelease(owner: String, repo: String, release: String) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/releases/tag/\(release)") else { return }
+        guard let url = URLBuilder.github().add(paths: [owner, repo, "releases", "tag", release]).url else { return }
         presentSafari(url: url)
     }
 
     func presentMilestone(owner: String, repo: String, milestone: Int) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/milestone/\(milestone)") else { return }
+        guard let url = URLBuilder.github().add(paths: [owner, repo, "milestone", milestone]).url else { return }
         presentSafari(url: url)
     }
 
