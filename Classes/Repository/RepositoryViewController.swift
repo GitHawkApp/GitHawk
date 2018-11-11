@@ -64,7 +64,7 @@ ContextMenuDelegate {
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarHeight = 44
 
-        pagerBehaviour = .common(skipIntermediateViewControllers: true)
+        pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
         changeCurrentIndex = { (oldCell, newCell, animated) in
             oldCell?.label.textColor = Styles.Colors.Gray.medium.color
             newCell?.label.textColor = Styles.Colors.Blue.medium.color
