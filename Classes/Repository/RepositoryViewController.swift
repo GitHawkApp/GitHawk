@@ -216,8 +216,7 @@ ContextMenuDelegate {
     // MARK: NewIssueTableViewControllerDelegate
 
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
-        let issuesViewController = IssuesViewController(client: client, model: model)
-        show(issuesViewController, sender: self)
+        route_push(to: IssuesViewController(client: client, model: model))
     }
 
     // MARK: ContextMenuDelegate

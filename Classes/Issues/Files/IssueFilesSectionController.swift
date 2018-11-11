@@ -27,11 +27,10 @@ final class IssueFilesSectionController: ListSwiftSectionController<File> {
                 )
             }, didSelect: { [weak self] context in
                 guard let patch = context.value.patch else { return }
-                let controller = IssuePatchContentViewController(
+                self?.viewController?.route_push(to: IssuePatchContentViewController(
                     patch: patch,
                     fileName: context.value.actualFileName
-                )
-                self?.viewController?.show(controller, sender: nil)
+                ))
             })
         ]
     }

@@ -65,8 +65,10 @@ struct AlertAction {
 
     func view(client: GithubClient, repo: RepositoryDetails, icon: UIImage) -> UIAlertAction {
         return UIAlertAction(title: repo.name, image: icon, style: .default) { _ in
-            let repoViewController = RepositoryViewController(client: client, repo: repo)
-            self.rootViewController?.show(repoViewController, sender: nil)
+            self.rootViewController?.route_push(to: RepositoryViewController(
+                client: client,
+                repo: repo
+            ))
         }
     }
 

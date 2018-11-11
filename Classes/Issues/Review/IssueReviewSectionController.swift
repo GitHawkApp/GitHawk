@@ -47,7 +47,7 @@ MarkdownStyledTextViewDelegate {
         }
         switch attribute {
         case .issue(let issue):
-            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
+            viewController?.route_push(to: IssuesViewController(client: client, model: issue))
         default: break
         }
     }
