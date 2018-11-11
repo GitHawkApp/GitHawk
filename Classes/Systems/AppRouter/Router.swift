@@ -16,7 +16,38 @@ private func register<T: Routable & RoutePerformable>(
     map[T.path] = T.self
 }
 
+private var hasSwizzledChildViewController = false
+
 extension UIViewController {
+
+    fileprivate class func swizzleChildViewController() {
+        // make sure this isn't a subclass
+        if self !== UIViewController.self,
+            hasSwizzledChildViewController == false {
+            return
+        }
+
+        let originalSelector = #selector(addChildViewController(_:))
+        let swizzledSelector = #selector(swizzle_addChildViewController(_:))
+
+        guard let originalMethod = class_getInstanceMethod(self, originalSelector),
+            let swizzledMethod = class_getInstanceMethod(self, swizzledSelector)
+            else { return }
+
+        let didAddMethod = class_addMethod(self, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))
+
+        if didAddMethod {
+            class_replaceMethod(self, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod))
+        } else {
+            method_exchangeImplementations(originalMethod, swizzledMethod)
+        }
+    }
+
+    @objc func swizzle_addChildViewController(_ controller: UIViewController) {
+        self.swizzle_addChildViewController(controller)
+        controller.router = router
+    }
+
     private static var RouterAssocObjectKey = "RouterAssocObjectKey"
     var router: Router? {
         get {
@@ -38,20 +69,24 @@ extension UIViewController {
     }
 
     func route_push(route: Routable & RoutePerformable) {
+        if router == nil { print("ERROR: router was not wired up") }
         router?.handle(route: route, from: self)
     }
 
     func route_detail(route: Routable & RoutePerformable) {
+        if router == nil { print("ERROR: router was not wired up") }
         router?.handle(route: route, from: nil)
     }
 
     // MARK: Remove after migration
 
     func route_push(to controller: UIViewController) {
+        if router == nil { print("ERROR: router was not wired up") }
         router?.push(from: self, to: controller)
     }
 
     func route_detail(to controller: UIViewController) {
+        if router == nil { print("ERROR: router was not wired up") }
         router?.detail(controller: controller)
     }
 
@@ -75,6 +110,8 @@ final class Router: NSObject {
         register(route: RepoRoute.self, map: &routes)
         self.routes = routes
         self.propsSource = propsSource
+
+        UIViewController.swizzleChildViewController()
     }
 
     func handle(url: URL) -> RoutePerformableResult {
