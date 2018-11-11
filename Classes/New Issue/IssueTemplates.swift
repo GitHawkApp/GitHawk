@@ -25,26 +25,9 @@ struct IssueTemplateDetails {
 
 enum IssueTemplateHelper {
 
-    static private func matches(
-        regex: String,
-        text: String) -> [String] {
-        do {
-            let regex = try NSRegularExpression(pattern: regex)
-            let str = text as NSString
-            let results = regex.matches(
-                in: text,
-                range: NSMakeRange(0, str.length))
-            return results.map { str.substring(with: $0.range)}
-
-        } catch let error as NSError {
-            print("invalid regex: \(error.localizedDescription)")
-            return []
-        }
-    }
-
     static func getNameAndDescription(fromTemplatefile file: String) -> (name: String?, about: String?) {
-        let names = IssueTemplateHelper.matches(regex: "(?<=name:).*", text: file)
-        let abouts = IssueTemplateHelper.matches(regex: "(?<=about:).*", text: file)
+        let names = file.matches(regex: Constants.Regex.Template.name)
+        let abouts = file.matches(regex: Constants.Regex.Template.about)
         let name = names.first?.trimmingCharacters(in: .whitespaces)
         let about = abouts.first?.trimmingCharacters(in: .whitespaces)
         return (name, about)
@@ -66,7 +49,6 @@ enum IssueTemplateHelper {
                     title: template.title,
                     style: .default,
                     handler: { _ in
-
                         guard let viewController = NewIssueTableViewController.create(
                             client: GithubClient(userSession: details.session),
                             owner: details.repo.owner,
@@ -162,7 +144,25 @@ extension GithubClient {
             case .success(let file):
                 let nameAndDescription = IssueTemplateHelper.getNameAndDescription(fromTemplatefile: file)
                 if let name = nameAndDescription.name {
-                    completion(.success(IssueTemplate(title: name, template: file)))
+                    var cleanedFile = file
+
+                    // Remove all template detail text
+                    // -----
+                    // name:
+                    // about:
+                    // -----
+                    if let textToClean = file.matches(regex: Constants.Regex.Template.details).first {
+                        if let range = file.range(of: textToClean) {
+                            cleanedFile = file.replacingOccurrences(
+                                of: textToClean,
+                                with: Constants.Strings.emptyString,
+                                options: .literal,
+                                range: range
+                            )
+                        }
+                        cleanedFile = cleanedFile.trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                    completion(.success(IssueTemplate(title: name, template: cleanedFile)))
                 } else {
                     completion(.error(nil))
                 }

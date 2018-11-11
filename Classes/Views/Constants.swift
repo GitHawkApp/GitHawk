@@ -10,6 +10,13 @@ import Foundation
 
 enum Constants {
 
+    enum Regex {
+        enum Template {
+            static let name = "(?<=name:).*"
+            static let about = "(?<=about:).*"
+            static let details = "([-]{3,})([\\s\\S]*)([-]{3,})"
+        }
+    }
     enum GitHawk {
         static let owner = "GitHawkApp"
         static let name = "GitHawk"
@@ -64,5 +71,7 @@ enum Constants {
         static let reviewers = NSLocalizedString("Reviewers", comment: "")
         static let reviewGitHubAccess = NSLocalizedString("Review GitHub Access", comment: "")
         static let clear = NSLocalizedString("Clear", comment: "")
+        static let emptyString = NSLocalizedString("", comment: "")
+
     }
 }
