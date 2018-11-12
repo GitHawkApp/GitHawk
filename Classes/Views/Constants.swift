@@ -50,7 +50,6 @@ enum Constants {
         static let milestone = NSLocalizedString("Milestone", comment: "")
         static let assignees = NSLocalizedString("Assignees", comment: "")
         static let reviewers = NSLocalizedString("Reviewers", comment: "")
-        static let reviewGitHubAccess = NSLocalizedString("Review GitHub Access", comment: "")
         static let clear = NSLocalizedString("Clear", comment: "")
     }
 }
