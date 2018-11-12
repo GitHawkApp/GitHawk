@@ -151,7 +151,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
         let iconColor: UIColor
         switch action {
-        case .lock: iconColor = Styles.Colors.Gray.light.color
+        case .lock, .unlock: iconColor = Styles.Colors.Gray.light.color
         case .close: iconColor = Styles.Colors.Red.medium.color
         case .reopen: iconColor = Styles.Colors.Green.medium.color
         default: iconColor = Styles.Colors.Blue.medium.color
