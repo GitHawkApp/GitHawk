@@ -49,11 +49,6 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link-external" translatesAutoresizingMaskIntoConstraints="NO" id="Dil-iy-42r">
                                                     <rect key="frame" x="340" y="9.5" width="19" height="25"/>
                                                     <color key="tintColor" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                                            <color key="value" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review GitHub Access" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yH0-zn-LPp" customClass="SettingsLabel" customModule="Freetime" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="12" width="163" height="20"/>
@@ -365,11 +360,6 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link-external" translatesAutoresizingMaskIntoConstraints="NO" id="l9s-bQ-bad">
                                                     <rect key="frame" x="341" y="9.5" width="19" height="25"/>
                                                     <color key="tintColor" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                                            <color key="value" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -397,11 +387,6 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link-external" translatesAutoresizingMaskIntoConstraints="NO" id="WkB-US-Hey">
                                                     <rect key="frame" x="341" y="9.5" width="19" height="25"/>
                                                     <color key="tintColor" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                                            <color key="value" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
