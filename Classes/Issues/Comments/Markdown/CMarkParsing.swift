@@ -53,7 +53,7 @@ private extension TextElement {
                 }
                 builder.add(text: linkText)
             } else {
-                text.detectAndHandleShortlink(owner: options.owner, repo: options.repo, builder: builder)
+                text.detectAndHandleCustomRegex(owner: options.owner, repo: options.repo, builder: builder)
             }
         case .softBreak, .lineBreak:
             builder.add(text: "\n")
