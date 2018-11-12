@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol GitHubSessionListener: class {
-    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool)
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, isSwitch: Bool)
     func didLogout(manager: GitHubSessionManager)
 }
 
@@ -83,14 +83,14 @@ public class GitHubSessionManager: NSObject {
     }
 
     public func focus(
-        _ userSession: GitHubUserSession,
-        dismiss: Bool
+        _ userSession: GitHubUserSession
         ) {
+        let isSwitch = _userSessions.count > 0
         _userSessions.remove(userSession)
         _userSessions.insert(userSession, at: 0)
         save()
         for wrapper in listeners {
-            wrapper.listener?.didFocus(manager: self, userSession: userSession, dismiss: dismiss)
+            wrapper.listener?.didFocus(manager: self, userSession: userSession, isSwitch: isSwitch)
         }
     }
 

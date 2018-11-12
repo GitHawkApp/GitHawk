@@ -74,8 +74,7 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
 
     private func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
         sessionManager.focus(
-            GitHubUserSession(token: token, authMethod: authMethod, username: username),
-            dismiss: false
+            GitHubUserSession(token: token, authMethod: authMethod, username: username)
         )
     }
 
@@ -106,12 +105,12 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
 
         let selectedSession = userSessions[indexPath.row]
         guard selectedSession != sessionManager.focusedUserSession else { return }
-        sessionManager.focus(selectedSession, dismiss: false)
+        sessionManager.focus(selectedSession)
     }
 
     // MARK: GitHubSessionListener
 
-    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, isSwitch: Bool) {
         updateUserSessions()
         tableView.reloadData()
     }
