@@ -12,10 +12,17 @@ import GitHubSession
 import Squawk
 
 final class SettingsViewController: UITableViewController,
-NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
+    NewIssueTableViewControllerDelegate,
+    DefaultReactionDelegate,
+GitHubSessionListener {
 
     // must be injected
-    var sessionManager: GitHubSessionManager!
+    var sessionManager: GitHubSessionManager! {
+        didSet {
+            sessionManager.addListener(listener: self)
+        }
+    }
+
     var client: GithubClient!
 
     @IBOutlet weak var versionLabel: UILabel!
@@ -65,7 +72,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
         updateDefaultReaction()
 
         rz_smoothlyDeselectRows(tableView: tableView)
-        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
+        updateActiveAccount()
 
         client.client.send(GitHubAPIStatusRequest()) { [weak self] result in
             guard let strongSelf = self else { return }
@@ -284,6 +291,10 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
         showContextualMenu(PushNotificationsDisclaimerViewController())
     }
 
+    func updateActiveAccount() {
+        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
+    }
+
     // MARK: NewIssueTableViewControllerDelegate
 
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
@@ -295,4 +306,13 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     func didUpdateDefaultReaction() {
         updateDefaultReaction()
     }
+
+    // MARK: GitHubSessionListener
+
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, isSwitch: Bool) {
+        updateActiveAccount()
+    }
+
+    func didLogout(manager: GitHubSessionManager) {}
+
 }
