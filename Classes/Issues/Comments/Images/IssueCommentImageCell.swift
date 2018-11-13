@@ -21,6 +21,8 @@ protocol IssueCommentImageHeightCellDelegate: class {
 
 final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
 
+    static let bottomInset = Styles.Sizes.rowSpacing
+
     weak var delegate: IssueCommentImageCellDelegate?
     weak var heightDelegate: IssueCommentImageHeightCellDelegate?
 
@@ -56,7 +58,8 @@ final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        var frame = bounds
+        var frame = contentView.bounds
+        frame.size.height -= IssueCommentImageCell.bottomInset
         if let size = imageView.image?.size {
             frame.size = BoundedImageSize(originalSize: size, containerWidth: frame.width)
         }
