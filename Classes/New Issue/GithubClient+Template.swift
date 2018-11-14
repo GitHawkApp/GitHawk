@@ -23,7 +23,7 @@ extension GithubClient {
             owner: repo.owner,
             repo: repo.name,
             branch: repo.defaultBranch,
-            path: "\(Constants.Filepaths.githubIssue)/\(filename)") { (result) in
+            path: ".github/ISSUE_TEMPLATE/\(filename)") { (result) in
                 switch result {
                 case .success(let file): completion(.success(file))
                 case .error(let error):  completion(.error(error))
@@ -49,7 +49,7 @@ extension GithubClient {
                     // name:
                     // about:
                     // -----
-                    if let textToClean = file.matches(regex: Constants.Regex.Template.details).first {
+                    if let textToClean = file.matches(regex: "([-]{3,})([\\s\\S]*)([-]{3,})").first {
                         if let range = file.range(of: textToClean) {
                             cleanedFile = file.replacingOccurrences(
                                 of: textToClean,

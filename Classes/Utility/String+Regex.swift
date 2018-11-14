@@ -28,5 +28,9 @@ extension String {
             return []
         }
     }
+
+    static func getRegexForLine(after text: String) -> String {
+        return "(?<=\(text):).*"
+    }
 }
 

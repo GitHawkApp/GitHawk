@@ -10,19 +10,9 @@ import Foundation
 
 enum Constants {
 
-    enum Regex {
-        enum Template {
-            static let name = "(?<=name:).*"
-            static let about = "(?<=about:).*"
-            static let details = "([-]{3,})([\\s\\S]*)([-]{3,})"
-        }
-    }
     enum GitHawk {
         static let owner = "GitHawkApp"
         static let name = "GitHawk"
-    }
-    enum Filepaths {
-        static let githubIssue = ".github/ISSUE_TEMPLATE"
     }
     enum URLs {
         static let website = "http://www.githawk.com/"
