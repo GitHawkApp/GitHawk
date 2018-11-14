@@ -11,6 +11,8 @@ import GitHubAPI
 import GitHubSession
 import Squawk
 
+private let githubIssueURL = ".github/ISSUE_TEMPLATE"
+
 extension GithubClient {
 
     private func fetchTemplateFile(
@@ -23,7 +25,7 @@ extension GithubClient {
             owner: repo.owner,
             repo: repo.name,
             branch: repo.defaultBranch,
-            path: ".github/ISSUE_TEMPLATE/\(filename)") { (result) in
+            path: "\(githubIssueURL)/\(filename)") { (result) in
                 switch result {
                 case .success(let file): completion(.success(file))
                 case .error(let error):  completion(.error(error))
@@ -95,7 +97,7 @@ extension GithubClient {
             owner: repo.owner,
             repo: repo.name,
             branch: repo.defaultBranch,
-            path: Constants.Filepaths.githubIssue) { (result) in
+            path: githubIssueURL) { (result) in
                 switch result {
                 case .success(let files):
                     for file in files {
