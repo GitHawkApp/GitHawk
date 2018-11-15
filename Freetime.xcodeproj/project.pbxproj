@@ -478,6 +478,7 @@
 		C0BF305421961E1800A954D4 /* SpinnerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BF305321961E1800A954D4 /* SpinnerTableCell.swift */; };
 		C0BF30562197B83A00A954D4 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BF30552197B83A00A954D4 /* String+Regex.swift */; };
 		C0BF305821986CFA00A954D4 /* GithubClient+Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BF305721986CFA00A954D4 /* GithubClient+Template.swift */; };
+		C0CDBBBC219D1D4D00C2A8BB /* TemplateRegexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CDBBBB219D1D4D00C2A8BB /* TemplateRegexTests.swift */; };
 		C0DEB1DD218E7BFB00B6FEFD /* IssueTemplateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DEB1DC218E7BFB00B6FEFD /* IssueTemplateHelper.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
@@ -1050,6 +1051,7 @@
 		C0BF305321961E1800A954D4 /* SpinnerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerTableCell.swift; sourceTree = "<group>"; };
 		C0BF30552197B83A00A954D4 /* String+Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Regex.swift"; sourceTree = "<group>"; };
 		C0BF305721986CFA00A954D4 /* GithubClient+Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Template.swift"; sourceTree = "<group>"; };
+		C0CDBBBB219D1D4D00C2A8BB /* TemplateRegexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateRegexTests.swift; sourceTree = "<group>"; };
 		C0DEB1DC218E7BFB00B6FEFD /* IssueTemplateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTemplateHelper.swift; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
@@ -1641,6 +1643,7 @@
 				DCA5ED171FAEF3220072F074 /* Bookmark Tests */,
 				291E988421976B5600E5EED9 /* ContentWidthUtilsTests.swift */,
 				BD1DC657218DFE3C004DAC42 /* DetectShortlinkTests.swift */,
+				C0CDBBBB219D1D4D00C2A8BB /* TemplateRegexTests.swift */,
 				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
 				2986B35D1FD462AA00E3CFC6 /* FilePathTests.swift */,
 				296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */,
@@ -3300,6 +3303,7 @@
 				9870B9081FC74E300009719C /* SecretsTests.swift in Sources */,
 				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
 				2986B35E1FD462AA00E3CFC6 /* FilePathTests.swift in Sources */,
+				C0CDBBBC219D1D4D00C2A8BB /* TemplateRegexTests.swift in Sources */,
 				293A457A1F296B7E00DD1006 /* EmojiTests.swift in Sources */,
 				DCA5ED191FAEF32F0072F074 /* BookmarkViewModelTests.swift in Sources */,
 			);

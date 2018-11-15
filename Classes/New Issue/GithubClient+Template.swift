@@ -18,8 +18,12 @@ extension GithubClient {
     private func fetchTemplateFile(
         repo: RepositoryDetails,
         filename: String,
+        testingFile: String? = nil,
         completion: @escaping (Result<String>) -> Void
         ) {
+
+        // For Testing..
+        if let testingFile = testingFile { completion(.success(testingFile)) }
 
         self.fetchFile(
             owner: repo.owner,
@@ -34,12 +38,13 @@ extension GithubClient {
         }
     }
 
-    private func createTemplate(
+    func createTemplate(
         repo: RepositoryDetails,
         filename: String,
+        testingFile: String? = nil,
         completion: @escaping (Result<IssueTemplate>) -> Void
         ) {
-        fetchTemplateFile(repo: repo, filename: filename) { (result) in
+        fetchTemplateFile(repo: repo, filename: filename, testingFile: testingFile) { (result) in
             switch result {
             case .success(let file):
                 let nameAndDescription = IssueTemplateHelper.getNameAndDescription(fromTemplatefile: file)
