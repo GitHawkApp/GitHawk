@@ -43,7 +43,7 @@ IndicatorInfoProvider {
         feed.collectionView.contentInset = UIEdgeInsets(
             top: Styles.Sizes.columnSpacing,
             left: 0,
-            bottom: Styles.Sizes.columnSpacing, 
+            bottom: Styles.Sizes.columnSpacing,
             right: 0
         )
         feed.collectionView.backgroundColor = .white
