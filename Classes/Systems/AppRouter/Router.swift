@@ -178,6 +178,7 @@ final class Router: NSObject {
     }
 
     func present(from: UIViewController, to: UIViewController) {
+        to.router = self
         from.present(to, animated: trueUnlessReduceMotionEnabled)
     }
 
