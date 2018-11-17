@@ -173,7 +173,7 @@ GitHubSessionListener {
         viewController.delegate = self
         let navController = UINavigationController(rootViewController: viewController)
         navController.modalPresentationStyle = .formSheet
-        present(navController, animated: trueUnlessReduceMotionEnabled)
+        route_present(to: navController)
     }
 
     func onViewSource() {

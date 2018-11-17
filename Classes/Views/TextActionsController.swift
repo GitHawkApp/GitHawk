@@ -52,8 +52,7 @@ final class TextActionsController: NSObject,
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.modalPresentationStyle = .formSheet
-
-        viewController?.present(imagePicker, animated: trueUnlessReduceMotionEnabled)
+        viewController?.route_present(to: imagePicker)
     }
 
     // MARK: UIImagePickerControllerDelegate

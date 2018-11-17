@@ -90,6 +90,11 @@ extension UIViewController {
         router?.detail(controller: controller)
     }
 
+    func route_present(to controller: UIViewController) {
+        if router == nil { print("ERROR: router was not wired up") }
+        router?.present(from: self, to: controller)
+    }
+
 }
 
 protocol RouterPropsSource: class {
@@ -149,12 +154,17 @@ final class Router: NSObject {
         let result = route.perform(props: props)
         switch result {
         case .custom, .error: break
-        case .show(let toController):
+        case .push(let toController):
+            // if trying to push but not given an origin, fallback to detail
             if let controller = controller {
                 push(from: controller, to: toController)
             } else {
                 detail(controller: toController, split: props.splitViewController)
             }
+        case .present(let toController):
+            present(from: controller ?? props.splitViewController, to: toController)
+        case .setDetail(let toController):
+            detail(controller: toController, split: props.splitViewController)
         }
         return result
     }
@@ -165,6 +175,10 @@ final class Router: NSObject {
             to,
             animated: trueUnlessReduceMotionEnabled
         )
+    }
+
+    func present(from: UIViewController, to: UIViewController) {
+        from.present(to, animated: trueUnlessReduceMotionEnabled)
     }
 
     func detail(controller: UIViewController) {

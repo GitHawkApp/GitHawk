@@ -30,7 +30,7 @@ IssueCommentHtmlCellImageDelegate {
         let photo = IssueCommentPhoto(image: image, data: animatedImageData)
         let photosViewController = NYTPhotosViewController(photos: [photo])
         photosViewController.delegate = self
-        viewController?.present(photosViewController, animated: trueUnlessReduceMotionEnabled)
+        viewController?.route_present(to: photosViewController)
     }
 
     // MARK: NYTPhotosViewControllerDelegate
@@ -52,8 +52,7 @@ IssueCommentHtmlCellImageDelegate {
         ) { [weak self] (image, data, _, _) in
             if let image = image {
                 let photo = IssueCommentPhoto(image: image, data: nil)
-                let photosViewController = NYTPhotosViewController(photos: [photo])
-                self?.viewController?.present(photosViewController, animated: trueUnlessReduceMotionEnabled)
+                self?.viewController?.route_present(to: NYTPhotosViewController(photos: [photo]))
             } else {
                 Squawk.showGenericError()
             }

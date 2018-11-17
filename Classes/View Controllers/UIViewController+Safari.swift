@@ -13,11 +13,12 @@ extension UIViewController {
 
     func presentSafari(url: URL) {
 		guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
-		present(safariViewController, animated: trueUnlessReduceMotionEnabled)
+        route_present(to: safariViewController)
     }
 
     func presentProfile(login: String) {
         guard let controller = CreateProfileViewController(login: login) else { return }
+        route_present(to: controller)
         present(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
