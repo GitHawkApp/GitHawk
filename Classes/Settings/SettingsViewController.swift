@@ -154,21 +154,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     }
 
     func onReportBug() {
-        let repo = RepositoryDetails(
-            owner: "GitHawkApp",
-            name: "GitHawk",
-            defaultBranch: "master",
-            hasIssuesEnabled: true
-        )
-
-        reportBugCell.startSpinner()
-        client.createNewIssue(
-            repo: repo,
-            session: sessionManager.focusedUserSession,
-            mainViewController: self,
-            delegate: self) {
-                self.reportBugCell.stopSpinner()
-        }
+        
     }
 
     func onViewSource() {
