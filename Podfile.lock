@@ -37,13 +37,10 @@ PODS:
     - IGListKit/Default
   - ImageAlertAction (1.0.0)
   - MessageViewController (0.2.1)
-  - NYTPhotoViewer (1.1.0):
-    - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
-    - NYTPhotoViewer/Core (= 1.1.0)
-  - NYTPhotoViewer/AnimatedGifSupport (1.1.0):
-    - FLAnimatedImage (~> 1.0.8)
+  - NYTPhotoViewer/AnimatedGifSupport (2.0.0):
+    - FLAnimatedImage (~> 1.0.12)
     - NYTPhotoViewer/Core
-  - NYTPhotoViewer/Core (1.1.0)
+  - NYTPhotoViewer/Core (2.0.0)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
@@ -77,7 +74,7 @@ DEPENDENCIES:
   - IGListKit/Swift (from `https://github.com/GitHawkApp/IGListKit.git`, branch `fix-layout-insets`)
   - ImageAlertAction
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
-  - NYTPhotoViewer (~> 1.1.0)
+  - NYTPhotoViewer/AnimatedGifSupport (~> 2.0.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
   - Squawk (from `https://github.com/GitHawkApp/Squawk.git`, branch `master`)
@@ -205,7 +202,7 @@ SPEC CHECKSUMS:
   IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
   ImageAlertAction: a32a5053978ef2cffbc96f192d4ca2a24c774dd5
   MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
-  NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
+  NYTPhotoViewer: 34b8bd6bcc297466adec1668f9a01249d73c90e6
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Squawk: 7dbe029a1de47153a1722a98b787f755f2df2b3e
@@ -216,6 +213,6 @@ SPEC CHECKSUMS:
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
-PODFILE CHECKSUM: 3cdf2d1ecad4f5cda3248bd667e41a95466ddee0
+PODFILE CHECKSUM: de9d05b737b3112b8aff72dd349f7fe28b9669ed
 
 COCOAPODS: 1.5.3
