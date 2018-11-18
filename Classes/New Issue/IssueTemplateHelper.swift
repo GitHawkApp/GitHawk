@@ -63,7 +63,7 @@ class IssueTemplateHelper {
                         viewController.delegate = details.delegate
                         let navController = UINavigationController(rootViewController: viewController)
                         navController.modalPresentationStyle = .formSheet
-                        details.viewController.present(navController, animated: trueUnlessReduceMotionEnabled)
+                        details.viewController.route_present(to: navController)
                 }))
         }
 
@@ -94,7 +94,7 @@ class IssueTemplateHelper {
                 with: templates,
                 details: details
             )
-            details.viewController.present(alertView, animated: trueUnlessReduceMotionEnabled)
+            details.viewController.route_present(to: alertView)
         } else {
             // No templates exists, show blank new issue view controller
             guard let viewController = NewIssueTableViewController.create(
@@ -109,7 +109,7 @@ class IssueTemplateHelper {
             viewController.delegate = details.delegate
             let navController = UINavigationController(rootViewController: viewController)
             navController.modalPresentationStyle = .formSheet
-            details.viewController.present(navController, animated: trueUnlessReduceMotionEnabled)
+            details.viewController.route_present(to: navController)
         }
     }
 }

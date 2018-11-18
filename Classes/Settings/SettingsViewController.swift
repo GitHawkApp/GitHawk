@@ -161,19 +161,21 @@ GitHubSessionListener {
     }
 
     func onReportBug() {
-        guard let viewController = NewIssueTableViewController.create(
-                client: GithubClient(userSession: sessionManager.focusedUserSession),
-                owner: "GitHawkApp",
-                repo: "GitHawk",
-                signature: .bugReport
-            ) else {
-                Squawk.showGenericError()
-                return
+        let repo = RepositoryDetails(
+            owner: "GitHawkApp",
+            name: "GitHawk",
+            defaultBranch: "master",
+            hasIssuesEnabled: true
+        )
+
+        reportBugCell.startSpinner()
+        client.createNewIssue(
+            repo: repo,
+            session: sessionManager.focusedUserSession,
+            mainViewController: self,
+            delegate: self) {
+                self.reportBugCell.stopSpinner()
         }
-        viewController.delegate = self
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.modalPresentationStyle = .formSheet
-        route_present(to: navController)
     }
 
     func onViewSource() {
