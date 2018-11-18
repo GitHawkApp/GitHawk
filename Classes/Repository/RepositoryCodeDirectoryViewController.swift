@@ -36,7 +36,6 @@ IndicatorInfoProvider {
             target: self,
             action: #selector(RepositoryCodeDirectoryViewController.onShare(sender:)))
         barButtonItem.isEnabled = false
-
         return barButtonItem
     }()
 
@@ -140,6 +139,13 @@ IndicatorInfoProvider {
                 repo: repo,
                 branch: branch,
                 path: path
+            )
+        } else if path.isImage {
+            controller = RepositoryImageViewController(
+                repo: repo,
+                branch: branch,
+                path: path,
+                client: client
             )
         } else {
             controller = RepositoryCodeBlobViewController(
