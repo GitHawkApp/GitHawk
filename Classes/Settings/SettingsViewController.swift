@@ -12,10 +12,17 @@ import GitHubSession
 import Squawk
 
 final class SettingsViewController: UITableViewController,
-NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
+    NewIssueTableViewControllerDelegate,
+    DefaultReactionDelegate,
+GitHubSessionListener {
 
     // must be injected
-    var sessionManager: GitHubSessionManager!
+    var sessionManager: GitHubSessionManager! {
+        didSet {
+            sessionManager.addListener(listener: self)
+        }
+    }
+
     var client: GithubClient!
 
     @IBOutlet weak var versionLabel: UILabel!
@@ -65,7 +72,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
         updateDefaultReaction()
 
         rz_smoothlyDeselectRows(tableView: tableView)
-        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
+        updateActiveAccount()
 
         client.client.send(GitHubAPIStatusRequest()) { [weak self] result in
             guard let strongSelf = self else { return }
@@ -139,7 +146,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             let accountsController = navigationController.topViewController as? SettingsAccountsViewController,
             let client = self.client {
             accountsController.config(client: client.client, sessionManager: sessionManager)
-            self.navigationController?.showDetailViewController(navigationController, sender: self)
+            route_detail(to: navigationController)
         }
     }
 
@@ -154,7 +161,19 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     }
 
     func onReportBug() {
-        
+        guard let viewController = NewIssueTableViewController.create(
+                client: GithubClient(userSession: sessionManager.focusedUserSession),
+                owner: "GitHawkApp",
+                repo: "GitHawk",
+                signature: .bugReport
+            ) else {
+                Squawk.showGenericError()
+                return
+        }
+        viewController.delegate = self
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .formSheet
+        route_present(to: navController)
     }
 
     func onViewSource() {
@@ -169,9 +188,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             defaultBranch: "master",
             hasIssuesEnabled: true
         )
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navController = UINavigationController(rootViewController: repoViewController)
-        showDetailViewController(navController, sender: self)
+        route_detail(to: RepositoryViewController(client: client, repo: repo))
     }
 
     func onSetDefaultReaction() {
@@ -180,8 +197,7 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
             fatalError("Cannot instantiate DefaultReactionDetailController instance")
         }
         viewController.delegate = self
-        let navController = UINavigationController(rootViewController: viewController)
-        showDetailViewController(navController, sender: self)
+        route_detail(to: viewController)
     }
 
     func onTryTestFlightBeta() {
@@ -275,12 +291,14 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
         showContextualMenu(PushNotificationsDisclaimerViewController())
     }
 
+    func updateActiveAccount() {
+        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
+    }
+
     // MARK: NewIssueTableViewControllerDelegate
 
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
-        let issuesViewController = IssuesViewController(client: client, model: model)
-        let navigation = UINavigationController(rootViewController: issuesViewController)
-        showDetailViewController(navigation, sender: nil)
+        route_detail(to: IssuesViewController(client: client, model: model))
     }
 
     // MARK: DefaultReactionDelegate
@@ -288,4 +306,13 @@ NewIssueTableViewControllerDelegate, DefaultReactionDelegate {
     func didUpdateDefaultReaction() {
         updateDefaultReaction()
     }
+
+    // MARK: GitHubSessionListener
+
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, isSwitch: Bool) {
+        updateActiveAccount()
+    }
+
+    func didLogout(manager: GitHubSessionManager) {}
+
 }

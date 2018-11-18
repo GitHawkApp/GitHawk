@@ -29,7 +29,7 @@
 		290CA770216AE91300DE04F8 /* UITabBarController+SelectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */; };
 		290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */; };
 		290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */; };
-		290CA778216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */; };
+		290CA778216AFAE600DE04F8 /* RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA777216AFAE600DE04F8 /* RoutePerformable.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
@@ -138,7 +138,7 @@
 		29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */; };
 		29351EA02079246400FF8C17 /* CodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9F2079246400FF8C17 /* CodeBlockModel.swift */; };
 		29351EA22079663800FF8C17 /* String+Shortlink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA12079663800FF8C17 /* String+Shortlink.swift */; };
-		29351EA420796BB800FF8C17 /* String+DetectShortlink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA320796BB800FF8C17 /* String+DetectShortlink.swift */; };
+		29351EA420796BB800FF8C17 /* String+CustomBuilding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA320796BB800FF8C17 /* String+CustomBuilding.swift */; };
 		29351EA62079791800FF8C17 /* String+StripHTMLComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA52079791800FF8C17 /* String+StripHTMLComments.swift */; };
 		293A45761F296B7E00DD1006 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476B11ED24D99005D0953 /* IssueTests.swift */; };
 		293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */; };
@@ -241,6 +241,8 @@
 		29764C141FDC4DB60095FF95 /* SettingsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29764C131FDC4DB60095FF95 /* SettingsLabel.swift */; };
 		2977788820B0DAD500F2AFC2 /* ViewMarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977788720B0DAD500F2AFC2 /* ViewMarkdownViewController.swift */; };
 		2977788A20B306F200F2AFC2 /* LabelLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */; };
+		2977A3592199160700DBC354 /* UIImageView+StoryboardTintFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977A3582199160700DBC354 /* UIImageView+StoryboardTintFix.swift */; };
+		2977A35B219927F500DBC354 /* SpecialGitHubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977A35A219927F500DBC354 /* SpecialGitHubEmoji.swift */; };
 		2977D8BF215AE12D0073F737 /* LocalNotificationCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977D8BE215AE12D0073F737 /* LocalNotificationCacheTests.swift */; };
 		29792B191FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */; };
 		29792B1B1FFB21AD007A0C57 /* AutocompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B1A1FFB21AD007A0C57 /* AutocompleteController.swift */; };
@@ -339,6 +341,7 @@
 		29B205FE217B971300E4DD9F /* String+FirstLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205FD217B971300E4DD9F /* String+FirstLine.swift */; };
 		29B20600217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205FF217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift */; };
 		29B20602217BC37B00E4DD9F /* UIViewController+HistoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B20601217BC37B00E4DD9F /* UIViewController+HistoryAction.swift */; };
+		29B3B91721A0B38C006BED05 /* RepositoryImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B3B91621A0B38C006BED05 /* RepositoryImageViewController.swift */; };
 		29B5D08B20D578DB003DFBE2 /* InboxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B5D08A20D578DB003DFBE2 /* InboxType.swift */; };
 		29B75AD9210A9A0300C28131 /* IssueLabelStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */; };
 		29B75ADB210A9B3100C28131 /* IssueLabelStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */; };
@@ -584,7 +587,7 @@
 		290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+SelectType.swift"; sourceTree = "<group>"; };
 		290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwitchAccountShortcutRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
 		290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookmarkShortcutRoute+RoutePerformable.swift"; sourceTree = "<group>"; };
-		290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePerformable+RoutePerformable.swift"; sourceTree = "<group>"; };
+		290CA777216AFAE600DE04F8 /* RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePerformable.swift; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
@@ -694,7 +697,7 @@
 		29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssueCommentTableModel+Models.swift"; sourceTree = "<group>"; };
 		29351E9F2079246400FF8C17 /* CodeBlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockModel.swift; sourceTree = "<group>"; };
 		29351EA12079663800FF8C17 /* String+Shortlink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Shortlink.swift"; sourceTree = "<group>"; };
-		29351EA320796BB800FF8C17 /* String+DetectShortlink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DetectShortlink.swift"; sourceTree = "<group>"; };
+		29351EA320796BB800FF8C17 /* String+CustomBuilding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CustomBuilding.swift"; sourceTree = "<group>"; };
 		29351EA52079791800FF8C17 /* String+StripHTMLComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+StripHTMLComments.swift"; sourceTree = "<group>"; };
 		293A45A11F29954000DD1006 /* IssueCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitModel.swift; sourceTree = "<group>"; };
 		293A45A31F2995CE00DD1006 /* IssueCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitCell.swift; sourceTree = "<group>"; };
@@ -798,6 +801,8 @@
 		29764C131FDC4DB60095FF95 /* SettingsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabel.swift; sourceTree = "<group>"; };
 		2977788720B0DAD500F2AFC2 /* ViewMarkdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMarkdownViewController.swift; sourceTree = "<group>"; };
 		2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelLayoutManager.swift; sourceTree = "<group>"; };
+		2977A3582199160700DBC354 /* UIImageView+StoryboardTintFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+StoryboardTintFix.swift"; sourceTree = "<group>"; };
+		2977A35A219927F500DBC354 /* SpecialGitHubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialGitHubEmoji.swift; sourceTree = "<group>"; };
 		2977D8BE215AE12D0073F737 /* LocalNotificationCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationCacheTests.swift; sourceTree = "<group>"; };
 		29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+MessageAutocompleteControllerLayoutDelegate.swift"; sourceTree = "<group>"; };
 		29792B1A1FFB21AD007A0C57 /* AutocompleteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteController.swift; sourceTree = "<group>"; };
@@ -902,6 +907,7 @@
 		29B205FD217B971300E4DD9F /* String+FirstLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+FirstLine.swift"; sourceTree = "<group>"; };
 		29B205FF217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoFileHistoryQueryDataToPathHistoryViewModel.swift; sourceTree = "<group>"; };
 		29B20601217BC37B00E4DD9F /* UIViewController+HistoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HistoryAction.swift"; sourceTree = "<group>"; };
+		29B3B91621A0B38C006BED05 /* RepositoryImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryImageViewController.swift; sourceTree = "<group>"; };
 		29B5D08A20D578DB003DFBE2 /* InboxType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxType.swift; sourceTree = "<group>"; };
 		29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusCell.swift; sourceTree = "<group>"; };
 		29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusModel.swift; sourceTree = "<group>"; };
@@ -1155,7 +1161,7 @@
 				290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute+RoutePerformable.swift */,
 				29A10540216D912F004734A0 /* IssueRoute+RoutePerformable.swift */,
 				2962505F217D53C000EA6164 /* RepoRoute+RoutePerformable.swift */,
-				290CA777216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift */,
+				290CA777216AFAE600DE04F8 /* RoutePerformable.swift */,
 				2990B9DA218BF23D009865EB /* Router.swift */,
 				290CA769216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift */,
 				290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift */,
@@ -1558,12 +1564,13 @@
 		295F52AB1EF1BCF6000B53CF /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
+				296A4961210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift */,
 				29BE40D22070786400A79C86 /* CMarkParsing.swift */,
 				29351E9F2079246400FF8C17 /* CodeBlockModel.swift */,
 				29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */,
 				29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */,
 				29459A6E1FE61E0500034A04 /* MarkdownCheckboxModel.swift */,
-				29351EA320796BB800FF8C17 /* String+DetectShortlink.swift */,
+				29351EA320796BB800FF8C17 /* String+CustomBuilding.swift */,
 				29351E9B2079106300FF8C17 /* String+GitHubEmoji.swift */,
 				29351EA12079663800FF8C17 /* String+Shortlink.swift */,
 				29351EA52079791800FF8C17 /* String+StripHTMLComments.swift */,
@@ -1571,7 +1578,6 @@
 				2965F37120715161003CC92F /* StyledTextBuilder+NewBase.swift */,
 				29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */,
 				2977788720B0DAD500F2AFC2 /* ViewMarkdownViewController.swift */,
-				296A4961210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -1661,7 +1667,6 @@
 				9870B9071FC74E300009719C /* SecretsTests.swift */,
 				49FE18FE204B6508001681E8 /* SequenceTests.swift */,
 				DC60C6D21F983BB900241271 /* SignatureTests.swift */,
-				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
@@ -1763,6 +1768,7 @@
 				9870B9021FC73EE70009719C /* Secrets.swift */,
 				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
 				29973E551F68BFDE0004B693 /* Signature.swift */,
+				2977A35A219927F500DBC354 /* SpecialGitHubEmoji.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
 				292D2F1620FA5CAD00099342 /* Squawk+GitHawk.swift */,
 				29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */,
@@ -1852,6 +1858,7 @@
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				295B51471FC26F7F00C3993B /* UIImageView+Avatar.swift */,
+				2977A3582199160700DBC354 /* UIImageView+StoryboardTintFix.swift */,
 				29136BDE200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift */,
 				290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */,
 				294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */,
@@ -1867,10 +1874,10 @@
 		297AE86D1EC0D5C200B44A1F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2971CED22055C8F600342296 /* Freetime.entitlements */,
 				297AE86E1EC0D5C200B44A1F /* Assets.xcassets */,
 				98F0A0421F27BC4B0062A2CA /* emoji.json */,
 				29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */,
+				2971CED22055C8F600342296 /* Freetime.entitlements */,
 				294002401FDD9E8400950167 /* GoogleService-Info.plist */,
 				297AE8731EC0D5C200B44A1F /* Info.plist */,
 				297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */,
@@ -2077,13 +2084,6 @@
 			path = Labeled;
 			sourceTree = "<group>";
 		};
-		45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Snapshot Tests";
-			sourceTree = "<group>";
-		};
 		49B64EC520A85A06000D9AA4 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -2148,14 +2148,15 @@
 				292ACE191F5CAF9F00C9A02C /* Empty */,
 				29A5AF441F9298360065D529 /* GitHubClient+Repository.swift */,
 				986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */,
+				BDB6AA5D215FBC35009BB73C /* RepositoryBranches */,
 				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
 				29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */,
-				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
 				29C62F9F218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift */,
-				750986592048959D00D1E37A /* RepositoryWebViewController.swift */,
+				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
 				295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */,
 				29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */,
 				29B94E6E1FCB743900715D7E /* RepositoryFileCell.swift */,
+				29B3B91621A0B38C006BED05 /* RepositoryImageViewController.swift */,
 				292ACE171F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift */,
 				29A5AF401F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift */,
 				986B87331F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift */,
@@ -2166,7 +2167,7 @@
 				986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */,
 				986B87351F2CB28C00AAB55C /* RepositorySummarySectionController.swift */,
 				2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */,
-				BDB6AA5D215FBC35009BB73C /* RepositoryBranches */,
+				750986592048959D00D1E37A /* RepositoryWebViewController.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -2933,6 +2934,7 @@
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
 				295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */,
 				295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */,
+				29B3B91721A0B38C006BED05 /* RepositoryImageViewController.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				291E987B21973B8F00E5EED9 /* URLBuilder.swift in Sources */,
 				292FA33D1FBCE0F000BBB0BB /* Milestone.swift in Sources */,
@@ -2966,7 +2968,7 @@
 				DCA5ED161FAEE91F0072F074 /* BookmarkViewModel.swift in Sources */,
 				2924C18D20D5B3DD00FCFCFF /* LabelsViewController.swift in Sources */,
 				29DB5D192133418300E408D9 /* LocalNotificationsCache.swift in Sources */,
-				29351EA420796BB800FF8C17 /* String+DetectShortlink.swift in Sources */,
+				29351EA420796BB800FF8C17 /* String+CustomBuilding.swift in Sources */,
 				2986B35C1FD4618900E3CFC6 /* FilePath.swift in Sources */,
 				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
 				29CC294F1FF93AD7006B6DE7 /* IssueCommentEmptyCell.swift in Sources */,
@@ -3046,6 +3048,7 @@
 				295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */,
 				295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */,
+				2977A3592199160700DBC354 /* UIImageView+StoryboardTintFix.swift in Sources */,
 				295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */,
 				29F3A18C20CD790F00645CB7 /* UIViewController+CommonActionItems.swift in Sources */,
 				294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */,
@@ -3148,7 +3151,7 @@
 				BDB6AA69215FBC35009BB73C /* RepositoryBranchesViewController.swift in Sources */,
 				290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute+RoutePerformable.swift in Sources */,
 				293189281F5391F700EF0911 /* Result.swift in Sources */,
-				290CA778216AFAE600DE04F8 /* RoutePerformable+RoutePerformable.swift in Sources */,
+				290CA778216AFAE600DE04F8 /* RoutePerformable.swift in Sources */,
 				295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
@@ -3186,6 +3189,7 @@
 				D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */,
 				29C62F9B218F406A001724B2 /* IssueFilesSectionController.swift in Sources */,
 				294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */,
+				2977A35B219927F500DBC354 /* SpecialGitHubEmoji.swift in Sources */,
 				297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */,
 				29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */,
 				291E98832197697400E5EED9 /* ContentWidthUtils.swift in Sources */,
@@ -3560,7 +3564,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GLOBAL_APP_VERSION = 1.24.0;
+				GLOBAL_APP_VERSION = 1.25.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3615,7 +3619,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GLOBAL_APP_VERSION = 1.24.0;
+				GLOBAL_APP_VERSION = 1.25.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -3787,7 +3791,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GLOBAL_APP_VERSION = 1.24.0;
+				GLOBAL_APP_VERSION = 1.25.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;

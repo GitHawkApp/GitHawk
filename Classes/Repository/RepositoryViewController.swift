@@ -64,7 +64,7 @@ ContextMenuDelegate {
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarHeight = 44
 
-        pagerBehaviour = .common(skipIntermediateViewControllers: true)
+        pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
         changeCurrentIndex = { (oldCell, newCell, animated) in
             oldCell?.label.textColor = Styles.Colors.Gray.medium.color
             newCell?.label.textColor = Styles.Colors.Blue.medium.color
@@ -74,6 +74,7 @@ ContextMenuDelegate {
 
         super.viewDidLoad()
 
+        navigationController?.navigationBar.backgroundColor = .white
         view.backgroundColor = .white
         makeBackBarItemEmpty()
         delegate = self
@@ -186,7 +187,7 @@ ContextMenuDelegate {
 
         alert.addActions([
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client),
-            repo.hasIssuesEnabled ? newIssueAction() : nil,
+            repo.hasIssuesEnabled ? newIssueAction() : nil
         ])
         if let url = repoUrl {
             alert.add(action: AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
@@ -212,8 +213,7 @@ ContextMenuDelegate {
     // MARK: NewIssueTableViewControllerDelegate
 
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
-        let issuesViewController = IssuesViewController(client: client, model: model)
-        show(issuesViewController, sender: self)
+        route_push(to: IssuesViewController(client: client, model: model))
     }
 
     // MARK: ContextMenuDelegate

@@ -36,7 +36,6 @@ IndicatorInfoProvider {
             target: self,
             action: #selector(RepositoryCodeDirectoryViewController.onShare(sender:)))
         barButtonItem.isEnabled = false
-
         return barButtonItem
     }()
 
@@ -125,13 +124,12 @@ IndicatorInfoProvider {
     }
 
     private func showDirectory(at path: FilePath) {
-        let controller = RepositoryCodeDirectoryViewController(
+        route_push(to: RepositoryCodeDirectoryViewController(
             client: client,
             repo: repo,
             branch: branch,
             path: path
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
     private func showFile(at path: FilePath) {
@@ -142,6 +140,13 @@ IndicatorInfoProvider {
                 branch: branch,
                 path: path
             )
+        } else if path.isImage {
+            controller = RepositoryImageViewController(
+                repo: repo,
+                branch: branch,
+                path: path,
+                client: client
+            )
         } else {
             controller = RepositoryCodeBlobViewController(
                 client: client,
@@ -150,7 +155,7 @@ IndicatorInfoProvider {
                 path: path
             )
         }
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        route_push(to: controller)
     }
 
     // MARK: Overrides

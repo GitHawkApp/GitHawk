@@ -10,11 +10,11 @@ import XCTest
 import StyledTextKit
 
 class DetectShortlinkTests: XCTestCase {
-    // Test the String method detectAndHandleShortlink()
+    // Test the String method detectAndHandleCustomRegex()
 
     func setupBuilder(with text: String) -> StyledTextString {
         let builder = StyledTextBuilder(text: "")
-        text.detectAndHandleShortlink(
+        text.detectAndHandleCustomRegex(
             owner: "rnystrom",
             repo: "GitHawk",
             builder: builder

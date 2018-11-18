@@ -11,11 +11,11 @@ import GitHubSession
 import GitHawkRoutes
 
 extension BookmarkShortcutRoute: RoutePerformable {
-    func perform(
-        sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController,
-        client: GithubClient
-        ) -> Bool {
-        return splitViewController.masterTabBarController?.selectTab(of: BookmarkViewController.self) != nil
+    func perform(props: RoutePerformableProps) -> RoutePerformableResult {
+        if props.splitViewController.masterTabBarController?
+            .selectTab(of: BookmarkViewController.self) != nil {
+            return .custom
+        }
+        return .error
     }
 }

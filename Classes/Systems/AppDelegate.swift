@@ -60,8 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appController.performFetch(application: application, with: completionHandler)
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return appController.router.handle(url: url)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+        return appController.router.handle(url: url).wasHandled
     }
 
 }

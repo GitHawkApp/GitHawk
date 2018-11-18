@@ -136,7 +136,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)
             nav.modalPresentationStyle = .formSheet
-            self?.viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
+            self?.viewController?.route_present(to: nav)
         })
     }
 
@@ -166,10 +166,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
                 let nav = UINavigationController(
                     rootViewController: ViewMarkdownViewController(markdown: markdown)
                 )
-                self?.viewController?.present(
-                    nav,
-                    animated: trueUnlessReduceMotionEnabled
-                )
+                self?.viewController?.route_present(to: nav)
             }
         )
     }

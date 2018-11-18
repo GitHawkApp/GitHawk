@@ -31,12 +31,17 @@ final class AppSplitViewController: UISplitViewController {
     func resetEmpty() {
         let controller = UIViewController()
         controller.view.backgroundColor = Styles.Colors.background
-        reset(viewControllers: [UINavigationController(rootViewController: controller)])
+        reset(
+            viewControllers: [UINavigationController(rootViewController: controller)],
+            clearDetail: true
+        )
     }
 
-    func reset(viewControllers: [UIViewController]) {
+    func reset(viewControllers: [UIViewController], clearDetail: Bool) {
         masterTabBarController?.viewControllers = viewControllers
-        detailNavigationController?.viewControllers = [SplitPlaceholderViewController()]
+        if clearDetail {
+            detailNavigationController?.viewControllers = [SplitPlaceholderViewController()]
+        }
     }
 
 }

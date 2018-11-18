@@ -11,14 +11,11 @@ import GitHubSession
 import GitHawkRoutes
 
 extension IssueRoute: RoutePerformable {
-    func perform(
-        sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController,
-        client: GithubClient
-        ) -> Bool {
-        let model = IssueDetailsModel(owner: owner, repo: repo, number: number)
-        let controller = IssuesViewController(client: client, model: model, scrollToBottom: true)
-        splitViewController.showDetailViewController(controller, sender: nil)
-        return true
+    func perform(props: RoutePerformableProps) -> RoutePerformableResult {
+        return .push(IssuesViewController(
+            client: props.client,
+            model: IssueDetailsModel(owner: owner, repo: repo, number: number),
+            scrollToBottom: true
+        ))
     }
 }

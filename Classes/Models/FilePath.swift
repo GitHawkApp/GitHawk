@@ -45,6 +45,16 @@ struct FilePath {
         return FilePath(components: components + [component])
     }
 
+    var isImage: Bool {
+        guard let last = components.last else { return false }
+        for format in ["png", "jpg", "jpeg", "gif"] {
+            if last.hasSuffix(format) {
+                return true
+            }
+        }
+        return false
+    }
+
 }
 
 // MARK: - FilePath (BinaryFile) -
@@ -74,7 +84,8 @@ extension FilePath {
     // MARK: Private API
 
     private var binarySuffix: String? {
-        return FilePath.supportedBinaries.keys.first(where: { path.hasSuffix($0) })
+        guard let last = components.last else { return nil }
+        return FilePath.supportedBinaries.keys.first(where: { last.hasSuffix($0) })
     }
 
 }

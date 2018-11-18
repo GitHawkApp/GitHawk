@@ -202,8 +202,7 @@ class ImageUploadTableViewController: UITableViewController {
     }
 
     @IBAction func didPressPreviewImage() {
-        let previewViewController = NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)])
-        present(previewViewController, animated: trueUnlessReduceMotionEnabled)
+        route_present(to: NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)]))
     }
 }
 

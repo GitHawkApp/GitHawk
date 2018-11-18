@@ -35,7 +35,8 @@ final class IssuesViewController: MessageViewController,
     IssueTextActionsViewSendDelegate,
     EmptyViewDelegate,
     MessageTextViewListener,
-    IssueLabelTapSectionControllerDelegate {
+    IssueLabelTapSectionControllerDelegate,
+IssueManagingContextControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -134,6 +135,7 @@ final class IssuesViewController: MessageViewController,
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
 
         manageController.viewController = self
+        manageController.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -344,14 +346,14 @@ final class IssuesViewController: MessageViewController,
 
     func updateAndScrollIfNeeded(dismissRefresh: Bool = true) {
         feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
-            if self?.needsScrollToBottom == true {
-                self?.needsScrollToBottom = false
-                self?.scrollToLastContentElement()
-            }
+            self?.scrollToLastContentElement()
         }
     }
 
     func scrollToLastContentElement() {
+        guard needsScrollToBottom == true else { return }
+        needsScrollToBottom = false
+
         guard let lastTimeline = lastTimelineElement else { return }
 
         // assuming the last element is the "actions" when collaborator
@@ -359,12 +361,11 @@ final class IssuesViewController: MessageViewController,
     }
 
     func onPreview() {
-        let controller = IssuePreviewViewController(
+        route_push(to: IssuePreviewViewController(
             markdown: messageView.text,
             owner: model.owner,
             repo: model.repo
-        )
-        showDetailViewController(controller, sender: nil)
+        ))
     }
 
     @objc func onNavigationTitle(sender: UIView) {
@@ -637,6 +638,12 @@ final class IssuesViewController: MessageViewController,
     func didTapIssueLabel(owner: String, repo: String, label: String) {
         guard let issueType = self.issueType else { return }
         presentLabels(client: client, owner: owner, repo: repo, label: label, type: issueType)
+    }
+
+    // MARK: IssueManagingContextControllerDelegate
+
+    func willMutateModel(from controller: IssueManagingContextController) {
+        needsScrollToBottom = true
     }
 
 }
