@@ -53,7 +53,10 @@ private extension TextElement {
                 }
                 builder.add(text: linkText)
             } else {
-                text.detectAndHandleCustomRegex(owner: options.owner, repo: options.repo, builder: builder)
+                text.replacingGithubEmoji
+                    .strippingHTMLComments
+                    .removingHTMLEntities
+                    .detectAndHandleCustomRegex(owner: options.owner, repo: options.repo, builder: builder)
             }
         case .softBreak, .lineBreak:
             builder.add(text: "\n")
@@ -386,9 +389,6 @@ func MarkdownModels(
     branch: String = "master"
     ) -> [ListDiffable] {
     let cleaned = markdown
-        .replacingGithubEmojiRegex
-        .strippingHTMLComments
-        .removingHTMLEntities
         .trimmingCharacters(in: .whitespacesAndNewlines)
     guard let node = Node(markdown: cleaned) else { return [] }
     let options = CMarkOptions(

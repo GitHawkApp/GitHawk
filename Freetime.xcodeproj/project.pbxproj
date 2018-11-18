@@ -1654,7 +1654,6 @@
 				9870B9071FC74E300009719C /* SecretsTests.swift */,
 				49FE18FE204B6508001681E8 /* SequenceTests.swift */,
 				DC60C6D21F983BB900241271 /* SignatureTests.swift */,
-				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
@@ -2069,13 +2068,6 @@
 				29FB942D1EE751F70016E6D4 /* IssueLabeledSectionController.swift */,
 			);
 			path = Labeled;
-			sourceTree = "<group>";
-		};
-		45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Snapshot Tests";
 			sourceTree = "<group>";
 		};
 		49B64EC520A85A06000D9AA4 /* Utility */ = {

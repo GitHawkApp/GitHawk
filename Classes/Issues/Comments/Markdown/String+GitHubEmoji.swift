@@ -15,7 +15,8 @@ private let regex: NSRegularExpression = {
 }()
 
 extension String {
-    var replacingGithubEmojiRegex: String {
+
+    var replacingGithubEmoji: String {
         let matches = regex.matches(in: self, options: [], range: nsrange)
         var replacedString = self
         for match in matches.reversed() {
@@ -27,4 +28,5 @@ extension String {
         }
         return replacedString
     }
+
 }
