@@ -12,7 +12,7 @@ import GitHawkRoutes
 
 extension IssueRoute: RoutePerformable {
     func perform(props: RoutePerformableProps) -> RoutePerformableResult {
-        return .show(IssuesViewController(
+        return .push(IssuesViewController(
             client: props.client,
             model: IssueDetailsModel(owner: owner, repo: repo, number: number),
             scrollToBottom: true

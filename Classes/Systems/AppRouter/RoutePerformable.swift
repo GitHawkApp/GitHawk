@@ -12,12 +12,14 @@ import GitHubSession
 enum RoutePerformableResult {
     case error
     case custom
-    case show(UIViewController)
+    case push(UIViewController)
+    case setDetail(UIViewController)
+    case present(UIViewController)
 
     var wasHandled: Bool {
         switch self {
         case .error: return false
-        case .custom, .show: return true
+        default: return true
         }
     }
 }

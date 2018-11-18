@@ -19,6 +19,6 @@ extension RepoRoute: RoutePerformable {
             defaultBranch: branch,
             hasIssuesEnabled: true
         )
-        return .show(RepositoryViewController(client: props.client, repo: model))
+        return .push(RepositoryViewController(client: props.client, repo: model))
     }
 }
