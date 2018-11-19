@@ -58,7 +58,9 @@ private extension TextElement {
                     .removingHTMLEntities
                     .detectAndHandleCustomRegex(owner: options.owner, repo: options.repo, builder: builder)
             }
-        case .softBreak, .lineBreak:
+        case .softBreak:
+            builder.add(text: "\u{2028}")
+        case .lineBreak:
             builder.add(text: "\n")
         case .code(let text):
             builder.add(styledText: StyledText(
@@ -260,7 +262,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
     let endRunningText: (Bool) -> Void = { isLast in
         if let builder = runningBuilder {
             models.append(StyledTextRenderer(
-                string: builder.build(renderMode: .preserve),
+                string: builder.build(),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset(isLast: isLast),
                 backgroundColor: .white
@@ -303,7 +305,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
             let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
                 .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
             let string = StyledTextRenderer(
-                string: items.build(builder, options: options).build(renderMode: .preserve),
+                string: items.build(builder, options: options).build(),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentQuoteCell.inset(quoteLevel: level),
                 backgroundColor: .white
