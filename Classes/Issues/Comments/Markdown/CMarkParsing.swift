@@ -34,6 +34,7 @@ private extension TextElement {
     func build(
         _ builder: StyledTextBuilder,
         options: CMarkOptions,
+        position: TextElementPosition,
         context: CMarkContext = CMarkContext()
         ) -> StyledTextBuilder {
         builder.save()
@@ -59,7 +60,10 @@ private extension TextElement {
                     .detectAndHandleCustomRegex(owner: options.owner, repo: options.repo, builder: builder)
             }
         case .softBreak:
-            builder.add(text: "\u{2028}")
+            switch position {
+            case .neck: builder.add(text: "\u{2028}")
+            case .first, .last: break
+            }
         case .lineBreak:
             builder.add(text: "\n")
         case .code(let text):
@@ -104,14 +108,33 @@ private extension TextElement {
     }
 }
 
-private extension Sequence where Iterator.Element == TextElement {
+private enum TextElementPosition {
+    case first
+    case neck
+    case last
+}
+
+private extension Array where Iterator.Element == TextElement {
     @discardableResult
     func build(
         _ builder: StyledTextBuilder,
         options: CMarkOptions,
         context: CMarkContext = CMarkContext()
         ) -> StyledTextBuilder {
-        forEach { $0.build(builder, options: options, context: context) }
+        for (i, el) in enumerated() {
+            let position: TextElementPosition
+            switch i {
+            case 0: position = .first
+            case count - 1: position = .last
+            default: position = .neck
+            }
+            el.build(
+                builder,
+                options: options,
+                position: position,
+                context: context
+            )
+        }
         return builder
     }
 }
