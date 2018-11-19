@@ -15,7 +15,8 @@ protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
 }
 
-class ImageUploadTableViewController: UITableViewController {
+final class ImageUploadTableViewController: UITableViewController,
+    UITextFieldDelegate {
 
     @IBOutlet private var previewImageView: UIImageView! {
         didSet {
@@ -201,16 +202,25 @@ class ImageUploadTableViewController: UITableViewController {
         }
     }
 
-    @IBAction func didPressPreviewImage() {
-        route_present(to: NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)]))
-    }
-}
+    private var singlePhotoDataSource: NYTPhotoViewerSinglePhotoDataSource?
 
-// MARK: UITextFieldDelegate
-extension ImageUploadTableViewController: UITextFieldDelegate {
+    @IBAction func didPressPreviewImage() {
+        let photo = IssueCommentPhoto(image: image, data: nil)
+        let dataSource = NYTPhotoViewerSinglePhotoDataSource(photo: photo)
+        singlePhotoDataSource = dataSource
+        route_present(to: NYTPhotosViewController(
+            dataSource: dataSource,
+            initialPhoto: photo,
+            delegate: nil
+        ))
+    }
+
+    // MARK: UITextFieldDelegate
+
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
     }
+
 }
