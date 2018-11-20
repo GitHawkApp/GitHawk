@@ -46,6 +46,12 @@ final class URLBuilder {
         return self
     }
 
+    @discardableResult
+    func set(fragment: String) -> URLBuilder {
+        components.fragment = fragment
+        return self
+    }
+
     var url: URL? {
         var components = self.components
         if !pathComponents.isEmpty {
