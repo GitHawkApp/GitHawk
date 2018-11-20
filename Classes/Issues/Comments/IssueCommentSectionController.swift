@@ -85,11 +85,12 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     // MARK: Private API
 
     func shareAction(sender: UIView) -> UIAlertAction? {
-        let attribute = object?.asReviewComment == true ? "#discussion_r" : "#issuecomment-"
+        let attribute = object?.asReviewComment == true ? "discussion_r" : "issuecomment-"
         guard let number = object?.number,
-            let url = URLBuilder.github().add(
-                paths: [model.owner, model.repo, "issues", model.number, attribute, number]
-                ).url
+            let url = URLBuilder.github()
+                .add(paths: [model.owner, model.repo, "issues", model.number])
+                .set(fragment: "\(attribute)\(number)")
+                .url
         else { return nil }
         weak var weakSelf = self
 
