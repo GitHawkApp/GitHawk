@@ -83,7 +83,7 @@ struct AlertAction {
         return UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
-            self.rootViewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
+            self.rootViewController?.route_present(to: nav)
         }
     }
 
