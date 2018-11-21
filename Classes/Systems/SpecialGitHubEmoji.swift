@@ -9,7 +9,7 @@
 import Foundation
 
 enum SpecialGitHubEmoji: String {
-    
+
     case feelsgood
     case finnadie
     case goberserk
