@@ -19,7 +19,6 @@ extension UIViewController {
     func presentProfile(login: String) {
         guard let controller = CreateProfileViewController(login: login) else { return }
         route_present(to: controller)
-        present(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func presentCommit(owner: String, repo: String, hash: String) {
