@@ -8,6 +8,7 @@
 
 import Foundation
 import GitHawkRoutes
+import Crashlytics
 
 private func register<T: Routable & RoutePerformable>(
     route: T.Type,
@@ -17,6 +18,16 @@ private func register<T: Routable & RoutePerformable>(
 }
 
 private var hasSwizzledChildViewController = false
+
+private func logMissingRouter() {
+    let trace = Thread.callStackSymbols.joined(separator: "\n")
+    print("ERROR: Router not wired up. Callsite:")
+    print(trace)
+    Answers.logCustomEvent(
+        withName: "missing-router",
+        customAttributes: ["trace": trace]
+    )
+}
 
 extension UIViewController {
 
@@ -68,30 +79,20 @@ extension UIViewController {
         }
     }
 
-    func route_push(route: Routable & RoutePerformable) {
-        if router == nil { print("ERROR: router was not wired up") }
-        router?.handle(route: route, from: self)
-    }
-
-    func route_detail(route: Routable & RoutePerformable) {
-        if router == nil { print("ERROR: router was not wired up") }
-        router?.handle(route: route, from: nil)
-    }
-
     // MARK: Remove after migration
 
     func route_push(to controller: UIViewController) {
-        if router == nil { print("ERROR: router was not wired up") }
+        if router == nil { logMissingRouter() }
         router?.push(from: self, to: controller)
     }
 
     func route_detail(to controller: UIViewController) {
-        if router == nil { print("ERROR: router was not wired up") }
+        if router == nil { logMissingRouter() }
         router?.detail(controller: controller)
     }
 
     func route_present(to controller: UIViewController) {
-        if router == nil { print("ERROR: router was not wired up") }
+        if router == nil { logMissingRouter() }
         router?.present(from: self, to: controller)
     }
 
