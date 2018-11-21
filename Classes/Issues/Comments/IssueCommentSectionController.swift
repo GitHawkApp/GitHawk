@@ -239,7 +239,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         }
         switch attribute {
         case .issue(let issue):
-            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
+            viewController?.route_push(to: IssuesViewController(client: client, model: issue))
         case .checkbox(let checkbox):
             didTapCheckbox(checkbox: checkbox)
         default: break
