@@ -364,7 +364,8 @@ IssueManagingContextControllerDelegate {
         route_push(to: IssuePreviewViewController(
             markdown: messageView.text,
             owner: model.owner,
-            repo: model.repo
+            repo: model.repo,
+            title: Constants.Strings.preview
         ))
     }
 

@@ -282,6 +282,9 @@
 		299304691FBA8A88007B9737 /* IssueManagingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */; };
 		2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993046A1FBA8C04007B9737 /* IssueManagingExpansionCell.swift */; };
 		2993046F1FBA9D31007B9737 /* IssueManagingActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993046E1FBA9D31007B9737 /* IssueManagingActionCell.swift */; };
+		2996543621A73885006B2CA9 /* NewFeaturesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996543521A73885006B2CA9 /* NewFeaturesCell.swift */; };
+		2996543C21A76F3A006B2CA9 /* NewFeaturesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996543B21A76F3A006B2CA9 /* NewFeaturesSectionController.swift */; };
+		2996544021A7B14E006B2CA9 /* NewFeaturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996543F21A7B14E006B2CA9 /* NewFeaturesController.swift */; };
 		29973E561F68BFDE0004B693 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29973E551F68BFDE0004B693 /* Signature.swift */; };
 		2999972620310E9700995FFD /* IssueMergeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972520310E9700995FFD /* IssueMergeModel.swift */; };
 		2999972820310F3100995FFD /* IssueMergeContextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972720310F3100995FFD /* IssueMergeContextModel.swift */; };
@@ -842,6 +845,9 @@
 		299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingSectionController.swift; sourceTree = "<group>"; };
 		2993046A1FBA8C04007B9737 /* IssueManagingExpansionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingExpansionCell.swift; sourceTree = "<group>"; };
 		2993046E1FBA9D31007B9737 /* IssueManagingActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingActionCell.swift; sourceTree = "<group>"; };
+		2996543521A73885006B2CA9 /* NewFeaturesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeaturesCell.swift; sourceTree = "<group>"; };
+		2996543B21A76F3A006B2CA9 /* NewFeaturesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeaturesSectionController.swift; sourceTree = "<group>"; };
+		2996543F21A7B14E006B2CA9 /* NewFeaturesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeaturesController.swift; sourceTree = "<group>"; };
 		29973E551F68BFDE0004B693 /* Signature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signature.swift; sourceTree = "<group>"; };
 		2999972520310E9700995FFD /* IssueMergeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeModel.swift; sourceTree = "<group>"; };
 		2999972720310F3100995FFD /* IssueMergeContextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeContextModel.swift; sourceTree = "<group>"; };
@@ -2006,10 +2012,13 @@
 			isa = PBXGroup;
 			children = (
 				29F3A18720CBFF8700645CB7 /* CreateNotificationTitle.swift */,
+				29B5D08A20D578DB003DFBE2 /* InboxType.swift */,
+				2996543521A73885006B2CA9 /* NewFeaturesCell.swift */,
+				2996543F21A7B14E006B2CA9 /* NewFeaturesController.swift */,
+				2996543B21A76F3A006B2CA9 /* NewFeaturesSectionController.swift */,
 				290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */,
 				290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */,
 				290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */,
-				29B5D08A20D578DB003DFBE2 /* InboxType.swift */,
 				29BBD82A20CACB2F004D62FE /* NotificationCell.swift */,
 				29F3A18520CBF99E00645CB7 /* NotificationModelController.swift */,
 				29BBD82C20CACDFF004D62FE /* NotificationSectionController.swift */,
@@ -2827,6 +2836,7 @@
 				29CC294D1FF839CF006B6DE7 /* IssueCommentBaseCell.swift in Sources */,
 				297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */,
 				2965F37220715161003CC92F /* StyledTextBuilder+NewBase.swift in Sources */,
+				2996543621A73885006B2CA9 /* NewFeaturesCell.swift in Sources */,
 				290744B41F250A6800FD9E48 /* AutocompleteCell.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
@@ -2880,6 +2890,7 @@
 				294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				290CA7642169799600DE04F8 /* AppController.swift in Sources */,
+				2996543C21A76F3A006B2CA9 /* NewFeaturesSectionController.swift in Sources */,
 				29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */,
 				297403D71F1851C000ABA95A /* IssueAssigneeAvatarCell.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
@@ -3065,6 +3076,7 @@
 				98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */,
+				2996544021A7B14E006B2CA9 /* NewFeaturesController.swift in Sources */,
 				7B4B31A61F92257400480CE9 /* SearchQueryTokenizer.swift in Sources */,
 				2986B3581FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift in Sources */,
 				2999972C20311DD700995FFD /* IssueMergeSummaryCell.swift in Sources */,

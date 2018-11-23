@@ -22,13 +22,18 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
     init(
         markdown: String,
         owner: String,
-        repo: String
+        repo: String,
+        title: String,
+        asMenu: Bool = false
         ) {
         self.markdown = markdown
         self.owner = owner
         self.repo = repo
         super.init(nibName: nil, bundle: nil)
-        title = NSLocalizedString("Preview", comment: "")
+        self.title = title
+        if asMenu {
+            preferredContentSize = Styles.Sizes.contextMenuSize
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
