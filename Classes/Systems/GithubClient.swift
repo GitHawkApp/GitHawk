@@ -20,6 +20,7 @@ struct GithubClient {
     let bookmarksStore: BookmarkStore?
     let client: Client
     let badge: BadgeNotifications
+    private let bookmarkMigrator: BookmarkCloudMigrator?
 
     init(userSession: GitHubUserSession? = nil) {
         self.userSession = userSession
@@ -28,9 +29,13 @@ struct GithubClient {
         self.badge = BadgeNotifications(client: self.client)
 
         if let token = userSession?.token {
-            self.bookmarksStore = BookmarkStore(token: token)
+            let store = BookmarkStore(token: token)
+            self.bookmarksStore = store
+            self.bookmarkMigrator = BookmarkCloudMigrator(oldStore: store, client: self.client)
+            self.bookmarkMigrator?.sync()
         } else {
             self.bookmarksStore = nil
+            self.bookmarkMigrator = nil
         }
     }
 
