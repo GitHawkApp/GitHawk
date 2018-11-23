@@ -30,6 +30,8 @@ final class NewFeaturesCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        isAccessibilityElement = true
+
         backgroundColor = .white
         contentView.backgroundColor = Styles.Colors.Blue.light.color
         contentView.layer.cornerRadius = Styles.Sizes.cardCornerRadius
@@ -40,15 +42,16 @@ final class NewFeaturesCell: UICollectionViewCell {
         contentView.addSubview(closeButton)
 
         let tint = Styles.Colors.Blue.medium.color
-        label.text = NSLocalizedString("View new features!", comment: "")
         label.textColor = tint
         label.font = Styles.Text.secondaryBold.preferredFont
+        label.isAccessibilityElement = false
 
         let closeButtonSize = Styles.Sizes.icon.width
         closeButton.setImage(UIImage(named: "x-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
         closeButton.tintColor = tint
         closeButton.layer.cornerRadius = closeButtonSize / 2
         closeButton.addTarget(self, action: #selector(onCloseButton), for: .touchUpInside)
+        closeButton.accessibilityLabel = NSLocalizedString("Dismiss new feature modal", comment: "")
 
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -78,6 +81,18 @@ final class NewFeaturesCell: UICollectionViewCell {
 
     @objc private func onCloseButton() {
         delegate?.didTapClose(for: self)
+    }
+
+    func configure(with version: String) {
+        label.text = String.localizedStringWithFormat(
+            NSLocalizedString("New features in %@!", comment: ""),
+            version
+        )
+    }
+
+    override func accessibilityPerformEscape() -> Bool {
+        delegate?.didTapClose(for: self)
+        return true
     }
 
 }

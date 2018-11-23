@@ -19,20 +19,9 @@ NewFeaturesCellDelegate {
 
     override init() {
         super.init()
-        // only fetch and show cells if this unit hasn't been shown
-        guard controller.hasDisplayedLatest == false else { return }
-        // never show again for this app version
-        // network failure acceptable in case of skipped release notes
-        controller.hasDisplayedLatest = true
-
-        controller.fetch { [weak self] result in
-            switch result {
-            case .success(let markdown):
-                self?.markdown = markdown
-                self?.update()
-            case .error(let error):
-                print(error?.localizedDescription ?? "Error updating new features")
-            }
+        controller.fetch { [weak self] markdown in
+            self?.markdown = markdown
+            self?.update()
         }
     }
 
@@ -52,6 +41,8 @@ NewFeaturesCellDelegate {
                     )
             },
                 configure: { [weak self] (cell, _) in
+                    guard let `self` = self else { return }
+                    cell.configure(with: self.controller.version)
                     cell.delegate = self
             },
                 didSelect: { [weak self] _ in
@@ -65,7 +56,10 @@ NewFeaturesCellDelegate {
             markdown: markdown,
             owner: "GitHawkApp",
             repo: "GitHawk",
-            title: controller.version,
+            title: String.localizedStringWithFormat(
+                NSLocalizedString("New in %@", comment: ""),
+                controller.version
+            ),
             asMenu: true
         ))
     }
