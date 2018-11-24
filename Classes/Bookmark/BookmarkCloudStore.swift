@@ -8,25 +8,72 @@
 
 import Foundation
 
-final class BookmarkIDCloudStore {
+protocol BookmarkIDCloudKeyValueStore {
+    func savedBookmarks(for key: String) -> NSMutableOrderedSet
+    func set(bookmarks: NSMutableOrderedSet, for key: String)
+    @discardableResult func synchronize() -> Bool
+}
 
-    /**
-     TODO
-     - listeners array
-     - register to icloud updates
-     - when mutating via add() or icloud, notify listeners
-     */
-
-    private let iCloudStore = NSUbiquitousKeyValueStore()
-    private let username: String
-
-    init(username: String) {
-        self.username = username
+// use in app
+extension NSUbiquitousKeyValueStore: BookmarkIDCloudKeyValueStore {
+    func savedBookmarks(for key: String) -> NSMutableOrderedSet {
+        if let arr = array(forKey: key) as? [String] {
+            return NSMutableOrderedSet(array: arr)
+        }
+        return NSMutableOrderedSet()
     }
 
-    private var storage: NSMutableOrderedSet {
-        assert(Thread.isMainThread)
-        return iCloudStore.mutableOrderedSetValue(forKey: "bookmarks-\(username)")
+    func set(bookmarks: NSMutableOrderedSet, for key: String) {
+        set(bookmarks.array, forKey: key)
+    }
+}
+
+// use for tests
+extension UserDefaults: BookmarkIDCloudKeyValueStore {
+    func savedBookmarks(for key: String) -> NSMutableOrderedSet {
+        if let arr = array(forKey: key) as? [String] {
+            return NSMutableOrderedSet(array: arr)
+        }
+        return NSMutableOrderedSet()
+    }
+
+    func set(bookmarks: NSMutableOrderedSet, for key: String) {
+        set(bookmarks.array, forKey: key)
+    }
+}
+
+protocol BookmarkIDCloudStoreListener: class {
+    func didUpdateBookmarks(in store: BookmarkIDCloudStore)
+}
+
+private class BookmarkListenerWrapper {
+    init(listener: BookmarkIDCloudStoreListener) {
+        self.listener = listener
+    }
+    weak var listener: BookmarkIDCloudStoreListener?
+}
+
+final class BookmarkIDCloudStore {
+
+    private var listeners = [BookmarkListenerWrapper]()
+    private let iCloudStore: BookmarkIDCloudKeyValueStore
+    private let key: String
+    private var storage: NSMutableOrderedSet
+
+    init(
+        username: String,
+        iCloudStore: BookmarkIDCloudKeyValueStore = NSUbiquitousKeyValueStore()
+        ) {
+        let key = "bookmarks.\(username)"
+        self.key = key
+        self.iCloudStore = iCloudStore
+        self.storage = iCloudStore.savedBookmarks(for: key)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(iCloudDidUpdate),
+            name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: nil
+        )
     }
 
     func contains(graphQLID: String) -> Bool {
@@ -36,24 +83,53 @@ final class BookmarkIDCloudStore {
 
     func add(graphQLID: String) {
         assert(Thread.isMainThread)
+        guard storage.contains(graphQLID) == false else { return }
         storage.add(graphQLID)
-        iCloudStore.synchronize()
+        save()
+        enumerateListeners { $0.didUpdateBookmarks(in: self) }
     }
 
     func add(graphQLIDs: [String]) {
         assert(Thread.isMainThread)
         storage.addObjects(from: graphQLIDs)
-        iCloudStore.synchronize()
+        save()
+        enumerateListeners { $0.didUpdateBookmarks(in: self) }
     }
 
     func remove(graphQLID: String) {
         assert(Thread.isMainThread)
+        guard storage.contains(graphQLID) else { return }
         storage.remove(graphQLID)
-        iCloudStore.synchronize()
+        save()
+        enumerateListeners { $0.didUpdateBookmarks(in: self) }
     }
 
     var ids: [String] {
+        assert(Thread.isMainThread)
         return storage.array as? [String] ?? []
+    }
+
+    func add(listener: BookmarkIDCloudStoreListener) {
+        assert(Thread.isMainThread)
+        listeners.append(BookmarkListenerWrapper(listener: listener))
+    }
+
+    private func save() {
+        assert(Thread.isMainThread)
+        iCloudStore.set(bookmarks: storage, for: key)
+        iCloudStore.synchronize()
+    }
+
+    private func enumerateListeners(block: (BookmarkIDCloudStoreListener) -> Void) {
+        listeners.forEach {
+            if let listener = $0.listener {
+                block(listener)
+            }
+        }
+    }
+
+    @objc func iCloudDidUpdate() {
+        enumerateListeners { $0.didUpdateBookmarks(in: self) }
     }
 
 }

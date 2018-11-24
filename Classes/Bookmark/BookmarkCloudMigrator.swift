@@ -28,10 +28,10 @@ protocol BookmarkCloudMigratorClient {
 
 final class BookmarkCloudMigrator {
 
-    private let oldBookmarks: [Bookmark]
+    private let bookmarks: [BookmarkCloudMigratorClientBookmarks]
     private let client: BookmarkCloudMigratorClient
 
-    enum State {
+    enum State: Int {
         case inProgress
         case success
         case error
@@ -41,15 +41,24 @@ final class BookmarkCloudMigrator {
     private let needsMigrationKey: String
 
     init(username: String, oldBookmarks: [Bookmark], client: BookmarkCloudMigratorClient) {
-        self.oldBookmarks = oldBookmarks
+        self.bookmarks = oldBookmarks.compactMap {
+            switch $0.type {
+            case .commit, .release, .securityVulnerability: return nil
+            case .issue, .pullRequest:
+                return .issueOrPullRequest(owner: $0.owner, name: $0.name, number: $0.number)
+            case .repo:
+                return .repo(owner: $0.owner, name: $0.name)
+            }
+        }
         self.client = client
         self.needsMigrationKey = "com.freetime.bookmark-cloud-migrator.has-migrated.\(username)"
     }
 
     var needsMigration: Bool {
         get {
-            // dont offer migration if no old bookmarks
-            return !oldBookmarks.isEmpty
+            return state != .success
+                // dont offer migration if no old bookmarks
+                && !bookmarks.isEmpty
                 // or this device has already performed a sync
                 && !UserDefaults.standard.bool(forKey: needsMigrationKey)
         }
@@ -65,22 +74,7 @@ final class BookmarkCloudMigrator {
             return
         }
 
-        let params: [BookmarkCloudMigratorClientBookmarks] = oldBookmarks.compactMap {
-            switch $0.type {
-            case .commit, .release, .securityVulnerability: return nil
-            case .issue, .pullRequest:
-                return .issueOrPullRequest(owner: $0.owner, name: $0.name, number: $0.number)
-            case .repo:
-                return .repo(owner: $0.owner, name: $0.name)
-            }
-        }
-        guard !params.isEmpty else {
-            state = .success
-            completion(.noMigration)
-            return
-        }
-
-        client.fetch(bookmarks: params) { [weak self] result in
+        client.fetch(bookmarks: bookmarks) { [weak self] result in
             switch result {
             case .success, .noMigration:
                 self?.needsMigration = false
