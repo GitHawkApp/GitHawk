@@ -82,7 +82,7 @@ IssueManagingContextControllerDelegate {
                     title: result.title.string.allText,
                     defaultBranch: result.defaultBranch
                 )
-                self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
+                self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarkCloudStore, model: bookmark)
                 self.configureNavigationItems()
             } else {
                 hidden = true

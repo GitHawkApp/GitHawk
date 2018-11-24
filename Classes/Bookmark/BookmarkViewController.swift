@@ -46,10 +46,10 @@ TabNavRootViewControllerType {
 
     init(client: GithubClient) {
         self.client = client
-        guard let store = client.bookmarksStore else { fatalError("Client does not have a bookmark store") }
-        self.bookmarkStore = store
+        guard let token = client.userSession?.token else { fatalError("Client does not have a bookmark store") }
+        self.bookmarkStore = BookmarkStore(token: token)
         super.init(nibName: nil, bundle: nil)
-        store.add(listener: self)
+        bookmarkStore.add(listener: self)
     }
 
     required init?(coder aDecoder: NSCoder) {

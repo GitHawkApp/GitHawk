@@ -12,11 +12,11 @@ import UIKit
 // must manually add to UINavigationItem
 final class BookmarkNavigationController {
 
-    private let store: BookmarkStore
+    private let store: BookmarkIDCloudStore
     private let model: Bookmark
     private static let iconImageInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
 
-    init?(store: BookmarkStore?, model: Bookmark?) {
+    init?(store: BookmarkIDCloudStore?, model: Bookmark?) {
         guard let store = store, let model = model else { return nil }
         self.store = store
         self.model = model
@@ -36,7 +36,8 @@ final class BookmarkNavigationController {
         let imageName: String
         let selector: Selector
 
-        if store.contains(model) {
+        if true {
+//        if store.contains(model) {
             imageName = "nav-bookmark-selected"
             accessibilityLabel = Constants.Strings.removeBookmark
             selector = #selector(BookmarkNavigationController.remove(sender:))
@@ -70,13 +71,13 @@ final class BookmarkNavigationController {
         Haptic.triggerSelection()
         sender.action = #selector(BookmarkNavigationController.remove(sender:))
         sender.image = UIImage(named: "nav-bookmark-selected")?.withRenderingMode(.alwaysTemplate)
-        store.add(model)
+//        store.add(model)
     }
 
     @objc func remove(sender: UIBarButtonItem) {
         sender.action = #selector(BookmarkNavigationController.add(sender:))
         sender.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
-        store.remove(model)
+//        store.remove(model)
     }
 
 }

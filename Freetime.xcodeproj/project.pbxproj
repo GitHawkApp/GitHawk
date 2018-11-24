@@ -268,6 +268,12 @@
 		2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033D1F51E93500BE90F4 /* RatingSectionController.swift */; };
 		298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033F1F51E93B00BE90F4 /* RatingCell.swift */; };
 		2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
+		29827C8A21A87AE600A1B293 /* BookmarkCloudStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29827C8921A87AE600A1B293 /* BookmarkCloudStore.swift */; };
+		29827C8C21A87D4B00A1B293 /* BookmarkViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29827C8B21A87D4B00A1B293 /* BookmarkViewController2.swift */; };
+		29827C9421A9AF6200A1B293 /* BookmarkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29827C9321A9AF6200A1B293 /* BookmarkClient.swift */; };
+		29827C9721A9B0FE00A1B293 /* BookmarkMigrationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29827C9521A9B0FE00A1B293 /* BookmarkMigrationCell.swift */; };
+		29827C9821A9B0FE00A1B293 /* BookmarkMigrationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29827C9621A9B0FE00A1B293 /* BookmarkMigrationSectionController.swift */; };
+		29827C9C21A9B98B00A1B293 /* BookmarkCloudMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29827C9B21A9B98B00A1B293 /* BookmarkCloudMigratorTests.swift */; };
 		2986B3581FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986B3571FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift */; };
 		2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986B3591FD30F0B00E3CFC6 /* IssueManagingModel.swift */; };
 		2986B35C1FD4618900E3CFC6 /* FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986B35B1FD4618900E3CFC6 /* FilePath.swift */; };
@@ -833,6 +839,12 @@
 		2980033F1F51E93B00BE90F4 /* RatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
 		2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEmoji.swift; sourceTree = "<group>"; };
 		2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTests.swift; sourceTree = "<group>"; };
+		29827C8921A87AE600A1B293 /* BookmarkCloudStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCloudStore.swift; sourceTree = "<group>"; };
+		29827C8B21A87D4B00A1B293 /* BookmarkViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController2.swift; sourceTree = "<group>"; };
+		29827C9321A9AF6200A1B293 /* BookmarkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkClient.swift; sourceTree = "<group>"; };
+		29827C9521A9B0FE00A1B293 /* BookmarkMigrationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkMigrationCell.swift; sourceTree = "<group>"; };
+		29827C9621A9B0FE00A1B293 /* BookmarkMigrationSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkMigrationSectionController.swift; sourceTree = "<group>"; };
+		29827C9B21A9B98B00A1B293 /* BookmarkCloudMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCloudMigratorTests.swift; sourceTree = "<group>"; };
 		2986B3571FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueManagingExpansionModel.swift; sourceTree = "<group>"; };
 		2986B3591FD30F0B00E3CFC6 /* IssueManagingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingModel.swift; sourceTree = "<group>"; };
 		2986B35B1FD4618900E3CFC6 /* FilePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePath.swift; sourceTree = "<group>"; };
@@ -1670,6 +1682,7 @@
 				BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
 				291E987C21973FA700E5EED9 /* URLBuilderTests.swift */,
+				29827C9B21A9B98B00A1B293 /* BookmarkCloudMigratorTests.swift */,
 			);
 			path = FreetimeTests;
 			sourceTree = "<group>";
@@ -2274,15 +2287,20 @@
 		DCA5ED0C1FAED8FE0072F074 /* Bookmark */ = {
 			isa = PBXGroup;
 			children = (
-				DCA5ED0D1FAED91F0072F074 /* BookmarkViewController.swift */,
-				DCA5ED0F1FAEDF290072F074 /* BookmarkStore.swift */,
 				DCA5ED131FAEE8030072F074 /* Bookmark.swift */,
-				DCA5ED151FAEE91F0072F074 /* BookmarkViewModel.swift */,
-				DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */,
 				DCA5ED1C1FAEF9EE0072F074 /* BookmarkCell.swift */,
-				DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */,
-				294434E01FB1F2DA00050C06 /* BookmarkNavigationController.swift */,
+				29827C9321A9AF6200A1B293 /* BookmarkClient.swift */,
 				2996544121A862F6006B2CA9 /* BookmarkCloudMigrator.swift */,
+				29827C8921A87AE600A1B293 /* BookmarkCloudStore.swift */,
+				DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */,
+				29827C9521A9B0FE00A1B293 /* BookmarkMigrationCell.swift */,
+				29827C9621A9B0FE00A1B293 /* BookmarkMigrationSectionController.swift */,
+				294434E01FB1F2DA00050C06 /* BookmarkNavigationController.swift */,
+				DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */,
+				DCA5ED0F1FAEDF290072F074 /* BookmarkStore.swift */,
+				DCA5ED0D1FAED91F0072F074 /* BookmarkViewController.swift */,
+				29827C8B21A87D4B00A1B293 /* BookmarkViewController2.swift */,
+				DCA5ED151FAEE91F0072F074 /* BookmarkViewModel.swift */,
 			);
 			path = Bookmark;
 			sourceTree = "<group>";
@@ -2422,6 +2440,9 @@
 								enabled = 1;
 							};
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -2921,6 +2942,7 @@
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
 				29A10541216D912F004734A0 /* IssueRoute+RoutePerformable.swift in Sources */,
+				29827C9721A9B0FE00A1B293 /* BookmarkMigrationCell.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
@@ -3018,12 +3040,14 @@
 				29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */,
 				29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */,
 				29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */,
+				29827C8C21A87D4B00A1B293 /* BookmarkViewController2.swift in Sources */,
 				29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */,
 				29C53FC41F12EF4000A59ED5 /* IssueReferencedSectionController.swift in Sources */,
 				2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */,
 				DC63393B1F9F65EE00402A8D /* RepositoryAttributedString.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
 				297A6CE62027880C0027E03B /* MessageView+Styles.swift in Sources */,
+				29827C9421A9AF6200A1B293 /* BookmarkClient.swift in Sources */,
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */,
@@ -3064,6 +3088,7 @@
 				2919294B1F3EAD890012067B /* IssueViewFilesCell.swift in Sources */,
 				291929491F3EAD2E0012067B /* IssueViewFilesSectionController.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
+				29827C8A21A87AE600A1B293 /* BookmarkCloudStore.swift in Sources */,
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				29B205F8217B7E6F00E4DD9F /* PathHistoryViewModel.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
@@ -3264,6 +3289,7 @@
 				29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */,
 				29242812210A5148001F5980 /* SpacerCell.swift in Sources */,
 				292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */,
+				29827C9821A9B0FE00A1B293 /* BookmarkMigrationSectionController.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
@@ -3297,6 +3323,7 @@
 				291E987D21973FA700E5EED9 /* URLBuilderTests.swift in Sources */,
 				BD1DC658218DFE3D004DAC42 /* DetectShortlinkTests.swift in Sources */,
 				2986B35F1FD462B300E3CFC6 /* FilePath.swift in Sources */,
+				29827C9C21A9B98B00A1B293 /* BookmarkCloudMigratorTests.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
 				296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */,
 				BDB6AA762165B8EA009BB73C /* SwitchBranches.swift in Sources */,

@@ -7,67 +7,89 @@
 //
 
 import Foundation
-import GitHubAPI
 
-private extension String {
-    var graphQLSafeKey: String {
-        return "gql" + components(separatedBy: CharacterSet.alphanumerics.inverted)
-                .joined()
-    }
+enum BookmarkCloudMigratorClientResult {
+    case noMigration
+    case success([String])
+    case error(Error?)
+}
+
+enum BookmarkCloudMigratorClientBookmarks {
+    case repo(owner: String, name: String)
+    case issueOrPullRequest(owner: String, name: String, number: Int)
+}
+
+protocol BookmarkCloudMigratorClient {
+    func fetch(
+        bookmarks: [BookmarkCloudMigratorClientBookmarks],
+        completion: @escaping (BookmarkCloudMigratorClientResult) -> Void
+    )
 }
 
 final class BookmarkCloudMigrator {
 
-    private let oldStore: BookmarkStore
-    private let client: Client
+    private let oldBookmarks: [Bookmark]
+    private let client: BookmarkCloudMigratorClient
 
-    init(oldStore: BookmarkStore, client: Client) {
-        self.oldStore = oldStore
-        self.client = client
+    enum State {
+        case inProgress
+        case success
+        case error
     }
 
-    func sync() {
-        let subQueries: [String] = oldStore.values.compactMap {
+    private(set) var state: State = .inProgress
+    private let needsMigrationKey: String
+
+    init(username: String, oldBookmarks: [Bookmark], client: BookmarkCloudMigratorClient) {
+        self.oldBookmarks = oldBookmarks
+        self.client = client
+        self.needsMigrationKey = "com.freetime.bookmark-cloud-migrator.has-migrated.\(username)"
+    }
+
+    var needsMigration: Bool {
+        get {
+            // dont offer migration if no old bookmarks
+            return !oldBookmarks.isEmpty
+                // or this device has already performed a sync
+                && !UserDefaults.standard.bool(forKey: needsMigrationKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: needsMigrationKey)
+        }
+    }
+
+    func sync(completion: @escaping (BookmarkCloudMigratorClientResult) -> Void) {
+        guard needsMigration else {
+            state = .success
+            completion(.noMigration)
+            return
+        }
+
+        let params: [BookmarkCloudMigratorClientBookmarks] = oldBookmarks.compactMap {
             switch $0.type {
             case .commit, .release, .securityVulnerability: return nil
             case .issue, .pullRequest:
-                let key = "\($0.owner)\($0.name)\($0.number)".graphQLSafeKey
-                return """
-                \(key): repository(owner: "\($0.owner)", name: "\($0.name)") {
-                    issueOrPullRequest(number: \($0.number)) {
-                        ... on Issue { id }
-                        ... on PullRequest { id }
-                    }
-                }
-                """
+                return .issueOrPullRequest(owner: $0.owner, name: $0.name, number: $0.number)
             case .repo:
-                let key = "\($0.owner)\($0.name)".graphQLSafeKey
-                return """
-                \(key): repository(owner: "\($0.owner)", name: "\($0.name)") { id }
-                """
+                return .repo(owner: $0.owner, name: $0.name)
             }
         }
-        let query = "query{\(subQueries.joined(separator: " "))}"
-        client.send(ManualGraphQLRequest(query: query)) { [weak self] result in
-            switch result {
-            case .success(let json):
-                self?.handle(json: json.data)
-            case .failure(let error):
-                print(error?.localizedDescription ?? "Unknown error fetching bookmark items")
-            }
+        guard !params.isEmpty else {
+            state = .success
+            completion(.noMigration)
+            return
         }
-    }
 
-    private func handle(json: [String: Any]) {
-        let ids: [String] = json.compactMap {
-            guard let item = $0.value as? [String: Any] else { return nil }
-            if let issueOrPullRequest = item["issueOrPullRequest"] as? [String: Any] {
-                return issueOrPullRequest["id"] as? String
+        client.fetch(bookmarks: params) { [weak self] result in
+            switch result {
+            case .success, .noMigration:
+                self?.needsMigration = false
+                self?.state = .success
+            case .error:
+                self?.state = .error
             }
-            // repository
-            return item["id"] as? String
+            completion(result)
         }
-        print(ids)
     }
 
 }

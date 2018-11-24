@@ -17,10 +17,10 @@ struct GithubClient {
 
     let userSession: GitHubUserSession?
     let cache = FlatCache()
-    let bookmarksStore: BookmarkStore?
     let client: Client
     let badge: BadgeNotifications
-    private let bookmarkMigrator: BookmarkCloudMigrator?
+
+    let bookmarkCloudStore: BookmarkIDCloudStore?
 
     init(userSession: GitHubUserSession? = nil) {
         self.userSession = userSession
@@ -28,14 +28,10 @@ struct GithubClient {
         self.client = Client.make(userSession: userSession)
         self.badge = BadgeNotifications(client: self.client)
 
-        if let token = userSession?.token {
-            let store = BookmarkStore(token: token)
-            self.bookmarksStore = store
-            self.bookmarkMigrator = BookmarkCloudMigrator(oldStore: store, client: self.client)
-            self.bookmarkMigrator?.sync()
+        if let username = userSession?.username {
+            self.bookmarkCloudStore = BookmarkIDCloudStore(username: username)
         } else {
-            self.bookmarksStore = nil
-            self.bookmarkMigrator = nil
+            self.bookmarkCloudStore = nil
         }
     }
 

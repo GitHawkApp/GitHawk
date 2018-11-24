@@ -35,7 +35,7 @@ ContextMenuDelegate {
             hasIssueEnabled: repo.hasIssuesEnabled,
             defaultBranch: repo.defaultBranch
         )
-        self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
+        self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarkCloudStore, model: bookmark)
 
         var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
         if repo.hasIssuesEnabled {
