@@ -198,7 +198,8 @@ TabNavRootViewControllerType {
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         guard bookmarkStore.values.isEmpty else { return nil }
 
-        let view = InitialEmptyView(
+        let view = InitialEmptyView()
+        view.configure(
             imageName: "bookmarks-large",
             title: NSLocalizedString("Add Bookmarks", comment: ""),
             description: NSLocalizedString("Bookmark your favorite issues,\npull requests, and repositories.", comment: "")

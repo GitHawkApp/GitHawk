@@ -191,7 +191,8 @@ class SearchViewController: UIViewController,
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         switch state {
         case .idle:
-            let view = InitialEmptyView(
+            let view = InitialEmptyView()
+            view.configure(
                 imageName: "search-large",
                 title: Constants.Strings.searchGitHub,
                 description: NSLocalizedString("Find your favorite repositories.\nRecent searches are saved.", comment: "")

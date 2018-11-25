@@ -23,6 +23,7 @@ final class BookmarkMigrationCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        accessibilityIdentifier = "bookmark-migration-cell"
         contentView.addSubview(label)
         contentView.addSubview(button)
 

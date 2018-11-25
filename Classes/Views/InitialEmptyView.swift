@@ -21,19 +21,19 @@ final class InitialEmptyView: UIView {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
 
-    init(imageName: String, title: String, description: String) {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
-        imageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        accessibilityIdentifier = "initial-empty-view"
+
         imageView.tintColor = Styles.Colors.Gray.border.color
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
-            make.centerY.equalTo(self).offset(-(imageView.image?.size.height ?? 0)/2)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
 
         titleLabel.font = Styles.Text.title.preferredFont
-        titleLabel.text = title
         titleLabel.textColor = Styles.Colors.Gray.light.color
         titleLabel.backgroundColor = .clear
         addSubview(titleLabel)
@@ -45,7 +45,6 @@ final class InitialEmptyView: UIView {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
         descriptionLabel.font = Styles.Text.body.preferredFont
-        descriptionLabel.text = description
         descriptionLabel.textColor = Styles.Colors.Gray.light.color
         descriptionLabel.backgroundColor = .clear
         addSubview(descriptionLabel)
@@ -59,6 +58,19 @@ final class InitialEmptyView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Public API
+
+    func configure(imageName: String, title: String, description: String) {
+        if let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate) {
+            imageView.image = image
+            imageView.snp.updateConstraints { make in
+                make.centerY.equalToSuperview().offset(-image.size.height / 2)
+            }
+        }
+        titleLabel.text = title
+        descriptionLabel.text = description
     }
 
     // MARK: Private API

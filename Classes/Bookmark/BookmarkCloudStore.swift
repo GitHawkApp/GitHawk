@@ -55,6 +55,8 @@ private class BookmarkListenerWrapper {
 
 final class BookmarkIDCloudStore {
 
+    let username: String
+
     private var listeners = [BookmarkListenerWrapper]()
     private let iCloudStore: BookmarkIDCloudKeyValueStore
     private let key: String
@@ -64,6 +66,7 @@ final class BookmarkIDCloudStore {
         username: String,
         iCloudStore: BookmarkIDCloudKeyValueStore = NSUbiquitousKeyValueStore()
         ) {
+        self.username = username
         let key = "bookmarks.\(username)"
         self.key = key
         self.iCloudStore = iCloudStore

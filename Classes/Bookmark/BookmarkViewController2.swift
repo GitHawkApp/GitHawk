@@ -8,25 +8,32 @@
 
 import Foundation
 import IGListKit
+import Squawk
 
 protocol BookmarkViewControllerClient {
-    var sessionToken: String { get }
-    var username: String { get }
+    func fetch(graphQLIDs: [String], completion: @escaping (Result<[ListSwiftDiffable]>) -> Void)
 }
 
 final class BookmarkViewController2: BaseListViewController<String>,
-BaseListViewControllerDataSource {
+BaseListViewControllerDataSource,
+BaseListViewControllerEmptyDataSource {
 
     typealias Client = BookmarkViewControllerClient & BookmarkCloudMigratorClient
 
     private let client: Client
+    private let cloudStore: BookmarkIDCloudStore
     private let migrator: BookmarkCloudMigrator
 
-    init(client: Client) {
+    init(
+        client: Client,
+        cloudStore: BookmarkIDCloudStore,
+        oldBookmarks: [Bookmark]
+        ) {
         self.client = client
+        self.cloudStore = cloudStore
         self.migrator = BookmarkCloudMigrator(
-            username: client.username,
-            oldBookmarks: BookmarkStore(token: client.sessionToken).values,
+            username: cloudStore.username,
+            oldBookmarks: oldBookmarks,
             client: client
         )
 
@@ -34,6 +41,9 @@ BaseListViewControllerDataSource {
             emptyErrorMessage: NSLocalizedString("Error loading bookmarks", comment: ""),
             backgroundThreshold: 5 * 60
         )
+
+        dataSource = self
+        emptyDataSource = self
 
         // start migration on init (app start) so likely finished before opening
         // the bookmark tab
@@ -45,7 +55,7 @@ BaseListViewControllerDataSource {
             }
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,6 +73,7 @@ BaseListViewControllerDataSource {
         )
         alert.add(action: UIAlertAction(title: Constants.Strings.ok, style: .default))
         present(alert, animated: trueUnlessReduceMotionEnabled)
+        update()
     }
 
     private func handleMigrationSuccess() {
@@ -77,14 +88,23 @@ BaseListViewControllerDataSource {
         case .success: break
         }
 
-        // TODO fetch nodes from network
+        client.fetch(graphQLIDs: cloudStore.ids) { [weak self] result in
+            switch result {
+            case .success(let models):
+                // TODO set models
+                self?.update()
+            case .error(let error):
+                self?.error()
+                Squawk.show(error: error)
+            }
+        }
     }
 
     // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         switch migrator.state {
-            // if migrating return empty so spinner is showen
+        // if migrating return empty so spinner is showen
         case .inProgress: return []
         case .error: return [
             ListSwiftPair.pair("migration-error", { BookmarkMigrationSectionController() })
@@ -103,11 +123,13 @@ BaseListViewControllerDataSource {
 
     // MARK: BaseListViewControllerEmptyDataSource
 
-    // TODO create bookmark SC and return it here
-//    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
-//        return ListSwiftPair.pair(NSLocalizedString("No changes found.", comment: ""), {
-//            EmptyMessageSectionController()
-//        })
-//    }
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        let model = InitialEmptyViewModel(
+            imageName: "bookmarks-large",
+            title: NSLocalizedString("Add Bookmarks", comment: ""),
+            description: NSLocalizedString("Bookmark your favorite issues,\npull requests, and repositories.", comment: "")
+        )
+        return ListSwiftPair.pair(model, { InitialEmptyViewSectionController() })
+    }
 
 }
