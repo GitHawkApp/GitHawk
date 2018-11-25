@@ -11,6 +11,10 @@ import IGListKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: IssueType {
 
+    var viewerSubscribed: Bool {
+        return viewerSubscription?.rawValue != "IGNORED"
+    }
+
     var pullRequest: Bool {
         return false
     }

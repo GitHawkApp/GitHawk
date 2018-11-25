@@ -32,6 +32,7 @@ protocol IssueType {
     var targetBranch: String? { get }
     var locked: Bool { get }
     var headPaging: HeadPaging { get }
+    var viewerSubscribed: Bool { get }
     var viewerCanUpdate: Bool { get }
     var fileChanges: FileChanges? { get }
 

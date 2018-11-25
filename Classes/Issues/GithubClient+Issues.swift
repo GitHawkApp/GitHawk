@@ -163,6 +163,7 @@ extension GithubClient {
                         milestone: milestoneModel,
                         targetBranch: targetBranchModel,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
+                        viewerIsSubscribed: issueType.viewerSubscribed,
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository.hasIssuesEnabled,
                         viewerCanAdminister: canAdmin,
@@ -293,6 +294,25 @@ extension GithubClient {
                 cache.set(value: previous)
                 Squawk.show(error: error)
                 completion?(.error(error))
+            }
+        }
+    }
+
+
+    func setSubscription(
+        previous: IssueResult,
+        subscribed: Bool,
+        completion: ((Result<Bool>) -> Void)? = nil
+    ) {
+
+        let cache = self.cache
+
+        client.send(V3SubscribeThreadRequest(id: previous.id, ignore: subscribed)) { result in
+            switch result {
+            case .success:
+                completion?(.success(true))
+            case .failure(let error):
+                cache.set(value: previous)
             }
         }
     }

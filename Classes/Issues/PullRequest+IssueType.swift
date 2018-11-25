@@ -12,6 +12,10 @@ import StyledTextKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullRequest: IssueType {
 
+    var viewerSubscribed: Bool {
+        return viewerSubscription?.rawValue != "IGNORED"
+    }
+
     var pullRequest: Bool {
         return true
     }

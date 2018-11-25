@@ -17,6 +17,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
     }
     issueOrPullRequest(number: $number) {
       ... on Issue {
+	viewerSubscription
         timeline(last: $page_size, before: $before) {
           pageInfo{...headPaging}
           nodes {
@@ -182,6 +183,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         title
       }
       ... on PullRequest {
+	viewerSubscription
         timeline(last: $page_size, before: $before) {
           pageInfo{...headPaging}
           nodes {
