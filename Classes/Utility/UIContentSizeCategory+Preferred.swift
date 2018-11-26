@@ -10,6 +10,6 @@ import UIKit
 
 extension UIContentSizeCategory {
 
-    static var preferred: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+    static let preferred: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
 }
