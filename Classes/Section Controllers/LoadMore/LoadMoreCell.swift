@@ -10,8 +10,9 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class LoadMoreCell: UICollectionViewCell {
+final class LoadMoreCell: SelectableCell {
 
+    private let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let label = UILabel()
 
     override init(frame: CGRect) {
@@ -20,9 +21,14 @@ final class LoadMoreCell: UICollectionViewCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         label.font = Styles.Text.button.preferredFont
-        label.textColor = Styles.Colors.Gray.light.color
+        label.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
+            make.center.equalTo(contentView)
+        }
+        activity.hidesWhenStopped = true
+        contentView.addSubview(activity)
+        activity.snp.makeConstraints { make in
             make.center.equalTo(contentView)
         }
         label.text = NSLocalizedString("Load More", comment: "")
@@ -34,7 +40,7 @@ final class LoadMoreCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     override var accessibilityLabel: String? {
@@ -42,14 +48,10 @@ final class LoadMoreCell: UICollectionViewCell {
         set { }
     }
 
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                label.alpha = 0.5
-            } else {
-                label.alpha = 1
-            }
-        }
+    func configure(loading: Bool) {
+        label.isHidden = loading
+        loading
+            ? activity.startAnimating()
+            : activity.stopAnimating()
     }
-    
 }

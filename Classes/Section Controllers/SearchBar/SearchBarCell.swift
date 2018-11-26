@@ -28,7 +28,6 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
         searchBar.enablesReturnKeyAutomatically = false
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
             make.leading.equalTo(contentView)
@@ -45,7 +44,7 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: Public API

@@ -18,8 +18,6 @@ class StyledTextViewCell: UICollectionViewCell {
         textView.gesturableAttributes = MarkdownAttribute.all
         contentView.addSubview(textView)
         isAccessibilityElement = true
-//        clipsToBounds = false
-//        textView.clipsToBounds = false
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -28,7 +26,7 @@ class StyledTextViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
         textView.reposition(for: contentView.bounds.width)
     }
 

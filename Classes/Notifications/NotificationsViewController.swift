@@ -11,15 +11,13 @@ import IGListKit
 import FlatCache
 import Squawk
 
-final class NotificationsViewController: BaseListViewController2<Int>,
-BaseListViewController2DataSource,
-ForegroundHandlerDelegate,
+final class NotificationsViewController: BaseListViewController<Int>,
+BaseListViewControllerDataSource,
 FlatCacheListener,
 TabNavRootViewControllerType,
-BaseListViewController2EmptyDataSource {
+BaseListViewControllerEmptyDataSource {
 
     private let modelController: NotificationModelController
-    private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
 
@@ -31,11 +29,13 @@ BaseListViewController2EmptyDataSource {
         self.modelController = modelController
         self.inboxType = inboxType
 
-        super.init(emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""))
-        
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
+            backgroundThreshold: 5 * 60
+        )
+
         self.dataSource = self
         self.emptyDataSource = self
-        self.foreground.delegate = self
 
         switch inboxType {
         case .all: title = NSLocalizedString("All", comment: "")
@@ -71,7 +71,7 @@ BaseListViewController2EmptyDataSource {
     }
 
     override func fetch(page: Int?) {
-        let width = view.bounds.width
+        let width = view.safeContentWidth(with: feed.collectionView)
         let showAll = inboxType.showAll
 
         let repo: Repository?
@@ -101,9 +101,9 @@ BaseListViewController2EmptyDataSource {
                 ids.append($0.id)
             }
             rebuildAndUpdate(ids: ids, append: append, page: next, animated: animated)
-        case .error:
+        case .error(let err):
             error(animated: trueUnlessReduceMotionEnabled)
-            Squawk.showNetworkError()
+            Squawk.show(error: err)
         }
 
         // set after updating so self.models has already been changed
@@ -129,7 +129,7 @@ BaseListViewController2EmptyDataSource {
         let hasUnread = unread > 0
         navigationItem.rightBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unread)" : nil
-        BadgeNotifications.update(count: unread)
+        BadgeNotifications.updateBadge(count: unread)
     }
 
     @objc func onMore(sender: UIBarButtonItem) {
@@ -160,19 +160,17 @@ BaseListViewController2EmptyDataSource {
     }
 
     func pushRepoNotifications(owner: String, repo: String) {
-        let controller = NotificationsViewController(
+        route_push(to: NotificationsViewController(
             modelController: modelController,
             inboxType: .repo(Repository(owner: owner, name: repo))
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
     func onViewAll() {
-        let controller = NotificationsViewController(
+        route_push(to: NotificationsViewController(
             modelController: modelController,
             inboxType: .all
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
     func resetRightBarItem(updatingState updateState: Bool = true) {
@@ -227,7 +225,7 @@ BaseListViewController2EmptyDataSource {
                 generator.notificationOccurred(.success)
 
                 // clear all badges
-                BadgeNotifications.update(count: 0)
+                BadgeNotifications.updateBadge(count: 0)
 
                 // change the spinner to the mark all item
                 // don't update state here; it is managed by `fetch`
@@ -261,19 +259,27 @@ BaseListViewController2EmptyDataSource {
         update(page: page, animated: animated)
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
-        return notificationIDs.compactMap { id in
+        var models = [ListSwiftPair]()
+
+        models.append(ListSwiftPair.pair("com.freetime.notification.new-features", {
+            NewFeaturesSectionController()
+        }))
+
+        models += notificationIDs.compactMap { id in
             guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?
                 else { return nil }
             return ListSwiftPair.pair(model) { [modelController] in
                 NotificationSectionController(modelController: modelController)
             }
         }
+
+        return models
     }
 
-    // MARK: BaseListViewController2EmptyDataSource
+    // MARK: BaseListViewControllerEmptyDataSource
 
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         let layoutInsets = view.safeAreaInsets
@@ -282,26 +288,21 @@ BaseListViewController2EmptyDataSource {
         })
     }
 
-    // MARK: ForegroundHandlerDelegate
-
-    func didForeground(handler: ForegroundHandler) {
-        feed.refreshHead()
-    }
-
     // MARK: FlatCacheListener
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
         self.update(animated: trueUnlessReduceMotionEnabled)
         updateUnreadState()
     }
-    
+
     // MARK: TabNavRootViewControllerType
-    
+
     func didSingleTapTab() {
         feed.collectionView.scrollToTop(animated: true)
     }
-    
+
     func didDoubleTapTab() {
         didSingleTapTab()
     }
+
 }

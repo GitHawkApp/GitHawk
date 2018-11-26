@@ -21,7 +21,7 @@ final class PeopleCell: SelectableCell {
 
         backgroundColor = nil
         contentView.backgroundColor = nil
-        
+
         contentView.addSubview(avatarImageView)
         contentView.addSubview(usernameLabel)
         contentView.addSubview(checkmarkImageView)

@@ -1,0 +1,6 @@
+framework module ImageAlertAction {
+  umbrella header "ImageAlertAction-umbrella.h"
+
+  export *
+  module * { export * }
+}

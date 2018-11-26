@@ -21,7 +21,8 @@ func BodyHeightForComment(
         let inset = IssueCommentCodeBlockCell.scrollViewInset
         return viewModel.contentSize.height + inset.top + inset.bottom
     } else if let viewModel = viewModel as? IssueCommentImageModel {
-        return imageCache?.height(model: viewModel, width: width) ?? 200
+        return (imageCache?.height(model: viewModel, width: width) ?? 200)
+            + IssueCommentImageCell.bottomInset
     } else if let viewModel = viewModel as? IssueCommentQuoteModel {
         return viewModel.string.viewSize(in: width).height
     } else if viewModel is IssueCommentHrModel {
@@ -29,8 +30,7 @@ func BodyHeightForComment(
     } else if let cache = webviewCache, let viewModel = viewModel as? IssueCommentHtmlModel {
         return cache.height(model: viewModel, width: width)
     } else if let viewModel = viewModel as? IssueCommentTableModel {
-        let inset = IssueCommentTableCell.inset
-        return viewModel.rowHeights.reduce(0) { $0 + $1 } + inset.top + inset.bottom
+        return viewModel.size.height
     } else {
         return Styles.Sizes.tableCellHeight
     }

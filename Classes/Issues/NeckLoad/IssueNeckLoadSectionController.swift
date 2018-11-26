@@ -23,12 +23,11 @@ final class IssueNeckLoadSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        return collectionContext.cellSize(with: Styles.Sizes.tableCellHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: IssueNeckLoadCell.self, for: self, at: index) as? IssueNeckLoadCell
+        guard let cell = collectionContext?.dequeueReusableCell(of: LoadMoreCell.self, for: self, at: index) as? LoadMoreCell
             else { fatalError("Missing collection context, cell incorrect type, or object missing") }
         cell.configure(loading: loadingOverride)
         return cell

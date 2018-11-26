@@ -7,11 +7,6 @@ body: Copyright (c) 2016 A…
 name: Apollo, nameSpecified: 
 body: The MIT License (MIT…
 
-name: AutoInsetter, nameSpecified: 
-body: MIT License
-
-Copyrig…
-
 name: ContextMenu, nameSpecified: 
 body: The MIT License
 
@@ -20,38 +15,32 @@ Cop…
 name: Crashlytics, nameSpecified: 
 body: Fabric: Copyright 20…
 
+name: DropdownTitleView, nameSpecified: 
+body: The MIT License
+
+Cop…
+
 name: FLAnimatedImage, nameSpecified: 
 body: The MIT License (MIT…
 
 name: FLEX, nameSpecified: 
 body: Copyright (c) 2014-2…
 
+name: FMDB, nameSpecified: 
+body: If you are using FMD…
+
 name: Fabric, nameSpecified: 
 body: Fabric: Copyright 20…
-
-name: Firebase, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseAnalytics, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseCore, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseDatabase, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseInstanceID, nameSpecified: 
-body: Copyright 2018 Googl…
 
 name: FlatCache, nameSpecified: 
 body: The MIT License
 
 Cop…
 
-name: GoogleToolboxForMac, nameSpecified: 
-body: 
-                   …
+name: GitHawkRoutes, nameSpecified: 
+body: The MIT License
+
+Cop…
 
 name: HTMLString, nameSpecified: 
 body: The MIT License (MIT…
@@ -64,6 +53,11 @@ body: BSD License
 
 For `IG…
 
+name: ImageAlertAction, nameSpecified: 
+body: MIT License
+
+Copyrig…
+
 name: MessageViewController, nameSpecified: 
 body: The MIT License
 
@@ -71,11 +65,6 @@ Cop…
 
 name: NYTPhotoViewer, nameSpecified: 
 body: Copyright (c) 2015-2…
-
-name: Pageboy, nameSpecified: 
-body: MIT License
-
-Copyrig…
 
 name: SDWebImage, nameSpecified: 
 body: Copyright (c) 2016 O…
@@ -103,19 +92,11 @@ Copyrig…
 name: TUSafariActivity, nameSpecified: 
 body: Copyright (c) 2012 T…
 
-name: Tabman, nameSpecified: 
-body: MIT License
-
-Copyrig…
+name: XLPagerTabStrip, nameSpecified: 
+body: The MIT License (MIT…
 
 name: cmark-gfm-swift, nameSpecified: 
 body: Copyright (c) 2018 R…
-
-name: leveldb-library, nameSpecified: 
-body: Copyright (c) 2011 T…
-
-name: nanopb, nameSpecified: 
-body: Copyright (c) 2011 P…
 
 name: Alamofire, nameSpecified: 
 body: Copyright (c) 2014-2…
@@ -126,11 +107,6 @@ body: Copyright (c) 2016 A…
 name: Apollo, nameSpecified: 
 body: The MIT License (MIT…
 
-name: AutoInsetter, nameSpecified: 
-body: MIT License
-
-Copyrig…
-
 name: ContextMenu, nameSpecified: 
 body: The MIT License
 
@@ -139,38 +115,32 @@ Cop…
 name: Crashlytics, nameSpecified: 
 body: Fabric: Copyright 20…
 
+name: DropdownTitleView, nameSpecified: 
+body: The MIT License
+
+Cop…
+
 name: FLAnimatedImage, nameSpecified: 
 body: The MIT License (MIT…
 
 name: FLEX, nameSpecified: 
 body: Copyright (c) 2014-2…
 
+name: FMDB, nameSpecified: 
+body: If you are using FMD…
+
 name: Fabric, nameSpecified: 
 body: Fabric: Copyright 20…
-
-name: Firebase, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseAnalytics, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseCore, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseDatabase, nameSpecified: 
-body: Copyright 2018 Googl…
-
-name: FirebaseInstanceID, nameSpecified: 
-body: Copyright 2018 Googl…
 
 name: FlatCache, nameSpecified: 
 body: The MIT License
 
 Cop…
 
-name: GoogleToolboxForMac, nameSpecified: 
-body: 
-                   …
+name: GitHawkRoutes, nameSpecified: 
+body: The MIT License
+
+Cop…
 
 name: HTMLString, nameSpecified: 
 body: The MIT License (MIT…
@@ -183,6 +153,11 @@ body: BSD License
 
 For `IG…
 
+name: ImageAlertAction, nameSpecified: 
+body: MIT License
+
+Copyrig…
+
 name: MessageViewController, nameSpecified: 
 body: The MIT License
 
@@ -190,11 +165,6 @@ Cop…
 
 name: NYTPhotoViewer, nameSpecified: 
 body: Copyright (c) 2015-2…
-
-name: Pageboy, nameSpecified: 
-body: MIT License
-
-Copyrig…
 
 name: SDWebImage, nameSpecified: 
 body: Copyright (c) 2016 O…
@@ -222,19 +192,11 @@ Copyrig…
 name: TUSafariActivity, nameSpecified: 
 body: Copyright (c) 2012 T…
 
-name: Tabman, nameSpecified: 
-body: MIT License
-
-Copyrig…
+name: XLPagerTabStrip, nameSpecified: 
+body: The MIT License (MIT…
 
 name: cmark-gfm-swift, nameSpecified: 
 body: Copyright (c) 2018 R…
-
-name: leveldb-library, nameSpecified: 
-body: Copyright (c) 2011 T…
-
-name: nanopb, nameSpecified: 
-body: Copyright (c) 2011 P…
 
 name: FBSnapshotTestCase, nameSpecified: 
 body: BSD License

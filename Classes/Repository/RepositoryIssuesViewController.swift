@@ -8,34 +8,47 @@
 
 import UIKit
 import IGListKit
+import XLPagerTabStrip
 
 enum RepositoryIssuesType {
     case issues
     case pullRequests
 }
 
-class RepositoryIssuesViewController: BaseListViewController<NSString>,
-BaseListViewControllerDataSource,
-SearchBarSectionControllerDelegate {
+final class RepositoryIssuesViewController: BaseListViewController<String>,
+    BaseListViewControllerDataSource,
+    BaseListViewControllerEmptyDataSource,
+    BaseListViewControllerHeaderDataSource,
+    SearchBarSectionControllerDelegate,
+IndicatorInfoProvider {
 
-    private var models = [ListDiffable]()
-    private let repo: RepositoryDetails
+    private var models = [RepositoryIssueSummaryModel]()
+    private let owner: String
+    private let repo: String
     private let client: RepositoryClient
     private let type: RepositoryIssuesType
     private let searchKey: ListDiffable = "searchKey" as ListDiffable
     private let debouncer = Debouncer()
     private var previousSearchString = "is:open "
+    private var label: String?
 
-    init(client: GithubClient, repo: RepositoryDetails, type: RepositoryIssuesType) {
+    init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType, label: String? = nil) {
+        self.owner = owner
         self.repo = repo
-        self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
+        self.client = RepositoryClient(githubClient: client, owner: owner, name: repo)
         self.type = type
+        self.label = label
+        if let label = label {
+            previousSearchString += "label:\"\(label)\" "
+        }
 
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: "")
         )
-        
+
         self.dataSource = self
+        self.emptyDataSource = self
+        self.headerDataSource = self
 
         switch type {
         case .issues: title = NSLocalizedString("Issues", comment: "")
@@ -52,29 +65,32 @@ SearchBarSectionControllerDelegate {
 
         makeBackBarItemEmpty()
 
-        // set the frame in -viewDidLoad is required when working with TabMan
-        feed.collectionView.frame = view.bounds
-        feed.collectionView.contentInsetAdjustmentBehavior = .never
+        let presentingInTabMan = label == nil
+        if presentingInTabMan {
+            // set the frame in -viewDidLoad is required when working with TabMan
+            feed.collectionView.frame = view.bounds
+            feed.collectionView.contentInsetAdjustmentBehavior = .never
+        }
     }
 
     // MARK: Overrides
 
-    override func fetch(page: NSString?) {
+    override func fetch(page: String?) {
         client.searchIssues(
             query: fullQueryString,
             nextPage: page as String?,
-            containerWidth: view.bounds.width
+            containerWidth: view.safeContentWidth(with: feed.collectionView)
         ) { [weak self] (result: Result<RepositoryClient.RepositoryPayload>) in
             switch result {
             case .error:
                 self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let payload):
                 if page != nil {
-                    self?.models += payload.models as [ListDiffable]
+                    self?.models += payload.models
                 } else {
                     self?.models = payload.models
                 }
-                self?.update(page: payload.nextPage as NSString?, animated: trueUnlessReduceMotionEnabled)
+                self?.update(page: payload.nextPage, animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
@@ -87,38 +103,44 @@ SearchBarSectionControllerDelegate {
         debouncer.action = { [weak self] in self?.fetch(page: nil) }
     }
 
-    // MARK: BaseListViewControllerDataSource
+    // MARK: BaseListViewControllerHeaderDataSource
 
-    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return [searchKey]
-    }
-
-    func models(listAdapter: ListAdapter) -> [ListDiffable] {
-        return models
-    }
-
-    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
-        if let object = model as? ListDiffable, object === searchKey {
-            return SearchBarSectionController(
+    func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        return ListSwiftPair.pair("header", { [weak self, previousSearchString] in
+            SearchBarSectionController(
                 placeholder: Constants.Strings.search,
                 delegate: self,
                 query: previousSearchString
             )
-        }
-        return RepositorySummarySectionController(client: client.githubClient, repo: repo)
+        })
     }
 
-    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
+    // MARK: BaseListViewControllerDataSource
+
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        return models.map { [client, owner, repo] model in
+            ListSwiftPair.pair(model, {
+                RepositorySummarySectionController(
+                    client: client.githubClient,
+                    owner: owner,
+                    repo: repo
+                )
+            })
+        }
+    }
+
+    // MARK: BaseListViewControllerEmptyDataSource
+
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        let layoutInsets = view.safeAreaInsets
         let empty: RepositoryEmptyResultsType
         switch type {
         case .issues: empty = .issues
         case .pullRequests: empty = .pullRequests
         }
-        return RepositoryEmptyResultsSectionController(
-            topInset: 0,
-            layoutInsets: view.safeAreaInsets,
-            type: empty
-        )
+        return ListSwiftPair.pair("empty") {
+            RepositoryEmptyResultsSectionController2(layoutInsets: layoutInsets, type: empty)
+        }
     }
 
     // MARK: Private API
@@ -129,7 +151,13 @@ SearchBarSectionControllerDelegate {
         case .issues: typeQuery = "is:issue"
         case .pullRequests: typeQuery = "is:pr"
         }
-        return "repo:\(repo.owner)/\(repo.name) \(typeQuery) \(previousSearchString)"
+        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
+    }
+
+    // MARK: IndicatorInfoProvider
+
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: title)
     }
 
 }

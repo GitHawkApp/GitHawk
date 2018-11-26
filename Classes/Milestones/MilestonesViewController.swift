@@ -10,11 +10,15 @@ import UIKit
 import Squawk
 import IGListKit
 
-final class MilestonesViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class MilestonesViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 MilestoneSectionControllerDelegate {
 
-    public private(set) var selected: Milestone?
+    public private(set) var selected: Milestone? = nil {
+        didSet {
+            self.updateClearButtonEnabled()
+        }
+    }
 
     private var owner: String!
     private var repo: String!
@@ -43,6 +47,7 @@ MilestoneSectionControllerDelegate {
         title = Constants.Strings.milestone
         preferredContentSize = Styles.Sizes.contextMenuSize
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
 
@@ -54,6 +59,27 @@ MilestoneSectionControllerDelegate {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         addMenuDoneButton()
+        addMenuClearButton()
+    }
+
+    func addMenuClearButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Constants.Strings.clear,
+            style: .plain,
+            target: self,
+            action: #selector(onMenuClear)
+        )
+        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        updateClearButtonEnabled()
+    }
+
+    func updateClearButtonEnabled() {
+        navigationItem.leftBarButtonItem?.isEnabled = selected != nil
+    }
+
+    @objc func onMenuClear() {
+        selected = nil
+        update(animated: true)
     }
 
     // MARK: Overrides
@@ -63,14 +89,14 @@ MilestoneSectionControllerDelegate {
             switch result {
             case .success(let milestones):
                 self?.milestones = milestones
-            case .error:
-                Squawk.showGenericError()
+            case .error(let error):
+                Squawk.show(error: error)
             }
             self?.update(animated: true)
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return milestones.map { [dateFormatter, selected] milestone in
@@ -102,4 +128,3 @@ MilestoneSectionControllerDelegate {
     }
 
 }
-

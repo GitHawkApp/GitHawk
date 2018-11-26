@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 import StyledTextKit
 
-class RepositoryIssueSummaryModel: ListDiffable {
+final class RepositoryIssueSummaryModel: ListSwiftDiffable {
 
     let id: String
     let title: StyledTextRenderer
@@ -20,6 +20,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
     let status: IssueStatus
     let pullRequest: Bool
     let labels: [RepositoryLabel]
+    let ciStatus: RepositoryIssueCIStatus?
 
     // quicker comparison for diffing rather than scanning the labels array
     let labelSummary: String
@@ -32,7 +33,8 @@ class RepositoryIssueSummaryModel: ListDiffable {
         author: String,
         status: IssueStatus,
         pullRequest: Bool,
-        labels: [RepositoryLabel]
+        labels: [RepositoryLabel],
+        ciStatus: RepositoryIssueCIStatus?
         ) {
         self.id = id
         self.title = title
@@ -43,17 +45,17 @@ class RepositoryIssueSummaryModel: ListDiffable {
         self.pullRequest = pullRequest
         self.labels = labels
         self.labelSummary = labels.reduce("", { $0 + $1.name })
+        self.ciStatus = ciStatus
     }
 
-    // MARK: ListDiffable
+    // MARK: ListSwiftDiffable
 
-    func diffIdentifier() -> NSObjectProtocol {
-        return id as NSObjectProtocol
+    var identifier: String {
+        return id
     }
 
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? RepositoryIssueSummaryModel else { return false }
+    func isEqual(to value: ListSwiftDiffable) -> Bool {
+        guard let object = value as? RepositoryIssueSummaryModel else { return false }
         return id == object.id
             && number == object.number
             && pullRequest == object.pullRequest
@@ -62,5 +64,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
             && created == object.created
             && title.string == object.title.string
             && labelSummary == object.labelSummary
+            && ciStatus == object.ciStatus
     }
+
 }

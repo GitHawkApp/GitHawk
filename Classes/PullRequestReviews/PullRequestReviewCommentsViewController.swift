@@ -15,7 +15,9 @@ import Squawk
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
-    PullRequestReviewReplySectionControllerDelegate {
+    PullRequestReviewReplySectionControllerDelegate,
+    EmptyViewDelegate,
+    IssueTextActionsViewSendDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -66,7 +68,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         view.backgroundColor = Styles.Colors.background
 
         // setup message view properties
-        configure(target: self, action: #selector(didPressButton(_:)))
+        configure()
 
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.messageView.text ?? ""
@@ -77,10 +79,12 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
             repo: model.repo,
             owner: model.owner,
             addBorder: false,
-            supportsImageUpload: true
+            supportsImageUpload: true,
+            showSendButton: true
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
+        actions.sendDelegate = self
 
         textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
@@ -124,36 +128,13 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         width: insetWidth
         ) { [weak self] (result) in
             switch result {
-            case .error: Squawk.showGenericError()
+            case .error(let error):
+                Squawk.show(error: error)
             case .success(let models):
                 self?.results = models
                 self?.feed.finishLoading(dismissRefresh: true, animated: true)
             }
         }
-    }
-
-    @objc func didPressButton(_ sender: Any) {
-        guard let reply = focusedReplyModel else { return }
-
-        let text = messageView.text
-        messageView.text = ""
-        messageView.textView.resignFirstResponder()
-        setMessageView(hidden: true, animated: true)
-
-        client.sendComment(
-            body: text,
-            inReplyTo: reply.replyID,
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number,
-            width: insetWidth
-        ) { [weak self] result in
-            switch result {
-            case .error: break
-            case .success(let comment): self?.insertComment(model: comment, reply: reply)
-            }
-        }
-
     }
 
     func insertComment(model: IssueCommentModel, reply: PullRequestReviewReplyModel) {
@@ -190,8 +171,10 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         case .idle:
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Error loading review comments.", comment: "")
+            emptyView.delegate = self
+            emptyView.button.isHidden = false
             return emptyView
-        case .loadingNext:
+        case .loadingNext, .initial:
             return nil
         case .loading:
             return EmptyLoadingView()
@@ -206,6 +189,38 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         feed.adapter.scroll(to: reply, padding: Styles.Sizes.rowSpacing)
 
         focusedReplyModel = reply
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry(view: EmptyView) {
+        feed.refreshHead()
+    }
+
+    // MARK: IssueTextActionsViewSendDelegate
+
+    func didSend(for actionsView: IssueTextActionsView) {
+        guard let reply = focusedReplyModel else { return }
+
+        let text = messageView.text
+        messageView.text = ""
+        messageView.textView.resignFirstResponder()
+        setMessageView(hidden: true, animated: true)
+
+        client.sendComment(
+            body: text,
+            inReplyTo: reply.replyID,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            width: insetWidth
+        ) { [weak self] result in
+            actionsView.isProcessing = false
+            switch result {
+            case .error: break
+            case .success(let comment): self?.insertComment(model: comment, reply: reply)
+            }
+        }
     }
 
 }

@@ -31,10 +31,15 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
             let primaryNav = tab.selectedViewController as? UINavigationController,
             let secondaryNav = secondaryViewController as? UINavigationController {
 
-            // remove any placeholder VCs from the stack
-            primaryNav.viewControllers += secondaryNav.viewControllers.filter {
+            let collapsedControllers = secondaryNav.viewControllers.filter {
                 $0.hidesBottomBarWhenPushed = true
+                // remove any placeholder VCs from the stack
                 return ($0 is SplitPlaceholderViewController) == false
+            }
+            // avoid setting view controllers b/c can result in viewDidLoad being called
+            // https://github.com/GitHawkApp/GitHawk/issues/2230
+            if collapsedControllers.count > 0 {
+                primaryNav.viewControllers += collapsedControllers
             }
         }
 
@@ -89,7 +94,10 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
         guard let tab = splitViewController.viewControllers.first as? UITabBarController
             else { return false }
 
-        if splitViewController.isCollapsed {
+        // isCollapsed can be false even when showing a single view controller on iPhone.
+        // We check viewControllers.count as well to ensure we don't skip showing view controllers on the nav stack that we'd like to.
+        // https://github.com/GitHawkApp/GitHawk/issues/2450
+        if splitViewController.isCollapsed || splitViewController.viewControllers.count == 1 {
             if let nav = vc as? UINavigationController, let first = nav.viewControllers.first {
                 tab.selectedViewController?.show(first, sender: sender)
             } else {

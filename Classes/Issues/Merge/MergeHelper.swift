@@ -23,7 +23,7 @@ enum MergeHelper {
         if hasError {
             return (.failure, NSLocalizedString("Some checks failed", comment: ""))
         } else if hasPending {
-            return (.pending, NSLocalizedString("Merge status pending", comment: ""))
+            return (.pending, NSLocalizedString("Some checks still pending", comment: ""))
         } else {
             return (.success, NSLocalizedString("All checks passed", comment: ""))
         }

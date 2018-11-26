@@ -12,7 +12,7 @@ final class SearchNoResultsSectionController: ListSectionController {
 
     let topInset: CGFloat
     let layoutInsets: UIEdgeInsets
-    
+
     init(topInset: CGFloat, layoutInsets: UIEdgeInsets) {
         self.topInset = topInset
         self.layoutInsets = layoutInsets

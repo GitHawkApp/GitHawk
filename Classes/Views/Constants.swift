@@ -10,11 +10,6 @@ import Foundation
 
 enum Constants {
 
-    enum URLs {
-        static let website = "http://www.githawk.com/"
-        static let blog = "http://blog.githawk.com/"
-    }
-
     enum Strings {
         static let all = NSLocalizedString("All", comment: "")
         static let markRead = NSLocalizedString("Mark Read", comment: "")
@@ -32,6 +27,8 @@ enum Constants {
         static let reopened = NSLocalizedString("Reopened", comment: "")
         static let unknown = NSLocalizedString("Unknown", comment: "")
         static let merged = NSLocalizedString("Merged", comment: "")
+        static let unlock = NSLocalizedString("Unlock", comment: "")
+        static let lock = NSLocalizedString("Lock", comment: "")
         static let locked = NSLocalizedString("Locked", comment: "")
         static let newIssue = NSLocalizedString("New Issue", comment: "")
         static let bullet = "\u{2022}"
@@ -53,5 +50,7 @@ enum Constants {
         static let milestone = NSLocalizedString("Milestone", comment: "")
         static let assignees = NSLocalizedString("Assignees", comment: "")
         static let reviewers = NSLocalizedString("Reviewers", comment: "")
+        static let clear = NSLocalizedString("Clear", comment: "")
+        static let preview = NSLocalizedString("Preview", comment: "")
     }
 }

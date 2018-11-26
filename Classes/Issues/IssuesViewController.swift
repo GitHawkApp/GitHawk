@@ -9,13 +9,14 @@
 import UIKit
 import IGListKit
 import TUSafariActivity
-import SafariServices
 import SnapKit
 import FlatCache
 import MessageViewController
 import Squawk
 import ContextMenu
 import GitHubAPI
+import ImageAlertAction
+import DropdownTitleView
 
 extension ListDiffable {
     var needsSpacer: Bool {
@@ -23,21 +24,25 @@ extension ListDiffable {
     }
 }
 
-final class IssuesViewController:
-    MessageViewController,
+final class IssuesViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     AddCommentListener,
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-    IssueCommentSectionControllerDelegate {
+    IssueCommentSectionControllerDelegate,
+    IssueTextActionsViewSendDelegate,
+    EmptyViewDelegate,
+    MessageTextViewListener,
+    IssueLabelTapSectionControllerDelegate,
+IssueManagingContextControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let textActionsController = TextActionsController()
-    private var bookmarkNavController: BookmarkNavigationController? = nil
+    private var bookmarkNavController: BookmarkNavigationController?
     private var autocompleteController: AutocompleteController!
     private let manageController: IssueManagingContextController
     private let threadInset = UIEdgeInsets(
@@ -49,6 +54,8 @@ final class IssuesViewController:
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
+    private var actions: IssueTextActionsView?
+    private var issueType: RepositoryIssuesType?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -128,6 +135,7 @@ final class IssuesViewController:
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
 
         manageController.viewController = self
+        manageController.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -142,7 +150,7 @@ final class IssuesViewController:
         let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
 
-        let navigationTitle = NavigationTitleDropdownView()
+        let navigationTitle = DropdownTitleView()
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         navigationTitle.configure(
             title: "#\(model.number)",
@@ -165,7 +173,7 @@ final class IssuesViewController:
         view.backgroundColor = Styles.Colors.background
 
         // setup message view properties
-        configure(target: self, action: #selector(didPressButton(_:)))
+        configure()
 
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.messageView.text ?? ""
@@ -176,31 +184,39 @@ final class IssuesViewController:
             repo: model.repo,
             owner: model.owner,
             addBorder: false,
-            supportsImageUpload: true
+            supportsImageUpload: true,
+            showSendButton: true
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
+        actions.sendDelegate = self
+        self.actions = actions
+
+        actions.sendButtonEnabled = !messageView.textView.text.isEmpty
+        messageView.textView.add(listener: self)
 
         textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
 
         actions.frame = CGRect(x: 0, y: 0, width: 0, height: 32)
         messageView.add(contentView: actions)
-        
+
         //show disabled bookmark button until issue has finished loading
         navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
 
-        view.addSubview(manageController.manageButton)
+        // insert below so button doesn't appear above autocomplete
+        view.insertSubview(manageController.manageButton, belowSubview: messageView)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let informator = HandoffInformator(
-            activityName: "viewIssue",
-            activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
-            url: externalURL
-        )
-        setupUserActivity(with: informator)
+        if let url = externalURL {
+            setupUserActivity(with: HandoffInformator(
+                activityName: "viewIssue",
+                activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
+                url: url
+            ))
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -218,7 +234,7 @@ final class IssuesViewController:
         feed.collectionView.updateSafeInset(container: view, base: threadInset)
     }
 
-    override func didLayout() {    
+    override func didLayout() {
         let manageButtonSize = manageController.manageButton.bounds.size
         manageController.manageButton.frame = CGRect(
             origin: CGPoint(
@@ -230,21 +246,8 @@ final class IssuesViewController:
 
     // MARK: Private API
 
-    @objc func didPressButton(_ sender: Any?) {
-        // get text before calling super b/c it will clear it
-        let text = messageView.text
-        messageView.text = ""
-
-        if let id = resultID {
-            addCommentClient.addComment(
-                subjectId: id,
-                body: text
-            )
-        }
-    }
-
-    var externalURL: URL {
-        return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
+    var externalURL: URL? {
+        return URLBuilder.github().add(paths: [model.owner, model.repo, "issues", model.number]).url
     }
 
     var bookmark: Bookmark? {
@@ -270,6 +273,7 @@ final class IssuesViewController:
         return action(
             owner: model.owner,
             repo: model.repo,
+            icon: #imageLiteral(resourceName: "repo"),
             branch: result.defaultBranch,
             issuesEnabled: result.hasIssuesEnabled,
             client: client
@@ -277,8 +281,9 @@ final class IssuesViewController:
     }
 
     @objc func onMore(sender: UIBarButtonItem) {
+        guard let url = externalURL else { return }
         let activityController = UIActivityViewController(
-            activityItems: [externalURL],
+            activityItems: [url],
             applicationActivities: [TUSafariActivity()]
         )
         activityController.popoverPresentationController?.barButtonItem = sender
@@ -304,22 +309,17 @@ final class IssuesViewController:
                     }
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
-                case .error:
-                    Squawk.showGenericError()
+                case .error(let error):
+                    Squawk.show(error: error)
                 }
             }
         }
-
-        // assumptions here, but the collectionview may not have been laid out or content size found
-        // assume the collectionview is pinned to the view's bounds
-        let contentInset = feed.collectionView.contentInset
-        let width = view.bounds.width - contentInset.left - contentInset.right
 
         client.fetch(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            width: width,
+            width: view.safeContentWidth(with: feed.collectionView),
             prependResult: previous ? result : nil
         ) { [weak self] resultType in
             guard let strongSelf = self else { return }
@@ -333,6 +333,7 @@ final class IssuesViewController:
                 )
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
+                strongSelf.issueType = result.pullRequest ? .pullRequests : .issues
             default: break
             }
 
@@ -345,14 +346,14 @@ final class IssuesViewController:
 
     func updateAndScrollIfNeeded(dismissRefresh: Bool = true) {
         feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
-            if self?.needsScrollToBottom == true {
-                self?.needsScrollToBottom = false
-                self?.scrollToLastContentElement()
-            }
+            self?.scrollToLastContentElement()
         }
     }
 
     func scrollToLastContentElement() {
+        guard needsScrollToBottom == true else { return }
+        needsScrollToBottom = false
+
         guard let lastTimeline = lastTimelineElement else { return }
 
         // assuming the last element is the "actions" when collaborator
@@ -360,18 +361,18 @@ final class IssuesViewController:
     }
 
     func onPreview() {
-        let controller = IssuePreviewViewController(
+        route_push(to: IssuePreviewViewController(
             markdown: messageView.text,
             owner: model.owner,
-            repo: model.repo
-        )
-        showDetailViewController(controller, sender: nil)
+            repo: model.repo,
+            title: Constants.Strings.preview
+        ))
     }
 
     @objc func onNavigationTitle(sender: UIView) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
         alert.addActions([
-            action(owner: model.owner),
+            action(owner: model.owner, icon: #imageLiteral(resourceName: "organization")),
             viewRepoAction(),
             AlertAction.cancel()
             ])
@@ -402,10 +403,10 @@ final class IssuesViewController:
             metadata.append(IssueFileChangesModel(changes: changes))
         }
         // END metadata collection
-        
+
         objects.append(IssueTitleModel(string: current.title))
         objects += metadata
-        
+
         if let targetBranch = current.targetBranch {
             objects.append(targetBranch)
         }
@@ -440,8 +441,7 @@ final class IssuesViewController:
         // side effect so to jump to the last element when auto scrolling
         lastTimelineElement = objects.last
 
-        if viewerIsCollaborator,
-            current.labels.status.status == .open,
+        if current.labels.status.status == .open,
             let merge = current.mergeModel {
             objects.append(merge)
         }
@@ -453,7 +453,7 @@ final class IssuesViewController:
         switch object {
         // header and metadata
         case is IssueTitleModel: return IssueTitleSectionController()
-        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
+        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model, tapDelegate: self)
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
@@ -467,7 +467,7 @@ final class IssuesViewController:
                 autocomplete: autocompleteController.autocomplete.copy,
                 issueCommentDelegate: self
             )
-        case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
+        case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model, tapDelegate: self)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
@@ -479,7 +479,12 @@ final class IssuesViewController:
 
         // controls
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
-        case is IssueMergeModel: return IssueMergeSectionController(model: model, client: client, resultID: resultID)
+        case is IssueMergeModel: return IssueMergeSectionController(
+            model: model,
+            client: client,
+            mergeCapable: viewerIsCollaborator,
+            resultID: resultID
+            )
 
         // deprecated
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
@@ -498,8 +503,10 @@ final class IssuesViewController:
         case .idle:
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Issue cannot be found", comment: "")
+            emptyView.delegate = self
+            emptyView.button.isHidden = false
             return emptyView
-        case .loading, .loadingNext:
+        case .loading, .loadingNext, .initial:
             return nil
         }
     }
@@ -524,13 +531,14 @@ final class IssuesViewController:
         viewerCanUpdate: Bool,
         viewerCanDelete: Bool
         ) {
+        self.actions?.isProcessing = false
         guard let previous = result,
             let comment = createCommentModel(
                 id: id,
                 commentFields: commentFields,
                 reactionFields: reactionFields,
                 contentSizeCategory: UIContentSizeCategory.preferred,
-                width: view.bounds.width,
+                width: view.safeContentWidth(with: feed.collectionView),
                 owner: model.owner,
                 repo: model.repo,
                 threadState: .single,
@@ -549,6 +557,7 @@ final class IssuesViewController:
     }
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
+        self.actions?.isProcessing = false
         messageView.text = body
     }
 
@@ -581,7 +590,7 @@ final class IssuesViewController:
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
         let quote = getCommentUntilNewLine(from: commentModel.rawMarkdown)
-        messageView.text = ">\(quote)\n\n@\(commentModel.details.login) "
+        messageView.text = "\(messageView.text)\n>\(quote)\n\n@\(commentModel.details.login) "
 
         feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
     }
@@ -592,6 +601,50 @@ final class IssuesViewController:
             return string
         }
         return substring + " ..."
+    }
+
+    // MARK: IssueTextActionsViewSendDelegate
+
+    func didSend(for actionsView: IssueTextActionsView) {
+        // get text before calling super b/c it will clear it
+        let text = messageView.text
+        messageView.text = ""
+        actions?.sendButtonEnabled = false
+
+        if let id = resultID {
+            addCommentClient.addComment(
+                subjectId: id,
+                body: text
+            )
+        }
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry(view: EmptyView) {
+        feed.refreshHead()
+    }
+
+    // MARK: MessageTextViewListener
+
+    func didChange(textView: MessageTextView) {
+        actions?.sendButtonEnabled = !textView.text.isEmpty
+    }
+
+    func didChangeSelection(textView: MessageTextView) {}
+    func willChangeRange(textView: MessageTextView, to range: NSRange) {}
+
+    // MARK: IssueLabelsSectionControllerDelegate
+
+    func didTapIssueLabel(owner: String, repo: String, label: String) {
+        guard let issueType = self.issueType else { return }
+        presentLabels(client: client, owner: owner, repo: repo, label: label, type: issueType)
+    }
+
+    // MARK: IssueManagingContextControllerDelegate
+
+    func willMutateModel(from controller: IssueManagingContextController) {
+        needsScrollToBottom = true
     }
 
 }

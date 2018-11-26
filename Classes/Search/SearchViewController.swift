@@ -14,11 +14,12 @@ class SearchViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-InitialEmptyViewDelegate,
-SearchRecentSectionControllerDelegate,
-SearchRecentHeaderSectionControllerDelegate,
-TabNavRootViewControllerType,
-SearchResultSectionControllerDelegate {
+    EmptyViewDelegate,
+    InitialEmptyViewDelegate,
+    SearchRecentSectionControllerDelegate,
+    SearchRecentHeaderSectionControllerDelegate,
+    TabNavRootViewControllerType,
+    SearchResultSectionControllerDelegate {
 
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
@@ -82,7 +83,6 @@ SearchResultSectionControllerDelegate {
 
         searchBar.delegate = self
         searchBar.placeholder = Constants.Strings.searchGitHub
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
@@ -95,6 +95,13 @@ SearchResultSectionControllerDelegate {
         rz_smoothlyDeselectRows(collectionView: collectionView)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // https://stackoverflow.com/a/47976999
+        navigationController?.view.setNeedsLayout()
+        navigationController?.view.layoutIfNeeded()
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
@@ -103,6 +110,10 @@ SearchResultSectionControllerDelegate {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
+    }
+
+    func searchBarBecomeFirstResponder() {
+        searchBar.becomeFirstResponder()
     }
 
     // MARK: Data Loading/Paging
@@ -127,7 +138,10 @@ SearchResultSectionControllerDelegate {
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
 
-        let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
+        let request = client.search(
+            query: term,
+            containerWidth: view.safeContentWidth(with: collectionView)
+        ) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: trueUnlessReduceMotionEnabled)
         }
@@ -158,7 +172,7 @@ SearchResultSectionControllerDelegate {
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey {
-            
+
             return SearchNoResultsSectionController(
                 topInset: controlHeight,
                 layoutInsets: view.safeAreaInsets
@@ -189,8 +203,10 @@ SearchResultSectionControllerDelegate {
         case .error:
             let view = EmptyView()
             view.label.text = NSLocalizedString("Error finding results", comment: "")
+            view.delegate = self
+            view.button.isHidden = false
             return view
-         case .results:
+        case .results:
             return nil
         }
     }
@@ -227,6 +243,15 @@ SearchResultSectionControllerDelegate {
         update(animated: false)
     }
 
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry(view: EmptyView) {
+        searchBar.resignFirstResponder()
+
+        guard let term = searchTerm(for: searchBar.text) else { return }
+        search(term: term)
+    }
+
     // MARK: InitialEmptyViewDelegate
 
     func didTap(emptyView: InitialEmptyView) {
@@ -259,9 +284,7 @@ SearchResultSectionControllerDelegate {
         // otherwise pushing the next view controller wont be animated
         update(animated: trueUnlessReduceMotionEnabled)
 
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navigation = UINavigationController(rootViewController: repoViewController)
-        showDetailViewController(navigation, sender: nil)
+        route_detail(to: RepositoryViewController(client: client, repo: repo))
     }
 
     // MARK: SearchRecentHeaderSectionControllerDelegate

@@ -50,7 +50,7 @@ final class ClearAllHeaderCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     func configure(title text: String) {

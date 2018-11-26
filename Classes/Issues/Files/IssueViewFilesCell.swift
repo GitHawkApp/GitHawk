@@ -31,7 +31,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: Public API
@@ -66,7 +66,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
             ))
         }
         label.attributedText = attributedText
-        
+
         accessibilityLabel = NSLocalizedString(
             "View Files",
             comment: "The accessibility label for the View Files button in a pull request.")

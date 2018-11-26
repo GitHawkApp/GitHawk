@@ -54,8 +54,8 @@ extension GithubClient {
             switch result {
             case .success:
                 cache.set(value: optimisticResult)
-            case .failure:
-                Squawk.showGenericError()
+            case .failure(let err):
+                Squawk.show(error: err)
                 error()
             }
         }

@@ -18,11 +18,11 @@ final class ViewMarkdownViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         title = NSLocalizedString("Markdown", comment: "")
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

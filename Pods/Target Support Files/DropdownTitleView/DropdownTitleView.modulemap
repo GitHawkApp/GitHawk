@@ -1,0 +1,6 @@
+framework module DropdownTitleView {
+  umbrella header "DropdownTitleView-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -50,7 +50,7 @@ final class RepositoryEmptyResultsCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     override var accessibilityLabel: String? {

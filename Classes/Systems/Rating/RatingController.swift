@@ -81,10 +81,9 @@ final class RatingController {
     }
 
     private class func openAppStore() {
-        guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1252320249?action=write-review")
-            else { return }
-        prompted()
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if UIApplication.shared.openWriteReview() {
+            prompted()
+        }
     }
 
     private static let storage = UserDefaults.standard

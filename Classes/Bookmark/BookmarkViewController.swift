@@ -10,14 +10,14 @@ import UIKit
 import IGListKit
 import Apollo
 
-class BookmarkViewController: UIViewController,
+final class BookmarkViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-BookmarkHeaderSectionControllerDelegate,
-StoreListener,
-BookmarkSectionControllerDelegate,
-InitialEmptyViewDelegate,
+    BookmarkHeaderSectionControllerDelegate,
+    StoreListener,
+    BookmarkSectionControllerDelegate,
+    InitialEmptyViewDelegate,
 TabNavRootViewControllerType {
 
     private let client: GithubClient
@@ -76,7 +76,6 @@ TabNavRootViewControllerType {
 
         searchBar.delegate = self
         searchBar.placeholder = Constants.Strings.searchBookmarks
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
@@ -98,6 +97,13 @@ TabNavRootViewControllerType {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        searchBar.resignFirstResponder()
+        // https://stackoverflow.com/a/47976999
+        navigationController?.view.setNeedsLayout()
+        navigationController?.view.layoutIfNeeded()
     }
 
     private func update(animated: Bool) {
@@ -143,11 +149,11 @@ TabNavRootViewControllerType {
         default:
             return
         }
-        let navigation = UINavigationController(rootViewController: destinationViewController)
-        showDetailViewController(navigation, sender: nil)
+        route_detail(to: destinationViewController)
     }
 
     func didDelete(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
+        searchBar.resignFirstResponder()
         bookmarkStore.remove(viewModel.bookmark)
         update(animated: true)
     }
@@ -156,7 +162,7 @@ TabNavRootViewControllerType {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         let contentSizeCategory = UIContentSizeCategory.preferred
-        let width = view.bounds.width
+        let width = view.safeContentWidth(with: collectionView)
         var bookmarks: [ListDiffable]
         switch state {
         case .idle:
@@ -240,7 +246,7 @@ TabNavRootViewControllerType {
                 self?.update(animated: false)
             },
             AlertAction.cancel()
-        ])
+            ])
 
         present(alert, animated: true)
     }

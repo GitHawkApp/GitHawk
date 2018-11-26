@@ -8,7 +8,13 @@
 
 import IGListKit
 
+protocol LabelSectionControllerDelegate: class {
+    func didSelect(controller: LabelSectionController)
+}
+
 final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> {
+
+    public weak var delegate: LabelSectionControllerDelegate?
 
     public private(set) var selected: Bool
 
@@ -23,10 +29,7 @@ final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> 
                 value,
                 cellType: ListCellType.class(LabelMenuCell.self),
                 size: {
-                    return CGSize(
-                        width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeightLarge
-                    )
+                    return $0.collection.cellSize(with: Styles.Sizes.tableCellHeightLarge)
             },
                 configure: { [weak self] in
                     let color = $1.value.color.color
@@ -41,9 +44,9 @@ final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> 
                     strongSelf.selected = !strongSelf.selected
                     context.deselect()
                     context.cell?.setSelected(strongSelf.selected)
+                    strongSelf.delegate?.didSelect(controller: strongSelf)
             })
         ]
     }
 
 }
-

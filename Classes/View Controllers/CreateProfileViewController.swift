@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-func CreateProfileViewController(login: String) -> UIViewController {
-    let url = URL(string: "https://github.com/\(login)")!
-	return try! SFSafariViewController.configured(with: url)
+func CreateProfileViewController(login: String) -> UIViewController? {
+    guard let url = URLBuilder.github().add(path: login).url else { return nil }
+    return try? SFSafariViewController.configured(with: url)
 }

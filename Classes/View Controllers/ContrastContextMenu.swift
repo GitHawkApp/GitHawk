@@ -9,7 +9,7 @@
 import UIKit
 
 struct ContrastContextMenuItem {
-    
+
     let title: String
     let iconName: String?
     let iconColor: UIColor?
@@ -36,12 +36,12 @@ final class ContrastContextMenu: UITableViewController {
 
     private class Cell: UITableViewCell {
         static let reuseIdentifier = "cell"
-        var border: UIView? = nil
+        var border: UIView?
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             accessibilityTraits |= UIAccessibilityTraitButton
             isAccessibilityElement = true
-            
+
             selectedBackgroundView = UIView()
             selectedBackgroundView?.backgroundColor = Styles.Colors.Gray.medium.color
             contentView.backgroundColor = nil
@@ -49,11 +49,21 @@ final class ContrastContextMenu: UITableViewController {
 
             textLabel?.font = Styles.Text.bodyBold.preferredFont
             textLabel?.textColor = .white
-            
+
             imageView?.tintColor = Styles.Colors.Blue.medium.color
 
             border = contentView.addBorder(.top)
             border?.backgroundColor = Styles.Colors.Gray.medium.color
+        }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            guard let frame = textLabel?.frame, imageView != nil else { return }
+            textLabel?.frame = CGRect(x: 55,
+                                      y: frame.minY,
+                                      width: frame.width,
+                                      height: frame.height
+            )
         }
 
         required init?(coder aDecoder: NSCoder) {

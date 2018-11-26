@@ -37,15 +37,15 @@ class MarkdownStyledTextView: StyledTextView, StyledTextViewDelegate {
 
     // MARK: StyledTextViewDelegate
 
-    func didTap(view: StyledTextView, attributes: [NSAttributedStringKey : Any], point: CGPoint) {
+    func didTap(view: StyledTextView, attributes: [NSAttributedStringKey: Any], point: CGPoint) {
+        if let details = attributes[MarkdownAttribute.details] as? String {
+            showDetailsInMenu(details: details, point: point)
+        }
         guard let detected = DetectMarkdownAttribute(attributes: attributes) else { return }
         tapDelegate?.didTap(cell: self, attribute: detected)
     }
 
-    func didLongPress(view: StyledTextView, attributes: [NSAttributedStringKey : Any], point: CGPoint) {
-        if let details = attributes[MarkdownAttribute.details] as? String {
-            showDetailsInMenu(details: details, point: point)
-        }
+    func didLongPress(view: StyledTextView, attributes: [NSAttributedStringKey: Any], point: CGPoint) {
         if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
             show(url: url)
         }

@@ -13,12 +13,18 @@ public struct V3RepositoryReadmeRequest: V3Request {
     public var pathComponents: [String] {
         return ["repos", owner, repo, "readme"]
     }
+    
+    public var parameters: [String : Any]? {
+        return ["ref" : branch]
+    }
 
     public let owner: String
     public let repo: String
+    public let branch: String
 
-    public init(owner: String, repo: String) {
+    public init(owner: String, repo: String, branch: String) {
         self.owner = owner
         self.repo = repo
+        self.branch = branch 
     }
 }

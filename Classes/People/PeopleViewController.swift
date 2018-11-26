@@ -11,8 +11,8 @@ import IGListKit
 import GitHubAPI
 import Squawk
 
-final class PeopleViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class PeopleViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 PeopleSectionControllerDelegate {
 
     enum PeopleType {
@@ -49,14 +49,10 @@ PeopleSectionControllerDelegate {
 
         self.dataSource = self
 
-        switch type {
-        case .assignee: title = NSLocalizedString("Assignees", comment: "")
-        case .reviewer: title = NSLocalizedString("Reviewers", comment: "")
-        }
-
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.setLoadingSpinnerColor(to: .white)
         preferredContentSize = Styles.Sizes.contextMenuSize
-        updateSelectionCount()
+        updateTitle()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -67,6 +63,7 @@ PeopleSectionControllerDelegate {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         addMenuDoneButton()
+        addMenuClearButton()
     }
 
     // MARK: Public API
@@ -80,16 +77,54 @@ PeopleSectionControllerDelegate {
         }
     }
 
+    func selectionChanged(newValues: [IssueAssigneeViewModel]) -> Bool {
+        // pretty hacky but oh well
+        return Set<String>(newValues.map { $0.login }) != selections
+    }
+
+    func updateClearButtonEnabled() {
+        navigationItem.leftBarButtonItem?.isEnabled = selected.count > 0
+    }
+
+    func addMenuClearButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Constants.Strings.clear,
+            style: .plain,
+            target: self,
+            action: #selector(onMenuClear)
+        )
+        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        navigationItem.leftBarButtonItem?.isEnabled = self.selections.count > 0
+    }
+
+    @objc func onMenuClear() {
+        self.selected.forEach {
+            if let sectionController: PeopleSectionController = feed.swiftAdapter.sectionController(for: $0) {
+                sectionController.didSelectItem(at: 0)
+            }
+        }
+    }
+
+    static func sortUsers(users: [V3User], currentUser: String?) -> [V3User] {
+        return users.sorted {
+            if $0.login == currentUser {
+                return true
+            } else {
+                return $0.login.caseInsensitiveCompare($1.login) == .orderedAscending
+            }
+        }
+    }
+
     // MARK: Private API
 
-    func updateSelectionCount() {
-        let label = UILabel()
-        label.font = Styles.Text.body.preferredFont
-        label.backgroundColor = .clear
-        label.textColor = Styles.Colors.Gray.light.color
-        label.text = "\(selected.count)/\(selectionLimit)"
-        label.sizeToFit()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
+    private func updateTitle() {
+        let selectedCount = users.count > 0 ? selected.count : selections.count
+        let counter = "\(selectedCount)/\(selectionLimit)"
+        switch type {
+        case .assignee: title = "\(Constants.Strings.assignees) \(counter)"
+        case .reviewer: title = "\(Constants.Strings.reviewers) \(counter)"
+        }
+        updateClearButtonEnabled()
     }
 
     // MARK: Overrides
@@ -105,9 +140,10 @@ PeopleSectionControllerDelegate {
         ) { [weak self] result in
             switch result {
             case .success(let response):
-                let sortedUsers = response.data.sorted {
-                    $0.login.caseInsensitiveCompare($1.login) == .orderedAscending
-                }
+                let sortedUsers = PeopleViewController.sortUsers(
+                    users: response.data,
+                    currentUser: self?.client.userSession?.username
+                )
                 let users = sortedUsers.map { IssueAssigneeViewModel(login: $0.login, avatarURL: $0.avatarUrl) }
                 if page != nil {
                     self?.users += users
@@ -123,13 +159,13 @@ PeopleSectionControllerDelegate {
                     nextPage = nil
                 }
                 self?.update(page: nextPage, animated: true)
-            case .failure:
-                Squawk.showGenericError()
+            case .failure(let error):
+                Squawk.show(error: error)
             }
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return users
@@ -146,7 +182,6 @@ PeopleSectionControllerDelegate {
     // MARK: PeopleSectionControllerDelegate
 
     func didSelect(controller: PeopleSectionController) {
-        updateSelectionCount()
+        updateTitle()
     }
-
 }

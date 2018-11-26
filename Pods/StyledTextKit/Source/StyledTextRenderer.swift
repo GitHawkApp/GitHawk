@@ -22,7 +22,22 @@ public final class StyledTextRenderer {
     private var lock = os_unfair_lock_s()
     private var contentSizeCategory: UIContentSizeCategory
 
-    public init(
+    internal static let globalSizeCache = LRUCache<StyledTextRenderCacheKey, CGSize>(
+        maxSize: 1000, // CGSize cache size always 1, treat as item count
+        compaction: .default,
+        clearOnWarning: true
+    )
+
+    internal static let globalBitmapCache = LRUCache<StyledTextRenderCacheKey, CGImage>(
+        maxSize: 1024 * 1024 * 20, // 20mb
+        compaction: .default,
+        clearOnWarning: true
+    )
+
+    internal var sizeCache: LRUCache<StyledTextRenderCacheKey, CGSize>
+    internal var bitmapCache: LRUCache<StyledTextRenderCacheKey, CGImage>
+
+    public convenience init(
         string: StyledTextString,
         contentSizeCategory: UIContentSizeCategory,
         inset: UIEdgeInsets = .zero,
@@ -31,11 +46,37 @@ public final class StyledTextRenderer {
         scale: CGFloat = StyledTextScreenScale,
         maximumNumberOfLines: Int = 0
         ) {
+        self.init(
+            string: string,
+            contentSizeCategory: contentSizeCategory,
+            inset: inset,
+            backgroundColor: backgroundColor,
+            layoutManager: layoutManager,
+            scale: scale,
+            maximumNumberOfLines: maximumNumberOfLines,
+            sizeCache: nil,
+            bitmapCache: nil
+        )
+    }
+
+    internal init(
+        string: StyledTextString,
+        contentSizeCategory: UIContentSizeCategory,
+        inset: UIEdgeInsets,
+        backgroundColor: UIColor?,
+        layoutManager: NSLayoutManager,
+        scale: CGFloat,
+        maximumNumberOfLines: Int,
+        sizeCache: LRUCache<StyledTextRenderCacheKey, CGSize>?,
+        bitmapCache: LRUCache<StyledTextRenderCacheKey, CGImage>?
+        ) {
         self.string = string
         self.contentSizeCategory = contentSizeCategory
         self.inset = inset
         self.backgroundColor = backgroundColor
         self.scale = scale
+        self.sizeCache = sizeCache ?? StyledTextRenderer.globalSizeCache
+        self.bitmapCache = bitmapCache ?? StyledTextRenderer.globalBitmapCache
 
         textContainer = NSTextContainer()
         textContainer.exclusionPaths = []
@@ -61,23 +102,16 @@ public final class StyledTextRenderer {
         return storage
     }
 
-    private static let globalSizeCache = LRUCache<StyledTextRenderCacheKey, CGSize>(
-        maxSize: 1000, // CGSize cache size always 1, treat as item count
-        compaction: .default,
-        clearOnWarning: true
-    )
-
     // not thread safe
     private func _size(_ key: StyledTextRenderCacheKey) -> CGSize {
-        let cache = StyledTextRenderer.globalSizeCache
-        if let cached = cache[key] {
+        if let cached = sizeCache[key] {
             // always update the container to requested size
             textContainer.size = cached
             return cached
         }
         let insetWidth = max(key.width - inset.left - inset.right, 0)
         let size = layoutManager.size(textContainer: textContainer, width: insetWidth, scale: scale)
-        cache[key] = size
+        sizeCache[key] = size
         return size
     }
 
@@ -91,12 +125,6 @@ public final class StyledTextRenderer {
         return size(in: width).resized(inset: inset)
     }
 
-    private static let globalBitmapCache = LRUCache<StyledTextRenderCacheKey, CGImage>(
-        maxSize: 1024 * 1024 * 20, // 20mb
-        compaction: .default,
-        clearOnWarning: true
-    )
-
     public func cachedRender(for width: CGFloat) -> (image: CGImage?, size: CGSize?) {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
@@ -107,7 +135,7 @@ public final class StyledTextRenderer {
             backgroundColor: backgroundColor,
             maximumNumberOfLines: 0
         )
-        return (StyledTextRenderer.globalBitmapCache[key], StyledTextRenderer.globalSizeCache[key])
+        return (bitmapCache[key], sizeCache[key])
     }
 
     public func render(for width: CGFloat) -> (image: CGImage?, size: CGSize) {
@@ -116,7 +144,7 @@ public final class StyledTextRenderer {
 
         let key = StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor, maximumNumberOfLines: textContainer.maximumNumberOfLines)
         let size = _size(key)
-        let cache = StyledTextRenderer.globalBitmapCache
+        let cache = bitmapCache
         if let cached = cache[key] {
             return (cached, size)
         }

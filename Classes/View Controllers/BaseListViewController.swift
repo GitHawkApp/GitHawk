@@ -2,49 +2,50 @@
 //  BaseListViewController.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 10/4/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 4/21/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import UIKit
 import IGListKit
 
-// Extension of ListAdapterDataSource to mixin our own features like paging controls
 protocol BaseListViewControllerDataSource: class {
-    // models that stick to the head of the list. not displayed on an empty error
-    func headModels(listAdapter: ListAdapter) -> [ListDiffable]
-    // the core "body" models in the list
-    func models(listAdapter: ListAdapter) -> [ListDiffable]
-    // section controllers for models in the list
-    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController
-    // a section controller for empty lists w/out error
-    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair]
 }
 
-/**
- Subclassable view controller with basic list features:
- - Composed list data with head and body contents
- - "Empty" section controller when body contents is missing
- - Error handling via IGListAdapterDataSource emptyView(...) API
- - Paging control when page is non-nil
- */
-class BaseListViewController<PagingType: ListDiffable>: UIViewController,
-ListAdapterDataSource,
+protocol BaseListViewControllerEmptyDataSource: class {
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair
+}
+
+protocol BaseListViewControllerHeaderDataSource: class {
+    func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair
+}
+
+class BaseListViewController<PageType: CustomStringConvertible>: UIViewController,
+ListSwiftAdapterDataSource,
 FeedDelegate,
-LoadMoreSectionControllerDelegate {
+LoadMoreSectionController2Delegate,
+ListSwiftAdapterEmptyViewSource,
+EmptyViewDelegate {
 
-    // required on init
     private let emptyErrorMessage: String
+    private let backgroundThreshold: CFTimeInterval?
+
     public weak var dataSource: BaseListViewControllerDataSource?
+    public weak var emptyDataSource: BaseListViewControllerEmptyDataSource?
+    public weak var headerDataSource: BaseListViewControllerHeaderDataSource?
 
-    public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var page: PagingType?
+    public private(set) lazy var feed: Feed = { Feed(
+        viewController: self,
+        delegate: self,
+        backgroundThreshold: backgroundThreshold
+        ) }()
+    private var page: PageType?
     private var hasError = false
-    private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
-    private var filterQuery: String?
 
-    init(emptyErrorMessage: String) {
+    init(emptyErrorMessage: String, backgroundThreshold: CFTimeInterval? = nil) {
         self.emptyErrorMessage = emptyErrorMessage
+        self.backgroundThreshold = backgroundThreshold
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -55,7 +56,8 @@ LoadMoreSectionControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         feed.viewDidLoad()
-        feed.adapter.dataSource = self
+        feed.swiftAdapter.dataSource = self
+        feed.swiftAdapter.emptyViewSource = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -70,18 +72,19 @@ LoadMoreSectionControllerDelegate {
 
     // MARK: Overridable API
 
-    // override this method to do your own networking
-    // if page is nil then you should request the very first page of content
-    func fetch(page: PagingType?) {}
+    func fetch(page: PageType?) {}
 
     // MARK: Public API
 
     final func update(animated: Bool) {
-        self.feed.finishLoading(dismissRefresh: true, animated: animated)
+        self.feed.finishLoading(
+            dismissRefresh: true,
+            animated: animated && trueUnlessReduceMotionEnabled
+        )
     }
 
     final func update(
-        page: PagingType?,
+        page: PageType?,
         animated: Bool,
         completion: (() -> Void)? = nil
         ) {
@@ -89,7 +92,11 @@ LoadMoreSectionControllerDelegate {
 
         self.hasError = false
         self.page = page
-        self.feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
+        self.feed.finishLoading(
+            dismissRefresh: true,
+            animated: animated && trueUnlessReduceMotionEnabled,
+            completion: completion
+        )
     }
 
     final func error(
@@ -98,69 +105,11 @@ LoadMoreSectionControllerDelegate {
         ) {
         assert(Thread.isMainThread)
         hasError = true
-        feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
-    }
-
-    final func filter(query: String?, animated: Bool) {
-        filterQuery = query
-        feed.adapter.performUpdates(animated: animated)
-    }
-
-    // MARK: ListAdapterDataSource
-
-    final func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        assert(Thread.isMainThread)
-        guard let dataSource = self.dataSource else { return [] }
-
-        let objects = dataSource.models(listAdapter: listAdapter)
-        let hasNoObjects = objects.count == 0
-
-        // short-circuit to display empty-error message using the emptyView(...) API
-        if hasError && hasNoObjects {
-            return []
-        }
-
-        var allObjects = dataSource.headModels(listAdapter: listAdapter)
-
-        // if there are no objects and the feed is idle, show an empty control
-        if hasNoObjects && feed.status == .idle {
-            allObjects.append(emptyKey)
-        } else {
-            allObjects += objects
-
-            // only append paging if there are visible objects
-            if let page = self.page {
-                allObjects.append(page)
-            }
-        }
-
-        // if a query string exists, return matching Filterable objects
-        if let query = filterQuery {
-            return filtered(array: allObjects, query: query)
-        } else {
-            return allObjects
-        }
-    }
-
-    final func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        assert(Thread.isMainThread)
-        guard let object = object as? ListDiffable,
-        let dataSource = self.dataSource
-            else { fatalError("Object not diffable or missing data source") }
-        if object === page {
-            return LoadMoreSectionController(delegate: self)
-        } else if object === emptyKey {
-            return dataSource.emptySectionController(listAdapter: listAdapter)
-        }
-        return dataSource.sectionController(model: object, listAdapter: listAdapter)
-    }
-
-    final func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        assert(Thread.isMainThread)
-        guard hasError else { return nil }
-        let empty = EmptyView()
-        empty.label.text = emptyErrorMessage
-        return empty
+        feed.finishLoading(
+            dismissRefresh: true,
+            animated: animated && trueUnlessReduceMotionEnabled,
+            completion: completion
+        )
     }
 
     // MARK: FeedDelegate
@@ -174,10 +123,66 @@ LoadMoreSectionControllerDelegate {
         return false
     }
 
-    // MARK: LoadMoreSectionControllerDelegate
+    // MARK: ListSwiftAdapterDataSource
 
-    final func didSelect(sectionController: LoadMoreSectionController) {
+    public func values(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        assert(Thread.isMainThread)
+        guard let dataSource = self.dataSource else { return [] }
+
+        let models = dataSource.models(adapter: adapter)
+        let hasNoObjects = models.count == 0
+
+        // short-circuit to display empty-error message using the emptyView(...) API
+        if hasError && hasNoObjects {
+            return []
+        }
+
+        let listModels: [ListSwiftPair]
+        if let emptyDataSource = self.emptyDataSource,
+            hasNoObjects,
+            feed.status == .idle {
+            listModels = [emptyDataSource.emptyModel(for: adapter)]
+        } else if let page = self.page?.description {
+            let pagePair = ListSwiftPair.pair(page) { [weak self] in
+                let controller = LoadMoreSectionController2()
+                controller.delegate = self
+                return controller
+            }
+            listModels = models + [pagePair]
+        } else {
+            listModels = models
+        }
+        if let header = headerDataSource?.headerModel(for: adapter) {
+            return [header] + listModels
+        } else {
+            return listModels
+        }
+    }
+
+    // MARK: LoadMoreSectionController2Delegate
+
+    func didSelect(controller: LoadMoreSectionController2) {
         fetch(page: page)
+    }
+
+    // MARK: ListSwiftAdapterEmptyViewSource
+
+    func emptyView(adapter: ListSwiftAdapter) -> UIView? {
+        guard hasError else { return nil }
+        let empty = EmptyView()
+        empty.label.text = emptyErrorMessage
+        empty.delegate = self
+        empty.button.isHidden = false
+        return empty
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry(view: EmptyView) {
+        // order is required to hide the error empty view while loading
+        feed.refreshHead()
+        hasError = false
+        feed.adapter.performUpdates(animated: false, completion: nil)
     }
 
 }

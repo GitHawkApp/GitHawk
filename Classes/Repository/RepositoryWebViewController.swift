@@ -48,11 +48,10 @@ final class RepositoryWebViewController: UIViewController {
     }
 
     private var resourceURL: URL? {
-        guard let encodedPath = path.path.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-            return nil
-        }
-
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/raw/\(branch)/\(encodedPath)")
+        return URLBuilder.github()
+            .add(paths: [repo.owner, repo.name, "raw", branch])
+            .add(paths: path.components)
+            .url
     }
 
     private lazy var webView: WKWebView = {
@@ -129,6 +128,16 @@ extension RepositoryWebViewController: WKNavigationDelegate {
 
 }
 
+// MARK: - RepositoryWebViewController (EmptyViewDelegate) -
+
+extension RepositoryWebViewController: EmptyViewDelegate {
+
+    func didTapRetry(view: EmptyView) {
+        fetch()
+    }
+
+}
+
 // MARK: - RepositoryWebViewController (Fetch Data) -
 
 extension RepositoryWebViewController {
@@ -179,6 +188,8 @@ extension RepositoryWebViewController {
 
         state = .idle
         emptyView.isHidden = true
+        emptyView.delegate = self
+        emptyView.button.isHidden = false
 
         view.backgroundColor = .white
         view.addSubview(emptyView)

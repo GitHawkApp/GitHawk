@@ -17,11 +17,11 @@ final class ShowMoreDetailsLabel: UILabel {
 
         isUserInteractionEnabled = true
 
-        let longPress = UILongPressGestureRecognizer(
+        let tap = UITapGestureRecognizer(
             target: self,
             action: #selector(ShowMoreDetailsLabel.showMenu(recognizer:))
         )
-        addGestureRecognizer(longPress)
+        addGestureRecognizer(tap)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,8 +34,8 @@ final class ShowMoreDetailsLabel: UILabel {
 
     // MARK: Private API
 
-    @objc func showMenu(recognizer: UILongPressGestureRecognizer) {
-        guard recognizer.state == .began,
+    @objc func showMenu(recognizer: UITapGestureRecognizer) {
+        guard recognizer.state == .recognized,
             !detailText.isEmpty else { return }
 
         becomeFirstResponder()

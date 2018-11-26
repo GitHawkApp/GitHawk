@@ -22,12 +22,11 @@ final class LoadMoreSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        return collectionContext.cellSize(with: Styles.Sizes.tableCellHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: IssueNeckLoadCell.self, for: self, at: index) as? IssueNeckLoadCell else {
+        guard let cell = collectionContext?.dequeueReusableCell(of: LoadMoreCell.self, for: self, at: index) as? LoadMoreCell else {
             fatalError("Missing context, or cell is wrong type")
         }
         cell.configure(loading: loadingOverride)

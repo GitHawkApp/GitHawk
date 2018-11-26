@@ -52,14 +52,25 @@ UICollectionViewDelegateFlowLayout {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = contentView.bounds
+        if let model = self.model {
+            collectionView.frame = CGRect(
+                x: 0,
+                y: 0,
+                width: bounds.width,
+                height: model.size.height
+            )
+        }
     }
 
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentTableModel else { return }
-        self.model = viewModel
+        configure(with: viewModel)
+    }
+
+    func configure(with model: IssueCommentTableModel) {
+        self.model = model
         collectionView.reloadData()
     }
 

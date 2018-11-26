@@ -38,7 +38,7 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
     private let readButton = HittableButton()
     private let watchButton = HittableButton()
     private let moreButton = HittableButton()
-    private var readLayer = CAShapeLayer()
+    private let readOverlayView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -130,9 +130,9 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
 
         contentView.addBorder(.bottom, left: inset.left)
 
-        readLayer.fillColor = Styles.Colors.Gray.light.color.withAlphaComponent(0.08).cgColor
-        readLayer.isHidden = true
-        layer.addSublayer(readLayer)
+        readOverlayView.backgroundColor = Styles.Colors.Gray.light.color.withAlphaComponent(0.08)
+        readOverlayView.isHidden = true
+        addSubview(readOverlayView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -142,14 +142,16 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         textView.reposition(for: contentView.bounds.width)
-
-        CATransaction.begin()
-        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-        readLayer.path = UIBezierPath(ovalIn: readButton.bounds).cgPath
-        readLayer.bounds = readButton.bounds
-        readLayer.position = convert(readButton.center, from: readButton.superview)
-        readLayer.transform = CATransform3DMakeScale(20, 20, 20)
-        CATransaction.commit()
+        readOverlayView.frame = bounds
+//        CATransaction.begin()
+//        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+//        readLayer.path = UIBezierPath(ovalIn: readButton.bounds).cgPath
+//        readLayer.bounds = readButton.bounds
+//        readLayer.position = convert(readButton.center, from: readButton.superview)
+//        readLayer.transform = CATransform3DMakeScale(30, 30, 30)
+//        // keep the read layer in front
+//        readLayer.superlayer?.addSublayer(readLayer)
+//        CATransaction.commit()
     }
 
     override var accessibilityLabel: String? {
@@ -186,7 +188,8 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         case .pending: tintColor = Styles.Colors.Blue.medium.color
         }
         iconImageView.tintColor = tintColor
-        iconImageView.image = model.type.icon.withRenderingMode(.alwaysTemplate)
+        iconImageView.image = model.type.icon(merged: model.state == .merged)?
+            .withRenderingMode(.alwaysTemplate)
 
         let hasComments = model.comments > 0
         commentButton.alpha = hasComments ? 1 : 0.3
@@ -196,7 +199,7 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         watchButton.setImage(UIImage(named: "\(watchingImageName)-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
 
         dimViews(dim: model.read)
-        hideReadLayer(hide: !model.read)
+        readOverlayView.isHidden = !model.read
 
         let watchAccessibilityAction = UIAccessibilityCustomAction(
             name: model.watching ?
@@ -241,11 +244,28 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
             self.dimViews(dim: true)
         }
 
-        hideReadLayer(hide: false)
+        readOverlayView.isHidden = false
+
+        if readOverlayView.layer.mask == nil {
+            let mask = CAShapeLayer()
+            mask.fillColor = UIColor.black.cgColor
+            let smallest = min(readButton.bounds.width, readButton.bounds.height)
+            let position = convert(readButton.center, from: readButton.superview)
+            let longestEdge = max(self.bounds.width - position.x, position.x)
+            let ratio = ceil(longestEdge / (smallest / 2.0)) + 5
+            let bounds = CGRect(x: 0, y: 0, width: smallest, height: smallest)
+            mask.path = UIBezierPath(ovalIn: bounds).cgPath
+            mask.bounds = bounds
+            mask.position = position
+            mask.transform = CATransform3DMakeScale(ratio, ratio, ratio)
+            readOverlayView.layer.mask = mask
+        }
+
+        let scaleDuration: TimeInterval = 0.25
 
         let scale = CABasicAnimation(keyPath: "transform.scale")
         scale.fromValue = 1
-        scale.duration = 0.27
+        scale.duration = scaleDuration
         scale.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
 
         let fade = CABasicAnimation(keyPath: "opacity")
@@ -254,24 +274,22 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         fade.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
 
         let group = CAAnimationGroup()
+        group.duration = scaleDuration
         group.animations = [scale, fade]
 
-        readLayer.add(group, forKey: nil)
+        readOverlayView.layer.mask?.add(group, forKey: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + scaleDuration) {
+            self.readOverlayView.layer.mask?.removeFromSuperlayer()
+        }
     }
 
     private func dimViews(dim: Bool) {
-        let alpha: CGFloat = dim ? 0.5 : 1
+        let alpha: CGFloat = dim ? 0.7 : 1
         [iconImageView, detailsLabel, dateLabel, textView].forEach { view in
             view.alpha = alpha
         }
         readButton.alpha = dim ? 0.2 : 1
-    }
-
-    private func hideReadLayer(hide: Bool) {
-        CATransaction.begin()
-        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-        readLayer.isHidden = hide
-        CATransaction.commit()
     }
 
 }

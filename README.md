@@ -1,7 +1,16 @@
-<a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="Design/githawk-pulse.gif" /></a>
-<p align="center"><a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="Design/app-store-badge.png" width="250" /></a></p>
+<a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="images/githawk-pulse.gif" /></a>
+<p align="center"><a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="images/app-store-badge.png" width="250" /></a></p>
 
-[![Build Status](https://www.bitrise.io/app/a912ff037bca7072/status.svg?token=PMpBs9u-C7CBIKPwNLSJrg&branch=master)](https://www.bitrise.io/app/a912ff037bca7072)
+<p align="center">
+    <a href="https://www.bitrise.io/app/a912ff037bca7072">
+        <img src="https://app.bitrise.io/app/a912ff037bca7072/status.svg?token=PMpBs9u-C7CBIKPwNLSJrg&branch=master"
+             alt="Build Status">
+    </a>
+    <a href="https://testflight.apple.com/join/QIVXLkkn">
+      <img src="https://img.shields.io/badge/Join-TestFlight-blue.svg"
+           alt="Join TestFlight" />
+    </a>
+</p>
 
 GitHawk is the highest rated iOS app for GitHub.
 
@@ -12,6 +21,19 @@ GitHawk is the highest rated iOS app for GitHub.
 :thumbsup: | The only app with emoji reactions!
 :zap: | Native markdown rendering
 :octocat: | 100% free and open source
+
+## Contributing
+
+We are always looking for contributions from **all skill levels**! A great way to get started is by helping [organize and/or squish bugs](https://github.com/GitHawkApp/GitHawk/projects/4).
+
+#### Highest Priority Needs:
+
+- 👩‍💼 **Product Manager**
+  - We have some [projects](https://github.com/GitHawkApp/GitHawk/projects) and tons of unorganized/unprioritized [features](https://github.com/GitHawkApp/GitHawk/issues?q=is%3Aissue+is%3Aopen+label%3Afeature). GitHawk needs someone to own the product direction!
+- 👩‍🎨 **Designer**
+  - Like making unique UIs? So do we! We value keeping GitHawk's UX close to core iOS, but, when necessary, create our own high-quality UI components. Helping design for GitHawk is a great opportunity to try new ideas out!
+- 👩‍💻 **iOS Project Management**
+  - There is a _lot_ of low-hanging fruit with our project setup, test and deployment automation, build optimizations, and more! I (@rnystrom) have no idea what I'm doing here. Come point us in the right direction!
 
 ## Installation
 
@@ -37,12 +59,6 @@ See the [setup guide](Setup.md) for details about API keys and environment varia
 We ship GitHawk on the App Store for free and provide its entire source code for free as well. In the spirit of openness, GitHawk is licensed under MIT so that you can use my code in your app, if you choose.
 
 However, **please do not ship this app** under your own account. Paid or free.
-
-## Contributing
-
-:warning: This repo is moving _fast_! :warning:
-
-If you would like to test the latest changes, you can join the **TestFlight** beta by DMing your e-mail address to [@_ryannystrom](https://twitter.com/_ryannystrom).
 
 ## Why are we building this?
 

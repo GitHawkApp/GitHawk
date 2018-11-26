@@ -26,10 +26,8 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
                 value,
                 cellType: ListCellType.class(NotificationCell.self),
                 size: {
-                    let width = $0.collection.containerSize.width
-                    return CGSize(
-                        width: width,
-                        height: $0.value.title.viewSize(in: width).height
+                    return $0.collection.cellSize(with:
+                        $0.value.title.viewSize(in: $0.collection.safeContentWidth()).height
                     )
             },
                 configure: { [weak self] in
@@ -63,10 +61,11 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
         guard let value = self.value else { return }
             let alert = UIAlertController.configured(preferredStyle: .actionSheet)
             alert.addActions([
-                viewController?.action(owner: value.owner),
+                viewController?.action(owner: value.owner, icon: #imageLiteral(resourceName: "organization")),
                 viewController?.action(
                     owner: value.owner,
                     repo: value.repo,
+                    icon: #imageLiteral(resourceName: "repo"),
                     branch: value.branch,
                     issuesEnabled: value.issuesEnabled,
                     client: modelController.githubClient
@@ -82,17 +81,17 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
             modelController.markNotificationRead(id: model.id)
         }
 
+        BadgeNotifications.clear(for: model)
+
         switch model.number {
         case .hash(let hash):
             viewController?.presentCommit(owner: model.owner, repo: model.repo, hash: hash)
         case .number(let number):
-            let controller = IssuesViewController(
+            viewController?.route_detail(to: IssuesViewController(
                 client: modelController.githubClient,
                 model: IssueDetailsModel(owner: model.owner, repo: model.repo, number: number),
                 scrollToBottom: true
-            )
-            let navigation = UINavigationController(rootViewController: controller)
-            viewController?.showDetailViewController(navigation, sender: nil)
+            ))
         case .release(let release):
             showRelease(release, model: model)
         }
@@ -108,8 +107,8 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
                         repo: model.repo,
                         release: response.data.tagName
                     )
-                case .failure:
-                    Squawk.showGenericError()
+                case .failure(let error):
+                    Squawk.show(error: error)
                 }
         }
     }

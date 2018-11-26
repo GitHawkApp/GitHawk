@@ -31,7 +31,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         backgroundHighlightView.backgroundColor = UIColor(white: 0, alpha: 0.07)
         backgroundHighlightView.alpha = 0
         contentView.addSubview(backgroundHighlightView)
-        
+
         let tint = Styles.Colors.Blue.medium.color
 
         chevron.tintColor = tint
@@ -64,7 +64,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     override var isSelected: Bool {
@@ -86,7 +86,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         label.alpha = alpha
         chevron.alpha = alpha
     }
-    
+
     // MARK: Public API
 
     func animate(expanded: Bool) {

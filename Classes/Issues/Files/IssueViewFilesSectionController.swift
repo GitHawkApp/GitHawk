@@ -21,10 +21,8 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(
-            width: width,
-            height: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
+        return collectionContext.cellSize(
+            with: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
         )
     }
 
@@ -38,11 +36,16 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
 
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { return }
-
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
-
-        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes.changedFiles)
-        viewController?.show(controller, sender: nil)
+        collectionContext?.deselectItem(
+            at: index,
+            sectionController: self,
+            animated: trueUnlessReduceMotionEnabled
+        )
+        viewController?.route_push(to: IssueFilesViewController(
+            model: issueModel,
+            client: client,
+            fileCount: object.changes.changedFiles
+        ))
     }
 
 }

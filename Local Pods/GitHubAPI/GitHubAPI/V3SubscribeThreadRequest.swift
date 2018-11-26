@@ -16,7 +16,7 @@ public struct V3SubscribeThreadRequest: V3Request {
     public var method: HTTPMethod { return .put }
     public var parameters: [String : Any]? {
         return [
-            "ignored": ignore ? "true" : "false"
+            "ignored": ignore ? true : false
         ]
     }
 

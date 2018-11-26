@@ -48,7 +48,7 @@ final class IssueCommitCell: UICollectionViewCell {
             action: #selector(IssueCommitCell.onAvatar))
         )
         avatarImageView.accessibilityIgnoresInvertColors = true
-        
+
         contentView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -77,7 +77,7 @@ final class IssueCommitCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: Public API

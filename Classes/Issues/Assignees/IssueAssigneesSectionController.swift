@@ -60,12 +60,9 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width
-            else { fatalError("Collection context must be set") }
-        return CGSize(
-            width: width,
+        return collectionContext.cellSize(
             // secondary label OR the avatar, w/e is bigger. changes when dynamic content sizes
-            height: max(Styles.Sizes.icon.height, Styles.Text.secondary.preferredFont.lineHeight)
+            with: max(Styles.Sizes.icon.height, Styles.Text.secondary.preferredFont.lineHeight)
         )
     }
 

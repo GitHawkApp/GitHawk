@@ -24,6 +24,7 @@ final class MergeButton: UIView {
     private let mergeLabel = UILabel()
     private let optionBorder = UIView()
     private let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    private let gradientLayer = CAGradientLayer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,16 +74,37 @@ final class MergeButton: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
+
     // MARK: Public
 
     func configure(title: String, enabled: Bool, loading: Bool) {
         isUserInteractionEnabled = enabled && !loading
 
         backgroundColor = (enabled
-            ? Styles.Colors.Green.medium.color
+            ? (loading ? Styles.Colors.Green.medium.color : .clear)
             : Styles.Colors.Gray.light.color)
             .withAlphaComponent(loading ? 0.2 : 1)
         alpha = enabled ? 1 : 0.3
+
+        if enabled && !loading {
+            guard gradientLayer.superlayer == nil else { return }
+            gradientLayer.cornerRadius = layer.cornerRadius
+            gradientLayer.colors = [
+                UIColor.fromHex("34d058").cgColor,
+                Styles.Colors.Green.medium.color.cgColor
+            ]
+            layer.addSublayer(gradientLayer)
+
+            [mergeLabel, optionIconView, optionBorder, activityView].forEach {
+                bringSubview(toFront: $0)
+            }
+        } else {
+            gradientLayer.removeFromSuperlayer()
+        }
 
         let titleColor = enabled ? .white : Styles.Colors.Gray.dark.color
         mergeLabel.textColor = titleColor

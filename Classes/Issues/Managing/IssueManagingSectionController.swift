@@ -19,37 +19,37 @@ ContextMenuDelegate {
     private enum Action {
         static let labels = IssueManagingActionModel(
             key: "tag",
-            label: NSLocalizedString("Labels", comment: ""),
+            label: Constants.Strings.labels,
             imageName: "tag",
             color: "3f88f7".color
         )
         static let milestone = IssueManagingActionModel(
             key: "milestone",
-            label: NSLocalizedString("Milestone", comment: ""),
+            label: Constants.Strings.milestone,
             imageName: "milestone",
             color: "6847ba".color
         )
         static let assignees = IssueManagingActionModel(
             key: "person",
-            label: NSLocalizedString("Assignees", comment: ""),
+            label: Constants.Strings.assignees,
             imageName: "person",
             color: "e77230".color
         )
         static let reviewers = IssueManagingActionModel(
             key: "reviewer",
-            label: NSLocalizedString("Reviewers", comment: ""),
+            label: Constants.Strings.reviewers,
             imageName: "reviewer",
             color: "50a451".color
         )
         static let lock = IssueManagingActionModel(
             key: "lock", // share key so lock/unlock just updates cell
-            label: NSLocalizedString("Lock", comment: ""),
+            label: Constants.Strings.lock,
             imageName: "lock",
             color: Styles.Colors.Gray.dark.color
         )
         static let unlock = IssueManagingActionModel(
             key: "lock", // share key so lock/unlock just updates cell
-            label: NSLocalizedString("Unlock", comment: ""),
+            label: Constants.Strings.unlock,
             imageName: "key",
             color: Styles.Colors.Gray.dark.color
         )
@@ -201,7 +201,7 @@ ContextMenuDelegate {
             models += [
                 Action.labels,
                 Action.milestone,
-                Action.assignees,
+                Action.assignees
             ]
             if object.pullRequest {
                 models.append(Action.reviewers)
@@ -225,11 +225,8 @@ ContextMenuDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let containerWidth = collectionContext?.insetContainerSize.width
-            else { fatalError("Collection context must be set") }
-
+        let containerWidth = collectionContext.cellWidth()
         let height = IssueManagingActionCell.height
-
         let rawRowCount = min(CGFloat(viewModels.count), floor(containerWidth / (height + minimumInteritemSpacing)))
         return CGSize(
             width: floor((containerWidth - (rawRowCount - 1) * minimumInteritemSpacing) / rawRowCount),
@@ -255,7 +252,7 @@ ContextMenuDelegate {
         viewModel: Any
         ) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
-        
+
         guard updating == false,
             let viewModel = viewModel as? ListDiffable,
             let cell = collectionContext?.cellForItem(at: index, sectionController: self)

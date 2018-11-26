@@ -10,7 +10,6 @@ import IGListKit
 
 protocol SearchResultSectionControllerDelegate: class {
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails)
-
 }
 
 final class SearchResultSectionController: ListGenericSectionController<SearchRepoResult> {
@@ -25,8 +24,9 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight + Styles.Sizes.rowSpacing * 2)
+        return collectionContext.cellSize(
+            with: Styles.Sizes.tableCellHeight + Styles.Sizes.rowSpacing * 2
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -41,7 +41,7 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
 
     override func didSelectItem(at index: Int) {
         guard let object = object else { return }
-        
+
         let repo = RepositoryDetails(
             owner: object.owner,
             name: object.name,
@@ -50,10 +50,10 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
         )
 
         delegate?.didSelect(sectionController: self, repo: repo)
-
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navigation = UINavigationController(rootViewController: repoViewController)
-        viewController?.showDetailViewController(navigation, sender: nil)
+        viewController?.route_detail(to: RepositoryViewController(
+            client: client,
+            repo: repo
+        ))
     }
 
 }

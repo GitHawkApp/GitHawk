@@ -10,7 +10,13 @@ import UIKit
 import ContextMenu
 import GitHubAPI
 
+protocol IssueManagingContextControllerDelegate: class {
+    func willMutateModel(from controller: IssueManagingContextController)
+}
+
 final class IssueManagingContextController: NSObject, ContextMenuDelegate {
+
+    weak var delegate: IssueManagingContextControllerDelegate?
 
     // Int with lowers-highest permissions to do rank comparisons
     enum Permissions: Int {
@@ -81,6 +87,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     var actions: [Action] {
+        if case .none = permissions { return [] }
         guard let result = self.result else { return [] }
 
         var actions = [Action]()
@@ -126,10 +133,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             title = Constants.Strings.reviewers
             iconName = "reviewer"
         case .unlock:
-            title = NSLocalizedString("Unlock", comment: "")
+            title =  Constants.Strings.unlock
             iconName = "key"
         case .lock:
-            title = NSLocalizedString("Lock", comment: "")
+            title = Constants.Strings.lock
             iconName = "lock"
         case .reopen:
             title = Constants.Strings.reopen
@@ -139,20 +146,30 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             iconName = "x"
         }
 
+        // Lock always has the divider above it assuming you're a collaborator.
+        // If you aren't a collaborator (Lock does not show), close has the divider above it.
         let separator: Bool
         switch action {
-        case .reopen, .close: separator = true
+        case .lock, .unlock: separator = true
+        case .reopen, .close: separator = permissions != .collaborator
         default: separator = false
         }
 
         let iconColor: UIColor
         switch action {
+        case .lock, .unlock: iconColor = Styles.Colors.Gray.light.color
         case .close: iconColor = Styles.Colors.Red.medium.color
+        case .reopen: iconColor = Styles.Colors.Green.medium.color
         default: iconColor = Styles.Colors.Blue.medium.color
         }
 
-        return ContrastContextMenuItem(title: title, iconName: iconName, iconColor: iconColor,
-                                       separator: separator, action: actionBlock(action))
+        return ContrastContextMenuItem(
+            title: title,
+            iconName: iconName,
+            iconColor: iconColor,
+            separator: separator,
+            action: actionBlock(action)
+        )
 
     }
 
@@ -176,6 +193,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     @objc func onButton(sender: UIButton) {
         guard let viewController = self.viewController else { return }
 
+        viewController.view.endEditing(true)
         let items = actions.map { self.item($0) }
         ContextMenu.shared.show(
             sourceViewController: viewController,
@@ -255,6 +273,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func close(_ doClose: Bool) {
         guard let previous = result else { return }
+        delegate?.willMutateModel(from: self)
         client.setStatus(
             previous: previous,
             owner: model.owner,
@@ -267,6 +286,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func lock(_ doLock: Bool) {
         guard let previous = result else { return }
+        delegate?.willMutateModel(from: self)
         client.setLocked(
             previous: previous,
             owner: model.owner,
@@ -278,7 +298,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     func didDismiss(selected labels: [RepositoryLabel]) {
-        guard let previous = result else { return }
+        guard let previous = result,
+            previous.labels.labels != labels
+            else { return }
+        delegate?.willMutateModel(from: self)
         client.mutateLabels(
             previous: previous,
             owner: model.owner,
@@ -290,6 +313,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func didDismiss(controller: PeopleViewController) {
         guard let previous = result else { return }
+
+        let selected = controller.selected
+        guard controller.selectionChanged(newValues: selected) else { return }
+        delegate?.willMutateModel(from: self)
 
         let mutationType: V3AddPeopleRequest.PeopleType
         switch controller.type {
@@ -308,7 +335,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     func didDismiss(controller: MilestonesViewController) {
-        guard let previous = result else { return }
+        guard let previous = result,
+            previous.milestone != controller.selected
+            else { return }
+        delegate?.willMutateModel(from: self)
         client.setMilestone(
             previous: previous,
             owner: model.owner,
@@ -333,4 +363,3 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
 }
-

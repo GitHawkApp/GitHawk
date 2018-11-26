@@ -25,7 +25,7 @@ final class BookmarkCell: SwipeSelectableCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         backgroundColor = .white
 
         contentView.clipsToBounds = true
@@ -52,7 +52,7 @@ final class BookmarkCell: SwipeSelectableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
 
         let bounds = contentView.bounds
         textView.reposition(for: bounds.width)
@@ -74,7 +74,7 @@ final class BookmarkCell: SwipeSelectableCell {
     }
 
     func configure(viewModel: BookmarkViewModel, height: CGFloat) {
-        imageView.image = viewModel.bookmark.type.icon.withRenderingMode(.alwaysTemplate)
+        imageView.image = viewModel.bookmark.type.icon()?.withRenderingMode(.alwaysTemplate)
         textView.configure(with: viewModel.text, width: contentView.bounds.width)
 
         // set "Owner/Repo #123" on the detail label if issue/PR, otherwise clear and collapse it
@@ -84,14 +84,14 @@ final class BookmarkCell: SwipeSelectableCell {
                 string: "\(viewModel.bookmark.owner)/\(viewModel.bookmark.name)",
                 attributes: [
                     .font: Styles.Text.secondaryBold.preferredFont,
-                    .foregroundColor: Styles.Colors.Gray.light.color,
+                    .foregroundColor: Styles.Colors.Gray.light.color
                     ]
             )
             detailString.append(NSAttributedString(
                 string: " #\(viewModel.bookmark.number)",
                 attributes: [
                     .font: Styles.Text.secondary.preferredFont,
-                    .foregroundColor: Styles.Colors.Gray.light.color,
+                    .foregroundColor: Styles.Colors.Gray.light.color
                 ]
             ))
             detailLabel.attributedText = detailString

@@ -11,10 +11,12 @@ import NYTPhotoViewer
 
 final class IssueCommentPhoto: NSObject, NYTPhoto {
 
-    let image: UIImage?
-    let imageData: Data?
+    // mutable to create the model, mutate, and tell the NYTP... to update
+    // https://github.com/NYTimes/NYTPhotoViewer/issues/203#issuecomment-264474752
+    var image: UIImage?
+    var imageData: Data?
 
-    init(image: UIImage, data: Data?) {
+    init(image: UIImage? = nil, data: Data? = nil) {
         self.image = image
         self.imageData = data
     }

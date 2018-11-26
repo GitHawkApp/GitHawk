@@ -25,14 +25,11 @@ final class BookmarkSectionController: ListGenericSectionController<BookmarkView
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width,
-            let object = object else {
-            fatalError("Missing context")
-        }
-
-        return CGSize(
-            width: width,
-            height: max(object.text.viewSize(in: width).height, Styles.Sizes.tableCellHeightLarge)
+        return collectionContext.cellSize(
+            with: max(
+                object?.text.viewSize(in: collectionContext.safeContentWidth()).height ?? 0,
+                Styles.Sizes.tableCellHeight + Styles.Sizes.rowSpacing * 2
+                )
         )
     }
 
