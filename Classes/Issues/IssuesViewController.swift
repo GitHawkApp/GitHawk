@@ -74,15 +74,10 @@ IssueManagingContextControllerDelegate {
                 let result = self.client.cache.get(id: id) as IssueResult? {
                 hidden = result.labels.locked && !viewerIsCollaborator
 
-                let bookmark = Bookmark(
-                    type: result.pullRequest ? .pullRequest : .issue,
-                    name: self.model.repo,
-                    owner: self.model.owner,
-                    number: self.model.number,
-                    title: result.title.string.allText,
-                    defaultBranch: result.defaultBranch
+                self.bookmarkNavController = BookmarkNavigationController(
+                    store: client.bookmarkCloudStore,
+                    graphQLID: id
                 )
-                self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarkCloudStore, model: bookmark)
                 self.configureNavigationItems()
             } else {
                 hidden = true

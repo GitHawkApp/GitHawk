@@ -28,14 +28,10 @@ ContextMenuDelegate {
         self.client = client
         self.branch = repo.defaultBranch
 
-        let bookmark = Bookmark(
-            type: .repo,
-            name: repo.name,
-            owner: repo.owner,
-            hasIssueEnabled: repo.hasIssuesEnabled,
-            defaultBranch: repo.defaultBranch
+        self.bookmarkNavController = BookmarkNavigationController(
+            store: client.bookmarkCloudStore,
+            graphQLID: "" // TODO
         )
-        self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarkCloudStore, model: bookmark)
 
         var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
         if repo.hasIssuesEnabled {

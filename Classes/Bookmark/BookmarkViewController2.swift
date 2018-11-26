@@ -11,7 +11,12 @@ import IGListKit
 import Squawk
 
 protocol BookmarkViewControllerClient {
-    func fetch(graphQLIDs: [String], completion: @escaping (Result<[ListSwiftDiffable]>) -> Void)
+    func fetch(graphQLIDs: [String], completion: @escaping (Result<[BookmarkModelType]>) -> Void)
+}
+
+enum BookmarkModelType {
+    case issue(BookmarkIssueViewModel)
+    case repo(RepositoryDetails)
 }
 
 final class BookmarkViewController2: BaseListViewController<String>,
@@ -23,6 +28,7 @@ BaseListViewControllerEmptyDataSource {
     private let client: Client
     private let cloudStore: BookmarkIDCloudStore
     private let migrator: BookmarkCloudMigrator
+    private var models = [BookmarkModelType]()
 
     init(
         client: Client,
@@ -50,8 +56,10 @@ BaseListViewControllerEmptyDataSource {
         self.migrator.sync { [weak self] result in
             switch result {
             case .noMigration: break
-            case .success: self?.handleMigrationSuccess()
-            case .error(let error): self?.handleMigration(error: error)
+            case .success(let ids):
+                self?.handleMigrationSuccess(graphQLIDs: ids)
+            case .error(let error):
+                self?.handleMigration(error: error)
             }
         }
     }
@@ -76,7 +84,8 @@ BaseListViewControllerEmptyDataSource {
         update()
     }
 
-    private func handleMigrationSuccess() {
+    private func handleMigrationSuccess(graphQLIDs: [String]) {
+        cloudStore.add(graphQLIDs: graphQLIDs)
         fetch(page: nil)
     }
 
@@ -91,7 +100,7 @@ BaseListViewControllerEmptyDataSource {
         client.fetch(graphQLIDs: cloudStore.ids) { [weak self] result in
             switch result {
             case .success(let models):
-                // TODO set models
+                self?.models = models
                 self?.update()
             case .error(let error):
                 self?.error()
@@ -112,13 +121,18 @@ BaseListViewControllerEmptyDataSource {
         case .success: break
         }
 
-        var models = [ListSwiftPair]()
-        /**
-         - get all gqlIDs
-         - fetch from cache
-         - if type is model that we support, add it to the models array
-         */
-        return models
+        return models.map {
+            switch $0 {
+            case .issue(let model):
+                return ListSwiftPair.pair(model, {
+                    BookmarkIssueSectionController()
+                })
+            case .repo(let model):
+                return ListSwiftPair.pair(model, {
+                    BookmarkRepoSectionController()
+                })
+            }
+        }
     }
 
     // MARK: BaseListViewControllerEmptyDataSource

@@ -8,13 +8,14 @@
 
 import XCTest
 import IGListKit
+import StyledTextKit
 @testable import Freetime
 
 private class FakeBookmarkViewControllerClient: BookmarkViewControllerClient,
 BookmarkCloudMigratorClient {
 
     let migratorResult: BookmarkCloudMigratorClientResult
-    let clientResult: Result<[ListSwiftDiffable]>
+    let clientResult: Result<[BookmarkModelType]>
     let infiniteMigration: Bool
 
     var migratorFetches = 0
@@ -22,7 +23,7 @@ BookmarkCloudMigratorClient {
 
     init(
         migratorResult: BookmarkCloudMigratorClientResult,
-        clientResult: Result<[ListSwiftDiffable]>,
+        clientResult: Result<[BookmarkModelType]>,
         infiniteMigration: Bool = false
         ) {
         self.migratorResult = migratorResult
@@ -44,7 +45,7 @@ BookmarkCloudMigratorClient {
         }
     }
 
-    func fetch(graphQLIDs: [String], completion: @escaping (Result<[ListSwiftDiffable]>) -> Void) {
+    func fetch(graphQLIDs: [String], completion: @escaping (Result<[BookmarkModelType]>) -> Void) {
         clientFetches += 1
         completion(clientResult)
     }
@@ -183,6 +184,61 @@ class BookmarkViewControllerTests: XCTestCase {
             XCTAssertNil(utils.view(with: "feed-loading-view"))
             XCTAssertNil(utils.view(with: "bookmark-migration-cell"))
             XCTAssertNotNil(utils.view(with: "base-empty-view"))
+            XCTAssertEqual(client.migratorFetches, 0)
+            XCTAssertEqual(client.clientFetches, 1)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 30)
+    }
+
+    func test_whenFetchReturnsModels_thatCellsExist() {
+        let models: [BookmarkModelType] = [
+            BookmarkModelType.issue(BookmarkIssueViewModel(
+                repo: Repository(owner: "GitHawkApp", name: "GitHawk"),
+                number: 42,
+                isPullRequest: false,
+                state: .open,
+                text: StyledTextRenderer(
+                    string: StyledTextBuilder(text: "Foo bar").build(),
+                    contentSizeCategory: .medium)
+            )),
+            BookmarkModelType.issue(BookmarkIssueViewModel(
+                repo: Repository(owner: "GitHawkApp", name: "GitHawk"),
+                number: 12,
+                isPullRequest: true,
+                state: .closed,
+                text: StyledTextRenderer(
+                    string: StyledTextBuilder(text: "Foo bar").build(),
+                    contentSizeCategory: .medium)
+            )),
+            BookmarkModelType.repo(RepositoryDetails(
+                owner: "GitHawkApp",
+                name: "GitHawk",
+                defaultBranch: "master",
+                hasIssuesEnabled: true
+            ))
+        ]
+
+        let store = BookmarkIDCloudStore(username: "foo", iCloudStore: UserDefaults.standard)
+        let client = FakeBookmarkViewControllerClient(
+            migratorResult: .success([]),
+            clientResult: .success(models)
+        )
+        let utils = ViewControllerTestUtil(viewController: BookmarkViewController2(
+            client: client,
+            cloudStore: store,
+            oldBookmarks: []
+        ))
+
+        let expectation = XCTestExpectation(description: #function)
+        DispatchQueue.main.async {
+            XCTAssertNil(utils.view(with: "initial-empty-view"))
+            XCTAssertNotNil(utils.view(with: "feed-collection-view"))
+            XCTAssertNil(utils.view(with: "feed-loading-view"))
+            XCTAssertNil(utils.view(with: "bookmark-migration-cell"))
+            XCTAssertNil(utils.view(with: "base-empty-view"))
+            XCTAssertEqual(utils.views(with: "bookmark-cell").count, 2)
+            XCTAssertEqual(utils.views(with: "bookmark-repo-cell").count, 1)
             XCTAssertEqual(client.migratorFetches, 0)
             XCTAssertEqual(client.clientFetches, 1)
             expectation.fulfill()

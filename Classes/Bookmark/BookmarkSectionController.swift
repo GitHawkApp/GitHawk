@@ -37,9 +37,8 @@ final class BookmarkSectionController: ListGenericSectionController<BookmarkView
         guard let cell = collectionContext?.dequeueReusableCell(of: BookmarkCell.self, for: self, at: index) as? BookmarkCell else {
             fatalError("Missing context or wrong cell type")
         }
-        guard let object = object else { fatalError() }
+//        guard let object = object else { fatalError() }
         cell.delegate = self
-        cell.configure(viewModel: object, height: sizeForItem(at: index).height)
         return cell
     }
 

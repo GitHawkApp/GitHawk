@@ -31,7 +31,7 @@ BookmarkMigrationCellDelegate {
     // MARK: BookmarkMigrationCellDelegate
 
     func didTapMigrate(for cell: BookmarkMigrationCell) {
-
+        // TODO forward up to VC to migrate again
     }
 
 }
