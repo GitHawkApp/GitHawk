@@ -1,0 +1,37 @@
+query BookmarkNodes($ids: [ID!]!) {
+  nodes(ids: $ids) {
+    __typename
+    ... on Issue {
+      title
+      number
+      issueState: state
+      repository {
+        owner {
+          login
+        }
+        name
+      }
+    }
+    ... on PullRequest {
+      title
+      number
+      pullRequestState: state
+      repository {
+        owner {
+          login
+        }
+        name
+      }
+    }
+    ... on Repository {
+      owner {
+        login
+      }
+      name
+      defaultBranchRef {
+        name
+      }
+      hasIssuesEnabled
+    }
+  }
+}

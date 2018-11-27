@@ -49,8 +49,19 @@ func newSearchRootViewController(client: GithubClient) -> UIViewController {
 }
 
 func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
+    guard let cloudStore = client.bookmarkCloudStore else {
+        fatalError("Cannot init a bookmark VC without setting up storage")
+    }
+
+    let oldBookmarks: [Bookmark]
+    if let token = client.userSession?.token {
+        oldBookmarks = BookmarkStore(token: token).values
+    } else {
+        oldBookmarks = []
+    }
+
     let title = Constants.Strings.bookmarks
-    let controller = BookmarkViewController(client: client)
+    let controller = BookmarkViewController2(client: client, cloudStore: cloudStore, oldBookmarks: oldBookmarks)
     controller.makeBackBarItemEmpty()
     controller.title = title
     let nav = UINavigationController(rootViewController: controller)
