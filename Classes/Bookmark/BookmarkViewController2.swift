@@ -152,7 +152,7 @@ BookmarkIDCloudStoreListener {
     // MARK: BookmarkIDCloudStoreListener
 
     func didUpdateBookmarks(in store: BookmarkIDCloudStore) {
-        update()
+        fetch(page: nil)
     }
 
 }

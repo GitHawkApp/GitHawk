@@ -68,6 +68,7 @@ extension GithubClient: BookmarkViewController2.Client {
         graphQLIDs: [String],
         completion: @escaping (Result<[BookmarkModelType]>) -> Void
         ) {
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
         client.query(BookmarkNodesQuery(ids: graphQLIDs), result: { $0 }, completion: { result in
             switch result {
             case .failure(let error):
@@ -82,7 +83,8 @@ extension GithubClient: BookmarkViewController2.Client {
                             number: issue.number,
                             isPullRequest: false,
                             state: issue.issueState.rawValue,
-                            title: issue.title
+                            title: issue.title,
+                            contentSizeCategory: contentSizeCategory
                         )))
                     } else if let pr = $0?.asPullRequest {
                         models.append(.issue(BookmarkIssueViewModel(
@@ -91,7 +93,8 @@ extension GithubClient: BookmarkViewController2.Client {
                             number: pr.number,
                             isPullRequest: true,
                             state: pr.pullRequestState.rawValue,
-                            title: pr.title
+                            title: pr.title,
+                            contentSizeCategory: contentSizeCategory
                         )))
                     } else if let repo = $0?.asRepository {
                         models.append(.repo(RepositoryDetails(

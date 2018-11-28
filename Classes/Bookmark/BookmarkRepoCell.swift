@@ -17,11 +17,13 @@ final class BookmarkRepoCell: SwipeSelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        backgroundColor = .white
         accessibilityIdentifier = "bookmark-repo-cell"
 
         contentView.addSubview(imageView)
         contentView.addSubview(label)
 
+        imageView.contentMode = .center
         imageView.tintColor = Styles.Colors.Blue.medium.color
         imageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -34,6 +36,8 @@ final class BookmarkRepoCell: SwipeSelectableCell {
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
         }
+
+        addBorder(.bottom, left: Styles.Sizes.icon.width + Styles.Sizes.columnSpacing * 2)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +54,7 @@ final class BookmarkRepoCell: SwipeSelectableCell {
             .foregroundColor: Styles.Colors.Gray.dark.color,
             .font: Styles.Text.body.preferredFont
             ])
-        text.append(NSAttributedString(string: "\(owner)/", attributes: [
+        text.append(NSAttributedString(string: "\(name)", attributes: [
             .foregroundColor: Styles.Colors.Gray.dark.color,
             .font: Styles.Text.bodyBold.preferredFont
             ]))

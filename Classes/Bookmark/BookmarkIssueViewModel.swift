@@ -50,7 +50,8 @@ struct BookmarkIssueViewModel: ListSwiftDiffable {
         number: Int,
         isPullRequest: Bool,
         state: String,
-        title: String
+        title: String,
+        contentSizeCategory: UIContentSizeCategory
         ) {
         let string = StyledTextBuilder(
             styledText: StyledText(text: title, style: Styles.Text.body)
@@ -60,7 +61,11 @@ struct BookmarkIssueViewModel: ListSwiftDiffable {
             number: number,
             isPullRequest: isPullRequest,
             state: State(rawValue: state) ?? .pending,
-            text: StyledTextRenderer(string: string, contentSizeCategory: .medium)
+            text: StyledTextRenderer(
+                string: string,
+                contentSizeCategory: contentSizeCategory,
+                inset: BookmarkCell.titleInset
+            )
         )
     }
 

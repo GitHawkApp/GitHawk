@@ -132,6 +132,8 @@ final class BookmarkIDCloudStore {
     }
 
     @objc func iCloudDidUpdate() {
+        iCloudStore.synchronize()
+        storage = iCloudStore.savedBookmarks(for: key)
         enumerateListeners { $0.didUpdateBookmarks(in: self) }
     }
 

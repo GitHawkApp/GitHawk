@@ -31,20 +31,19 @@ final class BookmarkCell: SwipeSelectableCell {
 
         contentView.clipsToBounds = true
 
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
+        imageView.contentMode = .center
         imageView.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.rowSpacing)
+            make.left.equalTo(Styles.Sizes.columnSpacing)
             make.size.equalTo(Styles.Sizes.icon)
         }
 
         contentView.addSubview(textView)
         contentView.addSubview(detailLabel)
 
-        addBorder(.bottom, left: Styles.Sizes.gutter)
+        addBorder(.bottom, left: BookmarkCell.titleInset.left)
     }
 
     required init?(coder aDecoder: NSCoder) {
