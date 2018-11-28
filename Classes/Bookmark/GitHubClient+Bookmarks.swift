@@ -68,7 +68,43 @@ extension GithubClient: BookmarkViewController2.Client {
         graphQLIDs: [String],
         completion: @escaping (Result<[BookmarkModelType]>) -> Void
         ) {
-        // TODO
+        client.query(BookmarkNodesQuery(ids: graphQLIDs), result: { $0 }, completion: { result in
+            switch result {
+            case .failure(let error):
+                completion(.error(error))
+            case .success(let data):
+                var models = [BookmarkModelType]()
+                data.nodes.forEach {
+                    if let issue = $0?.asIssue {
+                        models.append(.issue(BookmarkIssueViewModel(
+                            owner: issue.repository.owner.login,
+                            name: issue.repository.name,
+                            number: issue.number,
+                            isPullRequest: false,
+                            state: issue.issueState.rawValue,
+                            title: issue.title
+                        )))
+                    } else if let pr = $0?.asPullRequest {
+                        models.append(.issue(BookmarkIssueViewModel(
+                            owner: pr.repository.owner.login,
+                            name: pr.repository.name,
+                            number: pr.number,
+                            isPullRequest: true,
+                            state: pr.pullRequestState.rawValue,
+                            title: pr.title
+                        )))
+                    } else if let repo = $0?.asRepository {
+                        models.append(.repo(RepositoryDetails(
+                            owner: repo.owner.login,
+                            name: repo.name,
+                            defaultBranch: repo.defaultBranchRef?.name ?? "master",
+                            hasIssuesEnabled: repo.hasIssuesEnabled
+                        )))
+                    }
+                }
+                completion(.success(models))
+            }
+        })
     }
 
 }

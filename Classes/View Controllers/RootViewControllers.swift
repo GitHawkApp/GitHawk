@@ -61,7 +61,11 @@ func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     }
 
     let title = Constants.Strings.bookmarks
-    let controller = BookmarkViewController2(client: client, cloudStore: cloudStore, oldBookmarks: oldBookmarks)
+    let controller = BookmarkViewController2(
+        client: client,
+        cloudStore: cloudStore,
+        oldBookmarks: oldBookmarks
+    )
     controller.makeBackBarItemEmpty()
     controller.title = title
     let nav = UINavigationController(rootViewController: controller)

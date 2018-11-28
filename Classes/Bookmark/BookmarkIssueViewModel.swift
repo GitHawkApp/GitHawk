@@ -44,6 +44,26 @@ struct BookmarkIssueViewModel: ListSwiftDiffable {
         _identifier = "\(repo.owner).\(repo.name).\(number)"
     }
 
+    init(
+        owner: String,
+        name: String,
+        number: Int,
+        isPullRequest: Bool,
+        state: String,
+        title: String
+        ) {
+        let string = StyledTextBuilder(
+            styledText: StyledText(text: title, style: Styles.Text.body)
+            ).build()
+        self.init(
+            repo: Repository(owner: owner, name: name),
+            number: number,
+            isPullRequest: isPullRequest,
+            state: State(rawValue: state) ?? .pending,
+            text: StyledTextRenderer(string: string, contentSizeCategory: .medium)
+        )
+    }
+
     // MARK: ListSwiftDiffable
 
     var identifier: String {

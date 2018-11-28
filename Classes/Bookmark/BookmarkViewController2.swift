@@ -21,7 +21,8 @@ enum BookmarkModelType {
 
 final class BookmarkViewController2: BaseListViewController<String>,
 BaseListViewControllerDataSource,
-BaseListViewControllerEmptyDataSource {
+BaseListViewControllerEmptyDataSource,
+BookmarkIDCloudStoreListener {
 
     typealias Client = BookmarkViewControllerClient & BookmarkCloudMigratorClient
 
@@ -50,6 +51,8 @@ BaseListViewControllerEmptyDataSource {
 
         dataSource = self
         emptyDataSource = self
+
+        cloudStore.add(listener: self)
 
         // start migration on init (app start) so likely finished before opening
         // the bookmark tab
@@ -144,6 +147,12 @@ BaseListViewControllerEmptyDataSource {
             description: NSLocalizedString("Bookmark your favorite issues,\npull requests, and repositories.", comment: "")
         )
         return ListSwiftPair.pair(model, { InitialEmptyViewSectionController() })
+    }
+
+    // MARK: BookmarkIDCloudStoreListener
+
+    func didUpdateBookmarks(in store: BookmarkIDCloudStore) {
+        update()
     }
 
 }
