@@ -66,8 +66,6 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
                     owner: value.owner,
                     repo: value.repo,
                     icon: #imageLiteral(resourceName: "repo"),
-                    branch: value.branch,
-                    issuesEnabled: value.issuesEnabled,
                     client: modelController.githubClient
                 ),
                 AlertAction.cancel()

@@ -49,9 +49,9 @@ final class BookmarkMigrationCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

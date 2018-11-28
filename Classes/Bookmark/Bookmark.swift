@@ -14,24 +14,18 @@ struct Bookmark: Codable, Equatable {
     let owner: String
     let number: Int
     let title: String
-    let hasIssueEnabled: Bool
-    let defaultBranch: String
 
     init(type: NotificationType,
          name: String,
          owner: String,
          number: Int = 0,
-         title: String = "",
-         hasIssueEnabled: Bool = false,
-         defaultBranch: String = "master"
+         title: String = ""
         ) {
         self.type = type
         self.name = name
         self.owner = owner
         self.number = number
         self.title = title
-        self.hasIssueEnabled = hasIssueEnabled
-        self.defaultBranch = defaultBranch
     }
 }
 

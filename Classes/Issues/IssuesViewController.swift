@@ -252,8 +252,7 @@ IssueManagingContextControllerDelegate {
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: result.title.string.allText,
-            defaultBranch: result.defaultBranch
+            title: result.title.string.allText
         )
     }
 
@@ -269,8 +268,6 @@ IssueManagingContextControllerDelegate {
             owner: model.owner,
             repo: model.repo,
             icon: #imageLiteral(resourceName: "repo"),
-            branch: result.defaultBranch,
-            issuesEnabled: result.hasIssuesEnabled,
             client: client
         )
     }

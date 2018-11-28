@@ -133,9 +133,7 @@ TabNavRootViewControllerType {
         case .repo:
             let repo = RepositoryDetails(
                 owner: bookmark.owner,
-                name: bookmark.name,
-                defaultBranch: bookmark.defaultBranch,
-                hasIssuesEnabled: bookmark.hasIssueEnabled
+                name: bookmark.name
             )
             destinationViewController = RepositoryViewController(client: client, repo: repo)
 

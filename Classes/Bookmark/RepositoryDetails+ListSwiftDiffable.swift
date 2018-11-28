@@ -16,9 +16,7 @@ extension RepositoryDetails: ListSwiftDiffable {
     }
 
     func isEqual(to value: ListSwiftDiffable) -> Bool {
-        guard let value = value as? RepositoryDetails else { return false }
-        return defaultBranch == value.defaultBranch
-        && hasIssuesEnabled == value.hasIssuesEnabled
+        return true
     }
 
 }

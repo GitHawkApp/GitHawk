@@ -28,10 +28,6 @@ query BookmarkNodes($ids: [ID!]!) {
         login
       }
       name
-      defaultBranchRef {
-        name
-      }
-      hasIssuesEnabled
     }
   }
 }

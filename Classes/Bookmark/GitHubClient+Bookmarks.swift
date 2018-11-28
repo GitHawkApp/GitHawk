@@ -96,9 +96,7 @@ extension GithubClient: BookmarkViewController2.Client {
                     } else if let repo = $0?.asRepository {
                         models.append(.repo(RepositoryDetails(
                             owner: repo.owner.login,
-                            name: repo.name,
-                            defaultBranch: repo.defaultBranchRef?.name ?? "master",
-                            hasIssuesEnabled: repo.hasIssuesEnabled
+                            name: repo.name
                         )))
                     }
                 }

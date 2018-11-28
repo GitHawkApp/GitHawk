@@ -442,6 +442,8 @@
 		29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942F1EE752280016E6D4 /* IssueLabeledCell.swift */; };
 		29FE635B21AB86B700A07A86 /* BookmarkRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE635A21AB86B700A07A86 /* BookmarkRepoCell.swift */; };
 		29FE635D21AB95EB00A07A86 /* GitHubClient+Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE635C21AB95EB00A07A86 /* GitHubClient+Bookmarks.swift */; };
+		29FE635F21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE635E21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift */; };
+		29FE636121AE2E7900A07A86 /* RepositoryErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE636021AE2E7900A07A86 /* RepositoryErrorViewController.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		3E79A2FF1F8A7DA700E1126B /* ShortcutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */; };
 		4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */; };
@@ -1028,6 +1030,8 @@
 		29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Freetime-Bridging-Header.h"; sourceTree = "<group>"; };
 		29FE635A21AB86B700A07A86 /* BookmarkRepoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRepoCell.swift; sourceTree = "<group>"; };
 		29FE635C21AB95EB00A07A86 /* GitHubClient+Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+Bookmarks.swift"; sourceTree = "<group>"; };
+		29FE635E21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryLoadingViewController.swift; sourceTree = "<group>"; };
+		29FE636021AE2E7900A07A86 /* RepositoryErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryErrorViewController.swift; sourceTree = "<group>"; };
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
 		36115D494E8C3B4F39AC8CD9 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		3E106824819769E0A6665A79 /* Pods-FreetimeWatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch/Pods-FreetimeWatch.release.xcconfig"; sourceTree = "<group>"; };
@@ -2197,6 +2201,7 @@
 				29C62F9F218F47A9001724B2 /* RepositoryCodeDirectorySectionController.swift */,
 				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
 				295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */,
+				29FE636021AE2E7900A07A86 /* RepositoryErrorViewController.swift */,
 				29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */,
 				29B94E6E1FCB743900715D7E /* RepositoryFileCell.swift */,
 				29B3B91621A0B38C006BED05 /* RepositoryImageViewController.swift */,
@@ -2204,6 +2209,7 @@
 				29A5AF401F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift */,
 				986B87331F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift */,
 				2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */,
+				29FE635E21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift */,
 				2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */,
 				29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */,
 				29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */,
@@ -2332,8 +2338,8 @@
 				DCA5ED0D1FAED91F0072F074 /* BookmarkViewController.swift */,
 				29827C8B21A87D4B00A1B293 /* BookmarkViewController2.swift */,
 				DCA5ED151FAEE91F0072F074 /* BookmarkViewModel.swift */,
-				296B8D8721AB859900E04181 /* RepositoryDetails+ListSwiftDiffable.swift */,
 				29FE635C21AB95EB00A07A86 /* GitHubClient+Bookmarks.swift */,
+				296B8D8721AB859900E04181 /* RepositoryDetails+ListSwiftDiffable.swift */,
 			);
 			path = Bookmark;
 			sourceTree = "<group>";
@@ -3060,6 +3066,7 @@
 				299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
 				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,
+				29FE636121AE2E7900A07A86 /* RepositoryErrorViewController.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
 				2946FA5120367FC100C37435 /* GithubClient+Merge.swift in Sources */,
 				2999972A20311B3800995FFD /* IssueMergeSectionController.swift in Sources */,
@@ -3291,6 +3298,7 @@
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */,
+				29FE635F21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift in Sources */,
 				29C8F9AB208BF64D0075931C /* BaseListViewController.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
 				2977788A20B306F200F2AFC2 /* LabelLayoutManager.swift in Sources */,

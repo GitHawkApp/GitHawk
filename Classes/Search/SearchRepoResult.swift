@@ -21,9 +21,7 @@ class SearchRepoResult: ListDiffable {
     let name: String
     let description: String
     let stars: Int
-    let hasIssuesEnabled: Bool
     let primaryLanguage: GithubLanguage?
-    let defaultBranch: String
 
     init(
         id: String,
@@ -31,18 +29,14 @@ class SearchRepoResult: ListDiffable {
         name: String,
         description: String,
         stars: Int,
-        hasIssuesEnabled: Bool,
-        primaryLanguage: GithubLanguage?,
-        defaultBranch: String
+        primaryLanguage: GithubLanguage?
         ) {
         self.id = id
         self.owner = owner
         self.name = name
         self.description = description
         self.stars = stars
-        self.hasIssuesEnabled = hasIssuesEnabled
         self.primaryLanguage = primaryLanguage
-        self.defaultBranch = defaultBranch
     }
 
     func diffIdentifier() -> NSObjectProtocol {

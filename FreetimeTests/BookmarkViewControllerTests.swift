@@ -213,9 +213,7 @@ class BookmarkViewControllerTests: XCTestCase {
             )),
             BookmarkModelType.repo(RepositoryDetails(
                 owner: "GitHawkApp",
-                name: "GitHawk",
-                defaultBranch: "master",
-                hasIssuesEnabled: true
+                name: "GitHawk"
             ))
         ]
 

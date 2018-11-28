@@ -1245,7 +1245,7 @@ public final class AddReactionMutation: GraphQLMutation {
 
 public final class BookmarkNodesQuery: GraphQLQuery {
   public static let operationString =
-    "query BookmarkNodes($ids: [ID!]!) {\n  nodes(ids: $ids) {\n    __typename\n    ... on Issue {\n      title\n      number\n      issueState: state\n      repository {\n        __typename\n        owner {\n          __typename\n          login\n        }\n        name\n      }\n    }\n    ... on PullRequest {\n      title\n      number\n      pullRequestState: state\n      repository {\n        __typename\n        owner {\n          __typename\n          login\n        }\n        name\n      }\n    }\n    ... on Repository {\n      owner {\n        __typename\n        login\n      }\n      name\n      defaultBranchRef {\n        __typename\n        name\n      }\n      hasIssuesEnabled\n    }\n  }\n}"
+    "query BookmarkNodes($ids: [ID!]!) {\n  nodes(ids: $ids) {\n    __typename\n    ... on Issue {\n      title\n      number\n      issueState: state\n      repository {\n        __typename\n        owner {\n          __typename\n          login\n        }\n        name\n      }\n    }\n    ... on PullRequest {\n      title\n      number\n      pullRequestState: state\n      repository {\n        __typename\n        owner {\n          __typename\n          login\n        }\n        name\n      }\n    }\n    ... on Repository {\n      owner {\n        __typename\n        login\n      }\n      name\n    }\n  }\n}"
 
   public var ids: [GraphQLID]
 
@@ -1622,8 +1622,8 @@ public final class BookmarkNodesQuery: GraphQLQuery {
         return Node(snapshot: ["__typename": "PullRequest", "title": title, "number": number, "pullRequestState": pullRequestState, "repository": repository.snapshot])
       }
 
-      public static func makeRepository(owner: AsRepository.Owner, name: String, defaultBranchRef: AsRepository.DefaultBranchRef? = nil, hasIssuesEnabled: Bool) -> Node {
-        return Node(snapshot: ["__typename": "Repository", "owner": owner.snapshot, "name": name, "defaultBranchRef": defaultBranchRef.flatMap { (value: AsRepository.DefaultBranchRef) -> Snapshot in value.snapshot }, "hasIssuesEnabled": hasIssuesEnabled])
+      public static func makeRepository(owner: AsRepository.Owner, name: String) -> Node {
+        return Node(snapshot: ["__typename": "Repository", "owner": owner.snapshot, "name": name])
       }
 
       public var __typename: String {
@@ -1999,8 +1999,6 @@ public final class BookmarkNodesQuery: GraphQLQuery {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
           GraphQLField("name", type: .nonNull(.scalar(String.self))),
-          GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
-          GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
         ]
 
         public var snapshot: Snapshot
@@ -2009,8 +2007,8 @@ public final class BookmarkNodesQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(owner: Owner, name: String, defaultBranchRef: DefaultBranchRef? = nil, hasIssuesEnabled: Bool) {
-          self.init(snapshot: ["__typename": "Repository", "owner": owner.snapshot, "name": name, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }, "hasIssuesEnabled": hasIssuesEnabled])
+        public init(owner: Owner, name: String) {
+          self.init(snapshot: ["__typename": "Repository", "owner": owner.snapshot, "name": name])
         }
 
         public var __typename: String {
@@ -2039,26 +2037,6 @@ public final class BookmarkNodesQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "name")
-          }
-        }
-
-        /// The Ref associated with the repository's default branch.
-        public var defaultBranchRef: DefaultBranchRef? {
-          get {
-            return (snapshot["defaultBranchRef"] as? Snapshot).flatMap { DefaultBranchRef(snapshot: $0) }
-          }
-          set {
-            snapshot.updateValue(newValue?.snapshot, forKey: "defaultBranchRef")
-          }
-        }
-
-        /// Indicates if the repository has issues feature enabled.
-        public var hasIssuesEnabled: Bool {
-          get {
-            return snapshot["hasIssuesEnabled"]! as! Bool
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "hasIssuesEnabled")
           }
         }
 
@@ -2100,44 +2078,6 @@ public final class BookmarkNodesQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "login")
-            }
-          }
-        }
-
-        public struct DefaultBranchRef: GraphQLSelectionSet {
-          public static let possibleTypes = ["Ref"]
-
-          public static let selections: [GraphQLSelection] = [
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("name", type: .nonNull(.scalar(String.self))),
-          ]
-
-          public var snapshot: Snapshot
-
-          public init(snapshot: Snapshot) {
-            self.snapshot = snapshot
-          }
-
-          public init(name: String) {
-            self.init(snapshot: ["__typename": "Ref", "name": name])
-          }
-
-          public var __typename: String {
-            get {
-              return snapshot["__typename"]! as! String
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "__typename")
-            }
-          }
-
-          /// The ref name.
-          public var name: String {
-            get {
-              return snapshot["name"]! as! String
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "name")
             }
           }
         }
@@ -17012,6 +16952,148 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "endCursor")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class RepositoryInfoQuery: GraphQLQuery {
+  public static let operationString =
+    "query RepositoryInfo($owner: String!, $name: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    id\n    defaultBranchRef {\n      __typename\n      name\n    }\n    hasIssuesEnabled\n  }\n}"
+
+  public var owner: String
+  public var name: String
+
+  public init(owner: String, name: String) {
+    self.owner = owner
+    self.name = name
+  }
+
+  public var variables: GraphQLMap? {
+    return ["owner": owner, "name": name]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name")], type: .object(Repository.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(repository: Repository? = nil) {
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a given repository by the owner and repository name.
+    public var repository: Repository? {
+      get {
+        return (snapshot["repository"] as? Snapshot).flatMap { Repository(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "repository")
+      }
+    }
+
+    public struct Repository: GraphQLSelectionSet {
+      public static let possibleTypes = ["Repository"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
+        GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, defaultBranchRef: DefaultBranchRef? = nil, hasIssuesEnabled: Bool) {
+        self.init(snapshot: ["__typename": "Repository", "id": id, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }, "hasIssuesEnabled": hasIssuesEnabled])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      /// The Ref associated with the repository's default branch.
+      public var defaultBranchRef: DefaultBranchRef? {
+        get {
+          return (snapshot["defaultBranchRef"] as? Snapshot).flatMap { DefaultBranchRef(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue?.snapshot, forKey: "defaultBranchRef")
+        }
+      }
+
+      /// Indicates if the repository has issues feature enabled.
+      public var hasIssuesEnabled: Bool {
+        get {
+          return snapshot["hasIssuesEnabled"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "hasIssuesEnabled")
+        }
+      }
+
+      public struct DefaultBranchRef: GraphQLSelectionSet {
+        public static let possibleTypes = ["Ref"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("name", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(name: String) {
+          self.init(snapshot: ["__typename": "Ref", "name": name])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// The ref name.
+        public var name: String {
+          get {
+            return snapshot["name"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "name")
           }
         }
       }
