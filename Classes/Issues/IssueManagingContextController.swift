@@ -89,7 +89,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     var actions: [Action] {
-        if case .none = permissions { return [] }
+
         guard let result = self.result else { return [] }
 
         var actions = [Action]()
@@ -114,15 +114,15 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
                 actions.append(.lock)
             }
         }
-
-        switch result.labels.status.status {
-        case .closed:
-            actions.append(.reopen)
-        case .open:
-            actions.append(.close)
-        case .merged: break
+        if permissions == .collaborator || permissions == .author {
+            switch result.labels.status.status {
+            case .closed:
+                actions.append(.reopen)
+            case .open:
+                actions.append(.close)
+            case .merged: break
+            }
         }
-
         return actions
     }
 
@@ -293,7 +293,9 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     func subscribe(_ doSubscribe: Bool) {
         guard let previous = result else { return }
         delegate?.willMutateModel(from: self)
-        client.setSubscription(previous: previous, subscribed: doSubscribe)
+        client.setSubscription(subscriptionId: previous.id, subscribed: doSubscribe) { (result) in
+            print(result)
+        }
         Haptic.triggerNotification(.success)
     }
     func close(_ doClose: Bool) {

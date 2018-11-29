@@ -298,23 +298,29 @@ extension GithubClient {
         }
     }
 
-
     func setSubscription(
-        previous: IssueResult,
+        subscriptionId: String,
         subscribed: Bool,
-        completion: ((Result<Bool>) -> Void)? = nil
-    ) {
+        completion: @escaping (Bool) -> Void
+        ) {
 
-        let cache = self.cache
+        let state: SubscriptionState = subscribed
+            ? .subscribed
+            : .unsubscribed
 
-        client.send(V3SubscribeThreadRequest(id: previous.id, ignore: subscribed)) { result in
+        let mutation = UpdateSubscriptionMutation(subscribable_Id: subscriptionId, subscription_state: state)
+
+        client.mutate(mutation, result: { data in
+            print(data.updateSubscription?.subscribable) // Returns nil
+        }, completion: { result in
             switch result {
-            case .success:
-                completion?(.success(true))
+            case .success(_):
+                completion(true)
             case .failure(let error):
-                cache.set(value: previous)
+                completion(false)
+                Squawk.show(error: error)
             }
-        }
+        })
     }
 
     enum CollaboratorPermission: String {

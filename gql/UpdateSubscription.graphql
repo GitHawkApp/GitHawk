@@ -1,0 +1,7 @@
+mutation UpdateSubscription($subscribable_Id: ID!, $subscription_state: SubscriptionState!) {
+  updateSubscription(input:{subscribableId: $subscribable_Id, state: $subscription_state}) {
+    subscribable{
+      ...subscribableFields
+    }
+  }
+}

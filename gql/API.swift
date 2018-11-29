@@ -58,6 +58,47 @@ public enum ReactionContent: RawRepresentable, Equatable, Apollo.JSONDecodable, 
   }
 }
 
+/// The possible states of a subscription.
+public enum SubscriptionState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
+  /// The User is only notified when particpating or @mentioned.
+  case unsubscribed
+  /// The User is notified of all conversations.
+  case subscribed
+  /// The User is never notified.
+  case ignored
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "UNSUBSCRIBED": self = .unsubscribed
+      case "SUBSCRIBED": self = .subscribed
+      case "IGNORED": self = .ignored
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .unsubscribed: return "UNSUBSCRIBED"
+      case .subscribed: return "SUBSCRIBED"
+      case .ignored: return "IGNORED"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: SubscriptionState, rhs: SubscriptionState) -> Bool {
+    switch (lhs, rhs) {
+      case (.unsubscribed, .unsubscribed): return true
+      case (.subscribed, .subscribed): return true
+      case (.ignored, .ignored): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
+
 /// The possible commit status states.
 public enum StatusState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
   public typealias RawValue = String
@@ -103,47 +144,6 @@ public enum StatusState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apol
       case (.failure, .failure): return true
       case (.pending, .pending): return true
       case (.success, .success): return true
-      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
-      default: return false
-    }
-  }
-}
-
-/// The possible states of a subscription.
-public enum SubscriptionState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
-  public typealias RawValue = String
-  /// The User is only notified when particpating or @mentioned.
-  case unsubscribed
-  /// The User is notified of all conversations.
-  case subscribed
-  /// The User is never notified.
-  case ignored
-  /// Auto generated constant for unknown enum values
-  case __unknown(RawValue)
-
-  public init?(rawValue: RawValue) {
-    switch rawValue {
-      case "UNSUBSCRIBED": self = .unsubscribed
-      case "SUBSCRIBED": self = .subscribed
-      case "IGNORED": self = .ignored
-      default: self = .__unknown(rawValue)
-    }
-  }
-
-  public var rawValue: RawValue {
-    switch self {
-      case .unsubscribed: return "UNSUBSCRIBED"
-      case .subscribed: return "SUBSCRIBED"
-      case .ignored: return "IGNORED"
-      case .__unknown(let value): return value
-    }
-  }
-
-  public static func == (lhs: SubscriptionState, rhs: SubscriptionState) -> Bool {
-    switch (lhs, rhs) {
-      case (.unsubscribed, .unsubscribed): return true
-      case (.subscribed, .subscribed): return true
-      case (.ignored, .ignored): return true
       case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
       default: return false
     }
@@ -1541,7 +1541,7 @@ public final class IssueAutocompleteQuery: GraphQLQuery {
 
 public final class IssueOrPullRequestQuery: GraphQLQuery {
   public static let operationString =
-    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    name\n    hasIssuesEnabled\n    viewerCanAdminister\n    mergeCommitAllowed\n    rebaseMergeAllowed\n    squashMergeAllowed\n    mentionableUsers(first: 50) {\n      __typename\n      nodes {\n        __typename\n        avatarUrl\n        login\n      }\n    }\n    defaultBranchRef {\n      __typename\n      name\n    }\n    issueOrPullRequest(number: $number) {\n      __typename\n      ... on Issue {\n        id\n        viewerSubscription\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              refCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n      }\n      ... on PullRequest {\n        viewerSubscription\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on MergedEvent {\n              ...nodeFields\n              mergedCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on PullRequestReviewThread {\n              comments(first: $page_size) {\n                __typename\n                nodes {\n                  __typename\n                  ...reactionFields\n                  ...nodeFields\n                  ...commentFields\n                  path\n                  diffHunk\n                }\n              }\n            }\n            ... on PullRequestReview {\n              ...nodeFields\n              ...commentFields\n              state\n              submittedAt\n              author {\n                __typename\n                login\n              }\n              comments {\n                __typename\n                totalCount\n              }\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on ReviewRequestedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on ReviewRequestRemovedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        reviewRequests(first: $page_size) {\n          __typename\n          nodes {\n            __typename\n            requestedReviewer {\n              __typename\n              ... on Actor {\n                login\n                avatarUrl\n              }\n            }\n          }\n        }\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              ...commitContext\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n        merged\n        baseRefName\n        changedFiles\n        additions\n        deletions\n        mergeable\n        mergeStateStatus\n      }\n    }\n  }\n}"
+    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    name\n    hasIssuesEnabled\n    viewerCanAdminister\n    mergeCommitAllowed\n    rebaseMergeAllowed\n    squashMergeAllowed\n    mentionableUsers(first: 50) {\n      __typename\n      nodes {\n        __typename\n        avatarUrl\n        login\n      }\n    }\n    defaultBranchRef {\n      __typename\n      name\n    }\n    issueOrPullRequest(number: $number) {\n      __typename\n      ... on Issue {\n        viewerSubscription\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              refCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n      }\n      ... on PullRequest {\n        viewerSubscription\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on MergedEvent {\n              ...nodeFields\n              mergedCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on PullRequestReviewThread {\n              comments(first: $page_size) {\n                __typename\n                nodes {\n                  __typename\n                  ...reactionFields\n                  ...nodeFields\n                  ...commentFields\n                  path\n                  diffHunk\n                }\n              }\n            }\n            ... on PullRequestReview {\n              ...nodeFields\n              ...commentFields\n              state\n              submittedAt\n              author {\n                __typename\n                login\n              }\n              comments {\n                __typename\n                totalCount\n              }\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on ReviewRequestedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on ReviewRequestRemovedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        reviewRequests(first: $page_size) {\n          __typename\n          nodes {\n            __typename\n            requestedReviewer {\n              __typename\n              ... on Actor {\n                login\n                avatarUrl\n              }\n            }\n          }\n        }\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              ...commitContext\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n        merged\n        baseRefName\n        changedFiles\n        additions\n        deletions\n        mergeable\n        mergeStateStatus\n      }\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(HeadPaging.fragmentString).appending(NodeFields.fragmentString).appending(ReactionFields.fragmentString).appending(CommentFields.fragmentString).appending(UpdatableFields.fragmentString).appending(DeletableFields.fragmentString).appending(ReferencedRepositoryFields.fragmentString).appending(MilestoneFields.fragmentString).appending(LockableFields.fragmentString).appending(ClosableFields.fragmentString).appending(LabelableFields.fragmentString).appending(AssigneeFields.fragmentString).appending(CommitContext.fragmentString) }
 
@@ -1858,8 +1858,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public static func makeIssue(id: GraphQLID, viewerSubscription: SubscriptionState? = nil, timeline: AsIssue.Timeline, milestone: AsIssue.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsIssue.ReactionGroup]? = nil, author: AsIssue.Author? = nil, editor: AsIssue.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsIssue.Label? = nil, viewerCanUpdate: Bool, assignees: AsIssue.Assignee, number: Int, title: String) -> IssueOrPullRequest {
-          return IssueOrPullRequest(snapshot: ["__typename": "Issue", "id": id, "viewerSubscription": viewerSubscription, "timeline": timeline.snapshot, "milestone": milestone.flatMap { (value: AsIssue.Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [AsIssue.ReactionGroup]) -> [Snapshot] in value.map { (value: AsIssue.ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: AsIssue.Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: AsIssue.Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: AsIssue.Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "assignees": assignees.snapshot, "number": number, "title": title])
+        public static func makeIssue(viewerSubscription: SubscriptionState? = nil, timeline: AsIssue.Timeline, milestone: AsIssue.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsIssue.ReactionGroup]? = nil, author: AsIssue.Author? = nil, editor: AsIssue.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsIssue.Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: AsIssue.Assignee, number: Int, title: String) -> IssueOrPullRequest {
+          return IssueOrPullRequest(snapshot: ["__typename": "Issue", "viewerSubscription": viewerSubscription, "timeline": timeline.snapshot, "milestone": milestone.flatMap { (value: AsIssue.Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [AsIssue.ReactionGroup]) -> [Snapshot] in value.map { (value: AsIssue.ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: AsIssue.Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: AsIssue.Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: AsIssue.Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
         }
 
         public static func makePullRequest(viewerSubscription: SubscriptionState? = nil, timeline: AsPullRequest.Timeline, reviewRequests: AsPullRequest.ReviewRequest? = nil, commits: AsPullRequest.Commit, milestone: AsPullRequest.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsPullRequest.ReactionGroup]? = nil, author: AsPullRequest.Author? = nil, editor: AsPullRequest.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsPullRequest.Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: AsPullRequest.Assignee, number: Int, title: String, merged: Bool, baseRefName: String, changedFiles: Int, additions: Int, deletions: Int, mergeable: MergeableState, mergeStateStatus: MergeStateStatus) -> IssueOrPullRequest {
@@ -1891,7 +1891,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
             GraphQLField("viewerSubscription", type: .scalar(SubscriptionState.self)),
             GraphQLField("timeline", arguments: ["last": GraphQLVariable("page_size"), "before": GraphQLVariable("before")], type: .nonNull(.object(Timeline.selections))),
             GraphQLField("milestone", type: .object(Milestone.selections)),
@@ -1927,8 +1926,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(id: GraphQLID, viewerSubscription: SubscriptionState? = nil, timeline: Timeline, milestone: Milestone? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: Label? = nil, viewerCanUpdate: Bool, assignees: Assignee, number: Int, title: String) {
-            self.init(snapshot: ["__typename": "Issue", "id": id, "viewerSubscription": viewerSubscription, "timeline": timeline.snapshot, "milestone": milestone.flatMap { (value: Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "assignees": assignees.snapshot, "number": number, "title": title])
+          public init(viewerSubscription: SubscriptionState? = nil, timeline: Timeline, milestone: Milestone? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: Assignee, number: Int, title: String) {
+            self.init(snapshot: ["__typename": "Issue", "viewerSubscription": viewerSubscription, "timeline": timeline.snapshot, "milestone": milestone.flatMap { (value: Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
           }
 
           public var __typename: String {
@@ -1937,15 +1936,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "__typename")
-            }
-          }
-
-          public var id: GraphQLID {
-            get {
-              return snapshot["id"]! as! GraphQLID
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "id")
             }
           }
 
@@ -2096,6 +2086,16 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "viewerCanUpdate")
+            }
+          }
+
+          /// ID of the object.
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
             }
           }
 
@@ -16854,6 +16854,267 @@ public final class SearchReposQuery: GraphQLQuery {
           }
         }
       }
+    }
+  }
+}
+
+public final class UpdateSubscriptionMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation UpdateSubscription($subscribable_Id: ID!, $subscription_state: SubscriptionState!) {\n  updateSubscription(input: {subscribableId: $subscribable_Id, state: $subscription_state}) {\n    __typename\n    subscribable {\n      __typename\n      ...subscribableFields\n    }\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(SubscribableFields.fragmentString) }
+
+  public var subscribable_Id: GraphQLID
+  public var subscription_state: SubscriptionState
+
+  public init(subscribable_Id: GraphQLID, subscription_state: SubscriptionState) {
+    self.subscribable_Id = subscribable_Id
+    self.subscription_state = subscription_state
+  }
+
+  public var variables: GraphQLMap? {
+    return ["subscribable_Id": subscribable_Id, "subscription_state": subscription_state]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("updateSubscription", arguments: ["input": ["subscribableId": GraphQLVariable("subscribable_Id"), "state": GraphQLVariable("subscription_state")]], type: .object(UpdateSubscription.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(updateSubscription: UpdateSubscription? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "updateSubscription": updateSubscription.flatMap { (value: UpdateSubscription) -> Snapshot in value.snapshot }])
+    }
+
+    /// Updates the state for subscribable subjects.
+    public var updateSubscription: UpdateSubscription? {
+      get {
+        return (snapshot["updateSubscription"] as? Snapshot).flatMap { UpdateSubscription(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "updateSubscription")
+      }
+    }
+
+    public struct UpdateSubscription: GraphQLSelectionSet {
+      public static let possibleTypes = ["UpdateSubscriptionPayload"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("subscribable", type: .nonNull(.object(Subscribable.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(subscribable: Subscribable) {
+        self.init(snapshot: ["__typename": "UpdateSubscriptionPayload", "subscribable": subscribable.snapshot])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The input subscribable entity.
+      public var subscribable: Subscribable {
+        get {
+          return Subscribable(snapshot: snapshot["subscribable"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "subscribable")
+        }
+      }
+
+      public struct Subscribable: GraphQLSelectionSet {
+        public static let possibleTypes = ["Issue", "Repository", "Commit", "PullRequest", "Team"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("viewerCanSubscribe", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("viewerSubscription", type: .scalar(SubscriptionState.self)),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public static func makeIssue(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> Subscribable {
+          return Subscribable(snapshot: ["__typename": "Issue", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+        }
+
+        public static func makeRepository(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> Subscribable {
+          return Subscribable(snapshot: ["__typename": "Repository", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+        }
+
+        public static func makeCommit(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> Subscribable {
+          return Subscribable(snapshot: ["__typename": "Commit", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+        }
+
+        public static func makePullRequest(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> Subscribable {
+          return Subscribable(snapshot: ["__typename": "PullRequest", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+        }
+
+        public static func makeTeam(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> Subscribable {
+          return Subscribable(snapshot: ["__typename": "Team", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID {
+          get {
+            return snapshot["id"]! as! GraphQLID
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        /// Check if the viewer is able to change their subscription status for the repository.
+        public var viewerCanSubscribe: Bool {
+          get {
+            return snapshot["viewerCanSubscribe"]! as! Bool
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "viewerCanSubscribe")
+          }
+        }
+
+        /// Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
+        public var viewerSubscription: SubscriptionState? {
+          get {
+            return snapshot["viewerSubscription"] as? SubscriptionState
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "viewerSubscription")
+          }
+        }
+
+        public var fragments: Fragments {
+          get {
+            return Fragments(snapshot: snapshot)
+          }
+          set {
+            snapshot += newValue.snapshot
+          }
+        }
+
+        public struct Fragments {
+          public var snapshot: Snapshot
+
+          public var subscribableFields: SubscribableFields {
+            get {
+              return SubscribableFields(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public struct SubscribableFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment subscribableFields on Subscribable {\n  __typename\n  id\n  viewerCanSubscribe\n  viewerSubscription\n}"
+
+  public static let possibleTypes = ["Issue", "Repository", "Commit", "PullRequest", "Team"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+    GraphQLField("viewerCanSubscribe", type: .nonNull(.scalar(Bool.self))),
+    GraphQLField("viewerSubscription", type: .scalar(SubscriptionState.self)),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeIssue(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> SubscribableFields {
+    return SubscribableFields(snapshot: ["__typename": "Issue", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+  }
+
+  public static func makeRepository(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> SubscribableFields {
+    return SubscribableFields(snapshot: ["__typename": "Repository", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+  }
+
+  public static func makeCommit(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> SubscribableFields {
+    return SubscribableFields(snapshot: ["__typename": "Commit", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+  }
+
+  public static func makePullRequest(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> SubscribableFields {
+    return SubscribableFields(snapshot: ["__typename": "PullRequest", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+  }
+
+  public static func makeTeam(id: GraphQLID, viewerCanSubscribe: Bool, viewerSubscription: SubscriptionState? = nil) -> SubscribableFields {
+    return SubscribableFields(snapshot: ["__typename": "Team", "id": id, "viewerCanSubscribe": viewerCanSubscribe, "viewerSubscription": viewerSubscription])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  public var id: GraphQLID {
+    get {
+      return snapshot["id"]! as! GraphQLID
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  /// Check if the viewer is able to change their subscription status for the repository.
+  public var viewerCanSubscribe: Bool {
+    get {
+      return snapshot["viewerCanSubscribe"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "viewerCanSubscribe")
+    }
+  }
+
+  /// Identifies if the viewer is watching, not watching, or ignoring the subscribable entity.
+  public var viewerSubscription: SubscriptionState? {
+    get {
+      return snapshot["viewerSubscription"] as? SubscriptionState
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "viewerSubscription")
     }
   }
 }
