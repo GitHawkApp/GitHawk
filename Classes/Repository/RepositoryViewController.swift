@@ -239,7 +239,7 @@ EmptyViewDelegate {
         guard case .value(let details) = self.state else { return nil }
 
         let repoDetails = IssueTemplateRepoDetails(
-            repo: self.repo,
+            repo: repo,
             defaultBranch: details.defaultBranch
         )
 
