@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // log device environment information
         LogEnvironmentInformation(application: application)
 
+        // setup content size category change handler
+        UIContentSizeCategoryChangeHandler.shared.setup()
+
         return true
     }
 

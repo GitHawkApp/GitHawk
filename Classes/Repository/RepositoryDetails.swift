@@ -11,6 +11,4 @@ import Foundation
 struct RepositoryDetails: Codable, Equatable {
     let owner: String
     let name: String
-    let defaultBranch: String
-    let hasIssuesEnabled: Bool
 }

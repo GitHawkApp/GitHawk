@@ -23,15 +23,15 @@ IndicatorInfoProvider {
     private var readme: RepositoryReadmeModel?
     private var branch: String
 
-    init(client: GithubClient, repo: RepositoryDetails) {
+    init(client: GithubClient, repo: RepositoryDetails, branch: String) {
         self.repo = repo
+        self.branch = branch
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
-        self.branch = repo.defaultBranch
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: "")
         )
         self.dataSource = self
-        title = NSLocalizedString("Overview", comment: "")
+        title = Constants.Strings.overview
     }
 
     required init?(coder aDecoder: NSCoder) {

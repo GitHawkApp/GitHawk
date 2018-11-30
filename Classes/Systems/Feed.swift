@@ -57,7 +57,10 @@ final class Feed: NSObject, UIScrollViewDelegate {
         self.collectionView.backgroundColor = Styles.Colors.background
         self.collectionView.refreshControl = feedRefresh.refreshControl
         self.collectionView.keyboardDismissMode = .onDrag
+        self.collectionView.accessibilityIdentifier = "feed-collection-view"
         feedRefresh.refreshControl.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
+
+        self.loadingView.accessibilityIdentifier = "feed-loading-view"
 
         if backgroundThreshold != nil {
             let center = NotificationCenter.default
@@ -87,10 +90,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
         feedRefresh.beginRefreshing()
     }
 
-    func showEmptyLoadingView() {
-        loadingView.isHidden = false
-    }
-
     func setLoadingSpinnerColor(to color: UIColor) {
         loadingView.setSpinnerColor(to: color)
     }
@@ -100,11 +99,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
         view.backgroundColor = .white
 
-        // avoid app launch in the background triggering viewDidLoad-based network calls
-        if UIApplication.shared.applicationState != .background {
-            refresh()
-        }
-
         adapter.collectionView = collectionView
 
         if collectionView.superview == nil {
@@ -112,6 +106,11 @@ final class Feed: NSObject, UIScrollViewDelegate {
         }
 
         view.addSubview(loadingView)
+
+        // avoid app launch in the background triggering viewDidLoad-based network calls
+        if UIApplication.shared.applicationState != .background {
+            refresh()
+        }
     }
 
     func viewWillLayoutSubviews(view: UIView) {
