@@ -32,7 +32,7 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
             let secondaryNav = secondaryViewController as? UINavigationController {
 
             let collapsedControllers = secondaryNav.viewControllers.filter {
-                // $0.hidesBottomBarWhenPushed = true
+
                 // remove any placeholder VCs from the stack
                 return ($0 is SplitPlaceholderViewController) == false
             }
