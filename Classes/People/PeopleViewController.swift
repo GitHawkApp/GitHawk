@@ -79,7 +79,7 @@ PeopleSectionControllerDelegate {
 
     func selectionChanged(newValues: [IssueAssigneeViewModel]) -> Bool {
         // pretty hacky but oh well
-        return Set<String>(newValues.map { $0.login }) == selections
+        return Set<String>(newValues.map { $0.login }) != selections
     }
 
     func updateClearButtonEnabled() {

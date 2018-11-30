@@ -80,6 +80,10 @@ NSString * const NYTPhotoViewControllerPhotoImageUpdatedNotification = @"NYTPhot
     self.loadingView.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
 
+- (BOOL)prefersHomeIndicatorAutoHidden {
+    return YES;
+}
+
 #pragma mark - NYTPhotoViewController
 
 - (instancetype)initWithPhoto:(id <NYTPhoto>)photo loadingView:(UIView *)loadingView notificationCenter:(NSNotificationCenter *)notificationCenter {
@@ -140,7 +144,8 @@ NSString * const NYTPhotoViewControllerPhotoImageUpdatedNotification = @"NYTPhot
     
     if (imageData || image) {
         [self.loadingView removeFromSuperview];
-        self.loadingView = nil;
+    } else {
+        [self.view addSubview:self.loadingView];
     }
 }
 

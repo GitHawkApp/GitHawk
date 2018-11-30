@@ -262,13 +262,21 @@ BaseListViewControllerEmptyDataSource {
     // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
-        return notificationIDs.compactMap { id in
+        var models = [ListSwiftPair]()
+
+        models.append(ListSwiftPair.pair("com.freetime.notification.new-features", {
+            NewFeaturesSectionController()
+        }))
+
+        models += notificationIDs.compactMap { id in
             guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?
                 else { return nil }
             return ListSwiftPair.pair(model) { [modelController] in
                 NotificationSectionController(modelController: modelController)
             }
         }
+
+        return models
     }
 
     // MARK: BaseListViewControllerEmptyDataSource

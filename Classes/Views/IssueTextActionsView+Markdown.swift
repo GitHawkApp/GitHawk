@@ -26,7 +26,8 @@ extension IssueTextActionsView {
                     viewController?.route_push(to: IssuePreviewViewController(
                         markdown: getMarkdownBlock(),
                         owner: owner,
-                        repo: repo
+                        repo: repo,
+                        title: Constants.Strings.preview
                     ))
                 }),
                 name: NSLocalizedString(
@@ -144,4 +145,3 @@ extension IssueTextActionsView {
     }
 
 }
-

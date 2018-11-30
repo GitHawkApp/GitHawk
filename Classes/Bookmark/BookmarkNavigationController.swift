@@ -12,14 +12,14 @@ import UIKit
 // must manually add to UINavigationItem
 final class BookmarkNavigationController {
 
-    private let store: BookmarkStore
-    private let model: Bookmark
+    private let store: BookmarkIDCloudStore
+    private let graphQLID: String
     private static let iconImageInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
 
-    init?(store: BookmarkStore?, model: Bookmark?) {
-        guard let store = store, let model = model else { return nil }
+    init?(store: BookmarkIDCloudStore?, graphQLID: String?) {
+        guard let store = store, let graphQLID = graphQLID else { return nil }
         self.store = store
-        self.model = model
+        self.graphQLID = graphQLID
     }
 
     // MARK: Public API
@@ -36,7 +36,7 @@ final class BookmarkNavigationController {
         let imageName: String
         let selector: Selector
 
-        if store.contains(model) {
+        if store.contains(graphQLID: graphQLID) {
             imageName = "nav-bookmark-selected"
             accessibilityLabel = Constants.Strings.removeBookmark
             selector = #selector(BookmarkNavigationController.remove(sender:))
@@ -70,13 +70,13 @@ final class BookmarkNavigationController {
         Haptic.triggerSelection()
         sender.action = #selector(BookmarkNavigationController.remove(sender:))
         sender.image = UIImage(named: "nav-bookmark-selected")?.withRenderingMode(.alwaysTemplate)
-        store.add(model)
+        store.add(graphQLID: graphQLID)
     }
 
     @objc func remove(sender: UIBarButtonItem) {
         sender.action = #selector(BookmarkNavigationController.add(sender:))
         sender.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
-        store.remove(model)
+        store.remove(graphQLID: graphQLID)
     }
 
 }

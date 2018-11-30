@@ -55,9 +55,9 @@ EmptyViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        feed.viewDidLoad()
         feed.swiftAdapter.dataSource = self
         feed.swiftAdapter.emptyViewSource = self
+        feed.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +76,7 @@ EmptyViewDelegate {
 
     // MARK: Public API
 
-    final func update(animated: Bool) {
+    final func update(animated: Bool = true) {
         self.feed.finishLoading(
             dismissRefresh: true,
             animated: animated && trueUnlessReduceMotionEnabled
@@ -85,7 +85,7 @@ EmptyViewDelegate {
 
     final func update(
         page: PageType?,
-        animated: Bool,
+        animated: Bool = true,
         completion: (() -> Void)? = nil
         ) {
         assert(Thread.isMainThread)
@@ -100,7 +100,7 @@ EmptyViewDelegate {
     }
 
     final func error(
-        animated: Bool,
+        animated: Bool = true,
         completion: (() -> Void)? = nil
         ) {
         assert(Thread.isMainThread)
@@ -168,11 +168,12 @@ EmptyViewDelegate {
     // MARK: ListSwiftAdapterEmptyViewSource
 
     func emptyView(adapter: ListSwiftAdapter) -> UIView? {
-        guard hasError else { return nil }
+        guard hasError, feed.status != .initial else { return nil }
         let empty = EmptyView()
         empty.label.text = emptyErrorMessage
         empty.delegate = self
         empty.button.isHidden = false
+        empty.accessibilityIdentifier = "base-empty-view"
         return empty
     }
 

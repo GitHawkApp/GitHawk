@@ -67,4 +67,14 @@ class URLBuilderTests: XCTestCase {
         )
     }
 
+    func test_withAnchorSymbol() {
+        let builder = URLBuilder.github()
+            .add(paths: ["githawkapp", "githawk", "issues", "42"])
+            .set(fragment: "issuecomment-1234")
+        XCTAssertEqual(
+            builder.url!.absoluteString,
+            "https://github.com/githawkapp/githawk/issues/42#issuecomment-1234"
+        )
+    }
+
 }

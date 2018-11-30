@@ -52,9 +52,7 @@ extension GithubClient {
                             name: repo.name,
                             description: repo.description ?? "",
                             stars: repo.stargazers.totalCount,
-                            hasIssuesEnabled: repo.hasIssuesEnabled,
-                            primaryLanguage: primaryLanguage,
-                            defaultBranch: repo.defaultBranchRef?.name ?? "master"
+                            primaryLanguage: primaryLanguage
                         )
                         builder.append(model)
                     }

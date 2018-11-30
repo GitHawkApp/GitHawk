@@ -9,6 +9,7 @@
 import UIKit
 import StyledTextKit
 import DropdownTitleView
+import NYTPhotoViewer
 
 enum Styles {
 
@@ -131,6 +132,7 @@ enum Styles {
         DropdownTitleView.appearance().subtitleColor = Styles.Colors.Gray.light.color
         DropdownTitleView.appearance().titleFont = Styles.Text.bodyBold.preferredFont
         DropdownTitleView.appearance().subtitleFont = Styles.Text.secondaryBold.preferredFont
+        UINavigationBar.appearance(whenContainedInInstancesOf: [NYTPhotosOverlayView.self]).tintColor = .white
     }
 
 }

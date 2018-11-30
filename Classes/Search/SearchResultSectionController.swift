@@ -44,9 +44,7 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
 
         let repo = RepositoryDetails(
             owner: object.owner,
-            name: object.name,
-            defaultBranch: object.defaultBranch,
-            hasIssuesEnabled: object.hasIssuesEnabled
+            name: object.name
         )
 
         delegate?.didSelect(sectionController: self, repo: repo)

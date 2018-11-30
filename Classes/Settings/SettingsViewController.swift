@@ -186,9 +186,7 @@ GitHubSessionListener {
 
         let repo = RepositoryDetails(
             owner: "GitHawkApp",
-            name: "GitHawk",
-            defaultBranch: "master",
-            hasIssuesEnabled: true
+            name: "GitHawk"
         )
         route_detail(to: RepositoryViewController(client: client, repo: repo))
     }

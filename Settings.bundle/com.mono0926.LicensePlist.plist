@@ -160,7 +160,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/NYTPhotoViewer</string>
 			<key>Title</key>
-			<string>NYTPhotoViewer (1.1.0)</string>
+			<string>NYTPhotoViewer (2.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -224,7 +224,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/XLPagerTabStrip</string>
 			<key>Title</key>
-			<string>XLPagerTabStrip</string>
+			<string>XLPagerTabStrip (8.1.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
