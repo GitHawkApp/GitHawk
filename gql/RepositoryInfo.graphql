@@ -1,0 +1,9 @@
+query RepositoryInfo($owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    id
+    defaultBranchRef {
+      name
+    }
+    hasIssuesEnabled
+  }
+}

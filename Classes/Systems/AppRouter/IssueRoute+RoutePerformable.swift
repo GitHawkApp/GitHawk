@@ -15,7 +15,7 @@ extension IssueRoute: RoutePerformable {
         return .push(IssuesViewController(
             client: props.client,
             model: IssueDetailsModel(owner: owner, repo: repo, number: number),
-            scrollToBottom: true
+            scrollToBottom: scrollToBottom
         ))
     }
 }

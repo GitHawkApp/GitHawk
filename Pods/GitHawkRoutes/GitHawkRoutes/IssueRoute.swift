@@ -13,11 +13,13 @@ public struct IssueRoute: Routable {
     public let owner: String
     public let repo: String
     public let number: Int
+    public let scrollToBottom: Bool
 
-    public init(owner: String, repo: String, number: Int) {
+    public init(owner: String, repo: String, number: Int, scrollToBottom: Bool = false) {
         self.owner = owner
         self.repo = repo
         self.number = number
+        self.scrollToBottom = scrollToBottom
     }
 
     public static func from(params: [String: String]) -> IssueRoute? {
@@ -25,14 +27,22 @@ public struct IssueRoute: Routable {
             let repo = params["repo"],
             let number = (params["number"] as NSString?)?.integerValue
             else { return nil }
-        return IssueRoute(owner: owner, repo: repo, number: number)
+        // optional to handle migrations
+        let scrollToBottom = (params["scrollToBottom"] as NSString?)?.boolValue ?? false
+        return IssueRoute(
+            owner: owner,
+            repo: repo,
+            number: number,
+            scrollToBottom: scrollToBottom
+        )
     }
 
     public var encoded: [String: String] {
         return [
             "owner": owner,
             "repo": repo,
-            "number": "\(number)"
+            "number": "\(number)",
+            "scrollToBottom": "\(scrollToBottom)"
         ]
     }
     

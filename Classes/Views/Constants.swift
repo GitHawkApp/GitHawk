@@ -54,5 +54,6 @@ enum Constants {
         static let preview = NSLocalizedString("Preview", comment: "")
         static let subscribe = NSLocalizedString("Subscribe", comment: "")
         static let unsubscribe = NSLocalizedString("Unsubscribe", comment: "")
+        static let overview = NSLocalizedString("Overview", comment: "")
     }
 }

@@ -12,12 +12,9 @@ import GitHubSession
 
 extension RepoRoute: RoutePerformable {
     func perform(props: RoutePerformableProps) -> RoutePerformableResult {
-        // TODO issues enabled should be fetched in the VC
         let model = RepositoryDetails(
             owner: owner,
-            name: repo,
-            defaultBranch: branch,
-            hasIssuesEnabled: true
+            name: repo
         )
         return .push(RepositoryViewController(client: props.client, repo: model))
     }
