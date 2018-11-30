@@ -306,7 +306,7 @@ extension GithubClient {
 
         let state: SubscriptionState = subscribe
             ? .subscribed
-            : .ignored
+            : .unsubscribed
 
         let optimisticResult = previous.updated(subscriptionState: state)
 

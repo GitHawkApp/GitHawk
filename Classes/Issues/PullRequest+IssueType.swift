@@ -13,7 +13,7 @@ import StyledTextKit
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullRequest: IssueType {
 
     var subscriptionState: SubscriptionState {
-        return viewerSubscription ?? .ignored
+        return viewerSubscription ?? .unsubscribed
     }
 
     var pullRequest: Bool {
