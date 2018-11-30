@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class BookmarkRepoCell: SwipeSelectableCell {
+final class BookmarkRepoCell: SelectableCell {
 
     private let imageView = UIImageView(image: UIImage(named: "repo")?.withRenderingMode(.alwaysTemplate))
     private let label = UILabel()

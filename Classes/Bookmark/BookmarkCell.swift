@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import StyledTextKit
 
-final class BookmarkCell: SwipeSelectableCell {
+final class BookmarkCell: SelectableCell {
 
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
