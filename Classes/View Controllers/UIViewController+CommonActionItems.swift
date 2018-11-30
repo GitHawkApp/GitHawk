@@ -20,15 +20,11 @@ extension UIViewController {
         owner: String,
         repo: String,
         icon: UIImage,
-        branch: String,
-        issuesEnabled: Bool,
         client: GithubClient
         ) -> UIAlertAction? {
         let repo = RepositoryDetails(
             owner: owner,
-            name: repo,
-            defaultBranch: branch,
-            hasIssuesEnabled: issuesEnabled
+            name: repo
         )
         weak var weakSelf = self
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })

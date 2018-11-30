@@ -41,7 +41,6 @@ func createSummaryModel(
 
     let builder = StyledTextBuilder(styledText: StyledText(
         text: node.title,
-//        style: Styles.Text.body.with(foreground: Styles.Colors.Gray.medium.color)
         style: Styles.Text.body
     ))
     if let ciStatus = node.ciStatus {

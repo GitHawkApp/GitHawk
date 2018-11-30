@@ -32,7 +32,7 @@ class SearchQueryTests: XCTestCase {
     }
 
     func test_encodesAndDecodes_recentlyViewed() {
-        let recentlyViewed = RepositoryDetails(owner: "Instagram", name: "IGListKit", defaultBranch: "master", hasIssuesEnabled: true)
+        let recentlyViewed = RepositoryDetails(owner: "Instagram", name: "IGListKit")
         let query = SearchQuery.recentlyViewed(recentlyViewed)
         let data = try? encoder.encode(query)
 
@@ -46,8 +46,8 @@ class SearchQueryTests: XCTestCase {
         let chickenWings = SearchQuery.search("Bonchon")
         let dimSum = SearchQuery.search("Nom Wah")
 
-        let koreanBBQDetails = RepositoryDetails(owner: "678 Corp", name: "Kang Ho Dong Baekjeong", defaultBranch: "master", hasIssuesEnabled: false)
-        let hotPotDetails = RepositoryDetails(owner: "Favor Taste", name: "99", defaultBranch: "dev", hasIssuesEnabled: false)
+        let koreanBBQDetails = RepositoryDetails(owner: "678 Corp", name: "Kang Ho Dong Baekjeong")
+        let hotPotDetails = RepositoryDetails(owner: "Favor Taste", name: "99")
         let koreanBBQ = SearchQuery.recentlyViewed(koreanBBQDetails)
         let hotPot = SearchQuery.recentlyViewed(hotPotDetails)
 

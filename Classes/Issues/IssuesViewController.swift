@@ -74,15 +74,10 @@ IssueManagingContextControllerDelegate {
                 let result = self.client.cache.get(id: id) as IssueResult? {
                 hidden = result.labels.locked && !viewerIsCollaborator
 
-                let bookmark = Bookmark(
-                    type: result.pullRequest ? .pullRequest : .issue,
-                    name: self.model.repo,
-                    owner: self.model.owner,
-                    number: self.model.number,
-                    title: result.title.string.allText,
-                    defaultBranch: result.defaultBranch
+                self.bookmarkNavController = BookmarkNavigationController(
+                    store: client.bookmarkCloudStore,
+                    graphQLID: id
                 )
-                self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
                 self.configureNavigationItems()
             } else {
                 hidden = true
@@ -257,8 +252,7 @@ IssueManagingContextControllerDelegate {
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: result.title.string.allText,
-            defaultBranch: result.defaultBranch
+            title: result.title.string.allText
         )
     }
 
@@ -269,13 +263,10 @@ IssueManagingContextControllerDelegate {
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard let result = result else { return nil }
         return action(
             owner: model.owner,
             repo: model.repo,
             icon: #imageLiteral(resourceName: "repo"),
-            branch: result.defaultBranch,
-            issuesEnabled: result.hasIssuesEnabled,
             client: client
         )
     }
