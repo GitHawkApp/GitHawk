@@ -114,9 +114,7 @@ class SplitViewTests: XCTestCase {
             client: GithubClient(userSession: nil),
             repo: RepositoryDetails(
                 owner: "Foo",
-                name: "Bar",
-                defaultBranch: "Baz",
-                hasIssuesEnabled: false
+                name: "Bar"
         ))
 
         let detail2 = IssuesViewController(
