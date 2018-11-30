@@ -108,26 +108,8 @@ class SplitViewTests: XCTestCase {
         masterTab.selectedIndex = 1
 
         let detailNav = UINavigationController()
-
-
-        let detail1 = RepositoryViewController(
-            client: GithubClient(userSession: nil),
-            repo: RepositoryDetails(
-                owner: "Foo",
-                name: "Bar",
-                defaultBranch: "Baz",
-                hasIssuesEnabled: false
-        ))
-
-        let detail2 = IssuesViewController(
-            client: GithubClient(userSession: nil),
-            model: IssueDetailsModel(
-                owner: "Foo",
-                repo: "Bar",
-                number: 0
-        ))
-
-
+        let detail1 = UIViewController()
+        let detail2 = UIViewController()
         detailNav.pushViewController(detail1, animated: false)
         detailNav.pushViewController(detail2, animated: false)
 
@@ -149,13 +131,8 @@ class SplitViewTests: XCTestCase {
 
         XCTAssertFalse(rightNav.viewControllers[0].hidesBottomBarWhenPushed)
         XCTAssertFalse(rightNav.viewControllers[1].hidesBottomBarWhenPushed)
-
-        // RepositoryViewController should not hide bottom bar
-        XCTAssertTrue(!rightNav.viewControllers[2].hidesBottomBarWhenPushed)
-
-        // IssueViewController should not hide bottom bar
+        XCTAssertTrue(rightNav.viewControllers[2].hidesBottomBarWhenPushed)
         XCTAssertTrue(rightNav.viewControllers[3].hidesBottomBarWhenPushed)
-
     }
 
     func test_whenCollapsing_withPlaceholderStackedOnDetail_thatVCsStackedWithoutPlaceholder() {
