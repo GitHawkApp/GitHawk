@@ -311,7 +311,7 @@ extension GithubClient {
         let mutation = UpdateSubscriptionMutation(subscribable_Id: subscriptionId, subscription_state: state)
 
         client.mutate(mutation, result: { data in
-            print(data.updateSubscription?.subscribable) // Returns nil
+            data.updateSubscription?.subscribable
         }, completion: { result in
             switch result {
             case .success(_):
