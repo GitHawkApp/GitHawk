@@ -25,13 +25,13 @@ struct IssueResult: Cachable {
     let targetBranch: IssueTargetBranchModel?
     // end optionals
     let timelinePages: [IssueTimelinePage]
-    let viewerIsSubscribed: Bool
     let viewerCanUpdate: Bool
     let hasIssuesEnabled: Bool
     let viewerCanAdminister: Bool
     let defaultBranch: String
     let fileChanges: FileChanges?
     let mergeModel: IssueMergeModel?
+    let subscriptionState: SubscriptionState
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })
@@ -74,12 +74,12 @@ struct IssueResult: Cachable {
         labels: IssueLabelsModel? = nil,
         assignee: IssueAssigneesModel? = nil,
         timelinePages: [IssueTimelinePage]? = nil,
-        viewerIsSubscribed: Bool? = nil,
         viewerCanUpdate: Bool? = nil,
         hasIssuesEnabled: Bool? = nil,
         viewerCanAdminister: Bool? = nil,
         defaultBranch: String? = nil,
-        mergeModel: IssueMergeModel? = nil
+        mergeModel: IssueMergeModel? = nil,
+        subscriptionState: SubscriptionState? = nil
         ) -> IssueResult {
         return IssueResult(
             id: id ?? self.id,
@@ -92,13 +92,13 @@ struct IssueResult: Cachable {
             milestone: self.milestone,
             targetBranch: self.targetBranch,
             timelinePages: timelinePages ?? self.timelinePages,
-            viewerIsSubscribed: viewerIsSubscribed ?? self.viewerIsSubscribed,
             viewerCanUpdate: viewerCanUpdate ?? self.viewerCanUpdate,
             hasIssuesEnabled: hasIssuesEnabled ?? self.hasIssuesEnabled,
             viewerCanAdminister: viewerCanAdminister ?? self.viewerCanAdminister,
             defaultBranch: defaultBranch ?? self.defaultBranch,
             fileChanges: fileChanges,
-            mergeModel: mergeModel ?? self.mergeModel
+            mergeModel: mergeModel ?? self.mergeModel,
+            subscriptionState: subscriptionState ?? self.subscriptionState
         )
     }
 
@@ -117,13 +117,13 @@ struct IssueResult: Cachable {
             milestone: milestone,
             targetBranch: self.targetBranch,
             timelinePages: timelinePages ?? self.timelinePages,
-            viewerIsSubscribed: self.viewerIsSubscribed,
             viewerCanUpdate: self.viewerCanUpdate,
             hasIssuesEnabled: self.hasIssuesEnabled,
             viewerCanAdminister: self.viewerCanAdminister,
             defaultBranch: self.defaultBranch,
             fileChanges: self.fileChanges,
-            mergeModel: self.mergeModel
+            mergeModel: self.mergeModel,
+            subscriptionState: self.subscriptionState
         )
     }
 
@@ -142,13 +142,13 @@ struct IssueResult: Cachable {
             milestone: self.milestone,
             targetBranch: self.targetBranch,
             timelinePages: timelinePages ?? self.timelinePages,
-            viewerIsSubscribed: self.viewerIsSubscribed,
             viewerCanUpdate: self.viewerCanUpdate,
             hasIssuesEnabled: self.hasIssuesEnabled,
             viewerCanAdminister: self.viewerCanAdminister,
             defaultBranch: self.defaultBranch,
             fileChanges: self.fileChanges,
-            mergeModel: self.mergeModel
+            mergeModel: self.mergeModel,
+            subscriptionState: self.subscriptionState
         )
     }
 

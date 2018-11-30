@@ -163,13 +163,13 @@ extension GithubClient {
                         milestone: milestoneModel,
                         targetBranch: targetBranchModel,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
-                        viewerIsSubscribed: issueType.viewerSubscribed,
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository.hasIssuesEnabled,
                         viewerCanAdminister: canAdmin,
                         defaultBranch: repository.defaultBranchRef?.name ?? "master",
                         fileChanges: issueType.fileChanges,
-                        mergeModel: issueType.mergeModel(availableTypes: availableMergeTypes)
+                        mergeModel: issueType.mergeModel(availableTypes: availableMergeTypes),
+                        subscriptionState: issueType.subscriptionState
                     )
 
                     DispatchQueue.main.async {
@@ -299,25 +299,31 @@ extension GithubClient {
     }
 
     func setSubscription(
-        subscriptionId: String,
-        subscribed: Bool,
-        completion: @escaping (Bool) -> Void
+        previous: IssueResult,
+        subscribe: Bool,
+        completion: ((Result<SubscriptionState?>) -> Void)? = nil
         ) {
 
-        let state: SubscriptionState = subscribed
+        let state: SubscriptionState = subscribe
             ? .subscribed
-            : .unsubscribed
+            : .ignored
 
-        let mutation = UpdateSubscriptionMutation(subscribable_Id: subscriptionId, subscription_state: state)
+        let optimisticResult = previous.updated(subscriptionState: state)
+
+        let cache = self.cache
+        cache.set(value: optimisticResult)
+
+        let mutation = UpdateSubscriptionMutation(subscribable_Id: previous.id, subscription_state: state)
 
         client.mutate(mutation, result: { data in
             data.updateSubscription?.subscribable
         }, completion: { result in
             switch result {
-            case .success(_):
-                completion(true)
+            case .success(let subscribable):
+                completion?(.success(subscribable.viewerSubscription))
             case .failure(let error):
-                completion(false)
+                cache.set(value: previous)
+                completion?(.error(error))
                 Squawk.show(error: error)
             }
         })

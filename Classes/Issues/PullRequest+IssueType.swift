@@ -12,8 +12,8 @@ import StyledTextKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullRequest: IssueType {
 
-    var viewerSubscribed: Bool {
-        return viewerSubscription?.rawValue != "IGNORED"
+    var subscriptionState: SubscriptionState {
+        return viewerSubscription ?? .ignored
     }
 
     var pullRequest: Bool {

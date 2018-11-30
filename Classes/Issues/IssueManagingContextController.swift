@@ -101,7 +101,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             }
         }
 
-        if result.viewerIsSubscribed {
+        if result.subscriptionState == .subscribed {
             actions.append(.unsubscribe)
         } else {
             actions.append(.subscribe)
@@ -293,9 +293,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     func subscribe(_ doSubscribe: Bool) {
         guard let previous = result else { return }
         delegate?.willMutateModel(from: self)
-        client.setSubscription(subscriptionId: previous.id, subscribed: doSubscribe) { (result) in
-            print(result)
-        }
+        client.setSubscription(previous: previous, subscribe: doSubscribe)
         Haptic.triggerNotification(.success)
     }
     func close(_ doClose: Bool) {
