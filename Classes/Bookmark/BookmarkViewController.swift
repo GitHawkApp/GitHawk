@@ -184,9 +184,10 @@ TabNavRootViewControllerType {
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         guard let object = object as? ListDiffable else { fatalError() }
 
-        if object === headerKey {
-            return BookmarkHeaderSectionController(delegate: self)
-        } else if object is BookmarkViewModel {
+//        if object === headerKey {
+//            return BookmarkHeaderSectionController(delegate: self)
+//        } else
+        if object is BookmarkViewModel {
             return BookmarkSectionController(delegate: self)
         }
 

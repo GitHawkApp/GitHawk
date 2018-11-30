@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import GitHawkRoutes
 
 final class BookmarkRepoSectionController: ListSwiftSectionController<RepositoryDetails> {
 
@@ -20,6 +21,12 @@ final class BookmarkRepoSectionController: ListSwiftSectionController<Repository
                     return $0.collection.cellSize(with: Styles.Sizes.tableCellHeightLarge)
             }, configure: {
                 $0.configure(owner: $1.value.owner, name: $1.value.name)
+            }, didSelect: { [weak self] context in
+                self?.viewController?.route(RepoRoute(
+                    owner: context.value.owner,
+                    repo: context.value.name,
+                    branch: nil
+                ))
             })
         ]
     }

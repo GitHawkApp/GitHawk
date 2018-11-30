@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import GitHawkRoutes
 
 final class BookmarkIssueSectionController: ListSwiftSectionController<BookmarkIssueViewModel> {
 
@@ -22,6 +23,12 @@ final class BookmarkIssueSectionController: ListSwiftSectionController<BookmarkI
                     )
             }, configure: {
                 $0.configure(with: $1.value)
+            }, didSelect: { [weak self] context in
+                self?.viewController?.route(IssueRoute(
+                    owner: context.value.repo.owner,
+                    repo: context.value.repo.name,
+                    number: context.value.number
+                ))
             })
         ]
     }

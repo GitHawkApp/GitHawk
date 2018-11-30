@@ -79,6 +79,10 @@ extension UIViewController {
         }
     }
 
+    func route(_ route: Routable & RoutePerformable) {
+        router?.handle(route: route, from: self)
+    }
+
     // MARK: Remove after migration
 
     func route_push(to controller: UIViewController) {

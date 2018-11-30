@@ -117,6 +117,13 @@ final class BookmarkIDCloudStore {
         listeners.append(BookmarkListenerWrapper(listener: listener))
     }
 
+    func clear() {
+        assert(Thread.isMainThread)
+        storage.removeAllObjects()
+        save()
+        enumerateListeners { $0.didUpdateBookmarks(in: self) }
+    }
+
     private func save() {
         assert(Thread.isMainThread)
         iCloudStore.set(bookmarks: storage, for: key)

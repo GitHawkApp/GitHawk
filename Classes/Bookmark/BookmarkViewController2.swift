@@ -22,7 +22,8 @@ enum BookmarkModelType {
 final class BookmarkViewController2: BaseListViewController<String>,
 BaseListViewControllerDataSource,
 BaseListViewControllerEmptyDataSource,
-BookmarkIDCloudStoreListener {
+BookmarkIDCloudStoreListener,
+BookmarkHeaderSectionControllerDelegate {
 
     typealias Client = BookmarkViewControllerClient & BookmarkCloudMigratorClient
 
@@ -124,7 +125,7 @@ BookmarkIDCloudStoreListener {
         case .success: break
         }
 
-        return models.map {
+        var models: [ListSwiftPair] = self.models.map {
             switch $0 {
             case .issue(let model):
                 return ListSwiftPair.pair(model, {
@@ -136,6 +137,17 @@ BookmarkIDCloudStoreListener {
                 })
             }
         }
+
+        if models.count > 0 {
+            models.insert(
+                ListSwiftPair.pair("header", { [weak self] in
+                    BookmarkHeaderSectionController(delegate: self)
+                }),
+                at: 0
+            )
+        }
+
+        return models
     }
 
     // MARK: BaseListViewControllerEmptyDataSource
@@ -153,6 +165,12 @@ BookmarkIDCloudStoreListener {
 
     func didUpdateBookmarks(in store: BookmarkIDCloudStore) {
         fetch(page: nil)
+    }
+
+    // MARK: BookmarkHeaderSectionControllerDelegate
+
+    func didTapClear(sectionController: BookmarkHeaderSectionController) {
+        cloudStore.clear()
     }
 
 }
