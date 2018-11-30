@@ -66,7 +66,7 @@ class BookmarkViewControllerTests: XCTestCase {
             migratorResult: .noMigration,
             clientResult: .success([])
         )
-        let utils = ViewControllerTestUtil(viewController: BookmarkViewController2(
+        let utils = ViewControllerTestUtil(viewController: BookmarkViewController(
             client: client,
             cloudStore: store,
             oldBookmarks: []
@@ -92,7 +92,7 @@ class BookmarkViewControllerTests: XCTestCase {
             migratorResult: .success([]),
             clientResult: .success([])
         )
-        let utils = ViewControllerTestUtil(viewController: BookmarkViewController2(
+        let utils = ViewControllerTestUtil(viewController: BookmarkViewController(
             client: client,
             cloudStore: store,
             oldBookmarks: []
@@ -118,7 +118,7 @@ class BookmarkViewControllerTests: XCTestCase {
             migratorResult: .error(nil),
             clientResult: .success([])
         )
-        let utils = ViewControllerTestUtil(viewController: BookmarkViewController2(
+        let utils = ViewControllerTestUtil(viewController: BookmarkViewController(
             client: client,
             cloudStore: store,
             oldBookmarks: [Bookmark(type: .repo, name: "foo", owner: "bar")]
@@ -145,7 +145,7 @@ class BookmarkViewControllerTests: XCTestCase {
             clientResult: .success([]),
             infiniteMigration: true
         )
-        let utils = ViewControllerTestUtil(viewController: BookmarkViewController2(
+        let utils = ViewControllerTestUtil(viewController: BookmarkViewController(
             client: client,
             cloudStore: store,
             oldBookmarks: [Bookmark(type: .repo, name: "foo", owner: "bar")]
@@ -171,7 +171,7 @@ class BookmarkViewControllerTests: XCTestCase {
             migratorResult: .success([]),
             clientResult: .error(nil)
         )
-        let utils = ViewControllerTestUtil(viewController: BookmarkViewController2(
+        let utils = ViewControllerTestUtil(viewController: BookmarkViewController(
             client: client,
             cloudStore: store,
             oldBookmarks: []
@@ -222,7 +222,7 @@ class BookmarkViewControllerTests: XCTestCase {
             migratorResult: .success([]),
             clientResult: .success(models)
         )
-        let utils = ViewControllerTestUtil(viewController: BookmarkViewController2(
+        let utils = ViewControllerTestUtil(viewController: BookmarkViewController(
             client: client,
             cloudStore: store,
             oldBookmarks: []
