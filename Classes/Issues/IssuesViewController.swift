@@ -263,7 +263,6 @@ IssueManagingContextControllerDelegate {
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard let result = result else { return nil }
         return action(
             owner: model.owner,
             repo: model.repo,

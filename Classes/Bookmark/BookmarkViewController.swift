@@ -1,277 +1,176 @@
 //
-//  BookmarkViewController.swift
+//  BookmarkViewController2.swift
 //  Freetime
 //
-//  Created by Hesham Salman on 11/5/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 11/23/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import IGListKit
-import Apollo
+import Squawk
 
-final class BookmarkViewController: UIViewController,
-    ListAdapterDataSource,
-    PrimaryViewController,
-    UISearchBarDelegate,
-    BookmarkHeaderSectionControllerDelegate,
-    StoreListener,
-    BookmarkSectionControllerDelegate,
-    InitialEmptyViewDelegate,
-TabNavRootViewControllerType {
+protocol BookmarkViewControllerClient {
+    func fetch(graphQLIDs: [String], completion: @escaping (Result<[BookmarkModelType]>) -> Void)
+}
 
-    private let client: GithubClient
-    private let headerKey = "com.freetime.BookmarkViewController.bookmark-header-key" as ListDiffable
+enum BookmarkModelType {
+    case issue(BookmarkIssueViewModel)
+    case repo(RepositoryDetails)
+}
 
-    private let searchBar = UISearchBar()
-    private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
-    private let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
-        view.alwaysBounceVertical = true
-        view.backgroundColor = Styles.Colors.background
-        return view
-    }()
-    private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
+final class BookmarkViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
+BaseListViewControllerEmptyDataSource,
+BookmarkIDCloudStoreListener,
+BookmarkHeaderSectionControllerDelegate {
 
-    var bookmarkStore: BookmarkStore
+    typealias Client = BookmarkViewControllerClient & BookmarkCloudMigratorClient
 
-    enum State {
-        case idle
-        case filtering(String)
-    }
+    private let client: Client
+    private let cloudStore: BookmarkIDCloudStore
+    private let migrator: BookmarkCloudMigrator
+    private var models = [BookmarkModelType]()
 
-    var state: State = .idle
-
-    // MARK: Initialization
-
-    init(client: GithubClient) {
+    init(
+        client: Client,
+        cloudStore: BookmarkIDCloudStore,
+        oldBookmarks: [Bookmark]
+        ) {
         self.client = client
-        guard let token = client.userSession?.token else { fatalError("Client does not have a bookmark store") }
-        self.bookmarkStore = BookmarkStore(token: token)
-        super.init(nibName: nil, bundle: nil)
-        bookmarkStore.add(listener: self)
+        self.cloudStore = cloudStore
+        self.migrator = BookmarkCloudMigrator(
+            username: cloudStore.username,
+            oldBookmarks: oldBookmarks,
+            client: client
+        )
+
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Error loading bookmarks", comment: ""),
+            backgroundThreshold: 5 * 60
+        )
+
+        dataSource = self
+        emptyDataSource = self
+
+        cloudStore.add(listener: self)
+
+        // start migration on init (app start) so likely finished before opening
+        // the bookmark tab
+        self.migrator.sync { [weak self] result in
+            switch result {
+            case .noMigration: break
+            case .success(let ids):
+                self?.handleMigrationSuccess(graphQLIDs: ids)
+            case .error(let error):
+                self?.handleMigration(error: error)
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: View Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        keyboardAdjuster = ScrollViewKeyboardAdjuster(
-            scrollView: collectionView,
-            viewController: self
+    private func handleMigration(error: Error?) {
+        // system alert displayed even if the bookmark tab isn't open
+        // to warn user that bookmarks aren't going to function
+        let alert = UIAlertController(
+            title: NSLocalizedString("Bookmarks Error", comment: ""),
+            message: NSLocalizedString(
+                "There was an error migrating your bookmarks to iCloud. Please open the bookmarks tab and tap \"Migrate\" to try again.",
+                comment: ""
+            ),
+            preferredStyle: .alert
         )
-
-        makeBackBarItemEmpty()
-
-        view.backgroundColor = Styles.Colors.background
-
-        view.addSubview(collectionView)
-        adapter.collectionView = collectionView
-        adapter.dataSource = self
-
-        searchBar.delegate = self
-        searchBar.placeholder = Constants.Strings.searchBookmarks
-        searchBar.backgroundColor = .clear
-        searchBar.searchBarStyle = .minimal
-        navigationItem.titleView = searchBar
-
-        searchBar.resignWhenKeyboardHides()
+        alert.add(action: UIAlertAction(title: Constants.Strings.ok, style: .default))
+        present(alert, animated: trueUnlessReduceMotionEnabled)
+        update()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(collectionView: collectionView)
-        update(animated: animated)
+    private func handleMigrationSuccess(graphQLIDs: [String]) {
+        cloudStore.add(graphQLIDs: graphQLIDs)
+        fetch(page: nil)
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    // MARK: Overrides
 
-        let bounds = view.bounds
-        if bounds != collectionView.frame {
-            collectionView.frame = bounds
-            collectionView.collectionViewLayout.invalidateForOrientationChange()
-        }
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        searchBar.resignFirstResponder()
-        // https://stackoverflow.com/a/47976999
-        navigationController?.view.setNeedsLayout()
-        navigationController?.view.layoutIfNeeded()
-    }
-
-    private func update(animated: Bool) {
-        adapter.performUpdates(animated: animated)
-    }
-
-    func filter(term: String?) {
-        defer {
-            update(animated: true)
+    override func fetch(page: String?) {
+        switch migrator.state {
+        case .inProgress, .error: return
+        case .success: break
         }
 
-        guard let term = term?.trimmingCharacters(in: .whitespacesAndNewlines), !term.isEmpty else {
-            state = .idle
-            return
-        }
-
-        state = .filtering(term)
-    }
-
-    // MARK: BookmarkSectionControllerDelegate
-
-    func didSelect(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
-        let bookmark = viewModel.bookmark
-        let destinationViewController: UIViewController
-
-        switch bookmark.type {
-        case .repo:
-            let repo = RepositoryDetails(
-                owner: bookmark.owner,
-                name: bookmark.name
-            )
-            destinationViewController = RepositoryViewController(client: client, repo: repo)
-
-        case .issue, .pullRequest:
-            let issueModel = IssueDetailsModel(
-                owner: bookmark.owner,
-                repo: bookmark.name,
-                number: bookmark.number
-            )
-            destinationViewController = IssuesViewController(client: client, model: issueModel)
-        default:
-            return
-        }
-        route_detail(to: destinationViewController)
-    }
-
-    func didDelete(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
-        searchBar.resignFirstResponder()
-        bookmarkStore.remove(viewModel.bookmark)
-        update(animated: true)
-    }
-
-    // MARK: ListAdapterDataSource
-
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let contentSizeCategory = UIContentSizeCategory.preferred
-        let width = view.safeContentWidth(with: collectionView)
-        var bookmarks: [ListDiffable]
-        switch state {
-        case .idle:
-            bookmarks = bookmarkStore.values.compactMap {
-                BookmarkViewModel(bookmark: $0, contentSizeCategory: contentSizeCategory, width: width)
+        client.fetch(graphQLIDs: cloudStore.ids) { [weak self] result in
+            switch result {
+            case .success(let models):
+                self?.models = models
+                self?.update()
+            case .error(let error):
+                self?.error()
+                Squawk.show(error: error)
             }
-        case .filtering(let term):
-            bookmarks = filtered(array: bookmarkStore.values, query: term)
-                .compactMap {
-                    BookmarkViewModel(bookmark: $0, contentSizeCategory: contentSizeCategory, width: width)
+        }
+    }
+
+    // MARK: BaseListViewControllerDataSource
+
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        switch migrator.state {
+        // if migrating return empty so spinner is showen
+        case .inProgress: return []
+        case .error: return [
+            ListSwiftPair.pair("migration-error", { BookmarkMigrationSectionController() })
+            ]
+        case .success: break
+        }
+
+        var models: [ListSwiftPair] = self.models.map {
+            switch $0 {
+            case .issue(let model):
+                return ListSwiftPair.pair(model, {
+                    BookmarkIssueSectionController()
+                })
+            case .repo(let model):
+                return ListSwiftPair.pair(model, {
+                    BookmarkRepoSectionController()
+                })
             }
         }
 
-        if !bookmarks.isEmpty {
-            bookmarks.insert(headerKey, at: 0)
+        if models.count > 0 {
+            models.insert(
+                ListSwiftPair.pair("header", { [weak self] in
+                    BookmarkHeaderSectionController(delegate: self)
+                }),
+                at: 0
+            )
         }
 
-        return bookmarks
+        return models
     }
 
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        guard let object = object as? ListDiffable else { fatalError() }
+    // MARK: BaseListViewControllerEmptyDataSource
 
-//        if object === headerKey {
-//            return BookmarkHeaderSectionController(delegate: self)
-//        } else
-        if object is BookmarkViewModel {
-            return BookmarkSectionController(delegate: self)
-        }
-
-        fatalError("Could not find section controller for object")
-    }
-
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        guard bookmarkStore.values.isEmpty else { return nil }
-
-        let view = InitialEmptyView()
-        view.configure(
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        let model = InitialEmptyViewModel(
             imageName: "bookmarks-large",
             title: NSLocalizedString("Add Bookmarks", comment: ""),
             description: NSLocalizedString("Bookmark your favorite issues,\npull requests, and repositories.", comment: "")
         )
-        view.delegate = self
-        return view
+        return ListSwiftPair.pair(model, { InitialEmptyViewSectionController() })
     }
 
-    // MARK: UISearchBarDelegate
+    // MARK: BookmarkIDCloudStoreListener
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filter(term: searchBar.text)
-    }
-
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        filter(term: searchBar.text)
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        state = .idle
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-
-        update(animated: true)
+    func didUpdateBookmarks(in store: BookmarkIDCloudStore) {
+        fetch(page: nil)
     }
 
     // MARK: BookmarkHeaderSectionControllerDelegate
 
     func didTapClear(sectionController: BookmarkHeaderSectionController) {
-        let alert = UIAlertController.configured(
-            title: NSLocalizedString("Are you sure?", comment: ""),
-            message: NSLocalizedString("All of your bookmarks will be lost. Do you want to continue?", comment: ""),
-            preferredStyle: .alert
-        )
-
-        alert.addActions([
-            AlertAction.clearAll { [weak self] _ in
-                self?.bookmarkStore.clear()
-                self?.update(animated: false)
-            },
-            AlertAction.cancel()
-            ])
-
-        present(alert, animated: true)
-    }
-
-    // MARK: InitialEmptyViewDelegate
-
-    func didTap(emptyView: InitialEmptyView) {
-        searchBar.resignFirstResponder()
-        searchBar.setShowsCancelButton(false, animated: true)
-    }
-
-    // MARK: TabNavRootViewControllerType
-
-    func didSingleTapTab() {
-        collectionView.scrollToTop(animated: true)
-    }
-
-    func didDoubleTapTab() {
-        searchBar.becomeFirstResponder()
-    }
-
-    // MARK: StoreListener
-
-    func didUpdateStore() {
-        update(animated: true)
+        cloudStore.clear()
     }
 
 }

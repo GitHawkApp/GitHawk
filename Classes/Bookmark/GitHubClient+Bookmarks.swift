@@ -27,7 +27,7 @@ private func bookmarkGraphQLIDs(from json: [String: Any]) -> [String] {
     }
 }
 
-extension GithubClient: BookmarkViewController2.Client {
+extension GithubClient: BookmarkViewController.Client {
 
     func fetch(
         bookmarks: [BookmarkCloudMigratorClientBookmarks],

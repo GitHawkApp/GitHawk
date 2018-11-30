@@ -61,7 +61,7 @@ func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     }
 
     let title = Constants.Strings.bookmarks
-    let controller = BookmarkViewController2(
+    let controller = BookmarkViewController(
         client: client,
         cloudStore: cloudStore,
         oldBookmarks: oldBookmarks
