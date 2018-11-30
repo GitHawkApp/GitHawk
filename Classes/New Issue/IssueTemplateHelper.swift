@@ -16,13 +16,6 @@ struct IssueTemplate {
     let template: String
 }
 
-struct IssueTemplateDetails {
-    let repo: RepositoryDetails
-    let session: GitHubUserSession?
-    let viewController: UIViewController
-    weak var delegate: NewIssueTableViewControllerDelegate?
-}
-
 class IssueTemplateHelper {
 
     static func getNameAndDescription(fromTemplatefile file: String) -> (name: String?, about: String?) {
@@ -52,10 +45,10 @@ class IssueTemplateHelper {
                     handler: { _ in
                         guard let viewController = NewIssueTableViewController.create(
                             client: GithubClient(userSession: details.session),
-                            owner: details.repo.owner,
-                            repo: details.repo.name,
+                            owner: details.repoDetails.repo.owner,
+                            repo: details.repoDetails.repo.name,
                             template: template.template,
-                            signature: details.repo.owner == Constants.GitHawk.owner ? .bugReport : .sentWithGitHawk
+                            signature: details.repoDetails.repo.owner == Constants.GitHawk.owner ? .bugReport : .sentWithGitHawk
                             ) else {
                                 assertionFailure("Failed to create NewIssueTableViewController")
                                 return
@@ -99,8 +92,8 @@ class IssueTemplateHelper {
             // No templates exists, show blank new issue view controller
             guard let viewController = NewIssueTableViewController.create(
                 client: GithubClient(userSession: details.session),
-                owner: details.repo.owner,
-                repo: details.repo.name,
+                owner: details.repoDetails.repo.owner,
+                repo: details.repoDetails.repo.name,
                 signature: .sentWithGitHawk
                 ) else {
                     assertionFailure("Failed to create NewIssueTableViewController")

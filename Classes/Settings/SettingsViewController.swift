@@ -161,16 +161,20 @@ GitHubSessionListener {
     }
 
     func onReportBug() {
+
         let repo = RepositoryDetails(
             owner: "GitHawkApp",
-            name: "GitHawk",
-            defaultBranch: "master",
-            hasIssuesEnabled: true
+            name: "GitHawk"
+        )
+
+        let repoDetails = IssueTemplateRepoDetails(
+            repo: repo,
+            defaultBranch: "master"
         )
 
         reportBugCell.startSpinner()
         client.createNewIssue(
-            repo: repo,
+            repo: repoDetails,
             session: sessionManager.focusedUserSession,
             mainViewController: self,
             delegate: self) {

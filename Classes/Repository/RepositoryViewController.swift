@@ -235,9 +235,17 @@ EmptyViewDelegate {
     }
 
     func newIssueAction() -> UIAlertAction? {
+
+        guard case .value(let details) = self.state else { return nil }
+
+        let repoDetails = IssueTemplateRepoDetails(
+            repo: self.repo,
+            defaultBranch: details.defaultBranch
+        )
+
         let action = UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { _ in
             self.client.createNewIssue(
-                repo: self.repo,
+                repo: repoDetails,
                 session: nil,
                 mainViewController: self,
                 delegate: self,

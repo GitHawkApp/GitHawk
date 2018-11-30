@@ -13,10 +13,23 @@ import Squawk
 
 private let githubIssueURL = ".github/ISSUE_TEMPLATE"
 
+
+struct IssueTemplateRepoDetails {
+    let repo: RepositoryDetails
+    let defaultBranch: String
+}
+
+struct IssueTemplateDetails {
+    let repoDetails: IssueTemplateRepoDetails
+    let session: GitHubUserSession?
+    let viewController: UIViewController
+    weak var delegate: NewIssueTableViewControllerDelegate?
+}
+
 extension GithubClient {
 
     private func fetchTemplateFile(
-        repo: RepositoryDetails,
+        repoDetails: IssueTemplateRepoDetails,
         filename: String,
         testingFile: String? = nil,
         completion: @escaping (Result<String>) -> Void
@@ -26,9 +39,9 @@ extension GithubClient {
         if let testingFile = testingFile { completion(.success(testingFile)) }
 
         self.fetchFile(
-            owner: repo.owner,
-            repo: repo.name,
-            branch: repo.defaultBranch,
+            owner: repoDetails.repo.owner,
+            repo: repoDetails.repo.name,
+            branch: repoDetails.defaultBranch,
             path: "\(githubIssueURL)/\(filename)") { (result) in
                 switch result {
                 case .success(let file): completion(.success(file))
@@ -39,12 +52,12 @@ extension GithubClient {
     }
 
     func createTemplate(
-        repo: RepositoryDetails,
+        repo: IssueTemplateRepoDetails,
         filename: String,
         testingFile: String? = nil,
         completion: @escaping (Result<IssueTemplate>) -> Void
         ) {
-        fetchTemplateFile(repo: repo, filename: filename, testingFile: testingFile) { (result) in
+        fetchTemplateFile(repoDetails: repo, filename: filename, testingFile: testingFile) { (result) in
             switch result {
             case .success(let file):
                 let nameAndDescription = IssueTemplateHelper.getNameAndDescription(fromTemplatefile: file)
@@ -78,7 +91,7 @@ extension GithubClient {
     }
 
     func createNewIssue(
-        repo: RepositoryDetails,
+        repo: IssueTemplateRepoDetails,
         session: GitHubUserSession?,
         mainViewController: UIViewController,
         delegate: NewIssueTableViewControllerDelegate,
@@ -92,16 +105,16 @@ extension GithubClient {
         let templateGroup = DispatchGroup()
 
         let details = IssueTemplateDetails(
-            repo: repo,
+            repoDetails: repo,
             session: session,
             viewController: mainViewController,
             delegate: delegate
         )
 
         self.fetchFiles(
-            owner: repo.owner,
-            repo: repo.name,
-            branch: repo.defaultBranch,
+            owner: details.repoDetails.repo.owner,
+            repo: details.repoDetails.repo.name,
+            branch: details.repoDetails.defaultBranch,
             path: githubIssueURL) { (result) in
                 switch result {
                 case .success(let files):
