@@ -22,16 +22,11 @@ class DefaultReactionDetailController: UITableViewController {
     @IBOutlet var heartCell: UITableViewCell!
     @IBOutlet var enabledSwitch: UISwitch!
 
-    weak var delegate: DefaultReactionDelegate? {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    weak var delegate: DefaultReactionDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureSwitch(withColor: UIColor.fromHex(Styles.Colors.Blue.medium))
         checkCurrentDefault()
     }
 
@@ -50,7 +45,7 @@ class DefaultReactionDetailController: UITableViewController {
         case hoorayCell: updateDefault(reaction: .hooray)
         case confusedCell: updateDefault(reaction: .confused)
         case heartCell: updateDefault(reaction: .heart)
-        default: return
+        default: break
         }
     }
 
@@ -58,10 +53,6 @@ class DefaultReactionDetailController: UITableViewController {
     @IBAction private func toggleDefaultReaction(_ sender: Any) {
         enabledSwitch.isOn ? updateDefault(reaction: .thumbsUp) : disableReaction()
         updateSections()
-    }
-
-    private func configureSwitch(withColor color: UIColor) {
-        enabledSwitch.onTintColor = color
     }
 
     private func checkCurrentDefault() {
@@ -104,11 +95,12 @@ class DefaultReactionDetailController: UITableViewController {
     }
 
     private func updateSections() {
-        tableView.performBatchUpdates({ [weak self] in
-            guard let `self` = self else { return }
-            enabledSwitch.isOn ?
-                self.tableView.insertSections(IndexSet(integer: 1), with: .top) :
-                self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
+        tableView.performBatchUpdates({
+            if enabledSwitch.isOn  {
+                self.tableView.insertSections(IndexSet(integer: 1), with: .top)
+            } else {
+                 self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
+            }
         }, completion: nil)
     }
 }
