@@ -132,16 +132,16 @@ GitHubSessionListener {
 
     // MARK: Private API
 
-    func updateDefaultReaction() {
+    private func updateDefaultReaction() {
         defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
             ?? NSLocalizedString("Off", comment: "")
     }
 
-    func onReviewAccess() {
+    private func onReviewAccess() {
         UIApplication.shared.openReviewAccess()
     }
 
-    func onAccounts() {
+    private func onAccounts() {
         if let navigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "accountsNavigationController") as? UINavigationController,
             let accountsController = navigationController.topViewController as? SettingsAccountsViewController,
             let client = self.client {
@@ -150,17 +150,17 @@ GitHubSessionListener {
         }
     }
 
-    func onGitHubStatus() {
+    private func onGitHubStatus() {
         guard let url = URLBuilder(host: "status.github.com").add(path: "messages").url
             else { return }
         presentSafari(url: url)
     }
 
-    func onReviewOnAppStore() {
+    private func onReviewOnAppStore() {
         UIApplication.shared.openWriteReview()
     }
 
-    func onReportBug() {
+    private func onReportBug() {
         guard let viewController = NewIssueTableViewController.create(
                 client: GithubClient(userSession: sessionManager.focusedUserSession),
                 owner: "GitHawkApp",
@@ -176,7 +176,7 @@ GitHubSessionListener {
         route_present(to: navController)
     }
 
-    func onViewSource() {
+    private func onViewSource() {
         guard let client = client else {
             Squawk.showGenericError()
             return
@@ -189,7 +189,7 @@ GitHubSessionListener {
         route_detail(to: RepositoryViewController(client: client, repo: repo))
     }
 
-    func onSetDefaultReaction() {
+    private func onSetDefaultReaction() {
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "DefaultReactionDetailController") as? DefaultReactionDetailController else {
             fatalError("Cannot instantiate DefaultReactionDetailController instance")
@@ -198,7 +198,7 @@ GitHubSessionListener {
         route_detail(to: viewController)
     }
 
-    func onTryTestFlightBeta() {
+    private func onTryTestFlightBeta() {
         #if TESTFLIGHT
         Squawk.showAlreadyOnBeta()
         #else
@@ -208,7 +208,7 @@ GitHubSessionListener {
         #endif
     }
 
-    func onSignOut() {
+    private func onSignOut() {
         let title = NSLocalizedString("Are you sure?", comment: "")
         let message = NSLocalizedString("All of your accounts will be signed out, and their bookmarks will be removed. Do you want to continue?", comment: "")
         let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
@@ -225,11 +225,11 @@ GitHubSessionListener {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    func signout() {
+    private func signout() {
         sessionManager.logout()
     }
 
-    @objc func updateBadge() {
+    @objc private func updateBadge() {
         BadgeNotifications.check { result in
             let showSwitches: Bool
             let pushEnabled: Bool
@@ -258,39 +258,39 @@ GitHubSessionListener {
         }
     }
 
-    @IBAction func onBadgeChanged() {
+    private func updateActiveAccount() {
+        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
+    }
+
+    @IBAction private func onBadgeChanged() {
         BadgeNotifications.isBadgeEnabled = badgeSwitch.isOn
         BadgeNotifications.configure { _ in
             self.updateBadge()
         }
     }
 
-    @IBAction func onPushChanged() {
+    @IBAction private func onPushChanged() {
         BadgeNotifications.isLocalNotificationEnabled = pushSwitch.isOn
         BadgeNotifications.configure { _ in
             self.updateBadge()
         }
     }
 
-    @IBAction func onSettings(_ sender: Any) {
+    @IBAction private func onSettings(_ sender: Any) {
         guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
         UIApplication.shared.open(url)
     }
 
-    @IBAction func onMarkRead(_ sender: Any) {
+    @IBAction private func onMarkRead(_ sender: Any) {
         NotificationModelController.setReadOnOpen(open: markReadSwitch.isOn)
     }
 
-    @IBAction func onSignature(_ sender: Any) {
+    @IBAction private func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn
     }
 
-    @IBAction func onPushNotificationsInfo(_ sender: Any) {
+    @IBAction private func onPushNotificationsInfo(_ sender: Any) {
         showContextualMenu(PushNotificationsDisclaimerViewController())
-    }
-
-    func updateActiveAccount() {
-        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
     }
 
     // MARK: NewIssueTableViewControllerDelegate
