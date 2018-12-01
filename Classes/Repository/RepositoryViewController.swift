@@ -243,7 +243,7 @@ EmptyViewDelegate {
             defaultBranch: details.defaultBranch
         )
 
-        let action = UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { _ in
+        let action = UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
             self.client.createNewIssue(
                 repo: repoDetails,
                 session: nil,

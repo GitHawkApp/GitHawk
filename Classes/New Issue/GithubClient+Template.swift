@@ -44,8 +44,8 @@ extension GithubClient {
             path: "\(githubIssueURL)/\(filename)") { (result) in
                 switch result {
                 case .success(let file): completion(.success(file))
-                case .error(let error):  completion(.error(error))
-                case .nonUTF8:           completion(.error(nil))
+                case .error(let error): completion(.error(error))
+                case .nonUTF8: completion(.error(nil))
                 }
         }
     }
