@@ -108,7 +108,7 @@ GitHubSessionListener {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        let cell = tableView.cellForRow(at: indexPath)
 
         switch cell {
         case reviewAccessCell: onReviewAccess()
