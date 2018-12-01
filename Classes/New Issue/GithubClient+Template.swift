@@ -14,15 +14,9 @@ import Squawk
 private let githubIssueURL = ".github/ISSUE_TEMPLATE"
 
 struct IssueTemplateRepoDetails {
-    let repo: RepositoryDetails
+    let owner: String
+    let name: String
     let defaultBranch: String
-}
-
-struct IssueTemplateDetails {
-    let repoDetails: IssueTemplateRepoDetails
-    let session: GitHubUserSession?
-    let viewController: UIViewController
-    weak var delegate: NewIssueTableViewControllerDelegate?
 }
 
 extension GithubClient {
@@ -34,12 +28,12 @@ extension GithubClient {
         completion: @escaping (Result<String>) -> Void
         ) {
 
-        // For Testing..
+        // For Testing.
         if let testingFile = testingFile { completion(.success(testingFile)) }
 
         self.fetchFile(
-            owner: repoDetails.repo.owner,
-            repo: repoDetails.repo.name,
+            owner: repoDetails.owner,
+            repo: repoDetails.name,
             branch: repoDetails.defaultBranch,
             path: "\(githubIssueURL)/\(filename)") { (result) in
                 switch result {
@@ -51,12 +45,13 @@ extension GithubClient {
     }
 
     func createTemplate(
-        repo: IssueTemplateRepoDetails,
+        repoDetails: IssueTemplateRepoDetails,
         filename: String,
         testingFile: String? = nil,
         completion: @escaping (Result<IssueTemplate>) -> Void
         ) {
-        fetchTemplateFile(repoDetails: repo, filename: filename, testingFile: testingFile) { (result) in
+
+        fetchTemplateFile(repoDetails: repoDetails, filename: filename, testingFile: testingFile) { result in
             switch result {
             case .success(let file):
                 let nameAndDescription = IssueTemplateHelper.getNameAndDescription(fromTemplatefile: file)
@@ -90,11 +85,8 @@ extension GithubClient {
     }
 
     func createNewIssue(
-        repo: IssueTemplateRepoDetails,
-        session: GitHubUserSession?,
-        mainViewController: UIViewController,
-        delegate: NewIssueTableViewControllerDelegate,
-        completion: @escaping () -> Void
+        repoDetails: IssueTemplateRepoDetails,
+        completion: @escaping (Result<[IssueTemplate]>) -> Void
         ) {
 
         var templates: [IssueTemplate] = []
@@ -103,23 +95,16 @@ extension GithubClient {
         // We need this since we will be making multiple async calls inside a for-loop.
         let templateGroup = DispatchGroup()
 
-        let details = IssueTemplateDetails(
-            repoDetails: repo,
-            session: session,
-            viewController: mainViewController,
-            delegate: delegate
-        )
-
         self.fetchFiles(
-            owner: details.repoDetails.repo.owner,
-            repo: details.repoDetails.repo.name,
-            branch: details.repoDetails.defaultBranch,
-            path: githubIssueURL) { (result) in
+            owner: repoDetails.owner,
+            repo: repoDetails.name,
+            branch: repoDetails.defaultBranch,
+            path: githubIssueURL) { result in
                 switch result {
                 case .success(let files):
                     for file in files {
                         templateGroup.enter()
-                        self.createTemplate(repo: repo, filename: file.name, completion: { (result) in
+                        self.createTemplate(repoDetails: repoDetails, filename: file.name, completion: { result in
                             switch result {
                             case .success(let template):
                                 templates.append(template)
@@ -130,19 +115,15 @@ extension GithubClient {
                         })
                     }
                 case .error(let error):
-                    if let err = error { Squawk.show(error: err) }
-                    completion()
+                    completion(.error(error))
                 }
 
                 // Wait for async calls in for-loop to finish up
                 templateGroup.notify(queue: .main) {
-                    completion()
+
                     // Sort lexicographically
                     let sortedTemplates = templates.sorted(by: {$0.title < $1.title })
-                    IssueTemplateHelper.present(
-                        withTemplates: sortedTemplates,
-                        details: details
-                    )
+                    completion(.success(sortedTemplates))
                 }
         }
     }

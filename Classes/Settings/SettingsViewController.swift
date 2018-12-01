@@ -162,23 +162,37 @@ GitHubSessionListener {
 
     func onReportBug() {
 
-        let repo = RepositoryDetails(
-            owner: "GitHawkApp",
-            name: "GitHawk"
-        )
-
         let repoDetails = IssueTemplateRepoDetails(
-            repo: repo,
+            owner: "GitHawkApp",
+            name: "GitHawk",
             defaultBranch: "master"
         )
 
         reportBugCell.startSpinner()
-        client.createNewIssue(
-            repo: repoDetails,
-            session: sessionManager.focusedUserSession,
-            mainViewController: self,
-            delegate: self) {
+        client.createNewIssue(repoDetails: repoDetails) { result in
+            switch result {
+            case .success(let templates):
+
                 self.reportBugCell.stopSpinner()
+                if templates.count > 0 {
+                    
+                } else {
+                    // No templates exists, show blank new issue view controller
+                    guard let viewController = NewIssueTableViewController.create(
+                        client: GithubClient(userSession: self.sessionManager.focusedUserSession),
+                        owner: repoDetails.repo.owner,
+                        repo: repoDetails.repo.name,
+                        signature: .sentWithGitHawk
+                        ) else {
+                            assertionFailure("Failed to create NewIssueTableViewController")
+                            return
+                    }
+                    viewController.delegate = self
+                    self.route_present(to: viewController)
+                }
+            case .error(let error):
+                // Error
+            }
         }
     }
 
