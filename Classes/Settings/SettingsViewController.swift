@@ -107,26 +107,19 @@ GitHubSessionListener {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
-        let cell = tableView.cellForRow(at: indexPath)
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
 
-        if cell === reviewAccessCell {
-            onReviewAccess()
-        } else if cell === accountsCell {
-            onAccounts()
-        } else if cell === githubStatusCell {
-            onGitHubStatus()
-        } else if cell === reviewOnAppStoreCell {
-            onReviewOnAppStore()
-        } else if cell === reportBugCell {
-            onReportBug()
-        } else if cell === viewSourceCell {
-            onViewSource()
-        } else if cell === setDefaultReaction {
-            onSetDefaultReaction()
-        } else if cell === signOutCell {
-            onSignOut()
-        } else if cell === tryTestFlightBetaCell {
-            onTryTestFlightBeta()
+        switch cell {
+        case reviewAccessCell: onReviewAccess()
+        case accountsCell: onAccounts()
+        case githubStatusCell: onGitHubStatus()
+        case reviewOnAppStoreCell: onReviewOnAppStore()
+        case reportBugCell: onReportBug()
+        case viewSourceCell: onViewSource()
+        case setDefaultReaction: onSetDefaultReaction()
+        case signOutCell: onSignOut()
+        case tryTestFlightBetaCell: onTryTestFlightBeta()
+        default: return
         }
     }
 
