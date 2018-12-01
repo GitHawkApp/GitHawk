@@ -56,6 +56,7 @@ GitHubSessionListener {
         signatureSwitch.isOn = Signature.enabled
         pushSettingsButton.accessibilityLabel = NSLocalizedString("How we send push notifications in GitHawk", comment: "")
 
+        configureSwitches(withColor: UIColor.fromHex(Styles.Colors.Blue.medium))
         updateBadge()
 
         NotificationCenter.default.addObserver(
@@ -124,6 +125,12 @@ GitHubSessionListener {
     }
 
     // MARK: Private API
+
+    private func configureSwitches(withColor color: UIColor) {
+        [badgeSwitch, pushSwitch, signatureSwitch, markReadSwitch].forEach {
+            $0?.onTintColor = color
+        }
+    }
 
     private func updateDefaultReaction() {
         defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
