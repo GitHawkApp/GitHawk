@@ -30,7 +30,6 @@ class IssueTemplateHelper {
         with templates: [IssueTemplate],
         details: IssueTemplateDetails) -> UIAlertController {
 
-
         let alertView = UIAlertController(
             title: NSLocalizedString("New Issue", comment: ""),
             message: NSLocalizedString("Choose Template", comment: ""),

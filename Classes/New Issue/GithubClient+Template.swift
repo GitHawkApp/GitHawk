@@ -13,7 +13,6 @@ import Squawk
 
 private let githubIssueURL = ".github/ISSUE_TEMPLATE"
 
-
 struct IssueTemplateRepoDetails {
     let repo: RepositoryDetails
     let defaultBranch: String
