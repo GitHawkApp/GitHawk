@@ -271,7 +271,9 @@ EmptyViewDelegate {
                                 return
                         }
                         viewController.delegate = strongSelf
-                        strongSelf.route_present(to: viewController)
+                        let navController = UINavigationController(rootViewController: viewController)
+                        navController.modalPresentationStyle = .formSheet
+                        strongSelf.route_present(to: navController)
                     }
                 case .error(let error):
                     Squawk.show(error: error)

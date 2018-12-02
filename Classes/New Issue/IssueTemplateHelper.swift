@@ -45,6 +45,6 @@ final class IssueTemplateHelper {
             }
             cleanedFile = cleanedFile.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        return cleanedFile;
+        return cleanedFile
     }
 }
