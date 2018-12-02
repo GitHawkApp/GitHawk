@@ -11,7 +11,7 @@ import IGListKit
 import ContextMenu
 
 protocol NewFeaturesSectionControllerDelegate: class {
-    func didTapClose(for sectionController:  NewFeaturesSectionController)
+    func didTapClose(for sectionController: NewFeaturesSectionController)
 }
 
 final class NewFeaturesSectionController: ListSwiftSectionController<String>,
