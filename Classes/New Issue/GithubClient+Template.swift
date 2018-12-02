@@ -32,7 +32,7 @@ extension GithubClient {
         // For Testing.
         if let testingFile = testingFile { completion(.success(testingFile)) }
 
-        self.fetchFile(
+        fetchFile(
             owner: repoDetails.owner,
             repo: repoDetails.name,
             branch: repoDetails.defaultBranch,
