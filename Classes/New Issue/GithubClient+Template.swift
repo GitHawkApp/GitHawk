@@ -108,8 +108,9 @@ extension GithubClient {
                             switch result {
                             case .success(let template):
                                 templates.append(template)
-                            case .error(let error):
-                                if let err = error { Squawk.show(error: err) }
+                            default: break
+                                // If error creating template continue silently
+                                // Worst case is no templates are found and a blank issue is shown
                             }
                             templateGroup.leave()
                         })

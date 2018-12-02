@@ -25,5 +25,4 @@ class IssueTemplateHelper {
         let about = abouts.first?.trimmingCharacters(in: .whitespaces)
         return (name, about)
     }
-    
 }

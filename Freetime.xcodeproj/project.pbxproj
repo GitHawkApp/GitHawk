@@ -506,7 +506,7 @@
 		C0BF305821986CFA00A954D4 /* GithubClient+Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BF305721986CFA00A954D4 /* GithubClient+Template.swift */; };
 		C0CDBBBC219D1D4D00C2A8BB /* TemplateRegexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CDBBBB219D1D4D00C2A8BB /* TemplateRegexTests.swift */; };
 		C0DEB1DD218E7BFB00B6FEFD /* IssueTemplateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DEB1DC218E7BFB00B6FEFD /* IssueTemplateHelper.swift */; };
-		C0E3CD4521B34E5700185B57 /* ViewController+Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E3CD4421B34E5700185B57 /* ViewController+Template.swift */; };
+		C0E3CD4521B34E5700185B57 /* NewIssueTableViewController+Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E3CD4421B34E5700185B57 /* NewIssueTableViewController+Template.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -1102,7 +1102,7 @@
 		C0BF305721986CFA00A954D4 /* GithubClient+Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Template.swift"; sourceTree = "<group>"; };
 		C0CDBBBB219D1D4D00C2A8BB /* TemplateRegexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateRegexTests.swift; sourceTree = "<group>"; };
 		C0DEB1DC218E7BFB00B6FEFD /* IssueTemplateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTemplateHelper.swift; sourceTree = "<group>"; };
-		C0E3CD4421B34E5700185B57 /* ViewController+Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Template.swift"; sourceTree = "<group>"; };
+		C0E3CD4421B34E5700185B57 /* NewIssueTableViewController+Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewIssueTableViewController+Template.swift"; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -2263,7 +2263,7 @@
 				98B5A0811F6C73D6000617D6 /* NewIssue.storyboard */,
 				98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */,
 				C0DEB1DC218E7BFB00B6FEFD /* IssueTemplateHelper.swift */,
-				C0E3CD4421B34E5700185B57 /* ViewController+Template.swift */,
+				C0E3CD4421B34E5700185B57 /* NewIssueTableViewController+Template.swift */,
 				C0BF305721986CFA00A954D4 /* GithubClient+Template.swift */,
 			);
 			path = "New Issue";
@@ -3077,7 +3077,7 @@
 				292FF8B71F303BD9009E63F7 /* IssuePreviewViewController.swift in Sources */,
 				292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */,
 				29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */,
-				C0E3CD4521B34E5700185B57 /* ViewController+Template.swift in Sources */,
+				C0E3CD4521B34E5700185B57 /* NewIssueTableViewController+Template.swift in Sources */,
 				29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */,
 				29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */,
 				29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */,

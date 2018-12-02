@@ -77,7 +77,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         template: String? = nil,
         signature: IssueSignatureType? = nil
         ) -> NewIssueTableViewController? {
-        
+
         let storyboard = UIStoryboard(name: "NewIssue", bundle: nil)
 
         let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
