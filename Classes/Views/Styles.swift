@@ -125,7 +125,7 @@ enum Styles {
         UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
         UINavigationBar.appearance().titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color]
-        UISwitch.appearance().onTintColor = Styles.Colors.Green.medium.color
+        UISwitch.appearance().onTintColor = Styles.Colors.Blue.medium.color
         UISearchBar.appearance().tintColor = Styles.Colors.Blue.medium.color
         DropdownTitleView.appearance().chevronTintColor = Styles.Colors.Gray.medium.color
         DropdownTitleView.appearance().titleColor = Styles.Colors.Gray.dark.color
