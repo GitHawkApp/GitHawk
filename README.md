@@ -33,7 +33,7 @@ We are always looking for contributions from **all skill levels**! A great way t
 - 👩‍🎨 **Designer**
   - Like making unique UIs? So do we! We value keeping GitHawk's UX close to core iOS, but, when necessary, create our own high-quality UI components. Helping design for GitHawk is a great opportunity to try new ideas out!
 - 👩‍💻 **iOS Project Management**
-  - There is a _lot_ of low-hanging fruit with our project setup, test and deployment automation, build optimizations, and more! I (@rnystrom) have no idea what I'm doing here. Come point us in the right direction!
+  - There is a _lot_ of low-hanging fruit with our project setup, test and deployment automation, build optimizations, and more! I ([@rnystrom](https://github.com/rnystrom)) have no idea what I'm doing here. Come point us in the right direction!
 
 ## Installation
 
