@@ -17,7 +17,7 @@ protocol NewFeaturesSectionControllerDelegate: class {
 final class NewFeaturesSectionController: ListSwiftSectionController<String>,
 NewFeaturesCellDelegate {
 
-    private var delegate: NewFeaturesSectionControllerDelegate?
+    private weak var delegate: NewFeaturesSectionControllerDelegate?
 
     init(delegate: NewFeaturesSectionControllerDelegate?) {
         super.init()
