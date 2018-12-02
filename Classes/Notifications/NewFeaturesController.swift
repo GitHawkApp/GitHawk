@@ -14,12 +14,17 @@ final class NewFeaturesController {
 
     // change to true for hardcoded testing
     private let testing = false
+    private(set) var latestMarkdown: String?
+
+    static var version: String {
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    }
 
     var version: String {
         if testing {
             return "test"
         }
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        return NewFeaturesController.version
     }
 
     private var fetchURL: URL? {
@@ -55,7 +60,7 @@ final class NewFeaturesController {
         }
     }
 
-    func fetch(success: @escaping (String) -> Void) {
+    func fetch(success: @escaping () -> Void) {
         guard let url = fetchURL,
             (testing == true || hasFetchedLatest == false)
             else { return }
@@ -66,8 +71,9 @@ final class NewFeaturesController {
                 response.statusCode == 200,
                 let data = data,
                 let string = String(data: data, encoding: .utf8) {
-                DispatchQueue.main.async {
-                    success(string)
+                DispatchQueue.main.async { [weak self] in
+                    self?.latestMarkdown = string
+                    success()
                 }
             }
         }

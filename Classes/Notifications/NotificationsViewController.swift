@@ -15,11 +15,13 @@ final class NotificationsViewController: BaseListViewController<Int>,
 BaseListViewControllerDataSource,
 FlatCacheListener,
 TabNavRootViewControllerType,
-BaseListViewControllerEmptyDataSource {
+BaseListViewControllerEmptyDataSource,
+NewFeaturesSectionControllerDelegate {
 
     private let modelController: NotificationModelController
     private let inboxType: InboxType
     private var notificationIDs = [String]()
+    private var newFeaturesController: NewFeaturesController? = NewFeaturesController()
 
     private var notifications: [NotificationViewModel] {
         return notificationIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
@@ -68,6 +70,10 @@ BaseListViewControllerEmptyDataSource {
         }
 
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
+
+        newFeaturesController?.fetch { [weak self] in
+            self?.update()
+        }
     }
 
     override func fetch(page: Int?) {
@@ -264,9 +270,11 @@ BaseListViewControllerEmptyDataSource {
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         var models = [ListSwiftPair]()
 
-        models.append(ListSwiftPair.pair("com.freetime.notification.new-features", {
-            NewFeaturesSectionController()
-        }))
+        if let markdown = newFeaturesController?.latestMarkdown {
+            models.append(ListSwiftPair.pair(markdown, { [weak self] in
+                NewFeaturesSectionController(delegate: self)
+            }))
+        }
 
         models += notificationIDs.compactMap { id in
             guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?
@@ -303,6 +311,13 @@ BaseListViewControllerEmptyDataSource {
 
     func didDoubleTapTab() {
         didSingleTapTab()
+    }
+
+    // MARK: NewFeaturesSectionControllerDelegate
+
+    func didTapClose(for sectionController: NewFeaturesSectionController) {
+        newFeaturesController = nil
+        update()
     }
 
 }
