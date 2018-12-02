@@ -62,12 +62,20 @@ class ContextMenuPresentationController: UIPresentationController {
         let frame: CGRect
         if let corner = preferredSourceViewCorner {
             let minPadding = item.options.containerStyle.edgePadding
-            let x = corner.point.x
-                + corner.position.xSizeModifier * size.width
-                + corner.position.xModifier * item.options.containerStyle.xPadding
             let y = corner.point.y
                 + corner.position.ySizeModifier * size.height
                 + corner.position.yModifier * item.options.containerStyle.yPadding
+
+            let x: CGFloat
+            switch item.options.position {
+            case .default:
+                x = corner.point.x
+                    + corner.position.xSizeModifier * size.width
+                    + corner.position.xModifier * item.options.containerStyle.xPadding
+            case .centerX:
+                x = corner.rect.midX - size.width / 2
+            }
+
             frame = CGRect(
                 x: max(minPadding, min(containerBounds.width - size.width - minPadding, x)),
                 y: max(minPadding, min(containerBounds.height - size.height - minPadding, y)),
