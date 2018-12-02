@@ -10,26 +10,30 @@ import UIKit
 import IGListKit
 import FlatCache
 import Squawk
+import DropdownTitleView
+import ContextMenu
 
 final class NotificationsViewController: BaseListViewController<Int>,
 BaseListViewControllerDataSource,
 FlatCacheListener,
 TabNavRootViewControllerType,
 BaseListViewControllerEmptyDataSource,
-NewFeaturesSectionControllerDelegate {
+NewFeaturesSectionControllerDelegate,
+InboxFilterControllerListener {
 
     private let modelController: NotificationModelController
-    private let inboxType: InboxType
     private var notificationIDs = [String]()
     private var newFeaturesController: NewFeaturesController? = NewFeaturesController()
+    private let inboxFilterController: InboxFilterController
+    private let navigationTitle = DropdownTitleView()
 
     private var notifications: [NotificationViewModel] {
         return notificationIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
     }
 
-    init(modelController: NotificationModelController, inboxType: InboxType) {
+    init(modelController: NotificationModelController) {
         self.modelController = modelController
-        self.inboxType = inboxType
+        self.inboxFilterController = InboxFilterController(client: modelController.githubClient)
 
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
@@ -39,11 +43,8 @@ NewFeaturesSectionControllerDelegate {
         self.dataSource = self
         self.emptyDataSource = self
 
-        switch inboxType {
-        case .all: title = NSLocalizedString("All", comment: "")
-        case .unread: title = NSLocalizedString("Inbox", comment: "")
-        case .repo(let repo): title = repo.name
-        }
+        inboxFilterController.announcer.add(listener: self)
+        updateTitle()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -56,20 +57,9 @@ NewFeaturesSectionControllerDelegate {
         makeBackBarItemEmpty()
         resetRightBarItem()
 
-        switch inboxType {
-        case .unread:
-            let item = UIBarButtonItem(
-                image: UIImage(named: "bullets-hollow"),
-                style: .plain,
-                target: self,
-                action: #selector(NotificationsViewController.onMore(sender:))
-            )
-            item.accessibilityLabel = Constants.Strings.moreOptions
-            navigationItem.leftBarButtonItem = item
-        case .repo, .all: break
-        }
-
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
+        navigationItem.titleView = navigationTitle
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle), for: .touchUpInside)
 
         newFeaturesController?.fetch { [weak self] in
             self?.update()
@@ -78,21 +68,14 @@ NewFeaturesSectionControllerDelegate {
 
     override func fetch(page: Int?) {
         let width = view.safeContentWidth(with: feed.collectionView)
-        let showAll = inboxType.showAll
-
-        let repo: Repository?
-        switch inboxType {
-        case .repo(let r): repo = r
-        case .all, .unread: repo = nil
-        }
 
         if let page = page {
-            modelController.fetchNotifications(repo: repo, all: showAll, page: page, width: width) { [weak self] result in
+            modelController.fetchNotifications(repo: nil, all: false, page: page, width: width) { [weak self] result in
                 self?.handle(result: result, append: true, animated: false, page: page)
             }
         } else {
             let first = 1
-            modelController.fetchNotifications(repo: repo, all: showAll, page: first, width: width) { [weak self] result in
+            modelController.fetchNotifications(repo: nil, all: false, page: first, width: width) { [weak self] result in
                 self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
             }
         }
@@ -117,13 +100,6 @@ NewFeaturesSectionControllerDelegate {
     }
 
     private func updateUnreadState() {
-        // don't update tab bar and badges when not showing only new notifications
-        // prevents archives updating badge and tab #s
-        switch inboxType {
-        case .repo: return
-        case .all, .unread: break
-        }
-
         var unread = 0
         for id in notificationIDs {
             guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?,
@@ -136,47 +112,6 @@ NewFeaturesSectionControllerDelegate {
         navigationItem.rightBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unread)" : nil
         BadgeNotifications.updateBadge(count: unread)
-    }
-
-    @objc func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
-
-        alert.add(action: UIAlertAction(
-            title: NSLocalizedString("View All", comment: ""),
-            style: .default,
-            handler: { [weak self] _ in
-                self?.onViewAll()
-        }))
-
-        let cache = modelController.githubClient.cache
-        var repoNames = Set<String>()
-        for id in notificationIDs {
-            guard let model = cache.get(id: id) as NotificationViewModel?,
-                !repoNames.contains(model.repo)
-                else { continue }
-            repoNames.insert(model.repo)
-            alert.add(action: UIAlertAction(title: model.repo, style: .default, handler: { [weak self] _ in
-                self?.pushRepoNotifications(owner: model.owner, repo: model.repo)
-            }))
-        }
-
-        alert.add(action: AlertAction.cancel())
-        alert.popoverPresentationController?.barButtonItem = sender
-        present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    func pushRepoNotifications(owner: String, repo: String) {
-        route_push(to: NotificationsViewController(
-            modelController: modelController,
-            inboxType: .repo(Repository(owner: owner, name: repo))
-        ))
-    }
-
-    func onViewAll() {
-        route_push(to: NotificationsViewController(
-            modelController: modelController,
-            inboxType: .all
-        ))
     }
 
     func resetRightBarItem(updatingState updateState: Bool = true) {
@@ -194,32 +129,32 @@ NewFeaturesSectionControllerDelegate {
     }
 
     @objc private func onMarkAll() {
-        let message: String
-        switch inboxType {
-        case .all, .unread:
-            message = NSLocalizedString("Mark all notifications as read?", comment: "")
-        case .repo(let repo):
-            let messageFormat = NSLocalizedString("Mark %@ notifications as read?", comment: "")
-            message = String(format: messageFormat, repo.name)
-        }
-
-        let alert = UIAlertController.configured(
-            title: NSLocalizedString("Notifications", comment: ""),
-            message: message,
-            preferredStyle: .alert
-        )
-
-        alert.addActions([
-            UIAlertAction(
-                title: Constants.Strings.markRead,
-                style: .destructive,
-                handler: { [weak self] _ in
-                    self?.markRead()
-            }),
-            AlertAction.cancel()
-            ])
-
-        present(alert, animated: trueUnlessReduceMotionEnabled)
+//        let message: String
+//        switch inboxType {
+//        case .all, .unread:
+//            message = NSLocalizedString("Mark all notifications as read?", comment: "")
+//        case .repo(let repo):
+//            let messageFormat = NSLocalizedString("Mark %@ notifications as read?", comment: "")
+//            message = String(format: messageFormat, repo.name)
+//        }
+//
+//        let alert = UIAlertController.configured(
+//            title: NSLocalizedString("Notifications", comment: ""),
+//            message: message,
+//            preferredStyle: .alert
+//        )
+//
+//        alert.addActions([
+//            UIAlertAction(
+//                title: Constants.Strings.markRead,
+//                style: .destructive,
+//                handler: { [weak self] _ in
+//                    self?.markRead()
+//            }),
+//            AlertAction.cancel()
+//            ])
+//
+//        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     private func markRead() {
@@ -245,10 +180,15 @@ NewFeaturesSectionControllerDelegate {
             RatingController.prompt(.system)
         }
 
-        switch inboxType {
-        case .all, .unread: modelController.markAllNotifications(completion: block)
-        case .repo(let repo): modelController.markRepoNotifications(repo: repo, completion: block)
-        }
+//        switch inboxType {
+//        case .all, .unread: modelController.markAllNotifications(completion: block)
+//        case .repo(let repo): modelController.markRepoNotifications(repo: repo, completion: block)
+//        }
+        /**
+         TODO
+         - if repo selected, only mark that repo as read
+         - if mention/etc selected, mark all (update alert language)
+         */
     }
 
     private func rebuildAndUpdate(
@@ -263,6 +203,29 @@ NewFeaturesSectionControllerDelegate {
             notificationIDs = ids
         }
         update(page: page, animated: animated)
+    }
+
+    private func updateTitle() {
+        navigationTitle.configure(
+            title: inboxFilterController.selected.type.title,
+            subtitle: inboxFilterController.selected.type.subtitle
+        )
+    }
+
+    @objc private func onNavigationTitle() {
+        inboxFilterController.showMenu(from: self)
+//        ContextMenu.shared.show(
+//            sourceViewController: self,
+//            viewController: InboxFilterViewController(inboxFilterController: inboxFilterController),
+//            options: ContextMenu.Options(
+//                containerStyle: ContextMenu.ContainerStyle(
+//                    backgroundColor: Styles.Colors.menuBackgroundColor.color
+//                ),
+//                menuStyle: .minimal,
+//                position: .centerX
+//            ),
+//            sourceView: navigationItem.titleView
+//        )
     }
 
     // MARK: BaseListViewControllerDataSource
@@ -318,6 +281,13 @@ NewFeaturesSectionControllerDelegate {
     func didTapClose(for sectionController: NewFeaturesSectionController) {
         newFeaturesController = nil
         update()
+    }
+
+    // MARK: InboxFilterControllerListener
+
+    func didUpdateSelectedFilter(for controller: InboxFilterController) {
+        updateTitle()
+        fetch(page: nil)
     }
 
 }

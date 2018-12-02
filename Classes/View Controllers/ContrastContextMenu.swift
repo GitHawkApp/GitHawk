@@ -89,7 +89,10 @@ final class ContrastContextMenu: UITableViewController {
         tableView.separatorStyle = .none
         tableView.reloadData()
         tableView.layoutIfNeeded()
-        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height)
+        preferredContentSize = CGSize(
+            width: Styles.Sizes.contextMenuSmallSize.width,
+            height: tableView.contentSize.height
+        )
     }
 
     // MARK: UITableViewDataSource
