@@ -12,6 +12,7 @@ import GitHubSession
 import Squawk
 
 private let githubIssueURL = ".github/ISSUE_TEMPLATE"
+let tempalateRegex = ".github/ISSUE_TEMPLATE"
 
 struct IssueTemplateRepoDetails {
     let owner: String
@@ -56,24 +57,7 @@ extension GithubClient {
             case .success(let file):
                 let nameAndDescription = IssueTemplateHelper.getNameAndDescription(fromTemplatefile: file)
                 if let name = nameAndDescription.name {
-                    var cleanedFile = file
-
-                    // Remove all template detail text
-                    // -----
-                    // name:
-                    // about:
-                    // -----
-                    if let textToClean = file.matches(regex: "([-]{3,})([\\s\\S]*)([-]{3,})").first {
-                        if let range = file.range(of: textToClean) {
-                            cleanedFile = file.replacingOccurrences(
-                                of: textToClean,
-                                with: "",
-                                options: .literal,
-                                range: range
-                            )
-                        }
-                        cleanedFile = cleanedFile.trimmingCharacters(in: .whitespacesAndNewlines)
-                    }
+                    let cleanedFile = IssueTemplateHelper.cleanText(file: file)
                     completion(.success(IssueTemplate(title: name, template: cleanedFile)))
                 } else {
                     completion(.error(nil))

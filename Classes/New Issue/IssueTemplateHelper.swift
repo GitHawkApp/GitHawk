@@ -25,4 +25,26 @@ final class IssueTemplateHelper {
         let about = abouts.first?.trimmingCharacters(in: .whitespaces)
         return (name, about)
     }
+
+    static func cleanText(file: String) -> String {
+
+        var cleanedFile = ""
+        // Remove all template detail text
+        // -----
+        // name:
+        // about:
+        // -----
+        if let textToClean = file.matches(regex: "([-]{3,})[^[-]{3,}]*([-]{3,})").first {
+            if let range = file.range(of: textToClean) {
+                cleanedFile = file.replacingOccurrences(
+                    of: textToClean,
+                    with: "",
+                    options: .literal,
+                    range: range
+                )
+            }
+            cleanedFile = cleanedFile.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        return cleanedFile;
+    }
 }
