@@ -41,6 +41,7 @@
     {
       "size" : "44x44",
       "idiom" : "watch",
+      "filename" : "Icon-HomeScreen-42mm-44x44@2x.png",
       "scale" : "2x",
       "role" : "appLauncher",
       "subtype" : "40mm"
@@ -48,6 +49,7 @@
     {
       "size" : "50x50",
       "idiom" : "watch",
+      "filename" : "Icon-HomeScreen-44mm-50x50@2x.png",
       "scale" : "2x",
       "role" : "appLauncher",
       "subtype" : "44mm"
@@ -71,6 +73,7 @@
     {
       "size" : "108x108",
       "idiom" : "watch",
+      "filename" : "Icon-HomeScreen-44mm-108x108@2x.png",
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "44mm"
@@ -80,14 +83,6 @@
       "idiom" : "watch-marketing",
       "filename" : "Icon-AppStore-1024x1024.png",
       "scale" : "1x"
-    },
-    {
-      "size" : "44x44",
-      "idiom" : "watch",
-      "filename" : "Icon-HomeScreen-42mm-44x44@2x.png",
-      "scale" : "2x",
-      "role" : "longLook",
-      "subtype" : "42mm"
     }
   ],
   "info" : {
