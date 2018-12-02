@@ -10,28 +10,24 @@ import Foundation
 import IGListKit
 import ContextMenu
 
+protocol NewFeaturesSectionControllerDelegate: class {
+    func didTapClose(for sectionController: NewFeaturesSectionController)
+}
+
 final class NewFeaturesSectionController: ListSwiftSectionController<String>,
 NewFeaturesCellDelegate {
 
-    private var markdown: String?
-    private let controller = NewFeaturesController()
-    private var closed = false
+    private weak var delegate: NewFeaturesSectionControllerDelegate?
 
-    override init() {
+    init(delegate: NewFeaturesSectionControllerDelegate?) {
         super.init()
-        controller.fetch { [weak self] markdown in
-            self?.markdown = markdown
-            self?.update()
-        }
+        self.delegate = delegate
     }
 
     override func createBinders(from value: String) -> [ListBinder] {
-        guard let markdown = self.markdown,
-            closed == false
-            else { return [] }
         return [
             binder(
-                markdown,
+                value,
                 cellType: ListCellType.class(NewFeaturesCell.self),
                 size: {
                     return $0.collection.cellSize(
@@ -42,11 +38,11 @@ NewFeaturesCellDelegate {
             },
                 configure: { [weak self] (cell, _) in
                     guard let `self` = self else { return }
-                    cell.configure(with: self.controller.version)
+                    cell.configure(with: NewFeaturesController.version)
                     cell.delegate = self
             },
-                didSelect: { [weak self] _ in
-                    self?.showChanges(markdown: markdown)
+                didSelect: { [weak self] context in
+                    self?.showChanges(markdown: context.value)
             })
         ]
     }
@@ -58,7 +54,7 @@ NewFeaturesCellDelegate {
             repo: "GitHawk",
             title: String.localizedStringWithFormat(
                 NSLocalizedString("New in %@", comment: ""),
-                controller.version
+                NewFeaturesController.version
             ),
             asMenu: true
         ))
@@ -67,8 +63,7 @@ NewFeaturesCellDelegate {
     // MARK: NewFeaturesCellDelegate
 
     func didTapClose(for cell: NewFeaturesCell) {
-        closed = true
-        update()
+        delegate?.didTapClose(for: self)
     }
 
 }

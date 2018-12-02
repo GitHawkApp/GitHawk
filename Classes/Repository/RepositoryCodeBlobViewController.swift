@@ -34,9 +34,8 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         let barButtonItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
             target: self,
-            action: #selector(RepositoryCodeBlobViewController.onShare(sender:)))
-        barButtonItem.isEnabled = false
-
+            action: #selector(RepositoryCodeBlobViewController.onShare(sender:))
+        )
         return barButtonItem
     }()
 
@@ -68,8 +67,8 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         emptyView.isHidden = true
         emptyView.delegate = self
         emptyView.button.isHidden = false
-        view.addSubview(emptyView)
         view.addSubview(codeView)
+        view.addSubview(emptyView)
 
         codeView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -101,7 +100,6 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
     func didFetchPayload(_ payload: Any) {
         sharingPayload = payload
-        moreOptionsItem.isEnabled = true
     }
 
     @objc func onRefresh() {

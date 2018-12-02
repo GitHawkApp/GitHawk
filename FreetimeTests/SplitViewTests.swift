@@ -109,7 +109,6 @@ class SplitViewTests: XCTestCase {
 
         let detailNav = UINavigationController()
 
-
         let detail1 = RepositoryViewController(
             client: GithubClient(userSession: nil),
             repo: RepositoryDetails(
@@ -124,7 +123,6 @@ class SplitViewTests: XCTestCase {
                 repo: "Bar",
                 number: 0
         ))
-
 
         detailNav.pushViewController(detail1, animated: false)
         detailNav.pushViewController(detail2, animated: false)
