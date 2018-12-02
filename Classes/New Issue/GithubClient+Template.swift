@@ -95,7 +95,7 @@ extension GithubClient {
         // We need this since we will be making multiple async calls inside a for-loop.
         let templateGroup = DispatchGroup()
 
-        self.fetchFiles(
+        fetchFiles(
             owner: repoDetails.owner,
             repo: repoDetails.name,
             branch: repoDetails.defaultBranch,

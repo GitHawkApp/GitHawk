@@ -16,7 +16,7 @@ struct IssueTemplate {
     let template: String
 }
 
-class IssueTemplateHelper {
+final class IssueTemplateHelper {
 
     static func getNameAndDescription(fromTemplatefile file: String) -> (name: String?, about: String?) {
         let names = file.matches(regex: String.getRegexForLine(after: "name"))
