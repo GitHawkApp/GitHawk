@@ -234,7 +234,7 @@ EmptyViewDelegate {
         }
     }
 
-    func newIssueAction() -> UIAlertAction? {
+    func newIssueAction(sender: UIView) -> UIAlertAction? {
 
         guard case .value(let details) = self.state else { return nil }
 
@@ -256,6 +256,7 @@ EmptyViewDelegate {
                             withTemplates: templates,
                             details: repoDetails
                         )
+                        alertView.popoverPresentationController?.setSourceView(sender)
                         strongSelf.route_present(to: alertView)
                     } else {
 
@@ -308,7 +309,7 @@ EmptyViewDelegate {
 
         alert.addActions([
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client),
-            newIssueAction()
+            newIssueAction(sender: sender)
             ])
         if let url = repoUrl {
             alert.add(action: AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {

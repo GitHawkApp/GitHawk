@@ -17,7 +17,7 @@ extension NewIssueTableViewControllerDelegate where Self: UIViewController {
         repoDetails: IssueTemplateRepoDetails
         ) -> UIAlertController {
 
-        let alertView = UIAlertController(
+        let alertView = UIAlertController.configured(
             title: Constants.Strings.newIssue,
             message: NSLocalizedString("Choose Template", comment: ""),
             preferredStyle: .actionSheet

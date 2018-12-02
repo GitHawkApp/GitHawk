@@ -182,6 +182,7 @@ GitHubSessionListener {
                         session: strongSelf.sessionManager.focusedUserSession,
                         details: repoDetails
                     )
+                    alertView.popoverPresentationController?.setSourceView(strongSelf.reportBugCell)
                     strongSelf.route_present(to: alertView)
                 } else {
 
