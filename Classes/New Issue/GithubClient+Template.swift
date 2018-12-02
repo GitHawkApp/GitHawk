@@ -36,7 +36,7 @@ extension GithubClient {
             owner: repoDetails.owner,
             repo: repoDetails.name,
             branch: repoDetails.defaultBranch,
-            path: "\(githubIssueURL)/\(filename)") { (result) in
+            path: "\(githubIssueURL)/\(filename)") { result in
                 switch result {
                 case .success(let file): completion(.success(file))
                 case .error(let error): completion(.error(error))
