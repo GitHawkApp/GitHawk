@@ -129,35 +129,41 @@ InboxFilterControllerListener {
     }
 
     @objc private func onMarkAll() {
-//        let message: String
-//        switch inboxType {
-//        case .all, .unread:
-//            message = NSLocalizedString("Mark all notifications as read?", comment: "")
-//        case .repo(let repo):
-//            let messageFormat = NSLocalizedString("Mark %@ notifications as read?", comment: "")
-//            message = String(format: messageFormat, repo.name)
-//        }
-//
-//        let alert = UIAlertController.configured(
-//            title: NSLocalizedString("Notifications", comment: ""),
-//            message: message,
-//            preferredStyle: .alert
-//        )
-//
-//        alert.addActions([
-//            UIAlertAction(
-//                title: Constants.Strings.markRead,
-//                style: .destructive,
-//                handler: { [weak self] _ in
-//                    self?.markRead()
-//            }),
-//            AlertAction.cancel()
-//            ])
-//
-//        present(alert, animated: trueUnlessReduceMotionEnabled)
+        let type = inboxFilterController.selected.type
+        let message: String
+        switch type {
+        case .all:
+            message = NSLocalizedString("Mark all notifications as read?", comment: "")
+        case .assigned, .created, .mentioned, .subscribed:
+            message = NSLocalizedString(
+                "Mark all notifications as read? This includes notifications not currently visible.",
+                comment: ""
+            )
+        case let .repo(owner, name):
+            let messageFormat = NSLocalizedString("Mark %@/%@ notifications as read?", comment: "")
+            message = String(format: messageFormat, owner, name)
+        }
+
+        let alert = UIAlertController.configured(
+            title: NSLocalizedString("Notifications", comment: ""),
+            message: message,
+            preferredStyle: .alert
+        )
+
+        alert.addActions([
+            UIAlertAction(
+                title: Constants.Strings.markRead,
+                style: .destructive,
+                handler: { [weak self] _ in
+                    self?.markRead(type: type)
+            }),
+            AlertAction.cancel()
+            ])
+
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func markRead() {
+    private func markRead(type: InboxFilterModel.FilterType) {
         self.setRightBarItemSpinning()
 
         let block: (Bool) -> Void = { success in
@@ -180,15 +186,12 @@ InboxFilterControllerListener {
             RatingController.prompt(.system)
         }
 
-//        switch inboxType {
-//        case .all, .unread: modelController.markAllNotifications(completion: block)
-//        case .repo(let repo): modelController.markRepoNotifications(repo: repo, completion: block)
-//        }
-        /**
-         TODO
-         - if repo selected, only mark that repo as read
-         - if mention/etc selected, mark all (update alert language)
-         */
+        switch type {
+        case .all, .subscribed, .assigned, .created, .mentioned:
+            modelController.markAllNotifications(completion: block)
+        case let .repo(owner, name):
+            modelController.markRepoNotifications(owner: owner, name: name, completion: block)
+        }
     }
 
     private func rebuildAndUpdate(
@@ -214,18 +217,6 @@ InboxFilterControllerListener {
 
     @objc private func onNavigationTitle() {
         inboxFilterController.showMenu(from: self)
-//        ContextMenu.shared.show(
-//            sourceViewController: self,
-//            viewController: InboxFilterViewController(inboxFilterController: inboxFilterController),
-//            options: ContextMenu.Options(
-//                containerStyle: ContextMenu.ContainerStyle(
-//                    backgroundColor: Styles.Colors.menuBackgroundColor.color
-//                ),
-//                menuStyle: .minimal,
-//                position: .centerX
-//            ),
-//            sourceView: navigationItem.titleView
-//        )
     }
 
     // MARK: BaseListViewControllerDataSource

@@ -153,8 +153,12 @@ final class NotificationModelController {
         }
     }
 
-    func markRepoNotifications(repo: Repository, completion: @escaping (Bool) -> Void) {
-        githubClient.client.send(V3MarkRepositoryNotificationsRequest(owner: repo.owner, repo: repo.name)) { result in
+    func markRepoNotifications(
+        owner: String,
+        name: String,
+        completion: @escaping (Bool) -> Void
+        ) {
+        githubClient.client.send(V3MarkRepositoryNotificationsRequest(owner: owner, repo: name)) { result in
             switch result {
             case .success: completion(true)
             case .failure: completion(false)

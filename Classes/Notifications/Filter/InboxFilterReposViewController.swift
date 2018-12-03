@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import Squawk
 
 final class InboxFilterReposViewController: BaseListViewController<String>,
 BaseListViewControllerDataSource {
@@ -18,15 +19,34 @@ BaseListViewControllerDataSource {
     init(inboxFilterController: InboxFilterController) {
         self.inboxFilterController = inboxFilterController
         super.init(emptyErrorMessage: NSLocalizedString("Error loading repos", comment: ""))
-        title = Constants.Strings.watchedRepos
+        dataSource = self
+        title = NSLocalizedString("Watched Repos", comment: "")
+        preferredContentSize = Styles.Sizes.contextMenuSize
+        feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.setLoadingSpinnerColor(to: .white)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+    }
+
     override func fetch(page: String?) {
-        // TODO
+        inboxFilterController.client.fetchSubscriptions { [weak self] result in
+            switch result {
+            case .error(let error):
+                Squawk.show(error: error)
+            case .success(let repos):
+                self?.repos = repos
+                self?.update()
+            }
+        }
     }
 
     // MARK: BaseListViewControllerDataSource

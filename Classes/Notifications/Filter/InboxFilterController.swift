@@ -10,7 +10,7 @@ import Foundation
 import ContextMenu
 
 protocol InboxFilterControllerClient {
-    func fetchSubscriptions(for username: String, completion: @escaping () -> Void)
+    func fetchSubscriptions(completion: @escaping (Result<[RepositoryDetails]>) -> Void)
 }
 
 protocol InboxFilterControllerListener: class {
@@ -19,7 +19,7 @@ protocol InboxFilterControllerListener: class {
 
 final class InboxFilterController {
 
-    private let client: InboxFilterControllerClient
+    let client: InboxFilterControllerClient
     let announcer = Announcer<InboxFilterControllerListener>()
 
     private(set) var selected: InboxFilterModel = InboxFilterModel(type: .all) {
@@ -50,18 +50,15 @@ final class InboxFilterController {
 
     private func showRepos(from viewController: UIViewController?) {
         guard let viewController = viewController else { return }
-//        ContextMenu.shared.show(
-//            sourceViewController: viewController,
-//            viewController: ContrastContextMenu(items: items),
-//            options: ContextMenu.Options(
-//                containerStyle: ContextMenu.ContainerStyle(
-//                    backgroundColor: Styles.Colors.menuBackgroundColor.color
-//                ),
-//                menuStyle: .minimal,
-//                hapticsStyle: .medium,
-//                position: .centerX
-//            )
-//        )
+        ContextMenu.shared.show(
+            sourceViewController: viewController,
+            viewController: InboxFilterReposViewController(inboxFilterController: self),
+            options: ContextMenu.Options(
+                containerStyle: ContextMenu.ContainerStyle(
+                    backgroundColor: Styles.Colors.menuBackgroundColor.color
+                )
+            )
+        )
     }
 
     func showMenu(from viewController: UIViewController) {
@@ -77,7 +74,7 @@ final class InboxFilterController {
             })
         }
         items.append(ContrastContextMenuItem(
-            title: Constants.Strings.watchedRepos,
+            title: NSLocalizedString("Repos", comment: ""),
             iconName: "repo",
             iconColor: Styles.Colors.Blue.medium.color,
             separator: true,

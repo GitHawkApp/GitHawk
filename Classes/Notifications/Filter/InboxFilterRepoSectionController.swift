@@ -21,7 +21,7 @@ final class InboxFilterRepoSectionController: ListSwiftSectionController<Reposit
         return [
             binder(
                 value,
-                cellType: ListCellType.class(BookmarkRepoCell.self),
+                cellType: ListCellType.class(InboxFilterRepoCell.self),
                 size: {
                     return $0.collection.cellSize(with: Styles.Sizes.tableCellHeight)
             }, configure: {
@@ -29,14 +29,17 @@ final class InboxFilterRepoSectionController: ListSwiftSectionController<Reposit
                     owner: $1.value.owner,
                     name: $1.value.name
                 )
+            }, didSelect: { [weak self] context in
+                self?.didSelect(value: context.value)
             })
         ]
     }
 
-    /**
- , didSelect: { [weak self] context in
- self?.inboxFilterController.update(selection: context.value)
- }
- */
+    private func didSelect(value: RepositoryDetails) {
+        viewController?.dismiss(animated: trueUnlessReduceMotionEnabled)
+        inboxFilterController.update(selection: InboxFilterModel(
+            type: .repo(owner: value.owner, name: value.name))
+        )
+    }
     
 }

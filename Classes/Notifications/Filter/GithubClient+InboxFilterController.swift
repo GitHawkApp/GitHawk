@@ -7,11 +7,26 @@
 //
 
 import Foundation
+import GitHubAPI
 
 extension GithubClient: InboxFilterControllerClient {
 
-    func fetchSubscriptions(for username: String, completion: @escaping () -> Void) {
-        
+    func fetchSubscriptions(completion: @escaping (Result<[RepositoryDetails]>) -> Void) {
+        guard let username = userSession?.username else {
+            completion(.error(nil))
+            return
+        }
+        client.send(V3SubscriptionsRequest(username: username)) { result in
+            switch result {
+            case .failure(let error):
+                completion(.error(error))
+            case .success(let data):
+                let repos = data.data.map {
+                    RepositoryDetails(owner: $0.owner.login, name: $0.name)
+                }
+                completion(.success(repos))
+            }
+        }
     }
     
 }

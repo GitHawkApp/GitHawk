@@ -26,6 +26,8 @@
 		290890C2204BDE2A00D088BC /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890C1204BDE2A00D088BC /* JSONResponse.swift */; };
 		290890C4204BDF9E00D088BC /* V3EditCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */; };
 		2955D4B221B4A36600A393D3 /* V3SubscriptionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4B121B4A36600A393D3 /* V3SubscriptionsRequest.swift */; };
+		2955D4B621B4B83200A393D3 /* V3IssuesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4B521B4B83200A393D3 /* V3IssuesRequest.swift */; };
+		2955D4B821B4B97100A393D3 /* V3Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4B721B4B97100A393D3 /* V3Issue.swift */; };
 		2958050B204B5A68009CFD51 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 2958050A204B5A68009CFD51 /* notifications.json */; };
 		2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */; };
 		2958050F204B6258009CFD51 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050E204B6258009CFD51 /* Client.swift */; };
@@ -100,6 +102,8 @@
 		290890C1204BDE2A00D088BC /* JSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
 		290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3EditCommentRequest.swift; sourceTree = "<group>"; };
 		2955D4B121B4A36600A393D3 /* V3SubscriptionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SubscriptionsRequest.swift; sourceTree = "<group>"; };
+		2955D4B521B4B83200A393D3 /* V3IssuesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3IssuesRequest.swift; sourceTree = "<group>"; };
+		2955D4B721B4B97100A393D3 /* V3Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Issue.swift; sourceTree = "<group>"; };
 		2958050A204B5A68009CFD51 /* notifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
 		2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationRequest.swift; sourceTree = "<group>"; };
 		2958050E204B6258009CFD51 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				2958052C204B7AB2009CFD51 /* V3DeleteCommentRequest.swift */,
 				290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */,
 				290890B3204BCC3100D088BC /* V3File.swift */,
+				2955D4B721B4B97100A393D3 /* V3Issue.swift */,
+				2955D4B521B4B83200A393D3 /* V3IssuesRequest.swift */,
 				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
 				29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */,
 				29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */,
@@ -518,9 +524,11 @@
 				290890A6204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift in Sources */,
 				290890AE204BC8F800D088BC /* GitHubAccessTokenRequest.swift in Sources */,
 				2958052F204B7B5D009CFD51 /* V3LockIssueRequest.swift in Sources */,
+				2955D4B821B4B97100A393D3 /* V3Issue.swift in Sources */,
 				29580515204B62DC009CFD51 /* Response.swift in Sources */,
 				29F8BABC204B545F00E5CA32 /* V3User.swift in Sources */,
 				29F3A18E20CD7DFC00645CB7 /* V3SubscribeThreadRequest.swift in Sources */,
+				2955D4B621B4B83200A393D3 /* V3IssuesRequest.swift in Sources */,
 				29580511204B629B009CFD51 /* Processing.swift in Sources */,
 				29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */,
 				290890B2204BCBD200D088BC /* V3PullRequestFilesRequest.swift in Sources */,

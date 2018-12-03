@@ -11,11 +11,6 @@ import SnapKit
 
 final class BookmarkRepoCell: SelectableCell {
 
-    enum Style {
-        case light
-        case dark
-    }
-
     private let imageView = UIImageView(image: UIImage(named: "repo")?.withRenderingMode(.alwaysTemplate))
     private let label = UILabel()
 
@@ -54,21 +49,13 @@ final class BookmarkRepoCell: SelectableCell {
         layoutContentView()
     }
 
-    func configure(owner: String, name: String, style: Style = .light) {
-        let textColor: UIColor
-        switch style {
-        case .light:
-            textColor = Styles.Colors.Gray.dark.color
-        case .dark:
-            textColor = .white
-        }
-
+    func configure(owner: String, name: String) {
         let text = NSMutableAttributedString(string: "\(owner)/", attributes: [
-            .foregroundColor: textColor,
+            .foregroundColor: Styles.Colors.Gray.dark.color,
             .font: Styles.Text.body.preferredFont
             ])
         text.append(NSAttributedString(string: "\(name)", attributes: [
-            .foregroundColor: textColor,
+            .foregroundColor: Styles.Colors.Gray.dark.color,
             .font: Styles.Text.bodyBold.preferredFont
             ]))
         label.attributedText = text
