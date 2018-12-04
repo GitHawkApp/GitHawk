@@ -22,13 +22,13 @@ NewFeaturesSectionControllerDelegate,
 InboxFilterControllerListener {
 
     private let modelController: NotificationModelController
-    private var notificationIDs = [String]()
+    private var modelIDs = [String]()
     private var newFeaturesController: NewFeaturesController? = NewFeaturesController()
     private let inboxFilterController: InboxFilterController
     private let navigationTitle = DropdownTitleView()
 
     private var notifications: [NotificationViewModel] {
-        return notificationIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
+        return modelIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
     }
 
     init(modelController: NotificationModelController) {
@@ -101,7 +101,7 @@ InboxFilterControllerListener {
 
     private func updateUnreadState() {
         var unread = 0
-        for id in notificationIDs {
+        for id in modelIDs {
             guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?,
                 !model.read
                 else { continue }
@@ -134,7 +134,7 @@ InboxFilterControllerListener {
         switch type {
         case .all:
             message = NSLocalizedString("Mark all notifications as read?", comment: "")
-        case .assigned, .created, .mentioned, .subscribed:
+        case .assigned, .created, .mentioned:
             message = NSLocalizedString(
                 "Mark all notifications as read? This includes notifications not currently visible.",
                 comment: ""
@@ -187,7 +187,7 @@ InboxFilterControllerListener {
         }
 
         switch type {
-        case .all, .subscribed, .assigned, .created, .mentioned:
+        case .all, .assigned, .created, .mentioned:
             modelController.markAllNotifications(completion: block)
         case let .repo(owner, name):
             modelController.markRepoNotifications(owner: owner, name: name, completion: block)
@@ -201,9 +201,9 @@ InboxFilterControllerListener {
         animated: Bool
         ) {
         if append {
-            notificationIDs += ids
+            modelIDs += ids
         } else {
-            notificationIDs = ids
+            modelIDs = ids
         }
         update(page: page, animated: animated)
     }
@@ -230,12 +230,17 @@ InboxFilterControllerListener {
             }))
         }
 
-        models += notificationIDs.compactMap { id in
-            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?
-                else { return nil }
-            return ListSwiftPair.pair(model) { [modelController] in
-                NotificationSectionController(modelController: modelController)
+        models += modelIDs.compactMap { id in
+            if let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel? {
+                return ListSwiftPair.pair(model) { [modelController] in
+                    NotificationSectionController(modelController: modelController)
+                }
+            } else if let model = modelController.githubClient.cache.get(id: id) as InboxDashboardModel? {
+                return ListSwiftPair.pair(model) {
+                    InboxDashboardSectionController()
+                }
             }
+            return nil
         }
 
         return models

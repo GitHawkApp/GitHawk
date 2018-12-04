@@ -16,7 +16,6 @@ struct InboxFilterModel: ListSwiftDiffable {
         case assigned
         case created
         case mentioned
-        case subscribed
         case repo(owner: String, name: String)
 
         var title: String {
@@ -25,14 +24,13 @@ struct InboxFilterModel: ListSwiftDiffable {
             case .assigned: return NSLocalizedString("Assigned", comment: "")
             case .created: return NSLocalizedString("Created", comment: "")
             case .mentioned: return NSLocalizedString("Mentioned", comment: "")
-            case .subscribed: return NSLocalizedString("Subscribed", comment: "")
             case let .repo(_, name): return name
             }
         }
 
         var subtitle: String? {
             switch self {
-            case .all, .assigned, .created, .mentioned, .subscribed: return nil
+            case .all, .assigned, .created, .mentioned: return nil
             case let .repo(owner, _): return owner
             }
         }
@@ -43,7 +41,6 @@ struct InboxFilterModel: ListSwiftDiffable {
             case .assigned: return "person"
             case .created: return "plus"
             case .mentioned: return "mention"
-            case .subscribed: return "unmute"
             case .repo: return nil
             }
         }

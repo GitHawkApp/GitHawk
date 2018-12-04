@@ -201,6 +201,9 @@
 		2955D4AE21B4752E00A393D3 /* Announcer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4AD21B4752E00A393D3 /* Announcer.swift */; };
 		2955D4B021B48B9700A393D3 /* InboxFilterReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4AF21B48B9700A393D3 /* InboxFilterReposViewController.swift */; };
 		2955D4B421B4B21B00A393D3 /* InboxFilterRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4B321B4B21B00A393D3 /* InboxFilterRepoCell.swift */; };
+		2955D4BA21B6015E00A393D3 /* InboxDashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4B921B6015E00A393D3 /* InboxDashboardCell.swift */; };
+		2955D4BC21B6036E00A393D3 /* InboxDashboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4BB21B6036E00A393D3 /* InboxDashboardModel.swift */; };
+		2955D4BE21B6044500A393D3 /* InboxDashboardSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4BD21B6044500A393D3 /* InboxDashboardSectionController.swift */; };
 		2957777B200129EB00DDD785 /* Int+Abbreviated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2957777A200129EB00DDD785 /* Int+Abbreviated.swift */; };
 		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
 		295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
@@ -779,6 +782,9 @@
 		2955D4AD21B4752E00A393D3 /* Announcer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcer.swift; sourceTree = "<group>"; };
 		2955D4AF21B48B9700A393D3 /* InboxFilterReposViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFilterReposViewController.swift; sourceTree = "<group>"; };
 		2955D4B321B4B21B00A393D3 /* InboxFilterRepoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFilterRepoCell.swift; sourceTree = "<group>"; };
+		2955D4B921B6015E00A393D3 /* InboxDashboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxDashboardCell.swift; sourceTree = "<group>"; };
+		2955D4BB21B6036E00A393D3 /* InboxDashboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxDashboardModel.swift; sourceTree = "<group>"; };
+		2955D4BD21B6044500A393D3 /* InboxDashboardSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxDashboardSectionController.swift; sourceTree = "<group>"; };
 		2957777A200129EB00DDD785 /* Int+Abbreviated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Abbreviated.swift"; sourceTree = "<group>"; };
 		295840641EE89F28007723C6 /* IssueStatusEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventModel.swift; sourceTree = "<group>"; };
 		295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventCell.swift; sourceTree = "<group>"; };
@@ -2078,6 +2084,9 @@
 			children = (
 				29F3A18720CBFF8700645CB7 /* CreateNotificationTitle.swift */,
 				2955D4A021B46AEC00A393D3 /* Filter */,
+				2955D4B921B6015E00A393D3 /* InboxDashboardCell.swift */,
+				2955D4BB21B6036E00A393D3 /* InboxDashboardModel.swift */,
+				2955D4BD21B6044500A393D3 /* InboxDashboardSectionController.swift */,
 				2996543521A73885006B2CA9 /* NewFeaturesCell.swift */,
 				2996543F21A7B14E006B2CA9 /* NewFeaturesController.swift */,
 				2996543B21A76F3A006B2CA9 /* NewFeaturesSectionController.swift */,
@@ -3045,8 +3054,10 @@
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				2973E80F20FBDB620050233F /* IssueManageButton.swift in Sources */,
 				291929531F3F9E490012067B /* IssueFileCell.swift in Sources */,
+				2955D4BC21B6036E00A393D3 /* InboxDashboardModel.swift in Sources */,
 				29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */,
 				98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */,
+				2955D4BA21B6015E00A393D3 /* InboxDashboardCell.swift in Sources */,
 				291929511F3F76B10012067B /* IssueFilesViewController.swift in Sources */,
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
 				292FCB131EDFCC510026635E /* IssueLabelDotCell.swift in Sources */,
@@ -3277,6 +3288,7 @@
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29CC29301FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift in Sources */,
+				2955D4BE21B6044500A393D3 /* InboxDashboardSectionController.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				299F63E8205F09900015D901 /* StyledTextRenderer+ListDiffable.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,

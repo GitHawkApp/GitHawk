@@ -30,7 +30,6 @@ final class InboxFilterController {
     private let staticFilters = [
         InboxFilterModel(type: .all),
         InboxFilterModel(type: .mentioned),
-        InboxFilterModel(type: .subscribed),
         InboxFilterModel(type: .assigned),
         InboxFilterModel(type: .created)
     ]
