@@ -43,6 +43,26 @@ final class NotificationModelController {
         UserDefaults.standard.set(open, forKey: openOnReadKey)
     }
 
+    private func handle(
+        notifications: [V3Notification],
+        next: Int?,
+        width: CGFloat,
+        contentSizeCategory: UIContentSizeCategory,
+        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
+        ) {
+        githubClient.badge.updateLocalNotificationCache(
+            notifications: notifications,
+            showAlert: false
+        )
+        CreateNotificationViewModels(
+            width: width,
+            contentSizeCategory: contentSizeCategory,
+            v3notifications: notifications
+        ) { [weak self] in
+            self?.fetchStates(for: $0, page: next, completion: completion)
+        }
+    }
+
     // https://developer.github.com/v3/activity/notifications/#list-your-notifications
     func fetchNotifications(
         repo: Repository? = nil,
@@ -51,39 +71,37 @@ final class NotificationModelController {
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
-        let badge = githubClient.badge
         let contentSizeCategory = UIContentSizeCategory.preferred
-        // TODO move handling + parsing to a single method?
         if let repo = repo {
-            githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
+            githubClient.client.send(V3RepositoryNotificationRequest(
+                all: all,
+                owner: repo.owner,
+                repo: repo.name)
+            ) { [weak self] result in
                 switch result {
                 case .success(let response):
-                    badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
-
-                    CreateNotificationViewModels(
+                    self?.handle(
+                        notifications: response.data,
+                        next: response.next,
                         width: width,
                         contentSizeCategory: contentSizeCategory,
-                        v3notifications: response.data
-                    ) { [weak self] in
-                        self?.fetchStates(for: $0, page: response.next, completion: completion)
-                    }
+                        completion: completion
+                    )
                 case .failure(let error):
                     completion(.error(error))
                 }
             }
         } else {
-            githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
+            githubClient.client.send(V3NotificationRequest(all: all, page: page)) { [weak self] result in
                 switch result {
                 case .success(let response):
-                    badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
-
-                    CreateNotificationViewModels(
+                    self?.handle(
+                        notifications: response.data,
+                        next: response.next,
                         width: width,
                         contentSizeCategory: contentSizeCategory,
-                        v3notifications: response.data
-                    ) { [weak self] in
-                        self?.fetchStates(for: $0, page: response.next, completion: completion)
-                    }
+                        completion: completion
+                    )
                 case .failure(let error):
                     completion(.error(error))
                 }
