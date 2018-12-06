@@ -203,8 +203,8 @@ GitHubSessionListener {
 
     private func onSignOut() {
         let title = NSLocalizedString("Are you sure?", comment: "")
-        let message = NSLocalizedString("All of your accounts will be signed out, and their bookmarks will be removed. Do you want to continue?", comment: "")
-        let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
+        let message = NSLocalizedString("You will be signed out from all of your accounts. Do you want to sign out?", comment: "")
+        let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .actionSheet)
         alert.addActions([
             AlertAction.cancel(),
             AlertAction(AlertActionBuilder {
