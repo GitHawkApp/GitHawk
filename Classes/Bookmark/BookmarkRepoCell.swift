@@ -11,7 +11,7 @@ import SnapKit
 
 final class BookmarkRepoCell: SelectableCell {
 
-    private let imageView = UIImageView(image: UIImage(named: "repo")?.withRenderingMode(.alwaysTemplate))
+    private let imageView = UIImageView(image: UIImage(named: "repo").withRenderingMode(.alwaysTemplate))
     private let label = UILabel()
 
     override init(frame: CGRect) {

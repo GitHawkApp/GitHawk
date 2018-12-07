@@ -13,7 +13,7 @@ final class IssueFileCell: SelectableCell {
 
     private let changeLabel = UILabel()
     private let pathLabel = UILabel()
-    private let disclosure = UIImageView(image: UIImage(named: "chevron-right")?.withRenderingMode(.alwaysTemplate))
+    private let disclosure = UIImageView(image: UIImage(named: "chevron-right").withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)

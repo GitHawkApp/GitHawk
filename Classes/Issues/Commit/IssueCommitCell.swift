@@ -18,7 +18,7 @@ final class IssueCommitCell: UICollectionViewCell {
 
     weak var delegate: IssueCommitCellDelegate?
 
-    private let commitImageView = UIImageView(image: UIImage(named: "git-commit-small")?.withRenderingMode(.alwaysTemplate))
+    private let commitImageView = UIImageView(image: UIImage(named: "git-commit-small").withRenderingMode(.alwaysTemplate))
     private let avatarImageView = UIImageView()
     private let messageLabel = UILabel()
 

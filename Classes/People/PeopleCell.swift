@@ -39,7 +39,7 @@ final class PeopleCell: SelectableCell {
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.gutter)
         }
 
-        checkmarkImageView.image = UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate)
+        checkmarkImageView.image = UIImage(named: "check-small").withRenderingMode(.alwaysTemplate)
         checkmarkImageView.tintColor = Styles.Colors.Blue.medium.color
         checkmarkImageView.contentMode = .scaleAspectFit
 

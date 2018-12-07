@@ -47,7 +47,7 @@ final class NewFeaturesCell: UICollectionViewCell {
         label.isAccessibilityElement = false
 
         let closeButtonSize = Styles.Sizes.icon.width
-        closeButton.setImage(UIImage(named: "x-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.setImage(UIImage(named: "x-small").withRenderingMode(.alwaysTemplate), for: .normal)
         closeButton.tintColor = tint
         closeButton.layer.cornerRadius = closeButtonSize / 2
         closeButton.addTarget(self, action: #selector(onCloseButton), for: .touchUpInside)

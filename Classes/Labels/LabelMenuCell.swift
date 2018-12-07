@@ -12,7 +12,7 @@ import SnapKit
 final class LabelMenuCell: SelectableCell {
 
     public let button = UIButton()
-    public let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
+    public let checkedImageView = UIImageView(image: UIImage(named: "check-small").withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
