@@ -12,8 +12,12 @@ import SafariServices
 extension UIViewController {
 
     func presentSafari(url: URL) {
-		guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
-        route_present(to: safariViewController)
+        if UserDefaults.standard.isNeedOpenExternalLinksInSafari {
+            UIApplication.shared.open(url)
+        } else {
+            guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
+            route_present(to: safariViewController)
+        }
     }
 
     func presentProfile(login: String) {

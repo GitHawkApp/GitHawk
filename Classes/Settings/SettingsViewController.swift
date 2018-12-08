@@ -46,6 +46,8 @@ GitHubSessionListener {
     @IBOutlet weak var pushSwitch: UISwitch!
     @IBOutlet weak var pushCell: UITableViewCell!
     @IBOutlet weak var pushSettingsButton: UIButton!
+    @IBOutlet weak var openExternalLinksLabel: SettingsLabel!
+    @IBOutlet weak var openExternalLinksSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,7 @@ GitHubSessionListener {
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
         signatureSwitch.isOn = Signature.enabled
+        openExternalLinksSwitch.isOn = UserDefaults.standard.isNeedOpenExternalLinksInSafari
         pushSettingsButton.accessibilityLabel = NSLocalizedString("How we send push notifications in GitHawk", comment: "")
 
         updateBadge()
@@ -284,6 +287,10 @@ GitHubSessionListener {
 
     @IBAction private func onPushNotificationsInfo(_ sender: Any) {
         showContextualMenu(PushNotificationsDisclaimerViewController())
+    }
+
+    @IBAction private func onOpenExternalLinks(_ sender: Any) {
+        UserDefaults.standard.isNeedOpenExternalLinksInSafari = openExternalLinksSwitch.isOn
     }
 
     // MARK: NewIssueTableViewControllerDelegate
