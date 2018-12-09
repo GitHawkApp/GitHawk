@@ -12,7 +12,7 @@ extension UserDefaults {
 
     private static let defaultKey = "com.whoisryannystrom.freetime.is-need-open-external-links-in-safari"
 
-    var isNeedOpenExternalLinksInSafari: Bool {
+    var shouldOpenExternalLinksInSafari: Bool {
         get {
             return bool(forKey: UserDefaults.defaultKey)
         }

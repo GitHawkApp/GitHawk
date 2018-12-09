@@ -12,7 +12,7 @@ import SafariServices
 extension UIViewController {
 
     func presentSafari(url: URL) {
-        if UserDefaults.standard.isNeedOpenExternalLinksInSafari {
+        if UserDefaults.standard.shouldOpenExternalLinksInSafari {
             UIApplication.shared.open(url)
         } else {
             guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
