@@ -34,7 +34,7 @@ final class ButtonCell: SelectableCell {
             make.left.equalTo(Styles.Sizes.gutter)
         }
 
-        disclosureImageView.image = UIImage(named: "chevron-right")?.withRenderingMode(.alwaysTemplate)
+        disclosureImageView.image = UIImage(named: "chevron-right").withRenderingMode(.alwaysTemplate)
         disclosureImageView.tintColor = Styles.Colors.Gray.light.color
         contentView.addSubview(disclosureImageView)
         disclosureImageView.snp.makeConstraints { make in

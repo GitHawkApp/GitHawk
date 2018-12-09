@@ -13,7 +13,7 @@ final class MilestoneCell2: SelectableCell {
 
     public let label = UILabel()
     public let detailLabel = UILabel()
-    private let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
+    private let checkedImageView = UIImageView(image: UIImage(named: "check-small").withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)

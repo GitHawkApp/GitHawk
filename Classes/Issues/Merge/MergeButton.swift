@@ -36,8 +36,8 @@ final class MergeButton: UIView {
 
         layer.cornerRadius = Styles.Sizes.avatarCornerRadius
 
-        let image = UIImage(named: "chevron-down")?.withRenderingMode(.alwaysTemplate)
-        let optionButtonWidth = (image?.size.width ?? 0) + (2 * Styles.Sizes.gutter)
+        let image = UIImage(named: "chevron-down").withRenderingMode(.alwaysTemplate)
+        let optionButtonWidth = (image.size.width ?? 0) + (2 * Styles.Sizes.gutter)
         optionIconView.contentMode = .center
         optionIconView.image = image
         optionIconView.isAccessibilityElement = true

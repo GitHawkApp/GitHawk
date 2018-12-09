@@ -12,7 +12,7 @@ final class IssueDetailBadgeView: UIImageView {
 
     init() {
         super.init(frame: .zero)
-        image = UIImage(named: "githawk-badge")?.withRenderingMode(.alwaysTemplate)
+        image = UIImage(named: "githawk-badge").withRenderingMode(.alwaysTemplate)
         tintColor = Styles.Colors.Blue.medium.color
 
         isUserInteractionEnabled = true

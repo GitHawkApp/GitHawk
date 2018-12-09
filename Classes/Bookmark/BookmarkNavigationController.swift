@@ -58,7 +58,7 @@ final class BookmarkNavigationController {
     //for timeframe between viewDidLoad() and bookmark info is loaded 
     static var disabledNavigationItem: UIBarButtonItem {
         let item = UIBarButtonItem()
-        item.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
+        item.image = UIImage(named: "nav-bookmark").withRenderingMode(.alwaysTemplate)
         item.isEnabled = false
         item.imageInsets = BookmarkNavigationController.iconImageInset
         return item
@@ -69,13 +69,13 @@ final class BookmarkNavigationController {
     @objc func add(sender: UIBarButtonItem) {
         Haptic.triggerSelection()
         sender.action = #selector(BookmarkNavigationController.remove(sender:))
-        sender.image = UIImage(named: "nav-bookmark-selected")?.withRenderingMode(.alwaysTemplate)
+        sender.image = UIImage(named: "nav-bookmark-selected").withRenderingMode(.alwaysTemplate)
         store.add(graphQLID: graphQLID)
     }
 
     @objc func remove(sender: UIBarButtonItem) {
         sender.action = #selector(BookmarkNavigationController.add(sender:))
-        sender.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
+        sender.image = UIImage(named: "nav-bookmark").withRenderingMode(.alwaysTemplate)
         store.remove(graphQLID: graphQLID)
     }
 

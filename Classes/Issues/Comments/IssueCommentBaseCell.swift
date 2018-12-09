@@ -37,7 +37,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         ]
         collapseLayer.locations = [0, 0.5, 1]
 
-        collapseButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        collapseButton.setImage(UIImage(named: "bullets").withRenderingMode(.alwaysTemplate), for: .normal)
         collapseButton.backgroundColor = Styles.Colors.Blue.medium.color
         collapseButton.accessibilityTraits = UIAccessibilityTraitNone
         collapseButton.tintColor = .white
