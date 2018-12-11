@@ -101,12 +101,11 @@ private struct CustomHandlingMatch {
     let handler: CustomHandlingMatcher
 }
 
-private let shortlinkRegex = try! NSRegularExpression(pattern: "(^|\\s|[^a-zA-Z0-9/])(([\\w|-]+)/([\\w|-]+))?#([0-9]+)(?![a-zA-Z0-9])", options: [])
-
 extension String {
 
     func detectAndHandleCustomRegex(owner: String, repo: String, builder: StyledTextBuilder) {
         let nsrange = self.nsrange
+        let shortlinkRegex = NSRegularExpression("(^|\\s|[^a-zA-Z0-9/])(([\\w|-]+)/([\\w|-]+))?#([0-9]+)(?![a-zA-Z0-9])")
 
         let shortlinkMatches = shortlinkRegex.matches(in: self, options: [], range: nsrange).map {
             CustomHandlingMatch(result: $0, handler: ShortlinkMatcher())

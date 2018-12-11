@@ -24,16 +24,16 @@ GitHawk is the highest rated iOS app for GitHub.
 
 ## Contributing
 
-We are always looking for contributions from **all skill levels**! A great way to get started is by helping [organize and/or squish bugs](https://github.com/GitHawkApp/GitHawk/projects/4).
+We are always looking for contributions from **all skill levels**! A great way to get started is by helping [organize and/or squish bugs](https://github.com/GitHawkApp/GitHawk/issues?q=is%3Aissue+is%3Aopen+label%3A%22%3Abug%3A+bug%22). If you're looking to ease your way into the project try out a [good first issue](https://github.com/GitHawkApp/GitHawk/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 #### Highest Priority Needs:
 
 - 👩‍💼 **Product Manager**
-  - We have some [projects](https://github.com/GitHawkApp/GitHawk/projects) and tons of unorganized/unprioritized [features](https://github.com/GitHawkApp/GitHawk/issues?q=is%3Aissue+is%3Aopen+label%3Afeature). GitHawk needs someone to own the product direction!
+  - We have some [projects](https://github.com/GitHawkApp/GitHawk/projects) and tons of unorganized/unprioritized [features](https://github.com/GitHawkApp/GitHawk/issues?q=is%3Aissue+is%3Aopen+label%3Afeature-request). GitHawk needs someone to own the product direction!
 - 👩‍🎨 **Designer**
   - Like making unique UIs? So do we! We value keeping GitHawk's UX close to core iOS, but, when necessary, create our own high-quality UI components. Helping design for GitHawk is a great opportunity to try new ideas out!
 - 👩‍💻 **iOS Project Management**
-  - There is a _lot_ of low-hanging fruit with our project setup, test and deployment automation, build optimizations, and more! I (@rnystrom) have no idea what I'm doing here. Come point us in the right direction!
+  - There is a _lot_ of low-hanging fruit with our project setup, test and deployment automation, build optimizations, and more! I ([@rnystrom](https://github.com/rnystrom)) have no idea what I'm doing here. Come point us in the right direction!
 
 ## Installation
 
@@ -52,7 +52,7 @@ open Freetime.xcworkspace/
 
 This will install [apollo-codegen](https://github.com/apollographql/apollo-codegen) that is required to generate the GraphQL models.
 
-See the [setup guide](Setup.md) for details about API keys and environment variables.
+See the [setup guide](https://github.com/GitHawkApp/GitHawk/blob/master/Setup.md) for details about API keys and environment variables.
 
 ## Open Source & Copying
 
@@ -62,7 +62,7 @@ However, **please do not ship this app** under your own account. Paid or free.
 
 ## Why are we building this?
 
-- Push `IGListKit` + Swift to its limits
+- Push [IGListKit](https://instagram.github.io/IGListKit/) + Swift to its limits
 - Better GitHub project management on mobile
 - Explore [GitHub's GraphQL API](https://developer.github.com/v4/)
 - Scratch my Swift-itch

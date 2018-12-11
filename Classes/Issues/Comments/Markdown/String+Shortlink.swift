@@ -9,7 +9,8 @@
 import Foundation
 import StringHelpers
 
-private let regex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
+private let regex = NSRegularExpression("https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)")
+
 extension String {
     var shortlinkInfo: (owner: String, repo: String, number: Int)? {
         guard let match = regex.firstMatch(in: self, options: [], range: nsrange),

@@ -47,7 +47,7 @@ UICollectionViewDelegateFlowLayout {
         addButton.setTitle("+", for: .normal)
         addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         addButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
-        addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        addButton.setImage(UIImage(named: "smiley-small").withRenderingMode(.alwaysTemplate), for: .normal)
         addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton(sender:)), for: .touchUpInside)
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
         addButton.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -57,7 +57,7 @@ UICollectionViewDelegateFlowLayout {
             make.bottom.equalToSuperview().offset(-Styles.Sizes.rowSpacing)
         }
 
-        moreButton.setImage(UIImage(named: "bullets-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        moreButton.setImage(UIImage(named: "bullets-small").withRenderingMode(.alwaysTemplate), for: .normal)
         moreButton.contentVerticalAlignment = .center
         moreButton.contentHorizontalAlignment = .right
         moreButton.imageView?.contentMode = .center

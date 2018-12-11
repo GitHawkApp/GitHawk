@@ -507,6 +507,8 @@
 		C0CDBBBC219D1D4D00C2A8BB /* TemplateRegexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CDBBBB219D1D4D00C2A8BB /* TemplateRegexTests.swift */; };
 		C0DEB1DD218E7BFB00B6FEFD /* IssueTemplateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DEB1DC218E7BFB00B6FEFD /* IssueTemplateHelper.swift */; };
 		C0E3CD4521B34E5700185B57 /* NewIssueTableViewController+Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E3CD4421B34E5700185B57 /* NewIssueTableViewController+Template.swift */; };
+		C0E3CD4B21BAE49B00185B57 /* NSRegularExpression+StaticString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */; };
+		C0E3CD4D21BAE65000185B57 /* UIImage+StaticString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -1103,6 +1105,8 @@
 		C0CDBBBB219D1D4D00C2A8BB /* TemplateRegexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateRegexTests.swift; sourceTree = "<group>"; };
 		C0DEB1DC218E7BFB00B6FEFD /* IssueTemplateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTemplateHelper.swift; sourceTree = "<group>"; };
 		C0E3CD4421B34E5700185B57 /* NewIssueTableViewController+Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewIssueTableViewController+Template.swift"; sourceTree = "<group>"; };
+		C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRegularExpression+StaticString.swift"; sourceTree = "<group>"; };
+		C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+StaticString.swift"; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -2253,6 +2257,8 @@
 				291E987A21973B8F00E5EED9 /* URLBuilder.swift */,
 				291E987E2197515C00E5EED9 /* UIApplication+ReviewAccess.swift */,
 				291E988021975FCB00E5EED9 /* UIApplication+WriteReview.swift */,
+				C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */,
+				C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -3049,6 +3055,7 @@
 				292FCB151EDFCC510026635E /* IssueLabelsSectionController.swift in Sources */,
 				29AF1E861F8AADD00008A0EF /* UIViewController+CancelAction.swift in Sources */,
 				2908C5891F6F3EB00071C39D /* IssueLocalReaction.swift in Sources */,
+				C0E3CD4B21BAE49B00185B57 /* NSRegularExpression+StaticString.swift in Sources */,
 				2931892B1F5397E400EF0911 /* IssueMilestoneCell.swift in Sources */,
 				292EB08F1F1FF5EC0046865D /* IssueMilestoneEventCell.swift in Sources */,
 				29F3A18820CBFF8700645CB7 /* CreateNotificationTitle.swift in Sources */,
@@ -3284,6 +3291,7 @@
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				296A4962210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift in Sources */,
 				29B94E6F1FCB743900715D7E /* RepositoryFileCell.swift in Sources */,
+				C0E3CD4D21BAE65000185B57 /* UIImage+StaticString.swift in Sources */,
 				29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */,
 				49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
