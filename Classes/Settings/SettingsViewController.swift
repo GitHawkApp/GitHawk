@@ -84,15 +84,18 @@ GitHubSessionListener {
             case .success(let response):
                 let text: String
                 let color: UIColor
-                switch response.data.status {
-                case .good:
-                    text = NSLocalizedString("Good", comment: "")
+                switch response.data.status.indicator {
+                case .none:
+                    text = response.data.status.description
                     color = Styles.Colors.Green.medium.color
                 case .minor:
-                    text = NSLocalizedString("Minor", comment: "")
+                    text = response.data.status.description
                     color = Styles.Colors.Yellow.medium.color
                 case .major:
-                    text = NSLocalizedString("Major", comment: "")
+                    text = response.data.status.description
+                    color = Styles.Colors.Red.medium.color
+                case .critical:
+                    text = response.data.status.description
                     color = Styles.Colors.Red.medium.color
                 }
                 strongSelf.apiStatusView.isHidden = false
@@ -144,7 +147,7 @@ GitHubSessionListener {
     }
 
     private func onGitHubStatus() {
-        guard let url = URLBuilder(host: "status.github.com").add(path: "messages").url
+        guard let url = URLBuilder(host: "githubstatus.com").url
             else { return }
         presentSafari(url: url)
     }
