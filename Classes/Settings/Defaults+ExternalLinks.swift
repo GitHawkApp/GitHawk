@@ -10,7 +10,7 @@ import Foundation
 
 extension UserDefaults {
 
-    private static let defaultKey = "com.whoisryannystrom.freetime.is-need-open-external-links-in-safari"
+    private static let defaultKey = "com.whoisryannystrom.freetime.should-open-external-links-in-safari"
 
     var shouldOpenExternalLinksInSafari: Bool {
         get {
