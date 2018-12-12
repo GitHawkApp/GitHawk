@@ -13,10 +13,17 @@ extension UIViewController {
 
     func presentSafari(url: URL) {
         if UserDefaults.standard.shouldOpenExternalLinksInSafari {
+            guard UIApplication.shared.canOpenURL(url) else {
+                return
+            }
             UIApplication.shared.open(url)
         } else {
-            guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
-            route_present(to: safariViewController)
+            do {
+                let safariViewController = try SFSafariViewController.configured(with: url)
+                route_present(to: safariViewController)
+            } catch {
+                assertionFailure(error.localizedDescription)
+            }
         }
     }
 
