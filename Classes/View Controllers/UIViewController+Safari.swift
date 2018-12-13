@@ -14,6 +14,7 @@ extension UIViewController {
     func presentSafari(url: URL) {
         if UserDefaults.standard.shouldOpenExternalLinksInSafari {
             guard UIApplication.shared.canOpenURL(url) else {
+                assertionFailure("Can't open url: \(url)")
                 return
             }
             UIApplication.shared.open(url)
