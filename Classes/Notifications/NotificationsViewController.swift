@@ -67,17 +67,41 @@ InboxFilterControllerListener {
     }
 
     override func fetch(page: Int?) {
+        let type = inboxFilterController.selected.type
         let width = view.safeContentWidth(with: feed.collectionView)
 
-        if let page = page {
-            modelController.fetchNotifications(repo: nil, all: false, page: page, width: width) { [weak self] result in
-                self?.handle(result: result, append: true, animated: false, page: page)
+        switch type {
+        case .unread, .all, .repo:
+
+            let repo: Repository?
+            if case .repo(let owner, let name) = type {
+                repo = Repository(owner: owner, name: name)
+            } else {
+                repo = nil
             }
-        } else {
-            let first = 1
-            modelController.fetchNotifications(repo: nil, all: false, page: first, width: width) { [weak self] result in
-                self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
+            let fetchPage = page ?? 1
+
+            modelController.fetchNotifications(
+                repo: repo,
+                // always fetch all for repos, otherwise use selection
+                all: repo != nil || type == .all,
+                page: fetchPage,
+                width: width
+            ) { [weak self] result in
+                self?.handle(
+                    result: result,
+                    append: false,
+                    // do not animate paged updates, only head loads
+                    animated: page == nil && trueUnlessReduceMotionEnabled,
+                    page: fetchPage
+                )
             }
+        case .assigned:
+            modelController.fetch(for: .assigned)
+        case .created:
+            modelController.fetch(for: .created)
+        case .mentioned:
+            modelController.fetch(for: .mentioned)
         }
     }
 
@@ -132,7 +156,7 @@ InboxFilterControllerListener {
         let type = inboxFilterController.selected.type
         let message: String
         switch type {
-        case .all:
+        case .unread, .all:
             message = NSLocalizedString("Mark all notifications as read?", comment: "")
         case .assigned, .created, .mentioned:
             message = NSLocalizedString(
@@ -187,7 +211,7 @@ InboxFilterControllerListener {
         }
 
         switch type {
-        case .all, .assigned, .created, .mentioned:
+        case .unread, .all, .assigned, .created, .mentioned:
             modelController.markAllNotifications(completion: block)
         case let .repo(owner, name):
             modelController.markRepoNotifications(owner: owner, name: name, completion: block)

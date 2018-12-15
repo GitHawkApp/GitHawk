@@ -221,4 +221,16 @@ final class NotificationModelController {
         }
     }
 
+    enum DashboardType {
+        case assigned
+        case created
+        case mentioned
+    }
+
+    func fetch(for type: DashboardType) {
+//        githubClient.client.send(V3IssuesRequest(filter: V3IssuesRequest.FilterType.all, completion: { Result in
+//
+//        })
+    }
+
 }

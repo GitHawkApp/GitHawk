@@ -12,6 +12,7 @@ import IGListKit
 struct InboxFilterModel: ListSwiftDiffable {
 
     enum FilterType: Equatable {
+        case unread
         case all
         case assigned
         case created
@@ -20,7 +21,8 @@ struct InboxFilterModel: ListSwiftDiffable {
 
         var title: String {
             switch self {
-            case .all: return Constants.Strings.inbox
+            case .unread: return Constants.Strings.inbox
+            case .all: return NSLocalizedString("All", comment: "")
             case .assigned: return NSLocalizedString("Assigned", comment: "")
             case .created: return NSLocalizedString("Created", comment: "")
             case .mentioned: return NSLocalizedString("Mentioned", comment: "")
@@ -30,14 +32,15 @@ struct InboxFilterModel: ListSwiftDiffable {
 
         var subtitle: String? {
             switch self {
-            case .all, .assigned, .created, .mentioned: return nil
+            case .unread, .all, .assigned, .created, .mentioned: return nil
             case let .repo(owner, _): return owner
             }
         }
 
         var iconName: String? {
             switch self {
-            case .all: return "inbox"
+            case .unread: return "inbox"
+            case .all: return "bell"
             case .assigned: return "person"
             case .created: return "plus"
             case .mentioned: return "mention"
