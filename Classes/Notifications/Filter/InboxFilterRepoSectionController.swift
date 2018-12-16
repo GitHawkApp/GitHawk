@@ -41,5 +41,5 @@ final class InboxFilterRepoSectionController: ListSwiftSectionController<Reposit
             type: .repo(owner: value.owner, name: value.name))
         )
     }
-    
+
 }

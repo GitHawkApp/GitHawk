@@ -9,11 +9,33 @@
 import Foundation
 
 public struct V3Issue: Codable {
-    public let status: String
-    public let changes: Int
-    public let filename: String
-    public let additions: Int
-    public let deletions: Int
-    public let sha: String
-    public let patch: String?
+
+    public struct PullRequest: Codable {
+        let url: URL
+    }
+
+//    public let id: Int
+//    public let nodeId: String
+    public let number: Int
+    public let title: String
+    public let state: String
+//    public let createdAt: Date
+    public let updatedAt: Date
+    public let repository: V3Repository
+//    public let comments: Int
+    public let pullRequest: PullRequest?
+
+    enum CodingKeys: String, CodingKey {
+//        case id
+//        case nodeId = "node_id"
+        case number
+        case title
+        case state
+//        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case repository
+//        case comments
+        case pullRequest = "pull_request"
+    }
+
 }

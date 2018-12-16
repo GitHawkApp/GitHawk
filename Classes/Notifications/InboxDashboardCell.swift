@@ -12,6 +12,13 @@ import StyledTextKit
 
 final class InboxDashboardCell: SelectableCell {
 
+    public static let inset = UIEdgeInsets(
+        top: NotificationCell.inset.top,
+        left: NotificationCell.inset.left,
+        bottom: Styles.Sizes.rowSpacing * 2,
+        right: NotificationCell.inset.right
+    )
+
     private let iconImageView = UIImageView()
     private let dateLabel = ShowMoreDetailsLabel()
     private let detailsLabel = UILabel()
@@ -30,10 +37,10 @@ final class InboxDashboardCell: SelectableCell {
         contentView.addSubview(dateLabel)
         contentView.addSubview(textView)
 
-        let inset = NotificationCell.inset
+        let inset = InboxDashboardCell.inset
 
         iconImageView.snp.makeConstraints { make in
-            make.top.equalTo(inset.top)
+            make.centerY.equalToSuperview()
             make.centerX.equalTo(inset.left / 2)
         }
 
@@ -51,6 +58,8 @@ final class InboxDashboardCell: SelectableCell {
             make.left.equalTo(NotificationCell.inset.left)
             make.right.lessThanOrEqualTo(dateLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
+
+        addBorder(.bottom, left: inset.left)
     }
 
     required init?(coder aDecoder: NSCoder) {

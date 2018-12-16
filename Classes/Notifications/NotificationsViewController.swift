@@ -69,6 +69,11 @@ InboxFilterControllerListener {
     override func fetch(page: Int?) {
         let type = inboxFilterController.selected.type
         let width = view.safeContentWidth(with: feed.collectionView)
+        let fetchPage = page ?? 1
+        // append model ids if paging
+        let append = page != nil
+        // do not animate paged updates, only head loads
+        let animated = page == nil && trueUnlessReduceMotionEnabled
 
         switch type {
         case .unread, .all, .repo:
@@ -79,7 +84,6 @@ InboxFilterControllerListener {
             } else {
                 repo = nil
             }
-            let fetchPage = page ?? 1
 
             modelController.fetchNotifications(
                 repo: repo,
@@ -88,28 +92,33 @@ InboxFilterControllerListener {
                 page: fetchPage,
                 width: width
             ) { [weak self] result in
-                self?.handle(
-                    result: result,
-                    append: false,
-                    // do not animate paged updates, only head loads
-                    animated: page == nil && trueUnlessReduceMotionEnabled,
-                    page: fetchPage
-                )
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
             }
         case .assigned:
-            modelController.fetch(for: .assigned)
+            modelController.fetch(for: .assigned, page: fetchPage, width: width) { [weak self] result in
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
+            }
         case .created:
-            modelController.fetch(for: .created)
+            modelController.fetch(for: .created, page: fetchPage, width: width) { [weak self] result in
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
+            }
         case .mentioned:
-            modelController.fetch(for: .mentioned)
+            modelController.fetch(for: .mentioned, page: fetchPage, width: width) { [weak self] result in
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
+            }
         }
     }
 
-    private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
+    private func handle<T: Cachable>(
+        result: Result<([T], Int?)>,
+        append: Bool,
+        animated: Bool,
+        page: Int
+        ) {
         switch result {
-        case .success(let notifications, let next):
+        case .success(let models, let next):
             var ids = [String]()
-            notifications.forEach {
+            models.forEach {
                 modelController.githubClient.cache.add(listener: self, value: $0)
                 ids.append($0.id)
             }
@@ -307,7 +316,7 @@ InboxFilterControllerListener {
 
     func didUpdateSelectedFilter(for controller: InboxFilterController) {
         updateTitle()
-        fetch(page: nil)
+        feed.refreshHead()
     }
 
 }

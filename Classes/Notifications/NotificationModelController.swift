@@ -8,6 +8,7 @@
 
 import Foundation
 import GitHubAPI
+import StyledTextKit
 
 // used to request states via graphQL
 extension NotificationViewModel {
@@ -227,10 +228,55 @@ final class NotificationModelController {
         case mentioned
     }
 
-    func fetch(for type: DashboardType) {
-//        githubClient.client.send(V3IssuesRequest(filter: V3IssuesRequest.FilterType.all, completion: { Result in
-//
-//        })
+    func fetch(
+        for type: DashboardType,
+        page: Int,
+        width: CGFloat,
+        completion: @escaping (Result<([InboxDashboardModel], Int?)>) -> Void
+        ) {
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let cache = githubClient.cache
+
+        let mapped: V3IssuesRequest.FilterType
+        switch type {
+        case .assigned: mapped = .assigned
+        case .mentioned: mapped = .mentioned
+        case .created: mapped = .created
+        }
+
+        githubClient.client.send(V3IssuesRequest(filter: mapped, page: page), completion: { result in
+            // iterate result data, convert to InboxDashboardModel
+            switch result {
+            case .failure(let error):
+                completion(.error(error))
+            case .success(let data):
+                let parsed: [InboxDashboardModel] = data.data.compactMap {
+                    guard let state = NotificationViewModel.State(rawValue: $0.state.uppercased()) else {
+                        return nil
+                    }
+                    let string = StyledTextBuilder(styledText: StyledText(
+                        text: $0.title,
+                        style: Styles.Text.body))
+                        .build()
+                    let text = StyledTextRenderer(
+                        string: string,
+                        contentSizeCategory: contentSizeCategory,
+                        inset: InboxDashboardCell.inset
+                    ).warm(width: width)
+                    return InboxDashboardModel(
+                        owner: $0.repository.owner.login,
+                        name: $0.repository.name,
+                        number: $0.number,
+                        date: $0.updatedAt,
+                        text: text,
+                        isPullRequest: $0.pullRequest != nil,
+                        state: state
+                    )
+                }
+                cache.set(values: parsed)
+                completion(.success((parsed, data.next)))
+            }
+        })
     }
 
 }

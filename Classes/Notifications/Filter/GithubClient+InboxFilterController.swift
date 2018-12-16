@@ -28,5 +28,5 @@ extension GithubClient: InboxFilterControllerClient {
             }
         }
     }
-    
+
 }

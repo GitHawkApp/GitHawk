@@ -22,17 +22,19 @@ final class InboxFilterController {
     let client: InboxFilterControllerClient
     let announcer = Announcer<InboxFilterControllerListener>()
 
-    private(set) var selected: InboxFilterModel = InboxFilterModel(type: .all) {
-        didSet {
-            announcer.enumerate { $0.didUpdateSelectedFilter(for: self) }
-        }
-    }
-    private let staticFilters = [
+    private static let filters = [
+        InboxFilterModel(type: .unread),
         InboxFilterModel(type: .all),
         InboxFilterModel(type: .mentioned),
         InboxFilterModel(type: .assigned),
         InboxFilterModel(type: .created)
     ]
+
+    private(set) var selected: InboxFilterModel = InboxFilterController.filters[0] {
+        didSet {
+            announcer.enumerate { $0.didUpdateSelectedFilter(for: self) }
+        }
+    }
     private var fetchedFilters = [InboxFilterModel]()
 
     init(client: InboxFilterControllerClient) {
@@ -61,7 +63,7 @@ final class InboxFilterController {
     }
 
     func showMenu(from viewController: UIViewController) {
-        var items: [ContrastContextMenuItem] = staticFilters.map { model in
+        var items: [ContrastContextMenuItem] = InboxFilterController.filters.map { model in
             ContrastContextMenuItem(
                 title: model.type.title,
                 iconName: model.type.iconName,

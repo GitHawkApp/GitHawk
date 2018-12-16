@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import GitHawkRoutes
 
 final class InboxDashboardSectionController: ListSwiftSectionController<InboxDashboardModel> {
 
@@ -23,6 +24,12 @@ final class InboxDashboardSectionController: ListSwiftSectionController<InboxDas
             },
                 configure: {
                     $0.configure(with: $1.value)
+            }, didSelect: { [weak self] context in
+                self?.viewController?.route(IssueRoute(
+                    owner: context.value.owner,
+                    repo: context.value.name,
+                    number: context.value.number
+                ))
             })
         ]
     }

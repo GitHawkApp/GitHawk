@@ -14,8 +14,6 @@ public struct V3IssuesRequest: V3Request {
         case assigned
         case created
         case mentioned
-        case subscribed
-        case all
     }
 
     public typealias ResponseType = V3DataResponse<[V3Issue]>
@@ -25,13 +23,17 @@ public struct V3IssuesRequest: V3Request {
     public var parameters: [String : Any]? {
         return [
             "per_page": 50,
+            "page": page,
             "filter": filter.rawValue
         ]
     }
 
-    let filter: FilterType
+    public let filter: FilterType
+    public let page: Int
 
-    public init(filter: FilterType) {
+    public init(filter: FilterType, page: Int) {
         self.filter = filter
+        self.page = page
     }
+
 }
