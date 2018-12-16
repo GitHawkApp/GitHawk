@@ -59,6 +59,7 @@ InboxFilterControllerListener {
 
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
         navigationItem.titleView = navigationTitle
+        navigationTitle.titleFont = UIFont.preferredFont(forTextStyle: .headline)
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle), for: .touchUpInside)
 
         newFeaturesController?.fetch { [weak self] in

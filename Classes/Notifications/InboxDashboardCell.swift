@@ -40,7 +40,7 @@ final class InboxDashboardCell: SelectableCell {
         let inset = InboxDashboardCell.inset
 
         iconImageView.snp.makeConstraints { make in
-            make.top.equalTo(inset.top)
+            make.top.equalTo(inset.top - 3)
             make.centerX.equalTo(inset.left / 2)
         }
 
