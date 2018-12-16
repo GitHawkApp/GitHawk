@@ -106,8 +106,11 @@ class ContextMenuPresentationController: UIPresentationController {
         let translate: CATransform3D
         if let corner = preferredSourceViewCorner {
             let point: CGPoint
-            if case .centerX = item.options.position, let view = item.sourceView {
-                point = view.center
+            if case .centerX = item.options.position,
+                let sourceView = item.sourceView,
+                let containerView = self.containerView,
+                let center = sourceView.superview?.convert(sourceView.center, to: containerView) {
+                point = center
             } else {
                 point = corner.point
             }
