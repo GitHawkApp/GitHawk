@@ -52,6 +52,7 @@ public class ContextMenu: NSObject {
 
         item.viewController.transitioningDelegate = self
         item.viewController.modalPresentationStyle = .custom
+        item.viewController.modalPresentationCapturesStatusBarAppearance = true
         sourceViewController.present(item.viewController, animated: true)
     }
 

@@ -15,6 +15,10 @@ class ClippedContainerViewController: UIViewController {
     private let options: ContextMenu.Options
     private let containedViewController: UINavigationController
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return viewController.preferredStatusBarStyle
+    }
+
     init(options: ContextMenu.Options, viewController: UIViewController) {
         self.viewController = viewController
         self.options = options

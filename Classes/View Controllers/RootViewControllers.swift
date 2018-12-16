@@ -27,8 +27,7 @@ func newSettingsRootViewController(
 
 func newNotificationsRootViewController(client: GithubClient) -> UIViewController {
     let controller = NotificationsViewController(
-        modelController: NotificationModelController(githubClient: client),
-        inboxType: .unread
+        modelController: NotificationModelController(githubClient: client)
     )
     let title = NSLocalizedString("Inbox", comment: "")
     controller.title = title

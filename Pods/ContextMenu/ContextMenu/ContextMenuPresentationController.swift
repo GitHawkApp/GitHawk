@@ -62,12 +62,20 @@ class ContextMenuPresentationController: UIPresentationController {
         let frame: CGRect
         if let corner = preferredSourceViewCorner {
             let minPadding = item.options.containerStyle.edgePadding
-            let x = corner.point.x
-                + corner.position.xSizeModifier * size.width
-                + corner.position.xModifier * item.options.containerStyle.xPadding
             let y = corner.point.y
                 + corner.position.ySizeModifier * size.height
                 + corner.position.yModifier * item.options.containerStyle.yPadding
+
+            let x: CGFloat
+            switch item.options.position {
+            case .default:
+                x = corner.point.x
+                    + corner.position.xSizeModifier * size.width
+                    + corner.position.xModifier * item.options.containerStyle.xPadding
+            case .centerX:
+                x = corner.rect.midX - size.width / 2
+            }
+
             frame = CGRect(
                 x: max(minPadding, min(containerBounds.width - size.width - minPadding, x)),
                 y: max(minPadding, min(containerBounds.height - size.height - minPadding, y)),
@@ -97,9 +105,16 @@ class ContextMenuPresentationController: UIPresentationController {
     var presentedViewTransform: CATransform3D {
         let translate: CATransform3D
         if let corner = preferredSourceViewCorner {
+            let point: CGPoint
+            if case .centerX = item.options.position, let view = item.sourceView {
+                point = view.center
+            } else {
+                point = corner.point
+            }
+
             let frame = frameOfPresentedViewInContainerView
             let center = CGPoint(x: frame.minX + frame.width / 2, y: frame.minY + frame.height / 2)
-            translate = CATransform3DMakeTranslation(corner.point.x - center.x, corner.point.y - center.y, 0)
+            translate = CATransform3DMakeTranslation(point.x - center.x, point.y - center.y, 0)
         } else {
             translate = CATransform3DIdentity
         }

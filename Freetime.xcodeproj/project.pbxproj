@@ -194,6 +194,16 @@
 		294EE4D1209006C3002C9CB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 294EE4D0209006C3002C9CB1 /* Assets.xcassets */; };
 		294EE4D5209006C3002C9CB1 /* FreetimeWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 294EE4B9209006BF002C9CB1 /* FreetimeWatch.app */; };
 		2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2950AB1C2083B1E400C6F19A /* EmptyLoadingView.swift */; };
+		2955D4A221B46B0B00A393D3 /* InboxFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4A121B46B0B00A393D3 /* InboxFilterController.swift */; };
+		2955D4A621B46B2900A393D3 /* GithubClient+InboxFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4A521B46B2900A393D3 /* GithubClient+InboxFilterController.swift */; };
+		2955D4A821B46B3D00A393D3 /* InboxFilterRepoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4A721B46B3D00A393D3 /* InboxFilterRepoSectionController.swift */; };
+		2955D4AC21B46E9C00A393D3 /* InboxFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4AB21B46E9C00A393D3 /* InboxFilterModel.swift */; };
+		2955D4AE21B4752E00A393D3 /* Announcer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4AD21B4752E00A393D3 /* Announcer.swift */; };
+		2955D4B021B48B9700A393D3 /* InboxFilterReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4AF21B48B9700A393D3 /* InboxFilterReposViewController.swift */; };
+		2955D4B421B4B21B00A393D3 /* InboxFilterRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4B321B4B21B00A393D3 /* InboxFilterRepoCell.swift */; };
+		2955D4BA21B6015E00A393D3 /* InboxDashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4B921B6015E00A393D3 /* InboxDashboardCell.swift */; };
+		2955D4BC21B6036E00A393D3 /* InboxDashboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4BB21B6036E00A393D3 /* InboxDashboardModel.swift */; };
+		2955D4BE21B6044500A393D3 /* InboxDashboardSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2955D4BD21B6044500A393D3 /* InboxDashboardSectionController.swift */; };
 		2957777B200129EB00DDD785 /* Int+Abbreviated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2957777A200129EB00DDD785 /* Int+Abbreviated.swift */; };
 		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
 		295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
@@ -361,7 +371,6 @@
 		29B20600217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B205FF217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift */; };
 		29B20602217BC37B00E4DD9F /* UIViewController+HistoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B20601217BC37B00E4DD9F /* UIViewController+HistoryAction.swift */; };
 		29B3B91721A0B38C006BED05 /* RepositoryImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B3B91621A0B38C006BED05 /* RepositoryImageViewController.swift */; };
-		29B5D08B20D578DB003DFBE2 /* InboxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B5D08A20D578DB003DFBE2 /* InboxType.swift */; };
 		29B75AD9210A9A0300C28131 /* IssueLabelStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */; };
 		29B75ADB210A9B3100C28131 /* IssueLabelStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */; };
 		29B75ADD210AA14F00C28131 /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75ADC210AA14F00C28131 /* String+Size.swift */; };
@@ -768,6 +777,16 @@
 		294EE4D0209006C3002C9CB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		294EE4D2209006C3002C9CB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2950AB1C2083B1E400C6F19A /* EmptyLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLoadingView.swift; sourceTree = "<group>"; };
+		2955D4A121B46B0B00A393D3 /* InboxFilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFilterController.swift; sourceTree = "<group>"; };
+		2955D4A521B46B2900A393D3 /* GithubClient+InboxFilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+InboxFilterController.swift"; sourceTree = "<group>"; };
+		2955D4A721B46B3D00A393D3 /* InboxFilterRepoSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFilterRepoSectionController.swift; sourceTree = "<group>"; };
+		2955D4AB21B46E9C00A393D3 /* InboxFilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFilterModel.swift; sourceTree = "<group>"; };
+		2955D4AD21B4752E00A393D3 /* Announcer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcer.swift; sourceTree = "<group>"; };
+		2955D4AF21B48B9700A393D3 /* InboxFilterReposViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFilterReposViewController.swift; sourceTree = "<group>"; };
+		2955D4B321B4B21B00A393D3 /* InboxFilterRepoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFilterRepoCell.swift; sourceTree = "<group>"; };
+		2955D4B921B6015E00A393D3 /* InboxDashboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxDashboardCell.swift; sourceTree = "<group>"; };
+		2955D4BB21B6036E00A393D3 /* InboxDashboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxDashboardModel.swift; sourceTree = "<group>"; };
+		2955D4BD21B6044500A393D3 /* InboxDashboardSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxDashboardSectionController.swift; sourceTree = "<group>"; };
 		2957777A200129EB00DDD785 /* Int+Abbreviated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Abbreviated.swift"; sourceTree = "<group>"; };
 		295840641EE89F28007723C6 /* IssueStatusEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventModel.swift; sourceTree = "<group>"; };
 		295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventCell.swift; sourceTree = "<group>"; };
@@ -943,7 +962,6 @@
 		29B205FF217B9C0600E4DD9F /* RepoFileHistoryQueryDataToPathHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoFileHistoryQueryDataToPathHistoryViewModel.swift; sourceTree = "<group>"; };
 		29B20601217BC37B00E4DD9F /* UIViewController+HistoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HistoryAction.swift"; sourceTree = "<group>"; };
 		29B3B91621A0B38C006BED05 /* RepositoryImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryImageViewController.swift; sourceTree = "<group>"; };
-		29B5D08A20D578DB003DFBE2 /* InboxType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxType.swift; sourceTree = "<group>"; };
 		29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusCell.swift; sourceTree = "<group>"; };
 		29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusModel.swift; sourceTree = "<group>"; };
 		29B75ADC210AA14F00C28131 /* String+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
@@ -1562,6 +1580,19 @@
 			path = "FreetimeWatch Extension";
 			sourceTree = "<group>";
 		};
+		2955D4A021B46AEC00A393D3 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				2955D4A521B46B2900A393D3 /* GithubClient+InboxFilterController.swift */,
+				2955D4A121B46B0B00A393D3 /* InboxFilterController.swift */,
+				2955D4AB21B46E9C00A393D3 /* InboxFilterModel.swift */,
+				2955D4B321B4B21B00A393D3 /* InboxFilterRepoCell.swift */,
+				2955D4A721B46B3D00A393D3 /* InboxFilterRepoSectionController.swift */,
+				2955D4AF21B48B9700A393D3 /* InboxFilterReposViewController.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
 		295840631EE89F19007723C6 /* StatusEvent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1810,6 +1841,7 @@
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 				D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */,
+				2955D4AD21B4752E00A393D3 /* Announcer.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -2055,7 +2087,10 @@
 			isa = PBXGroup;
 			children = (
 				29F3A18720CBFF8700645CB7 /* CreateNotificationTitle.swift */,
-				29B5D08A20D578DB003DFBE2 /* InboxType.swift */,
+				2955D4A021B46AEC00A393D3 /* Filter */,
+				2955D4B921B6015E00A393D3 /* InboxDashboardCell.swift */,
+				2955D4BB21B6036E00A393D3 /* InboxDashboardModel.swift */,
+				2955D4BD21B6044500A393D3 /* InboxDashboardSectionController.swift */,
 				2996543521A73885006B2CA9 /* NewFeaturesCell.swift */,
 				2996543F21A7B14E006B2CA9 /* NewFeaturesController.swift */,
 				2996543B21A76F3A006B2CA9 /* NewFeaturesSectionController.swift */,
@@ -2876,6 +2911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2955D4B021B48B9700A393D3 /* InboxFilterReposViewController.swift in Sources */,
 				D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */,
 				290744A91F24D2DA00FD9E48 /* AddCommentClient.swift in Sources */,
 				29DAA7AD20202A320029277A /* PullRequestReviewReplyCell.swift in Sources */,
@@ -2936,11 +2972,13 @@
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
 				2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */,
 				986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */,
+				2955D4A221B46B0B00A393D3 /* InboxFilterController.swift in Sources */,
 				299997322031242500995FFD /* IssueMergeSummaryModel.swift in Sources */,
 				296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */,
 				294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				290CA7642169799600DE04F8 /* AppController.swift in Sources */,
+				2955D4A821B46B3D00A393D3 /* InboxFilterRepoSectionController.swift in Sources */,
 				2996543C21A76F3A006B2CA9 /* NewFeaturesSectionController.swift in Sources */,
 				29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */,
 				297403D71F1851C000ABA95A /* IssueAssigneeAvatarCell.swift in Sources */,
@@ -3010,6 +3048,7 @@
 				291929471F3EAB250012067B /* IssueDetailsModel.swift in Sources */,
 				2930988F211F32D100E1178B /* DefaultReactionDetailController.swift in Sources */,
 				29C8F9AD208C02860075931C /* LoadMoreSectionController2.swift in Sources */,
+				2955D4A621B46B2900A393D3 /* GithubClient+InboxFilterController.swift in Sources */,
 				292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */,
 				292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */,
 				2924C18D20D5B3DD00FCFCFF /* LabelsViewController.swift in Sources */,
@@ -3021,8 +3060,10 @@
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				2973E80F20FBDB620050233F /* IssueManageButton.swift in Sources */,
 				291929531F3F9E490012067B /* IssueFileCell.swift in Sources */,
+				2955D4BC21B6036E00A393D3 /* InboxDashboardModel.swift in Sources */,
 				29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */,
 				98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */,
+				2955D4BA21B6015E00A393D3 /* InboxDashboardCell.swift in Sources */,
 				291929511F3F76B10012067B /* IssueFilesViewController.swift in Sources */,
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
 				292FCB131EDFCC510026635E /* IssueLabelDotCell.swift in Sources */,
@@ -3088,6 +3129,7 @@
 				292CD3CE1F0DB8E700D3D57B /* IssueReviewModel.swift in Sources */,
 				29F3A18A20CC017700645CB7 /* Repository.swift in Sources */,
 				292CD3CC1F0DB89600D3D57B /* IssueReviewSectionController.swift in Sources */,
+				2955D4AE21B4752E00A393D3 /* Announcer.swift in Sources */,
 				295C31CF1F0AA67600521CED /* IssueStatus+ButtonState.swift in Sources */,
 				290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */,
 				294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */,
@@ -3108,6 +3150,7 @@
 				29BBD82D20CACDFF004D62FE /* NotificationSectionController.swift in Sources */,
 				292FF8B01F2FDC33009E63F7 /* IssueTextActionsView.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
+				2955D4B421B4B21B00A393D3 /* InboxFilterRepoCell.swift in Sources */,
 				292FCB191EDFCC510026635E /* IssueTitleSectionController.swift in Sources */,
 				BDB6AA67215FBC35009BB73C /* RepositoryBranchUpdatable.swift in Sources */,
 				294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */,
@@ -3121,7 +3164,6 @@
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */,
 				29136BE3200AAA5A007317BE /* UIViewController+FilePathTitle.swift in Sources */,
-				29B5D08B20D578DB003DFBE2 /* InboxType.swift in Sources */,
 				295B51481FC26F7F00C3993B /* UIImageView+Avatar.swift in Sources */,
 				297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */,
 				DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */,
@@ -3136,6 +3178,7 @@
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */,
 				2996544021A7B14E006B2CA9 /* NewFeaturesController.swift in Sources */,
+				2955D4AC21B46E9C00A393D3 /* InboxFilterModel.swift in Sources */,
 				7B4B31A61F92257400480CE9 /* SearchQueryTokenizer.swift in Sources */,
 				2986B3581FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift in Sources */,
 				2999972C20311DD700995FFD /* IssueMergeSummaryCell.swift in Sources */,
@@ -3252,6 +3295,7 @@
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29CC29301FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift in Sources */,
+				2955D4BE21B6044500A393D3 /* InboxDashboardSectionController.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				299F63E8205F09900015D901 /* StyledTextRenderer+ListDiffable.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
