@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
     :commit: 74cc625beed7cbcec5c1c50f2aba807e9246a73a
     :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
-    :commit: ba476ab2a35c3bf477119d0d777e664ae55a1436
+    :commit: ba56fa6e7b98bf5d9049af2c811c39ae11e47b56
     :git: https://github.com/GitHawkApp/ContextMenu.git
   DropdownTitleView:
     :commit: 5d6e0eb1f422a185353dabcd673b04c9ac1d7100

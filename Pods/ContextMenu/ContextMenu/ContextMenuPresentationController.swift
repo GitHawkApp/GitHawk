@@ -105,9 +105,16 @@ class ContextMenuPresentationController: UIPresentationController {
     var presentedViewTransform: CATransform3D {
         let translate: CATransform3D
         if let corner = preferredSourceViewCorner {
+            let point: CGPoint
+            if case .centerX = item.options.position, let view = item.sourceView {
+                point = view.center
+            } else {
+                point = corner.point
+            }
+
             let frame = frameOfPresentedViewInContainerView
             let center = CGPoint(x: frame.minX + frame.width / 2, y: frame.minY + frame.height / 2)
-            translate = CATransform3DMakeTranslation(corner.point.x - center.x, corner.point.y - center.y, 0)
+            translate = CATransform3DMakeTranslation(point.x - center.x, point.y - center.y, 0)
         } else {
             translate = CATransform3DIdentity
         }
