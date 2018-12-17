@@ -143,15 +143,6 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         super.layoutSubviews()
         textView.reposition(for: contentView.bounds.width)
         readOverlayView.frame = bounds
-//        CATransaction.begin()
-//        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-//        readLayer.path = UIBezierPath(ovalIn: readButton.bounds).cgPath
-//        readLayer.bounds = readButton.bounds
-//        readLayer.position = convert(readButton.center, from: readButton.superview)
-//        readLayer.transform = CATransform3DMakeScale(30, 30, 30)
-//        // keep the read layer in front
-//        readLayer.superlayer?.addSublayer(readLayer)
-//        CATransaction.commit()
     }
 
     override func themeDidChange(_ theme: Theme) {

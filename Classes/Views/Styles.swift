@@ -47,6 +47,7 @@ enum Styles {
         static let cardCornerRadius: CGFloat = 6
         static let maxImageHeight: CGFloat = 300
         static let contextMenuSize: CGSize = CGSize(width: 280, height: 240)
+        static let contextMenuSmallSize: CGSize = CGSize(width: 180, height: 240)
 
         enum HTML {
             static let boldWeight = 600

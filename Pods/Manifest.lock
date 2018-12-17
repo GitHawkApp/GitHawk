@@ -7,8 +7,8 @@ PODS:
   - Apollo/Core (0.8.0)
   - cmark-gfm-swift (0.1.0)
   - ContextMenu (0.5.0)
-  - Crashlytics (3.12.0):
-    - Fabric (~> 1.9.0)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - DateAgo (0.1.0)
   - DropdownTitleView (0.1.0)
   - Fabric (1.9.0)
@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
     :commit: 74cc625beed7cbcec5c1c50f2aba807e9246a73a
     :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
-    :commit: ba476ab2a35c3bf477119d0d777e664ae55a1436
+    :commit: 684057771673e60070f8bb3f19f6cec2e9294b55
     :git: https://github.com/GitHawkApp/ContextMenu.git
   DropdownTitleView:
     :commit: da41d90f6fd980384c6d21d33e610cdbcd36f99a
@@ -185,7 +185,7 @@ SPEC CHECKSUMS:
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
   cmark-gfm-swift: 9915dfe0cd7feda740ab01fc2a1882989b6d5128
   ContextMenu: d7d1aa5a07ce48af08271fdc10b14d0b021408cd
-  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   DateAgo: c678b6435627f2b267980bc6f0a9969389686691
   DropdownTitleView: e02e559243efb248dd0e8a50665b0acc5f6f2413
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
