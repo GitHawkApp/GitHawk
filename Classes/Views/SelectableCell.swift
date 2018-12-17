@@ -35,7 +35,7 @@ extension UIView {
 
 }
 
-class SelectableCell: UICollectionViewCell {
+class SelectableCell: UICollectionViewCell, ThemeChangeListener {
 
     private lazy var overlay: UIView = {
         return self.contentView.addOverlay()
@@ -45,6 +45,7 @@ class SelectableCell: UICollectionViewCell {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
+        registerForThemeChanges()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,6 +62,8 @@ class SelectableCell: UICollectionViewCell {
         layoutContentView()
         overlay.layoutOverlay()
     }
+
+    func themeDidChange(_ theme: Theme) { }
 
     override var accessibilityLabel: String? {
         get {
@@ -83,12 +86,13 @@ class SelectableCell: UICollectionViewCell {
 
 }
 
-class SwipeSelectableCell: SwipeCollectionViewCell {
+class SwipeSelectableCell: SwipeCollectionViewCell, ThemeChangeListener {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
+        registerForThemeChanges()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -109,6 +113,8 @@ class SwipeSelectableCell: SwipeCollectionViewCell {
         layoutContentView()
         overlay.layoutOverlay()
     }
+
+    func themeDidChange(_ theme: Theme) { }
 
     override var isSelected: Bool {
         didSet {

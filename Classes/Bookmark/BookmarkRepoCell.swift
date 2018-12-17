@@ -17,7 +17,7 @@ final class BookmarkRepoCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
+        themeDidChange(Appearance.currentTheme)
         accessibilityIdentifier = "bookmark-repo-cell"
 
         contentView.addSubview(imageView)
@@ -49,13 +49,21 @@ final class BookmarkRepoCell: SelectableCell {
         layoutContentView()
     }
 
+    override func themeDidChange(_ theme: Theme) {
+        super.themeDidChange(theme)
+        backgroundColor = theme == .light ? .white : .black
+    }
+
     func configure(owner: String, name: String) {
+        let textColor = Appearance.currentTheme == .light
+            ? Styles.Colors.Gray.dark.color
+            : Styles.Colors.Gray.light.color
         let text = NSMutableAttributedString(string: "\(owner)/", attributes: [
-            .foregroundColor: Styles.Colors.Gray.dark.color,
+            .foregroundColor: textColor,
             .font: Styles.Text.body.preferredFont
             ])
         text.append(NSAttributedString(string: "\(name)", attributes: [
-            .foregroundColor: Styles.Colors.Gray.dark.color,
+            .foregroundColor: textColor,
             .font: Styles.Text.bodyBold.preferredFont
             ]))
         label.attributedText = text

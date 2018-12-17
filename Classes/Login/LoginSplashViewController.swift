@@ -24,6 +24,12 @@ protocol LoginSplashViewControllerDelegate: class {
 
 final class LoginSplashViewController: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return Appearance.currentTheme == .light
+            ? .default
+            : .lightContent
+    }
+
     enum State {
         case idle
         case fetchingToken
@@ -31,6 +37,8 @@ final class LoginSplashViewController: UIViewController {
 
     private var client: Client!
 
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var splashView: SplashView!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -68,6 +76,15 @@ final class LoginSplashViewController: UIViewController {
         super.viewDidLoad()
         state = .idle
         signInButton.layer.cornerRadius = Styles.Sizes.cardCornerRadius
+        view.backgroundColor = Appearance.currentTheme == .light
+            ? .white
+            : Styles.Colors.Gray.dark.color
+        titleLabel.textColor = Appearance.currentTheme == .light
+            ? .black
+            : .white
+        subtitleLabel.textColor = Appearance.currentTheme == .light
+            ? .black
+            : .white
     }
 
     override func viewDidAppear(_ animated: Bool) {

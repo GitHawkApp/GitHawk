@@ -19,7 +19,7 @@ final class SearchRecentCell: SwipeSelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
-        backgroundColor = .white
+        themeDidChange(Appearance.currentTheme)
 
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -50,6 +50,11 @@ final class SearchRecentCell: SwipeSelectableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentView()
+    }
+
+    override func themeDidChange(_ theme: Theme) {
+        super.themeDidChange(theme)
+        backgroundColor = theme == .light ? .white : .black
     }
 
     // MARK: Public API

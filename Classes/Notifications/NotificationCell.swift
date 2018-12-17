@@ -46,8 +46,8 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
-        backgroundColor = .white
         clipsToBounds = true
+        themeDidChange(Appearance.currentTheme)
 
         contentView.addSubview(iconImageView)
         contentView.addSubview(detailsLabel)
@@ -152,6 +152,11 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
 //        // keep the read layer in front
 //        readLayer.superlayer?.addSublayer(readLayer)
 //        CATransaction.commit()
+    }
+
+    override func themeDidChange(_ theme: Theme) {
+        super.themeDidChange(theme)
+        backgroundColor = theme == .light ? .white : .black
     }
 
     override var accessibilityLabel: String? {

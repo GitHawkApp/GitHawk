@@ -14,7 +14,7 @@ protocol FeedDelegate: class {
     func loadNextPage(feed: Feed) -> Bool
 }
 
-final class Feed: NSObject, UIScrollViewDelegate {
+final class Feed: NSObject, UIScrollViewDelegate, ThemeChangeListener {
 
     enum Status {
         case initial
@@ -95,6 +95,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
     }
 
     func viewDidLoad() {
+        registerForThemeChanges()
         guard let view = adapter.viewController?.view else { return }
 
         view.backgroundColor = .white
@@ -125,6 +126,10 @@ final class Feed: NSObject, UIScrollViewDelegate {
         if changed {
             collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
+    }
+
+    func themeDidChange(_ theme: Theme) {
+        collectionView.backgroundColor = Styles.Colors.background
     }
 
     func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> Void)? = nil) {
