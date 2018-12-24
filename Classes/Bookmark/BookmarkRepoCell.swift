@@ -17,7 +17,6 @@ final class BookmarkRepoCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        themeDidChange(Appearance.currentTheme)
         accessibilityIdentifier = "bookmark-repo-cell"
 
         contentView.addSubview(imageView)

@@ -53,7 +53,6 @@ final class SettingsViewController: UITableViewController,
         super.viewDidLoad()
 
         registerForThemeChanges()
-        themeDidChange(Appearance.currentTheme)
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         darkModeSwitch.isOn = Appearance.currentTheme == .dark

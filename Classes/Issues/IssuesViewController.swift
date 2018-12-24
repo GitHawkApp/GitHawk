@@ -164,9 +164,6 @@ final class IssuesViewController: MessageViewController,
         setup(scrollView: feed.collectionView)
         setMessageView(hidden: true, animated: false)
 
-        // Override colors base on theme
-        themeDidChange(Appearance.currentTheme)
-
         // setup message view properties
         configure()
 

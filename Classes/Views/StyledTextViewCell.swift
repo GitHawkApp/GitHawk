@@ -19,7 +19,6 @@ class StyledTextViewCell: UICollectionViewCell, ThemeChangeListener {
         contentView.addSubview(textView)
         isAccessibilityElement = true
         registerForThemeChanges()
-        themeDidChange(Appearance.currentTheme)
     }
 
     required init?(coder aDecoder: NSCoder) {

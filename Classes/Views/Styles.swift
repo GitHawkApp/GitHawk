@@ -89,6 +89,11 @@ enum Styles {
                 ? Styles.Colors.Gray.lighter.color
                 : Styles.Colors.Gray.dark.color
         }
+        static var barTint: UIColor {
+            return Appearance.currentTheme == .light
+                ? Styles.Colors.lightBarTint
+                : UIColor.black
+        }
         static let purple = "6f42c1"
         static let blueGray = "8697af"
         static let menuBackgroundColor = "292D35"
@@ -128,11 +133,8 @@ enum Styles {
     }
 
     static func setupAppearance() {
-        let barTintColor = Appearance.currentTheme == .light
-            ? Styles.Colors.lightBarTint
-            : UIColor.black
-        UITabBar.appearance().barTintColor = barTintColor
-        UINavigationBar.appearance().barTintColor = barTintColor
+        UITabBar.appearance().barTintColor = Styles.Colors.barTint
+        UINavigationBar.appearance().barTintColor = Styles.Colors.barTint
         UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
         let titleTextColor = Appearance.currentTheme == .light
             ? Styles.Colors.Gray.dark.color

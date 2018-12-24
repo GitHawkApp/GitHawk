@@ -23,7 +23,6 @@ final class SettingsLabel: UILabel, ThemeChangeListener {
     func configure() {
         registerForThemeChanges()
         font = Styles.Text.body.preferredFont
-        themeDidChange(Appearance.currentTheme)
     }
 
     func themeDidChange(_ theme: Theme) {

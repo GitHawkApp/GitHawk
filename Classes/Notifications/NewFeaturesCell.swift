@@ -33,7 +33,6 @@ final class NewFeaturesCell: UICollectionViewCell, ThemeChangeListener {
         isAccessibilityElement = true
 
         registerForThemeChanges()
-        themeDidChange(Appearance.currentTheme)
         contentView.backgroundColor = Styles.Colors.Blue.light.color
         contentView.layer.cornerRadius = Styles.Sizes.cardCornerRadius
         contentView.layer.borderWidth = 1 / UIScreen.main.scale

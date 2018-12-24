@@ -27,8 +27,6 @@ class StyledTableCell: UITableViewCell, ThemeChangeListener {
         let background = UIView()
         background.backgroundColor = Styles.Colors.Gray.alphaLighter
         selectedBackgroundView = background
-
-        themeDidChange(Appearance.currentTheme)
     }
 
     func themeDidChange(_ theme: Theme) {

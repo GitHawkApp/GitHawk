@@ -47,7 +47,6 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         isAccessibilityElement = true
 
         clipsToBounds = true
-        themeDidChange(Appearance.currentTheme)
 
         contentView.addSubview(iconImageView)
         contentView.addSubview(detailsLabel)

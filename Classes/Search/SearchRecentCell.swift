@@ -19,8 +19,6 @@ final class SearchRecentCell: SwipeSelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
-        themeDidChange(Appearance.currentTheme)
-
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.tintColor = Styles.Colors.Blue.medium.color

@@ -9,10 +9,12 @@
 import Foundation
 
 private let kPreferredThemeRawValueKey = "kPreferredThemeRawValueKey"
+private let kThemeDidChangeRawValue = "kThemeDidChange"
+private let kThemeDidChange = NSNotification.Name(kThemeDidChangeRawValue)
 
 enum Theme: Int {
     case light = 0
-    case dark = 1
+    case dark
 
     static var `default`: Theme {
         let rawValue = UserDefaults.standard.integer(forKey: kPreferredThemeRawValueKey)
@@ -37,8 +39,6 @@ final class Appearance {
         })
     }
 }
-
-private let kThemeDidChange = NSNotification.Name("kThemeDidChange")
 
 class ThemeChangeNotifier: NSObject {
     private let block: (_ notification: Notification?) -> Void
@@ -79,6 +79,9 @@ extension ThemeChangeListener where Self: NSObject {
             }
             self?.themeDidChange(theme)
         }
+
+        // Trigger a config cycle for the current theme
+        themeDidChange(Appearance.currentTheme)
     }
 
     private var themeChangeNotifier: ThemeChangeNotifier? {

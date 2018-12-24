@@ -262,7 +262,6 @@
 		371E141719780CC0D359E31D29685EF4 /* Locking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B056E764D191BED149C77A27F4070D11 /* Locking.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		37594E65784C1261F3295DA68116B44B /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7814E349C1D718446F325A9999720A76 /* HTTPRequest.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		37771B93CA1CC5F395B12FF41D230C3D /* FLEXTableListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A00448F2DB9CA660987E2765AAF551E /* FLEXTableListViewController.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		37C8FAC611CB47027F371EDFE02291A6 /* FlatCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4AA5B8DD8310A300E465D3D7E55E1C /* FlatCache.swift */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		37FBA6CD41CEB4424CB7179046FFF3DD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8594E2CBD141FED9A78785881004248 /* UIKit.framework */; };
 		382FF24F2B96EB30FE6B0C33F91F3196 /* ConstraintRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2420BABFEE526AC5D0D167E9A1C7FD /* ConstraintRelation.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		383A318C6AC08C99CD2D570B0D10FB0D /* tomorrow-night.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 0FA53529E2E6D16F81C55474A3C9EA1C /* tomorrow-night.min.css */; };
@@ -608,6 +607,7 @@
 		7BE27634EB345E70BCF36964B6A56514 /* FLEXNetworkTransactionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C818ECEA1438B85F0488E60C228AA32D /* FLEXNetworkTransactionTableViewCell.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		7BEBE48A21BBD3ABC8CA9F7E38DC9E85 /* IGListDisplayHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = AA64DFC3AF006D402841BA054DCDADDE /* IGListDisplayHandler.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7C1324119EBDE43CA09B55C63974E00B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0317B543DD06473C8C773AFE162FA7F2 /* Foundation.framework */; };
+		7C71AC25A896DD3A7B2ECC763BDA595A /* FlatCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4AA5B8DD8310A300E465D3D7E55E1C /* FlatCache.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		7C9110EA76BAD89853F2DBF7B1998E0F /* rainbow.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 890FBAB9324DAAED82B77E92B6B31E7C /* rainbow.min.css */; };
 		7CB851BA6646ACD6FFAA2BBF554B79FD /* ConstraintMakerRelatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6901FFA43BFD47BD226A2644E757F41 /* ConstraintMakerRelatable.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		7CDA7633F812B6AACA3204048593D4A7 /* V3Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD07AC39336339279F688C843D2C185 /* V3Issue.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -3720,29 +3720,9 @@
 		1A2932EE9AC63C62BC50C1EEA028B476 /* SwiftLint */ = {
 			isa = PBXGroup;
 			children = (
-				548ABCDDDD74FC97BB0B62E68EC366F7 /* CGImage+LRUCachable.swift */,
-				0531F383AAF4418D637BDDC2FDFC9812 /* CGSize+LRUCachable.swift */,
-				DBE07DB03AC0FA069A2FDC0AA57CDB1D /* CGSize+Utility.swift */,
-				97BBF686EAD0D480A9097222CFE879C8 /* Font.swift */,
-				35266D63BC52CCFD471D2F2A6F40F3F5 /* Hashable+Combined.swift */,
-				BC677B864AF0DD4EF94783271B11991C /* LRUCache.swift */,
-				28B46FA7D17BB2A9C44CD7EF72501559 /* NSAttributedString+Trim.swift */,
-				670615F7C9312F139004912FAFF19952 /* NSAttributedStringKey+StyledText.swift */,
-				44E513B5960FC596921015C4673980F6 /* NSLayoutManager+Render.swift */,
-				FCB018DA861195C989E4B5742813F47F /* StyledText.swift */,
-				0C02AD831CCBCB31854BE85C2E96FB2D /* StyledTextBuilder.swift */,
-				5905F8C220DCE1AF4976C2A4010C8293 /* StyledTextRenderCacheKey.swift */,
-				3B1DD768F1563F78355F74AC7036CB1E /* StyledTextRenderer.swift */,
-				F4D5846EC7D19D64F866B378484F9736 /* StyledTextString.swift */,
-				E7310108DB5F5A3252002E56DE7E47ED /* StyledTextView.swift */,
-				78658AC2A733EA49C2EADC231FE29B08 /* TextStyle.swift */,
-				78D8BFAEF978475C9F38446087D37FF5 /* UIContentSizeCategory+Scaling.swift */,
-				093180354BB7D4531A668E7DBC629589 /* UIFont+UnionTraits.swift */,
-				BA9754B491CB4AF2F3AC3AEBF7680DA6 /* UIScreen+Static.swift */,
-				F591E8ACE3906B616CD6E01001D74883 /* Support Files */,
 			);
-			name = StyledTextKit;
-			path = StyledTextKit;
+			name = SwiftLint;
+			path = SwiftLint;
 			sourceTree = "<group>";
 		};
 		1AEC2CAE779512226BA5F4088529A05F /* Support Files */ = {
@@ -3762,56 +3742,6 @@
 				006BE0B25B3FFAAF323DA337B0E0CED9 /* Info.plist */,
 				5971A4A272650982B7F9DF0AB09F8B15 /* ResourceBundle-Resources-Info.plist */,
 				1D7AE3D53265D27D942C1E3EF3309FD7 /* ResourceBundle-Resources-Info.plist */,
-			);
-			name = "cmark-gfm-swift";
-			path = "cmark-gfm-swift";
-			sourceTree = "<group>";
-		};
-		2465D12F11379F7F949ADCD1D090ED59 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				3A1EBC04B8CC5D08EDA92E67210F7F3F /* NSBundle+NYTPhotoViewer.h */,
-				2BF6A6ED20709C946AAD411ACD543B17 /* NSBundle+NYTPhotoViewer.m */,
-				9E75BA379036842AF24341F86C921E2C /* NYTPhoto.h */,
-				ECB4C8BA97AFC33550C3C426303E5A54 /* NYTPhotoCaptionView.h */,
-				C350E2BB7AD588E836BE24C888070EF5 /* NYTPhotoCaptionView.m */,
-				2207CD823E8F8040CAC8B86E6D7792C4 /* NYTPhotoCaptionViewLayoutWidthHinting.h */,
-				A922DFEF2CDF133E866133DF559C651A /* NYTPhotoContainer.h */,
-				6DA29FFEA810EC05E38D18AE3E98E1F9 /* NYTPhotoDismissalInteractionController.h */,
-				49211F2A4613F5139876AE87C2335C92 /* NYTPhotoDismissalInteractionController.m */,
-				871E437E4C0035655CED4E9DE05FD669 /* NYTPhotosOverlayView.h */,
-				8F41927BEE0A72B6884C5E9798387252 /* NYTPhotosOverlayView.m */,
-				DAB3105D001ED75458BAF298CAA62A96 /* NYTPhotosViewController.h */,
-				B119B17AB579543ED46F0F583B0A8E94 /* NYTPhotosViewController.m */,
-				F93FCD4A5DEFCE4F6CA836E8BCBB79C5 /* NYTPhotoTransitionAnimator.h */,
-				19AAF6A1343CE25BF8E35FF189F42168 /* NYTPhotoTransitionAnimator.m */,
-				AC11BB37DED63DDB7813423CCBB88DD4 /* NYTPhotoTransitionController.h */,
-				FC02C7A6319B007785637DCAB4450D16 /* NYTPhotoTransitionController.m */,
-				8AD09AD1278DB97F3689A0FFDC31A14E /* NYTPhotoViewController.h */,
-				D819C64B7754416374E4532BD6F1AF10 /* NYTPhotoViewController.m */,
-				D498DCE95FD380A72287D893173E2ED0 /* NYTPhotoViewer.h */,
-				57F418D389AE277D62BB8B8B6A11B849 /* NYTPhotoViewerArrayDataSource.h */,
-				54BC4DAF68C56B73BD49BA9261A00206 /* NYTPhotoViewerArrayDataSource.m */,
-				5943E24F2FABA53EC7CF197FA5AC0054 /* NYTPhotoViewerCore.h */,
-				C415162951631AC51B3863BECD3D53AA /* NYTPhotoViewerDataSource.h */,
-				15B5996FF4B3B2BAA6F44873ACCB0908 /* NYTPhotoViewerSinglePhotoDataSource.h */,
-				38BC707804072FAF8C6666F50506A086 /* NYTPhotoViewerSinglePhotoDataSource.m */,
-				5DD933D992C244CEE26D49093BCDBD96 /* NYTScalingImageView.h */,
-				24A785B5B6824229851C819209389353 /* NYTScalingImageView.m */,
-				495FAFE6A966874AF2C7EBA425728A41 /* Resources */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		2499F8E8C3F19EE87E4EE044FF4C2A3A /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				9339D0A9B4C90FF97C8A2D6613BFCA76 /* Info.plist */,
-				7F55059A43AF90F7D9D5989A8F90E0A9 /* SDWebImage.modulemap */,
-				EA6E8B8D4C013463EC40DF9AE15C4153 /* SDWebImage.xcconfig */,
-				D703151FFF3C54FC3137D08BA0A23AE3 /* SDWebImage-dummy.m */,
-				83E484CAB6B12E78C50BED502D1B3F93 /* SDWebImage-prefix.pch */,
-				9E90680FF66073F24B712517048A05E7 /* SDWebImage-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../../Pods/Target Support Files/DateAgo-iOS";
@@ -9699,7 +9629,7 @@
 		};
 		11FF1A114F3E943E93440E97ED116655 /* TestFlight */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B7285F94CD0C547C9B28F1251C807631 /* ImageAlertAction.xcconfig */;
+			baseConfigurationReference = D2950E8B2B952F73B4D4CC66146D1211 /* FlatCache.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -10291,40 +10221,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		38924977D4B4F204E56FF5ABCD3FC27F /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2950E8B2B952F73B4D4CC66146D1211 /* FlatCache.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/FlatCache/FlatCache-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/FlatCache/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/FlatCache/FlatCache.modulemap";
-				PRODUCT_MODULE_NAME = FlatCache;
-				PRODUCT_NAME = FlatCache;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		3A04DAD18BCD8E9D21287713DA2883F1 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -11070,40 +10966,6 @@
 			};
 			name = TestFlight;
 		};
-		631A71269BEA94B43B0048059AA0B690 /* TestFlight */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2950E8B2B952F73B4D4CC66146D1211 /* FlatCache.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/FlatCache/FlatCache-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/FlatCache/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/FlatCache/FlatCache.modulemap";
-				PRODUCT_MODULE_NAME = FlatCache;
-				PRODUCT_NAME = FlatCache;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = TestFlight;
-		};
 		69B481A9FC4086CAFC613B6A9696D8E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 63A06B681A362191DA8DF5F4AC0D6729 /* XLPagerTabStrip.xcconfig */;
@@ -11458,38 +11320,6 @@
 			};
 			name = TestFlight;
 		};
-		7F2EA16AF79B3A7B173B2960E85B3C33 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B7285F94CD0C547C9B28F1251C807631 /* ImageAlertAction.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/HTMLString/HTMLString-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/HTMLString/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/HTMLString/HTMLString.modulemap";
-				PRODUCT_MODULE_NAME = HTMLString;
-				PRODUCT_NAME = HTMLString;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		7D7F926001BBE85FF0F6C33ECB3CD947 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FFDDF2C6F41903FE66CD0F952754E830 /* GitHubAPI-watchOS.xcconfig */;
@@ -11536,6 +11366,38 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/HTMLString/HTMLString-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HTMLString/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/HTMLString/HTMLString.modulemap";
+				PRODUCT_MODULE_NAME = HTMLString;
+				PRODUCT_NAME = HTMLString;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		80B9EAC5C2AC14BB26DE00A3743078F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFF327072B2744AE9ED223664A776574 /* FLAnimatedImage.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/FLAnimatedImage/FLAnimatedImage-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/FLAnimatedImage/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -11553,41 +11415,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		82A8D8426F054778C8419B01F75F04DD /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BFF327072B2744AE9ED223664A776574 /* FLAnimatedImage.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
-				PRODUCT_MODULE_NAME = ContextMenu;
-				PRODUCT_NAME = ContextMenu;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		82A8D8426F054778C8419B01F75F04DD /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -12543,40 +12370,6 @@
 			};
 			name = Debug;
 		};
-		B8599BBAD96C5631BD8B36346C676240 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B7285F94CD0C547C9B28F1251C807631 /* ImageAlertAction.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ImageAlertAction/ImageAlertAction-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ImageAlertAction/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ImageAlertAction/ImageAlertAction.modulemap";
-				PRODUCT_MODULE_NAME = ImageAlertAction;
-				PRODUCT_NAME = ImageAlertAction;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.1;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		BA9E538D1140B8B0C370CEA4265969FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1BD142902A69983128EAC62CD704C315 /* Pods-Freetime.release.xcconfig */;
@@ -13467,39 +13260,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 64B0365038684F227E93FD57A8C09D80 /* SwipeCellKit.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
-				PRODUCT_MODULE_NAME = ContextMenu;
-				PRODUCT_NAME = ContextMenu;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		EB20A4ECC82AB29CDB0F788A6C4945A6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FEE9F8413519B821F3A9AEFED1B44AE /* DropdownTitleView.xcconfig */;
-			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13530,7 +13290,7 @@
 		};
 		EDE3CAA4C0030BE86F41F3106BA473BE /* TestFlight */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2950E8B2B952F73B4D4CC66146D1211 /* FlatCache.xcconfig */;
+			baseConfigurationReference = 3FEE9F8413519B821F3A9AEFED1B44AE /* DropdownTitleView.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -13631,6 +13391,74 @@
 				WATCHOS_DEPLOYMENT_TARGET = 4.2;
 			};
 			name = TestFlight;
+		};
+		F201E2E17459490A48983B643017CBAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7285F94CD0C547C9B28F1251C807631 /* ImageAlertAction.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ImageAlertAction/ImageAlertAction-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ImageAlertAction/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ImageAlertAction/ImageAlertAction.modulemap";
+				PRODUCT_MODULE_NAME = ImageAlertAction;
+				PRODUCT_NAME = ImageAlertAction;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F230DE00DC5D3D785A34BF87759D5C9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2950E8B2B952F73B4D4CC66146D1211 /* FlatCache.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/FlatCache/FlatCache-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FlatCache/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FlatCache/FlatCache.modulemap";
+				PRODUCT_MODULE_NAME = FlatCache;
+				PRODUCT_NAME = FlatCache;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		F6CAB19E7C45EA8783C3BCAE42350E4F /* Release */ = {
 			isa = XCBuildConfiguration;
