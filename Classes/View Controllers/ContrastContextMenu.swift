@@ -59,10 +59,11 @@ final class ContrastContextMenu: UITableViewController {
         override func layoutSubviews() {
             super.layoutSubviews()
             guard let frame = textLabel?.frame, imageView != nil else { return }
-            textLabel?.frame = CGRect(x: 55,
-                                      y: frame.minY,
-                                      width: frame.width,
-                                      height: frame.height
+            textLabel?.frame = CGRect(
+                x: 55,
+                y: frame.minY,
+                width: frame.width,
+                height: frame.height
             )
         }
 
