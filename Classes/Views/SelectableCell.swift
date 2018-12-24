@@ -63,7 +63,9 @@ class SelectableCell: UICollectionViewCell, ThemeChangeListener {
         overlay.layoutOverlay()
     }
 
-    func themeDidChange(_ theme: Theme) { }
+    func themeDidChange(_ theme: Theme) {
+        contentView.backgroundColor = theme == .light ? .white : .black
+    }
 
     override var accessibilityLabel: String? {
         get {

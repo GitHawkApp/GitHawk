@@ -76,15 +76,16 @@ final class LoginSplashViewController: UIViewController {
         super.viewDidLoad()
         state = .idle
         signInButton.layer.cornerRadius = Styles.Sizes.cardCornerRadius
-        view.backgroundColor = Appearance.currentTheme == .light
-            ? .white
-            : Styles.Colors.Gray.dark.color
-        titleLabel.textColor = Appearance.currentTheme == .light
-            ? .black
-            : .white
-        subtitleLabel.textColor = Appearance.currentTheme == .light
-            ? .black
-            : .white
+        switch Appearance.currentTheme {
+        case .light:
+            view.backgroundColor = .white
+            titleLabel.textColor = .black
+            subtitleLabel.textColor = .black
+        case .dark:
+            view.backgroundColor = Styles.Colors.Gray.dark.color
+            titleLabel.textColor = .white
+            subtitleLabel.textColor = .white
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

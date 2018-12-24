@@ -54,7 +54,6 @@ final class Feed: NSObject, UIScrollViewDelegate, ThemeChangeListener {
         self.adapter.scrollViewDelegate = self
 
         self.collectionView.alwaysBounceVertical = true
-        self.collectionView.backgroundColor = Styles.Colors.background
         self.collectionView.refreshControl = feedRefresh.refreshControl
         self.collectionView.keyboardDismissMode = .onDrag
         self.collectionView.accessibilityIdentifier = "feed-collection-view"
@@ -98,8 +97,6 @@ final class Feed: NSObject, UIScrollViewDelegate, ThemeChangeListener {
         registerForThemeChanges()
         guard let view = adapter.viewController?.view else { return }
 
-        view.backgroundColor = .white
-
         adapter.collectionView = collectionView
 
         if collectionView.superview == nil {
@@ -130,6 +127,8 @@ final class Feed: NSObject, UIScrollViewDelegate, ThemeChangeListener {
 
     func themeDidChange(_ theme: Theme) {
         collectionView.backgroundColor = Styles.Colors.background
+        guard let view = adapter.viewController?.view else { return }
+        view.backgroundColor = Styles.Colors.background
     }
 
     func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> Void)? = nil) {

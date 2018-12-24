@@ -48,11 +48,6 @@ final class BookmarkRepoCell: SelectableCell {
         layoutContentView()
     }
 
-    override func themeDidChange(_ theme: Theme) {
-        super.themeDidChange(theme)
-        backgroundColor = theme == .light ? .white : .black
-    }
-
     func configure(owner: String, name: String) {
         let textColor = Appearance.currentTheme == .light
             ? Styles.Colors.Gray.dark.color
