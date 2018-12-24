@@ -44,15 +44,18 @@ final class IssueRequestModel: ListDiffable {
 
         let styledString: StyledTextString
         if actor == user {
-            styledString = IssueRequestModel.buildSelfString(actor: actor,
-                                                             user: user,
-                                                             date: date,
-                                                             event: event)
+            styledString = IssueRequestModel.buildSelfString(
+                user: actor,
+                date: date,
+                event: event
+            )
         } else {
-            styledString = IssueRequestModel.buildString(actor: actor,
-                                                         user: user,
-                                                         date: date,
-                                                         event: event)
+            styledString = IssueRequestModel.buildString(
+                actor: actor,
+                user: user,
+                date: date,
+                event: event
+            )
         }
 
         self.string = StyledTextRenderer(
@@ -67,10 +70,11 @@ final class IssueRequestModel: ListDiffable {
         ).warm(width: width)
     }
 
-    static private func buildSelfString(actor: String,
-                                        user: String,
-                                        date: Date,
-                                        event: Event) -> StyledTextString {
+    static private func buildSelfString(
+        user: String,
+        date: Date,
+        event: Event
+    ) -> StyledTextString {
         let phrase: String
         switch event {
         case .assigned: phrase = NSLocalizedString(" self-assigned this", comment: "")
@@ -83,8 +87,8 @@ final class IssueRequestModel: ListDiffable {
             style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
         ))
             .save()
-            .add(styledText: StyledText(text: actor, style: Styles.Text.secondaryBold.with(attributes: [
-                MarkdownAttribute.username: actor,
+            .add(styledText: StyledText(text: user, style: Styles.Text.secondaryBold.with(attributes: [
+                MarkdownAttribute.username: user,
                 .foregroundColor: Styles.Colors.Gray.dark.color
                 ])
             ))
@@ -95,10 +99,13 @@ final class IssueRequestModel: ListDiffable {
         return builder.build()
     }
 
-    static private func buildString(actor: String,
-                                    user: String,
-                                    date: Date,
-                                    event: Event) -> StyledTextString {
+    static private func buildString(
+        actor: String,
+        user: String,
+        date: Date,
+        event: Event
+    ) -> StyledTextString {
+
         let phrase: String
         switch event {
         case .assigned: phrase = NSLocalizedString(" assigned", comment: "")
