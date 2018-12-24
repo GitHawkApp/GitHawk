@@ -24,7 +24,7 @@ final class LabelMenuCell: SelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
 
         contentView.addSubview(checkedImageView)
-        checkedImageView.tintColor = Styles.Colors.Blue.medium.color
+        checkedImageView.tintColor = Styles.Colors.Blue.menu.color
         checkedImageView.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalToSuperview()

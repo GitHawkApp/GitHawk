@@ -40,7 +40,7 @@ final class PeopleCell: SelectableCell {
         }
 
         checkmarkImageView.image = UIImage(named: "check-small").withRenderingMode(.alwaysTemplate)
-        checkmarkImageView.tintColor = Styles.Colors.Blue.medium.color
+        checkmarkImageView.tintColor = Styles.Colors.Blue.menu.color
         checkmarkImageView.contentMode = .scaleAspectFit
 
         checkmarkImageView.snp.makeConstraints { make in

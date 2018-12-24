@@ -67,7 +67,7 @@ final class InboxFilterController {
             ContrastContextMenuItem(
                 title: model.type.title,
                 iconName: model.type.iconName,
-                iconColor: Styles.Colors.Blue.medium.color,
+                iconColor: Styles.Colors.Blue.menu.color,
                 separator: false,
                 action: { [weak self] menu in
                     menu.dismiss(animated: trueUnlessReduceMotionEnabled)
@@ -77,7 +77,7 @@ final class InboxFilterController {
         items.append(ContrastContextMenuItem(
             title: NSLocalizedString("Repos", comment: ""),
             iconName: "repo",
-            iconColor: Styles.Colors.Blue.medium.color,
+            iconColor: Styles.Colors.Blue.menu.color,
             separator: true,
             action: { [weak self, weak viewController] menu in
                 menu.dismiss(animated: trueUnlessReduceMotionEnabled)
