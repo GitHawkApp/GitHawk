@@ -96,7 +96,7 @@ class DefaultReactionDetailController: UITableViewController {
 
     private func updateSections() {
         tableView.performBatchUpdates({
-            if enabledSwitch.isOn  {
+            if enabledSwitch.isOn {
                 self.tableView.insertSections(IndexSet(integer: 1), with: .top)
             } else {
                  self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
