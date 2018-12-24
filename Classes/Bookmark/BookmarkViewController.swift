@@ -64,6 +64,8 @@ BookmarkHeaderSectionControllerDelegate {
                 self?.handleMigrationSuccess(graphQLIDs: ids)
             case .error(let error):
                 self?.handleMigration(error: error)
+            case .partial(let ids, let errors):
+                self?.handleMigrationPartial(graphQLIDs: ids, errors: errors)
             }
         }
     }
@@ -91,6 +93,24 @@ BookmarkHeaderSectionControllerDelegate {
     private func handleMigrationSuccess(graphQLIDs: [String]) {
         cloudStore.add(graphQLIDs: graphQLIDs)
         fetch(page: nil)
+    }
+
+    private func handleMigrationPartial(graphQLIDs: [String], errors: Int) {
+        handleMigrationSuccess(graphQLIDs: graphQLIDs)
+
+        let messageFormat: String
+        if errors == 1 {
+            messageFormat = NSLocalizedString("%@ bookmark could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
+        } else {
+            messageFormat = NSLocalizedString("%@ bookmarks could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
+        }
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("Error Migrating Bookmarks", comment: ""),
+            message: String.localizedStringWithFormat(messageFormat, errors),
+            preferredStyle: .alert
+        )
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: Overrides

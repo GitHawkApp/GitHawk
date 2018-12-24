@@ -11,6 +11,8 @@ import Foundation
 enum BookmarkCloudMigratorClientResult {
     case noMigration
     case success([String])
+    // when oauth restrictions fail some migrations
+    case partial(success: [String], errors: Int)
     case error(Error?)
 }
 
@@ -76,7 +78,7 @@ final class BookmarkCloudMigrator {
 
         client.fetch(bookmarks: bookmarks) { [weak self] result in
             switch result {
-            case .success, .noMigration:
+            case .success, .noMigration, .partial:
                 self?.needsMigration = false
                 self?.state = .success
             case .error:

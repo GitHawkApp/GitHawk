@@ -57,7 +57,12 @@ extension GithubClient: BookmarkViewController.Client {
             switch result {
             case .success(let json):
                 let ids = bookmarkGraphQLIDs(from: json.data)
-                completion(.success(ids))
+                let delta = bookmarks.count - ids.count
+                if delta == 0 {
+                    completion(.success(ids))
+                } else {
+                    completion(.partial(success: ids, errors: delta))
+                }
             case .failure(let error):
                 completion(.error(error))
             }
