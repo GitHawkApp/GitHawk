@@ -134,12 +134,18 @@ class SearchViewController: UIViewController,
         self.update(animated: animated)
     }
 
-    func search(term: String) {
-        let query: SearchQuery = .search(term)
+    func search(term: String, includeForks: Bool = true) {
+
+        let searchTerm = includeForks
+            ? "fork:true " + term
+            : term
+
+        let query: SearchQuery = .search(searchTerm)
+
         guard canSearch(query: query) else { return }
 
         let request = client.search(
-            query: term,
+            query: searchTerm,
             containerWidth: view.safeContentWidth(with: collectionView)
         ) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
