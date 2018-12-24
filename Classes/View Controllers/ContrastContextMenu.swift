@@ -19,7 +19,7 @@ struct ContrastContextMenuItem {
     init(
         title: String,
         iconName: String? = nil,
-        iconColor: UIColor? = Styles.Colors.Blue.medium.color,
+        iconColor: UIColor? = Styles.Colors.Blue.menu.color,
         separator: Bool = false,
         action: ((ContrastContextMenu) -> Void)? = nil
         ) {
@@ -50,7 +50,7 @@ final class ContrastContextMenu: UITableViewController {
             textLabel?.font = Styles.Text.bodyBold.preferredFont
             textLabel?.textColor = .white
 
-            imageView?.tintColor = Styles.Colors.Blue.medium.color
+            imageView?.tintColor = Styles.Colors.Blue.menu.color
 
             border = contentView.addBorder(.top)
             border?.backgroundColor = Styles.Colors.Gray.medium.color
