@@ -74,7 +74,8 @@ ThemeChangeListener {
         }
 
         edgesForExtendedLayout = []
-
+        registerForThemeChanges()
+        
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
