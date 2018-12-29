@@ -161,7 +161,9 @@ final class Router: NSObject {
         case .custom, .error: break
         case .push(let toController):
             // if trying to push but not given an origin, fallback to detail
-            if let controller = controller {
+            if let controller = controller,
+                // do not allow pushing onto the master tab VC
+                controller.tabBarController != props.splitViewController.masterTabBarController {
                 push(from: controller, to: toController)
             } else {
                 detail(controller: toController, split: props.splitViewController)
