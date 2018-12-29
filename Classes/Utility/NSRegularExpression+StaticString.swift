@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension NSRegularExpression {
 
     convenience init(_ pattern: StaticString, options: NSRegularExpression.Options = []) {
