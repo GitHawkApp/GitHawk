@@ -59,8 +59,16 @@ extension Squawk {
     }
 
     static func show(error: Error?, view: UIView? = window) {
-        let text = error?.localizedDescription
-            ?? NSLocalizedString("Something went wrong.", comment: "")
+        let text: String
+        if error?.isGraphQLForbidden == true {
+            text = NSLocalizedString(
+                "Some repositories or organizations you browse may require Personal Access Tokens for access. You can add a PAT in Settings>Accounts.",
+                comment: ""
+            )
+        } else {
+            text = error?.localizedDescription
+                ?? NSLocalizedString("Something went wrong.", comment: "")
+        }
         Squawk.shared.show(in: view, config: errorConfig(text: text))
         triggerHaptic()
     }
