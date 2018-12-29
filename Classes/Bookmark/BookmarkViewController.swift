@@ -110,6 +110,7 @@ BookmarkHeaderSectionControllerDelegate {
             message: String.localizedStringWithFormat(messageFormat, errors),
             preferredStyle: .alert
         )
+        alert.add(action: UIAlertAction(title: Constants.Strings.ok, style: .default))
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
