@@ -302,6 +302,7 @@
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
 		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
+		298C7E2821D80BAF00DD2A60 /* Error+GraphQLForbidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */; };
 		298C7E2621D7F56600DD2A60 /* SettingsAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C7E2521D7F56600DD2A60 /* SettingsAccountCell.swift */; };
 		2990B9DB218BF23D009865EB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990B9DA218BF23D009865EB /* Router.swift */; };
 		29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
@@ -894,6 +895,7 @@
 		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
 		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
+		298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+GraphQLForbidden.swift"; sourceTree = "<group>"; };
 		298C7E2521D7F56600DD2A60 /* SettingsAccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountCell.swift; sourceTree = "<group>"; };
 		2990B9DA218BF23D009865EB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MutableTraits.swift"; sourceTree = "<group>"; };
@@ -2285,6 +2287,7 @@
 				291E988021975FCB00E5EED9 /* UIApplication+WriteReview.swift */,
 				C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */,
 				C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */,
+				298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2984,6 +2987,7 @@
 				296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */,
 				294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
+				298C7E2821D80BAF00DD2A60 /* Error+GraphQLForbidden.swift in Sources */,
 				290CA7642169799600DE04F8 /* AppController.swift in Sources */,
 				2955D4A821B46B3D00A393D3 /* InboxFilterRepoSectionController.swift in Sources */,
 				2996543C21A76F3A006B2CA9 /* NewFeaturesSectionController.swift in Sources */,
