@@ -42,6 +42,70 @@ final class IssueRequestModel: ListDiffable {
         self.date = date
         self.event = event
 
+        let styledString: StyledTextString
+        if actor == user {
+            styledString = IssueRequestModel.buildSelfString(
+                user: actor,
+                date: date,
+                event: event
+            )
+        } else {
+            styledString = IssueRequestModel.buildString(
+                actor: actor,
+                user: user,
+                date: date,
+                event: event
+            )
+        }
+
+        self.string = StyledTextRenderer(
+            string: styledString,
+            contentSizeCategory: contentSizeCategory,
+            inset: UIEdgeInsets(
+                top: Styles.Sizes.inlineSpacing,
+                left: 0,
+                bottom: Styles.Sizes.inlineSpacing,
+                right: 0
+            )
+        ).warm(width: width)
+    }
+
+    static private func buildSelfString(
+        user: String,
+        date: Date,
+        event: Event
+    ) -> StyledTextString {
+        let phrase: String
+        switch event {
+        case .assigned: phrase = NSLocalizedString(" self-assigned this", comment: "")
+        case .unassigned: phrase = NSLocalizedString(" removed their assignment", comment: "")
+        case .reviewRequested: phrase = NSLocalizedString(" self-requested a review", comment: "")
+        case .reviewRequestRemoved: phrase = NSLocalizedString(" removed their request for review", comment: "")
+        }
+
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
+        ))
+            .save()
+            .add(styledText: StyledText(text: user, style: Styles.Text.secondaryBold.with(attributes: [
+                MarkdownAttribute.username: user,
+                .foregroundColor: Styles.Colors.Gray.dark.color
+                ])
+            ))
+            .restore()
+            .add(text: phrase)
+            .add(text: " \(date.agoString(.long))", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+
+        return builder.build()
+    }
+
+    static private func buildString(
+        actor: String,
+        user: String,
+        date: Date,
+        event: Event
+    ) -> StyledTextString {
+
         let phrase: String
         switch event {
         case .assigned: phrase = NSLocalizedString(" assigned", comment: "")
@@ -66,16 +130,7 @@ final class IssueRequestModel: ListDiffable {
             .restore()
             .add(text: " \(date.agoString(.long))", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
 
-        self.string = StyledTextRenderer(
-            string: builder.build(),
-            contentSizeCategory: contentSizeCategory,
-            inset: UIEdgeInsets(
-                top: Styles.Sizes.inlineSpacing,
-                left: 0,
-                bottom: Styles.Sizes.inlineSpacing,
-                right: 0
-            )
-        ).warm(width: width)
+        return builder.build()
     }
 
     // MARK: ListDiffable
