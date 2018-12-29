@@ -633,29 +633,50 @@
         <scene sceneID="Xjx-IC-OZR">
             <objects>
                 <tableViewController id="Pin-sZ-TSO" customClass="SettingsAccountsViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="vrj-05-S8l">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="55" sectionHeaderHeight="18" sectionFooterHeight="18" id="vrj-05-S8l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96470588239999999" green="0.97254901959999995" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.73333333329999995" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="account" textLabel="ASM-DA-gBk" style="IBUITableViewCellStyleDefault" id="lpN-QC-8cv" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="account" id="lpN-QC-8cv" customClass="SettingsAccountCell" customModule="Freetime" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lpN-QC-8cv" id="yMj-Hq-uAw">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ASM-DA-gBk">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6O9-UD-6n2">
+                                            <rect key="frame" x="318" y="19" width="41" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <color key="tintColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" title="PAT" image="pencil-small">
+                                                <color key="titleColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="onPAT:" destination="lpN-QC-8cv" eventType="touchUpInside" id="QUr-5v-MqJ"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9k-QM-ueb">
+                                            <rect key="frame" x="16" y="17.5" width="39.5" height="19.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <nil key="textColor"/>
-                                            <color key="highlightedColor" red="0.14117647058823529" green="0.16078431372549018" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.14117647058823529" green="0.16078431372549018" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="6O9-UD-6n2" secondAttribute="trailing" constant="16" id="HNT-1f-04p"/>
+                                        <constraint firstItem="6O9-UD-6n2" firstAttribute="centerY" secondItem="yMj-Hq-uAw" secondAttribute="centerY" id="JAv-gW-2e0"/>
+                                        <constraint firstItem="B9k-QM-ueb" firstAttribute="centerY" secondItem="yMj-Hq-uAw" secondAttribute="centerY" id="PAQ-4P-bog"/>
+                                        <constraint firstItem="B9k-QM-ueb" firstAttribute="leading" secondItem="yMj-Hq-uAw" secondAttribute="leadingMargin" id="m3G-Lp-6cu"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="tintColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="patButton" destination="6O9-UD-6n2" id="OLP-Oh-pnn"/>
+                                    <outlet property="usernameLabel" destination="B9k-QM-ueb" id="MYz-Ox-FmK"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -712,5 +733,6 @@
     </scenes>
     <resources>
         <image name="link-external" width="19" height="25"/>
+        <image name="pencil-small" width="14" height="14"/>
     </resources>
 </document>
