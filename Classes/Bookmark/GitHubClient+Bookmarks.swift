@@ -16,9 +16,10 @@ private extension String {
     }
 }
 
-private func bookmarkGraphQLIDs(from json: [String: Any]) -> [String] {
-    return json.compactMap {
-        guard let item = $0.value as? [String: Any] else { return nil }
+private func bookmarkGraphQLIDs(from json: [String: Any], originalKeys: [String]) -> [String] {
+    // fetch by originalKeys to retain original ordering
+    return originalKeys.compactMap {
+        guard let item = json[$0] as? [String: Any] else { return nil }
         if let issueOrPullRequest = item["issueOrPullRequest"] as? [String: Any] {
             return issueOrPullRequest["id"] as? String
         }
@@ -33,30 +34,33 @@ extension GithubClient: BookmarkViewController.Client {
         bookmarks: [BookmarkCloudMigratorClientBookmarks],
         completion: @escaping (BookmarkCloudMigratorClientResult) -> Void
         ) {
-        let subQueries: [String] = bookmarks.map {
+        let subQueries: [(key: String, query: String)] = bookmarks.map {
             switch $0 {
             case .issueOrPullRequest(let owner, let name, let number):
                 let key = "\(owner)\(name)\(number)".graphQLSafeKey
-                return """
+                return (key, """
                     \(key): repository(owner: "\(owner)", name: "\(name)") {
                         issueOrPullRequest(number: \(number)) {
                             ... on Issue { id }
                             ... on PullRequest { id }
                         }
                     }
-                """
+                """)
             case .repo(let owner, let name):
                 let key = "\(owner)\(name)".graphQLSafeKey
-                return """
+                return (key, """
                     \(key): repository(owner: "\(owner)", name: "\(name)") { id }
-                """
+                """)
             }
         }
-        let query = "query{\(subQueries.joined(separator: " "))}"
+        let query = "query{\(subQueries.map({ $0.query }).joined(separator: " "))}"
         client.send(ManualGraphQLRequest(query: query)) { result in
             switch result {
             case .success(let json):
-                let ids = bookmarkGraphQLIDs(from: json.data)
+                let ids = bookmarkGraphQLIDs(
+                    from: json.data,
+                    originalKeys: subQueries.map({ $0.key })
+                )
                 let delta = bookmarks.count - ids.count
                 if delta == 0 {
                     completion(.success(ids))
