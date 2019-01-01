@@ -17,8 +17,8 @@ struct UIControlEffect {
 
     init(
         backgroundColor: UIColor? = nil,
-        alpha: CGFloat = 0.6,
-        transform: CGAffineTransform = CGAffineTransform(scaleX: 0.95, y: 0.95),
+        alpha: CGFloat = 0.8,
+        transform: CGAffineTransform = CGAffineTransform(scaleX: 0.97, y: 0.97),
         downDuration: TimeInterval = 0.07,
         liftDuration: TimeInterval = 0.13
         ) {
@@ -39,7 +39,7 @@ fileprivate final class UIControlEffects: NSObject {
     }
 
     let effect: UIControlEffect
-    var savedState: State? = nil
+    var savedState: State?
 
     init(effect: UIControlEffect) {
         self.effect = effect
@@ -81,7 +81,7 @@ extension UIControl {
         static var Name = "com.freetime.uicontroleffects.key"
     }
 
-    func add(touch effect: UIControlEffect) {
+    func addTouchEffect(_ effect: UIControlEffect = UIControlEffect()) {
         let object = UIControlEffects(effect: effect)
 
         addTarget(object, action: #selector(object.didTouchDown), for: .touchDown)
