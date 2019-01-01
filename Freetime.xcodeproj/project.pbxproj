@@ -302,8 +302,8 @@
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
 		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
-		298C7E2821D80BAF00DD2A60 /* Error+GraphQLForbidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */; };
 		298C7E2621D7F56600DD2A60 /* SettingsAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C7E2521D7F56600DD2A60 /* SettingsAccountCell.swift */; };
+		298C7E2821D80BAF00DD2A60 /* Error+GraphQLForbidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */; };
 		2990B9DB218BF23D009865EB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990B9DA218BF23D009865EB /* Router.swift */; };
 		29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
 		299304691FBA8A88007B9737 /* IssueManagingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */; };
@@ -895,8 +895,8 @@
 		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
 		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
-		298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+GraphQLForbidden.swift"; sourceTree = "<group>"; };
 		298C7E2521D7F56600DD2A60 /* SettingsAccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountCell.swift; sourceTree = "<group>"; };
+		298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+GraphQLForbidden.swift"; sourceTree = "<group>"; };
 		2990B9DA218BF23D009865EB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MutableTraits.swift"; sourceTree = "<group>"; };
 		299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingSectionController.swift; sourceTree = "<group>"; };
@@ -3759,6 +3759,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GLOBAL_APP_VERSION = 1.27.0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/Core/Sources",
@@ -3802,6 +3803,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GLOBAL_APP_VERSION = 1.27.0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/Core/Sources",
@@ -3937,6 +3939,7 @@
 					"ANIMATED_GIF_SUPPORT=1",
 					"TESTFLIGHT=1",
 				);
+				GLOBAL_APP_VERSION = 1.27.0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/Core/Sources",
