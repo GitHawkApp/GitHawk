@@ -212,7 +212,7 @@ ListBindingSectionControllerSelectionDelegate {
             title: NSLocalizedString("Change merge type", comment: ""),
             preferredStyle: .actionSheet
         )
-        alert.popoverPresentationController?.sourceView = button.optionIconView
+        alert.popoverPresentationController?.sourceView = button.optionButton
 
         for type in types {
             alert.add(action: AlertAction(AlertActionBuilder {

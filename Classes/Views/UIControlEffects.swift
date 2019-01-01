@@ -87,6 +87,7 @@ extension UIControl {
         addTarget(object, action: #selector(object.didTouchDown), for: .touchDown)
         addTarget(object, action: #selector(object.didLift), for: .touchUpInside)
         addTarget(object, action: #selector(object.didLift), for: .touchUpOutside)
+        addTarget(object, action: #selector(object.didLift), for: .touchCancel)
 
         // bind the effect object's lifecycle to the control
         objc_setAssociatedObject(
