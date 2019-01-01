@@ -36,6 +36,7 @@ BaseListViewControllerDataSource {
             subtitle: viewModel.path?.path,
             chevronEnabled: false
         )
+        titleView.addTouchEffect()
         navigationItem.titleView = titleView
     }
 

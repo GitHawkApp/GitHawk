@@ -34,6 +34,7 @@ extension UIViewController {
 
         if let title = filePath.current {
             let navigationTitle = DropdownTitleView()
+            navigationTitle.addTouchEffect()
             navigationTitle.configure(
                 title: title,
                 subtitle: filePath.basePath,

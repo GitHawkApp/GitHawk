@@ -146,6 +146,7 @@ IssueManagingContextControllerDelegate {
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
 
         let navigationTitle = DropdownTitleView()
+        navigationTitle.addTouchEffect()
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         navigationTitle.configure(
             title: "#\(model.number)",
