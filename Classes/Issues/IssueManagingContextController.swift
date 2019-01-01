@@ -56,6 +56,9 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     init(model: IssueDetailsModel, client: GithubClient) {
         let button = IssueManageButton()
+        // alpha animation is jarring when you see the contents beneath
+        button.addTouchEffect(UIControlEffect(backgroundColor: "267FE4".color, alpha: 1))
+        button.adjustsImageWhenHighlighted = false
         manageButton = button
         self.client = client
         self.model = model
