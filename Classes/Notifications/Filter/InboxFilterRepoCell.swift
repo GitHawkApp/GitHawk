@@ -16,6 +16,7 @@ final class InboxFilterRepoCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        overlayColor = Styles.Colors.Gray.medium.color
         accessibilityIdentifier = "inbox-filter-repo-cell"
 
         label.adjustsFontSizeToFitWidth = true
@@ -28,7 +29,8 @@ final class InboxFilterRepoCell: SelectableCell {
             make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
         }
 
-        addBorder(.bottom, left: Styles.Sizes.gutter)
+        let border = contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
+        border.backgroundColor = Styles.Colors.Gray.medium.color
     }
 
     required init?(coder aDecoder: NSCoder) {
