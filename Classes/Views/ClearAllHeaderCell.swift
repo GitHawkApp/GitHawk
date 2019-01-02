@@ -23,6 +23,8 @@ final class ClearAllHeaderCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        backgroundColor = Styles.Colors.Gray.lighter.color
+
         label.font = Styles.Text.secondary.preferredFont
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)

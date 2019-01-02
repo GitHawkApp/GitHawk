@@ -84,7 +84,7 @@ enum Styles {
 
     enum Colors {
 
-        static let background = Styles.Colors.Gray.lighter.color
+        static let background = UIColor.white
         static let purple = "6f42c1"
         static let blueGray = "8697af"
         static let menuBackgroundColor = "292D35"
