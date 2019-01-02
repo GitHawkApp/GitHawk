@@ -299,6 +299,21 @@ EmptyViewDelegate {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
+    private func addDropShadow() {
+        guard let buttonBarView = buttonBarView else {
+            return
+        }
+
+        let shadowPath = UIBezierPath(rect: CGRect(origin: CGPoint(x: 0, y: buttonBarView.bounds.height),
+                                                   size: CGSize(width: buttonBarView.bounds.width, height: 1)))
+        buttonBarView.layer.masksToBounds = false
+        buttonBarView.layer.shadowColor = UIColor.darkGray.cgColor
+        buttonBarView.layer.shadowOpacity = 1
+        buttonBarView.layer.shadowPath = shadowPath.cgPath
+        buttonBarView.layer.shouldRasterize = true
+        buttonBarView.layer.shadowRadius = 2
+    }
+
     // MARK: ButtonBarPagerTabStripViewController Overrides
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
@@ -329,6 +344,14 @@ EmptyViewDelegate {
 
     func didTapRetry(view: EmptyView) {
         fetchDetails()
+    }
+
+    // MARK: UIViewController Overrides
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        addDropShadow()
     }
 
 }
