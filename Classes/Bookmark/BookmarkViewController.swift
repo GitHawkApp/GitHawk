@@ -100,9 +100,9 @@ BookmarkHeaderSectionControllerDelegate {
 
         let messageFormat: String
         if errors == 1 {
-            messageFormat = NSLocalizedString("%@ bookmark could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
+            messageFormat = NSLocalizedString("%i bookmark could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
         } else {
-            messageFormat = NSLocalizedString("%@ bookmarks could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
+            messageFormat = NSLocalizedString("%i bookmarks could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
         }
 
         let alert = UIAlertController(
