@@ -191,6 +191,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     func themeDidChange(_ theme: Theme) {
         let baseColor: UIColor = Appearance.currentTheme == .light ? .white : Styles.Colors.Gray.dark.color
         sendButtonGradientLayer.colors = [baseColor.withAlphaComponent(0).cgColor, baseColor.cgColor]
+        collectionView.backgroundColor = Appearance.currentTheme == .light ? .white : .black
         collectionView.reloadData()
     }
 

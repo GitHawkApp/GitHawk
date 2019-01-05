@@ -111,6 +111,14 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         title = Constants.Strings.newIssue
 
         titleField.becomeFirstResponder()
+
+        if Appearance.currentTheme == .dark {
+            tableView.backgroundColor = Styles.Colors.background
+            titleField.textColor = .white
+            titleField.attributedPlaceholder = NSAttributedString(string: "Required", attributes: [.foregroundColor: Styles.Colors.Gray.light.color])
+            bodyField.textColor = .white
+            bodyField.backgroundColor = .black
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
