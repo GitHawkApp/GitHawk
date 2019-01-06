@@ -91,6 +91,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         case lock
         case reopen
         case close
+        case edit
     }
 
     var actions: [Action] {
@@ -100,7 +101,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         var actions = [Action]()
 
         if case .collaborator = permissions {
-            actions += [ .labels, .milestone, .assignees ]
+            actions += [ .labels, .milestone, .assignees, .edit ]
             if result.pullRequest {
                 actions.append(.reviewers)
             }
@@ -151,6 +152,9 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         case .close:
             title = Constants.Strings.close
             iconName = "x"
+        case .edit:
+            title = NSLocalizedString("Edit Title", comment: "")
+            iconName = "pencil"
         }
 
         // Lock always has the divider above it assuming you're a collaborator.
@@ -193,6 +197,11 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             case .lock: strongSelf.lock(true)
             case .reopen: strongSelf.close(false)
             case .close: strongSelf.close(true)
+            case .edit:
+                strongSelf.presentContextMenu(
+                    with: strongSelf.newEditIssueTitleController(),
+                    backgroundColor: .white
+                )
             }
         }
     }
@@ -263,15 +272,24 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             repo: model.repo
         )
     }
+    
+    func newEditIssueTitleController() -> UIViewController {
+        return EditIssueTitleViewController(
+            issueTitle: result?.title.string.allText ?? ""
+        )
+    }
 
-    func presentContextMenu(with controller: UIViewController) {
+    func presentContextMenu(
+        with controller: UIViewController,
+        backgroundColor: UIColor = Styles.Colors.menuBackgroundColor.color
+        ) {
         guard let viewController = self.viewController else { return }
         ContextMenu.shared.show(
             sourceViewController: viewController,
             viewController: controller,
             options: ContextMenu.Options(
                 containerStyle: ContextMenu.ContainerStyle(
-                    backgroundColor: Styles.Colors.menuBackgroundColor.color
+                    backgroundColor: backgroundColor
                 )
             ),
             delegate: self
@@ -354,6 +372,19 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             milestone: controller.selected
         )
     }
+    
+    func didDismiss(editedIssueTitle: String?) {
+        guard let editedTitle = editedIssueTitle,
+            let previous = result else { return }
+        
+        client.setIssueTitle(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            title: editedTitle
+        )
+    }
 
     // MARK: ContextMenuDelegate
 
@@ -364,6 +395,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             didDismiss(controller: people)
         } else if let labels = viewController as? LabelsViewController {
             didDismiss(selected: labels.selected)
+        } else if let editIssueTitle = viewController as? EditIssueTitleViewController {
+            didDismiss(editedIssueTitle: editIssueTitle.editedIssueTitle)
         }
     }
 

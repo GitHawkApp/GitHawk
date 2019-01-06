@@ -53,5 +53,7 @@ enum Constants {
         static let clear = NSLocalizedString("Clear", comment: "")
         static let preview = NSLocalizedString("Preview", comment: "")
         static let overview = NSLocalizedString("Overview", comment: "")
+        static let edit = NSLocalizedString("Edit", comment: "")
+        static let save = NSLocalizedString("Save", comment: "")
     }
 }

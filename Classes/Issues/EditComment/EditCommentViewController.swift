@@ -103,7 +103,7 @@ MessageTextViewListener {
 
     func setRightBarItemIdle() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Save", comment: ""),
+            title: Constants.Strings.save,
             style: .done,
             target: self,
             action: #selector(EditCommentViewController.onSave)

@@ -12,8 +12,7 @@ import StyledTextKit
 
 func titleStringSizing(
     title: String,
-    contentSizeCategory: UIContentSizeCategory,
-    width: CGFloat
+    contentSizeCategory: UIContentSizeCategory
     ) -> StyledTextRenderer {
     let builder = StyledTextBuilder(styledText: StyledText(
         text: title, style: Styles.Text.headline.with(foreground: Styles.Colors.Gray.dark.color)
