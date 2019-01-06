@@ -146,7 +146,7 @@ GitHubSessionListener {
     }
 
     private func onGitHubStatus() {
-        guard let url = URLBuilder(host: "status.github.com").add(path: "messages").url
+        guard let url = URLBuilder(host: "www.githubstatus.com").url
             else { return }
         presentSafari(url: url)
     }
