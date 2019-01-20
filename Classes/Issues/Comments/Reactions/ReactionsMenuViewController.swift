@@ -38,18 +38,25 @@ final class ReactionsMenuViewController: UICollectionViewController,
 
     private let reuseIdentifier = "cell"
     private let size: CGFloat = 50
-    private let reactions: [ReactionContent] = [
-        .thumbsUp,
-        .hooray,
-        .thumbsDown,
-        .heart,
-        .laugh,
-        .confused
+
+    private let sectionedReactions: [[ReactionContent]] = [
+        [
+            .thumbsUp,
+            .hooray,
+            .thumbsDown,
+            .heart
+        ],
+        [
+            .laugh,
+            .confused,
+            .rocket,
+            .eyes
+        ]
     ]
 
     var selectedReaction: ReactionContent? {
-        guard let item = collectionView?.indexPathsForSelectedItems?.first?.item else { return nil }
-        return reactions[item]
+        guard let item = collectionView?.indexPathsForSelectedItems?.first else { return nil }
+        return sectionedReactions[item.section][item.item]
     }
 
     init() {
@@ -69,22 +76,27 @@ final class ReactionsMenuViewController: UICollectionViewController,
         collectionView?.register(EmojiCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.reloadData()
         collectionView?.layoutIfNeeded()
+        let reactionsInRow = sectionedReactions.first?.count ?? 0
         preferredContentSize = CGSize(
-            width: size * CGFloat(reactions.count),
-            height: size
+            width: size * CGFloat(reactionsInRow),
+            height: size * CGFloat(sectionedReactions.count)
         )
     }
 
     // MARK: UICollectionViewDataSource
 
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return sectionedReactions.count
+    }
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return reactions.count
+        return sectionedReactions[section].count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         if let cell = cell as? EmojiCell {
-            cell.label.text = reactions[indexPath.item].emoji
+            cell.label.text = sectionedReactions[indexPath.section][indexPath.item].emoji
         }
         return cell
     }
