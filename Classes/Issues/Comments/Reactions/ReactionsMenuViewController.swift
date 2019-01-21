@@ -42,13 +42,13 @@ final class ReactionsMenuViewController: UICollectionViewController,
     private let sectionedReactions: [[ReactionContent]] = [
         [
             .thumbsUp,
-            .hooray,
             .thumbsDown,
-            .heart
+            .laugh,
+            .hooray
         ],
         [
-            .laugh,
             .confused,
+            .heart,
             .rocket,
             .eyes
         ]
