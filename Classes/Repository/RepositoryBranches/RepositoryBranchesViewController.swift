@@ -69,22 +69,24 @@ RepositoryBranchSectionControllerDelegate {
     }
 
     override func fetch(page: String?) {
-        client.fetchRepositoryBranches(owner: owner,
-                                 repo: repo
-            ) {  [weak self] result in
+        client.fetchRepositoryBranches(
+            owner: owner,
+            repo: repo,
+            nextPage: page as String?
+        ) {  [weak self] result in
             guard let strongSelf = self else { return }
             switch result {
-            case .success(let branches):
+            case .success(let payload):
                 self?.branches = RepositoryBranchesViewController.arrangeBranches(
                     selectedBranch: strongSelf.selectedBranch,
                     defaultBranch: strongSelf.defaultBranch,
-                    branches: branches
+                    branches: strongSelf.branches + payload.branches
                 )
-
+                self?.update(page: payload.nextPage, animated: true)
             case .error(let error):
                 Squawk.show(error: error)
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             }
-            self?.update(animated: true)
         }
     }
 
