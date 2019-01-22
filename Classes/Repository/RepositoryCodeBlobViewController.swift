@@ -79,6 +79,22 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         feedRefresh.beginRefreshing()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let url = externalURL {
+            setupUserActivity(with: HandoffInformator(
+                activityName: "viewCodeBlob",
+                activityTitle: "\(repo.owner)/\(repo.name)/\(branch)/" + path.components.joined(separator: "/"),
+                url: url
+            ))
+        }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        invalidateUserActivity()
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         let frame: CGRect
@@ -93,6 +109,10 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
     }
 
     // MARK: Private API
+
+    private var externalURL: URL? {
+        return URLBuilder.github().add(paths: [repo.owner, repo.name, "blob", branch] + path.components).url
+    }
 
     @objc func onFileNavigationTitle(sender: UIView) {
         showAlert(filePath: path, sender: sender)
