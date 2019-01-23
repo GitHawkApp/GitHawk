@@ -22,6 +22,7 @@ EmptyViewDelegate {
         let hasIssuesEnabled: Bool
         let defaultBranch: String
         let graphQLID: String
+        let headerModel: RepositoryOverviewHeaderModel
     }
 
     private enum State {
@@ -128,7 +129,8 @@ EmptyViewDelegate {
             controllers.append(RepositoryOverviewViewController(
                 client: client,
                 repo: repo,
-                branch: branch ?? details.defaultBranch
+                branch: branch ?? details.defaultBranch,
+                headerModel: details.headerModel
             ))
             if details.hasIssuesEnabled {
                 controllers.append(RepositoryIssuesViewController(
@@ -173,10 +175,16 @@ EmptyViewDelegate {
                     Squawk.show(error: error)
                 case .success(let data):
                     if let repo = data.repository {
+                        let headerModel = RepositoryOverviewHeaderModel(
+                            watchersCount: repo.watchers.totalCount,
+                            starsCount: repo.stargazers.totalCount,
+                            forksCount: repo.forkCount
+                        )
                         let details = Details(
                             hasIssuesEnabled: repo.hasIssuesEnabled,
                             defaultBranch: repo.defaultBranchRef?.name ?? "master",
-                            graphQLID: repo.id
+                            graphQLID: repo.id,
+                            headerModel: headerModel
                         )
                         self?.state = .value(details)
                     } else {

@@ -16961,7 +16961,7 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
 
 public final class RepositoryInfoQuery: GraphQLQuery {
   public static let operationString =
-    "query RepositoryInfo($owner: String!, $name: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    id\n    defaultBranchRef {\n      __typename\n      name\n    }\n    hasIssuesEnabled\n  }\n}"
+    "query RepositoryInfo($owner: String!, $name: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    id\n    defaultBranchRef {\n      __typename\n      name\n    }\n    hasIssuesEnabled\n    watchers {\n      __typename\n      totalCount\n    }\n    stargazers {\n      __typename\n      totalCount\n    }\n    forkCount\n  }\n}"
 
   public var owner: String
   public var name: String
@@ -17010,6 +17010,9 @@ public final class RepositoryInfoQuery: GraphQLQuery {
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
         GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
         GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("watchers", type: .nonNull(.object(Watcher.selections))),
+        GraphQLField("stargazers", type: .nonNull(.object(Stargazer.selections))),
+        GraphQLField("forkCount", type: .nonNull(.scalar(Int.self))),
       ]
 
       public var snapshot: Snapshot
@@ -17018,8 +17021,8 @@ public final class RepositoryInfoQuery: GraphQLQuery {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, defaultBranchRef: DefaultBranchRef? = nil, hasIssuesEnabled: Bool) {
-        self.init(snapshot: ["__typename": "Repository", "id": id, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }, "hasIssuesEnabled": hasIssuesEnabled])
+      public init(id: GraphQLID, defaultBranchRef: DefaultBranchRef? = nil, hasIssuesEnabled: Bool, watchers: Watcher, stargazers: Stargazer, forkCount: Int) {
+        self.init(snapshot: ["__typename": "Repository", "id": id, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }, "hasIssuesEnabled": hasIssuesEnabled, "watchers": watchers.snapshot, "stargazers": stargazers.snapshot, "forkCount": forkCount])
       }
 
       public var __typename: String {
@@ -17060,6 +17063,36 @@ public final class RepositoryInfoQuery: GraphQLQuery {
         }
       }
 
+      /// A list of users watching the repository.
+      public var watchers: Watcher {
+        get {
+          return Watcher(snapshot: snapshot["watchers"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "watchers")
+        }
+      }
+
+      /// A list of users who have starred this starrable.
+      public var stargazers: Stargazer {
+        get {
+          return Stargazer(snapshot: snapshot["stargazers"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "stargazers")
+        }
+      }
+
+      /// Returns how many forks there are of this repository in the whole network.
+      public var forkCount: Int {
+        get {
+          return snapshot["forkCount"]! as! Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "forkCount")
+        }
+      }
+
       public struct DefaultBranchRef: GraphQLSelectionSet {
         public static let possibleTypes = ["Ref"]
 
@@ -17094,6 +17127,82 @@ public final class RepositoryInfoQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue, forKey: "name")
+          }
+        }
+      }
+
+      public struct Watcher: GraphQLSelectionSet {
+        public static let possibleTypes = ["UserConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int) {
+          self.init(snapshot: ["__typename": "UserConnection", "totalCount": totalCount])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+      }
+
+      public struct Stargazer: GraphQLSelectionSet {
+        public static let possibleTypes = ["StargazerConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int) {
+          self.init(snapshot: ["__typename": "StargazerConnection", "totalCount": totalCount])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
           }
         }
       }

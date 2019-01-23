@@ -5,5 +5,12 @@ query RepositoryInfo($owner: String!, $name: String!) {
       name
     }
     hasIssuesEnabled
+    watchers {
+      totalCount
+    }
+    stargazers {
+      totalCount
+    }
+    forkCount
   }
 }
