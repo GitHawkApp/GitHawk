@@ -22,11 +22,13 @@ IndicatorInfoProvider {
     private let client: RepositoryClient
     private var readme: RepositoryReadmeModel?
     private var branch: String
+    private let headerModel: RepositoryOverviewHeaderModel
 
-    init(client: GithubClient, repo: RepositoryDetails, branch: String) {
+    init(client: GithubClient, repo: RepositoryDetails, branch: String, headerModel: RepositoryOverviewHeaderModel) {
         self.repo = repo
         self.branch = branch
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
+        self.headerModel = headerModel
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: "")
         )
@@ -57,6 +59,7 @@ IndicatorInfoProvider {
         let width = view.safeContentWidth(with: feed.collectionView)
         let contentSizeCategory = UIContentSizeCategory.preferred
         let branch = self.branch
+        let headerModel = self.headerModel
 
         client.githubClient.client
             .send(V3RepositoryReadmeRequest(owner: repo.owner, repo: repo.name, branch: branch)) { [weak self] result in
@@ -64,6 +67,11 @@ IndicatorInfoProvider {
             case .success(let response):
                 DispatchQueue.global().async {
 
+                    let header = RepositoryOverviewHeaderViewModels(
+                        model: headerModel,
+                        width: width,
+                        contentSizeCategory: contentSizeCategory
+                    )
                     let models = MarkdownModels(
                         response.data.content,
                         owner: repo.owner,
@@ -74,7 +82,7 @@ IndicatorInfoProvider {
                         isRoot: false,
                         branch: branch
                     )
-                    let model = RepositoryReadmeModel(models: models)
+                    let model = RepositoryReadmeModel(models: header + models)
                     DispatchQueue.main.async { [weak self] in
                         self?.readme = model
                         self?.update(animated: trueUnlessReduceMotionEnabled)

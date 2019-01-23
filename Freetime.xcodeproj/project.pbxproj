@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03A0EC6321F8F60B008C9CE2 /* RepositoryOverviewHeaderViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A0EC6221F8F60B008C9CE2 /* RepositoryOverviewHeaderViewModels.swift */; };
 		0F9440FD32236514CD7215E9 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF622FFD773FDA73297C0D0 /* Pods_Freetime.framework */; };
 		15F28F992108DBA6006421B6 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F28F982108DBA6006421B6 /* SplashView.swift */; };
 		290056F3210028B20046EAE5 /* UIViewController+MenuDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290056F2210028B20046EAE5 /* UIViewController+MenuDone.swift */; };
@@ -593,6 +594,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03A0EC6221F8F60B008C9CE2 /* RepositoryOverviewHeaderViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewHeaderViewModels.swift; sourceTree = "<group>"; };
 		07C7DC5A7A907BE73BCA95AC /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0F26A46A43D11F8D04E17D4A /* Pods-FreetimeWatch Extension.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch Extension.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension.testflight.xcconfig"; sourceTree = "<group>"; };
 		15F28F982108DBA6006421B6 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -2249,6 +2251,7 @@
 				986B87331F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift */,
 				2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */,
 				29FE635E21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift */,
+				03A0EC6221F8F60B008C9CE2 /* RepositoryOverviewHeaderViewModels.swift */,
 				2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */,
 				29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */,
 				29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */,
@@ -2981,6 +2984,7 @@
 				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				15F28F992108DBA6006421B6 /* SplashView.swift in Sources */,
+				03A0EC6321F8F60B008C9CE2 /* RepositoryOverviewHeaderViewModels.swift in Sources */,
 				2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
 				2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */,
