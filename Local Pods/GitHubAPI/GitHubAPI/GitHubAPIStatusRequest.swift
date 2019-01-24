@@ -9,15 +9,22 @@
 import Foundation
 
 public struct APIStatus: Codable {
-    public enum StatusType: String, Codable {
-        case good, minor, major
+    public let status: Status
+}
+
+public struct Status: Codable {
+    public let indicator: StatusType
+    public let description: String
+    
+    public enum StatusType: String, Codable, CodingKey {
+        case normal = "none"
+        case minor, major, critical
     }
-    public let status: StatusType
 }
 
 public struct GitHubAPIStatusRequest: HTTPRequest {
     public typealias ResponseType = V3DataResponse<APIStatus>
-    public var url: String { return "https://status.github.com/api/status.json" }
+    public var url: String { return "https://www.githubstatus.com/api/v2/status.json" }
     public var logoutOnAuthFailure: Bool { return false }
     public var method: HTTPMethod { return .get }
     public var parameters: [String : Any]? { return nil }

@@ -105,6 +105,11 @@ enum Styles {
             static let light = "f1f8ff"
             static let menu = "5d9cf4"
         }
+        
+        enum Orange {
+            static let medium = "fe642e"
+            static let light = "f6d8ce"
+        }
 
         enum Gray {
             static let dark = "24292e"
