@@ -63,6 +63,7 @@ final class BadgeNotifications {
         }
         if isLocalNotificationEnabled {
             options.insert(.alert)
+            options.insert(.sound)
         }
 
         if !options.isEmpty {
