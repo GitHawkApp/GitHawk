@@ -26,6 +26,8 @@ MilestoneSectionControllerDelegate {
     private let feedRefresh = FeedRefresh()
     private var milestones = [Milestone]()
 
+    var wasDismissedByDone: Bool = false
+
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -94,6 +96,11 @@ MilestoneSectionControllerDelegate {
             }
             self?.update(animated: true)
         }
+    }
+
+    override func onMenuDone() {
+        self.wasDismissedByDone = true
+        super.onMenuDone()
     }
 
     // MARK: BaseListViewControllerDataSource
