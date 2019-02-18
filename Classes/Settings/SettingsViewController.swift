@@ -63,7 +63,7 @@ GitHubSessionListener {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(SettingsViewController.updateBadge),
-            name: .UIApplicationDidBecomeActive,
+            name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
     }
@@ -272,7 +272,7 @@ GitHubSessionListener {
     }
 
     @IBAction private func onSettings(_ sender: Any) {
-        guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(url)
     }
 
