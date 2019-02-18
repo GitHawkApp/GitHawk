@@ -11,7 +11,7 @@ import Foundation
 final class InboxZeroLoader {
 
     // [year/"fixed": [month: [day: [key:value]]]
-    private typealias SerializedType = [String: [String: [String: [String: String]]]]
+    typealias SerializedType = [String: [String: [String: [String: String]]]]
     private let path: String = {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         return "\(path)/holidays.json"
@@ -32,6 +32,10 @@ final class InboxZeroLoader {
         return URLBuilder(host: "raw.githubusercontent.com").add(paths: [
             "GitHawkApp", "Holidays", "master", "locales", "holidays-\(Locale.current.identifier).json"
             ]).url
+    }
+
+    init(json: SerializedType? = nil) {
+        json.flatMap { self.json = $0 }
     }
 
     func load(completion: @escaping (Bool) -> Void) {
@@ -62,6 +66,14 @@ final class InboxZeroLoader {
         return ("🎉", NSLocalizedString("Inbox zero!", comment: ""))
     }
 
+    // either key on the current year or "fixed" (for permanent dates)
+    private func holiday(year: Int, month: Int, day: Int) -> [String: String]? {
+        let holidays: (String) -> [String: String]? = {
+            return self.json[$0]?["\(month)"]?["\(day)"]
+        }
+        return holidays("\(year)") ?? holidays("fixed")
+    }
+
     func message(date: Date = Date()) -> (emoji: String, message: String) {
         let components = Calendar.current.dateComponents([.day, .month, .year], from: date)
         guard let day = components.day,
@@ -70,12 +82,9 @@ final class InboxZeroLoader {
                 return fallback
         }
 
-        // either key on the current year or "fixed" (for permanent dates)
-        if let yearData = json["\(year)"] ?? json["fixed"],
-            let monthData = yearData["\(month)"],
-            let data = monthData["\(day)"],
-            let emoji = data["emoji"],
-            let message = data["message"] {
+        if let holiday = holiday(year: year, month: month, day: day),
+            let emoji = holiday["emoji"],
+            let message = holiday["message"] {
             return (emoji, message)
         }
         return fallback
