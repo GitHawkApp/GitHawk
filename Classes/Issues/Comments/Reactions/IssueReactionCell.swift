@@ -122,7 +122,7 @@ final class IssueReactionCell: UICollectionViewCell {
     func iterate(add: Bool) {
         let animation = CATransition()
         animation.duration = 0.25
-        animation.type = CATransitionType.push
+        animation.type = .push
         animation.subtype = add ? .fromTop : .fromBottom
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         countLabel.layer.add(animation, forKey: "text-change")
