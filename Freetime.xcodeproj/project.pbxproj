@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03E8D824221D339200EB792A /* GithubURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E8D823221D339200EB792A /* GithubURL.swift */; };
+		03E8D826221D358000EB792A /* GithubURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E8D825221D358000EB792A /* GithubURLTests.swift */; };
 		03C127B8220993300062F7C9 /* InboxZeroLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C127B7220993300062F7C9 /* InboxZeroLoaderTests.swift */; };
 		0F9440FD32236514CD7215E9 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF622FFD773FDA73297C0D0 /* Pods_Freetime.framework */; };
 		15F28F992108DBA6006421B6 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F28F982108DBA6006421B6 /* SplashView.swift */; };
@@ -594,6 +596,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03E8D823221D339200EB792A /* GithubURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubURL.swift; sourceTree = "<group>"; };
+		03E8D825221D358000EB792A /* GithubURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubURLTests.swift; sourceTree = "<group>"; };
 		03A0EC6221F8F60B008C9CE2 /* RepositoryOverviewHeaderViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewHeaderViewModels.swift; sourceTree = "<group>"; };
 		03C127B7220993300062F7C9 /* InboxZeroLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxZeroLoaderTests.swift; sourceTree = "<group>"; };
 		07C7DC5A7A907BE73BCA95AC /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1747,6 +1751,7 @@
 				295F52A61EF1B9D2000B53CF /* Test.md */,
 				291E987C21973FA700E5EED9 /* URLBuilderTests.swift */,
 				29827D7321AA5DA300A1B293 /* ViewControllerTestUtil.swift */,
+				03E8D825221D358000EB792A /* GithubURLTests.swift */,
 				03C127B7220993300062F7C9 /* InboxZeroLoaderTests.swift */,
 			);
 			path = FreetimeTests;
@@ -2295,6 +2300,7 @@
 				C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */,
 				C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */,
 				298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */,
+				03E8D823221D339200EB792A /* GithubURL.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -3015,6 +3021,7 @@
 				292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */,
 				290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */,
 				292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */,
+				03E8D824221D339200EB792A /* GithubURL.swift in Sources */,
 				292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
 				DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */,
@@ -3412,6 +3419,7 @@
 				BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */,
 				291E988521976B5600E5EED9 /* ContentWidthUtilsTests.swift in Sources */,
 				2977D8BF215AE12D0073F737 /* LocalNotificationCacheTests.swift in Sources */,
+				03E8D826221D358000EB792A /* GithubURLTests.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
 				49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */,

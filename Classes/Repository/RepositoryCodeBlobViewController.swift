@@ -21,13 +21,7 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
     private let emptyView = EmptyView()
     private var sharingPayload: Any?
     private var repoUrl: URL? {
-        let builder = URLBuilder.github()
-            .add(path: repo.owner)
-            .add(path: repo.name)
-            .add(path: "blob")
-            .add(path: branch)
-        path.components.forEach { builder.add(path: $0) }
-        return builder.url
+        return GithubURL.codeBlob(repo: repo, branch: branch, path: path)
     }
 
     private lazy var moreOptionsItem: UIBarButtonItem = {
@@ -77,6 +71,22 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
         fetch()
         feedRefresh.beginRefreshing()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let url = repoUrl {
+            setupUserActivity(with: HandoffInformator(
+                activityName: "viewCodeBlob",
+                activityTitle: "\(repo.owner)/\(repo.name)/\(branch)/" + path.components.joined(separator: "/"),
+                url: url
+            ))
+        }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        invalidateUserActivity()
     }
 
     override func viewWillLayoutSubviews() {
