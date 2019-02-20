@@ -17652,6 +17652,18 @@
               "description": "Represents the ❤️ emoji.",
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "ROCKET",
+              "description": "Represents the 🚀 emoji.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "EYES",
+              "description": "Represents the 👀 emoji.",
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "possibleTypes": null
