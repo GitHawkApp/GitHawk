@@ -76,7 +76,10 @@ final class ReactionsMenuViewController: UICollectionViewController,
         collectionView?.register(EmojiCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.reloadData()
         collectionView?.layoutIfNeeded()
-        let reactionsInRow = sectionedReactions.first?.count ?? 0
+        guard let reactionsInRow = sectionedReactions.first?.count else {
+            assertionFailure("Reactions in grid row must be >0")
+            return
+        }
         preferredContentSize = CGSize(
             width: size * CGFloat(reactionsInRow),
             height: size * CGFloat(sectionedReactions.count)
