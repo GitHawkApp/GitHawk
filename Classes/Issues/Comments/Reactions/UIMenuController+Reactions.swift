@@ -18,7 +18,9 @@ extension UIMenuController {
             .thumbsDown,
             .heart,
             .laugh,
-            .confused
+            .confused,
+            .rocket,
+            .eyes
         ]
 
         menuItems = reactions.map {
