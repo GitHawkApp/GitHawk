@@ -409,7 +409,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-GitHubAPITests/Pods-GitHubAPITests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-GitHubAPITests/Pods-GitHubAPITests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
 			);
@@ -420,7 +420,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GitHubAPITests/Pods-GitHubAPITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GitHubAPITests/Pods-GitHubAPITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		83D888E1E8CA52543AA10A44 /* [CP] Check Pods Manifest.lock */ = {
