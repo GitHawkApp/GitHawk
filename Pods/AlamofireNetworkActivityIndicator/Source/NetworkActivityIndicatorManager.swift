@@ -1,7 +1,7 @@
 //
 //  NetworkActivityIndicatorManager.swift
 //
-//  Copyright (c) 2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2016-2018 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ import UIKit
 ///
 ///     NetworkActivityIndicatorManager.shared.isEnabled = true
 ///
-/// By setting the `isEnabled` property to `true` for the `shared` instance, the network activity indicator will show 
+/// By setting the `isEnabled` property to `true` for the `shared` instance, the network activity indicator will show
 /// and hide automatically as Alamofire requests start and complete. You should not ever need to call
 /// `incrementActivityCount` and `decrementActivityCount` yourself.
 public class NetworkActivityIndicatorManager {
@@ -223,8 +223,13 @@ public class NetworkActivityIndicatorManager {
         )
 
         DispatchQueue.main.async {
+            #if swift(>=4.2)
+            RunLoop.main.add(timer, forMode: .common)
+            RunLoop.main.add(timer, forMode: .tracking)
+            #else
             RunLoop.main.add(timer, forMode: .commonModes)
             RunLoop.main.add(timer, forMode: .UITrackingRunLoopMode)
+            #endif
         }
 
         startDelayTimer = timer
@@ -240,8 +245,13 @@ public class NetworkActivityIndicatorManager {
         )
 
         DispatchQueue.main.async {
+            #if swift(>=4.2)
+            RunLoop.main.add(timer, forMode: .common)
+            RunLoop.main.add(timer, forMode: .tracking)
+            #else
             RunLoop.main.add(timer, forMode: .commonModes)
             RunLoop.main.add(timer, forMode: .UITrackingRunLoopMode)
+            #endif
         }
 
         completionDelayTimer = timer

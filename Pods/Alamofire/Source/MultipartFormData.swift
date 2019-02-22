@@ -1,7 +1,7 @@
 //
 //  MultipartFormData.swift
 //
-//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -92,7 +92,7 @@ open class MultipartFormData {
     // MARK: - Properties
 
     /// The `Content-Type` header value containing the boundary used to generate the `multipart/form-data`.
-    open var contentType: String { return "multipart/form-data; boundary=\(boundary)" }
+    open lazy var contentType: String = "multipart/form-data; boundary=\(self.boundary)"
 
     /// The content length of all body parts used to generate the `multipart/form-data` not including the boundaries.
     public var contentLength: UInt64 { return bodyParts.reduce(0) { $0 + $1.bodyContentLength } }
