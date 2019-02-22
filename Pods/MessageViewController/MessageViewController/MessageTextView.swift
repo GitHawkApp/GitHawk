@@ -25,21 +25,21 @@ open class MessageTextView: UITextView, UITextViewDelegate {
 
     open var defaultFont = UIFont.preferredFont(forTextStyle: .body) {
         didSet {
-            defaultTextAttributes[NSAttributedStringKey.font.rawValue] = defaultFont
+            defaultTextAttributes[.font] = defaultFont
         }
     }
 
     open var defaultTextColor = UIColor.black {
         didSet {
-            defaultTextAttributes[NSAttributedStringKey.foregroundColor.rawValue] = defaultTextColor
+            defaultTextAttributes[NSAttributedString.Key.foregroundColor] = defaultTextColor
         }
     }
 
-    internal var defaultTextAttributes: [String: Any] = {
+    internal var defaultTextAttributes: [NSAttributedString.Key: Any] = {
         let style = NSMutableParagraphStyle()
         style.paragraphSpacingBefore = 2
         style.lineHeightMultiple = 1
-        return [NSAttributedStringKey.paragraphStyle.rawValue: style]
+        return [NSAttributedString.Key.paragraphStyle: style]
         }() {
         didSet {
             typingAttributes = defaultTextAttributes
@@ -132,8 +132,8 @@ open class MessageTextView: UITextView, UITextViewDelegate {
         addSubview(placeholderLabel)
         updatePlaceholderVisibility()
 
-        defaultTextAttributes[NSAttributedStringKey.font.rawValue] = defaultFont
-        defaultTextAttributes[NSAttributedStringKey.foregroundColor.rawValue] = defaultTextColor
+        defaultTextAttributes[NSAttributedString.Key.font] = defaultFont
+        defaultTextAttributes[NSAttributedString.Key.foregroundColor] = defaultTextColor
     }
 
     internal func enumerateListeners(block: (MessageTextViewListener) -> Void) {
