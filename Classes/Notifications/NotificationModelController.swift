@@ -24,6 +24,14 @@ extension NotificationViewModel {
     }
 }
 
+// sorting Array<InboxDashboardModel> by date for mentioned filter type
+extension Array where Element == InboxDashboardModel {
+    func sortedMentionedByDate(filter: V3IssuesRequest.FilterType) -> [Element] {
+        if filter == .mentioned { return self.sorted(by: { $0.date > $1.date }) }
+        return self
+    }
+}
+
 final class NotificationModelController {
 
     let githubClient: GithubClient
@@ -273,8 +281,9 @@ final class NotificationModelController {
                         state: state
                     )
                 }
-                cache.set(values: parsed)
-                completion(.success((parsed, data.next)))
+                let sorted = parsed.sortedMentionedByDate(filter: mapped)
+                cache.set(values: sorted)
+                completion(.success((sorted, data.next)))
             }
         })
     }
