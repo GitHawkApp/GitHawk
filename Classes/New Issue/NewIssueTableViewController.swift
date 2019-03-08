@@ -145,11 +145,6 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             return
         }
 
-        guard let text = bodyField.text, !text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
-            Squawk.showError(message: NSLocalizedString("You must provide an issue description!", comment: "Invalid body field when sending new issue"))
-            return
-        }
-
         titleField.resignFirstResponder()
         bodyField.resignFirstResponder()
         setRightBarItemSpinning()

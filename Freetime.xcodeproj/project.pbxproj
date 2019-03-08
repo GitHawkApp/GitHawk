@@ -2490,7 +2490,7 @@
 				TargetAttributes = {
 					294EE4B8209006BF002C9CB1 = {
 						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = Z9U659S6FS;
+						DevelopmentTeam = 523C4DWBTH;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -2500,7 +2500,7 @@
 					};
 					294EE4C4209006C2002C9CB1 = {
 						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = Z9U659S6FS;
+						DevelopmentTeam = 523C4DWBTH;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -2510,7 +2510,7 @@
 					};
 					297AE8331EC0D58A00B44A1F = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = Z9U659S6FS;
+						DevelopmentTeam = 523C4DWBTH;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -2527,7 +2527,7 @@
 					};
 					297AE8471EC0D58A00B44A1F = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = Z9U659S6FS;
+						DevelopmentTeam = 523C4DWBTH;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 297AE8331EC0D58A00B44A1F;
@@ -3505,11 +3505,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = FreetimeWatch_Extension;
 				INFOPLIST_FILE = FreetimeWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -3532,11 +3532,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = FreetimeWatch_Extension;
 				INFOPLIST_FILE = FreetimeWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -3559,11 +3559,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = FreetimeWatch_Extension;
 				INFOPLIST_FILE = FreetimeWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -3583,11 +3583,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "FreetimeWatch Extension/FreetimeWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "FreetimeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -3607,11 +3607,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "FreetimeWatch Extension/FreetimeWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "FreetimeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -3631,11 +3631,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "FreetimeWatch Extension/FreetimeWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "FreetimeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -3770,7 +3770,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3793,7 +3793,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -debug-time-function-bodies -Onone -Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3813,7 +3813,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3836,7 +3836,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -debug-time-function-bodies";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3852,7 +3852,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				INFOPLIST_FILE = FreetimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
@@ -3868,7 +3868,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				INFOPLIST_FILE = FreetimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
@@ -3942,7 +3942,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3971,7 +3971,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -debug-time-function-bodies";
-				PRODUCT_BUNDLE_IDENTIFIER = com.waynenihart.freetime;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3988,7 +3988,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = Z9U659S6FS;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				INFOPLIST_FILE = FreetimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
