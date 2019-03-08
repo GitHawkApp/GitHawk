@@ -141,10 +141,17 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc func onSend() {
         guard let titleText = titleText else {
-            Squawk.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            Squawk.shared.show(in: bodyField, config: Squawk.Configuration(text: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue")))
             return
         }
+        
+        guard let text = bodyField.text,!text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
+            Squawk.shared.show(in: bodyField, config: Squawk.Configuration(text: NSLocalizedString("You must provide a issue description!", comment: "Invalid description when sending new issue")))
 
+            return
+        
+        }
+        
         titleField.resignFirstResponder()
         bodyField.resignFirstResponder()
         setRightBarItemSpinning()
