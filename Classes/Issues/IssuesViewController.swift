@@ -572,7 +572,7 @@ IssueManagingContextControllerDelegate {
         case .item(let item):
             guard item is IssueResult else { break }
             updateAndScrollIfNeeded()
-        case .list: break
+        case .list, .clear: break
         }
     }
 

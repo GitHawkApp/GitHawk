@@ -21,13 +21,7 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
     private let emptyView = EmptyView()
     private var sharingPayload: Any?
     private var repoUrl: URL? {
-        let builder = URLBuilder.github()
-            .add(path: repo.owner)
-            .add(path: repo.name)
-            .add(path: "blob")
-            .add(path: branch)
-        path.components.forEach { builder.add(path: $0) }
-        return builder.url
+        return GithubURL.codeBlob(repo: repo, branch: branch, path: path)
     }
 
     private lazy var moreOptionsItem: UIBarButtonItem = {
@@ -77,6 +71,22 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
         fetch()
         feedRefresh.beginRefreshing()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let url = repoUrl {
+            setupUserActivity(with: HandoffInformator(
+                activityName: "viewCodeBlob",
+                activityTitle: "\(repo.owner)/\(repo.name)/\(branch)/" + path.components.joined(separator: "/"),
+                url: url
+            ))
+        }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        invalidateUserActivity()
     }
 
     override func viewWillLayoutSubviews() {
@@ -149,7 +159,6 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         branch: branch,
         path: path.path
         ) { [weak self] (result) in
-            self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let text):
                 self?.handle(text: text)
@@ -162,17 +171,20 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         }
     }
 
-    func error(cannotLoad: Bool) {
+    private func error(cannotLoad: Bool) {
+        feedRefresh.endRefreshing()
         emptyView.isHidden = false
         emptyView.label.text = cannotLoad
             ? NSLocalizedString("Cannot display file as text", comment: "")
             : NSLocalizedString("Error loading file", comment: "")
     }
 
-    func handle(text: String) {
+    private func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-        codeView.set(code: text)
+        codeView.set(code: text) { [weak self] in
+            self?.feedRefresh.endRefreshing()
+        }
     }
 
     // MARK: EmptyViewDelegate

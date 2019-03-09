@@ -17,6 +17,10 @@ public enum ReactionContent: RawRepresentable, Equatable, Apollo.JSONDecodable, 
   case confused
   /// Represents the ❤️ emoji.
   case heart
+  /// Represents the 🚀 emoji.
+  case rocket
+  /// Represents the 👀 emoji.
+  case eyes
   /// Auto generated constant for unknown enum values
   case __unknown(RawValue)
 
@@ -28,6 +32,8 @@ public enum ReactionContent: RawRepresentable, Equatable, Apollo.JSONDecodable, 
       case "HOORAY": self = .hooray
       case "CONFUSED": self = .confused
       case "HEART": self = .heart
+      case "ROCKET": self = .rocket
+      case "EYES": self = .eyes
       default: self = .__unknown(rawValue)
     }
   }
@@ -40,6 +46,8 @@ public enum ReactionContent: RawRepresentable, Equatable, Apollo.JSONDecodable, 
       case .hooray: return "HOORAY"
       case .confused: return "CONFUSED"
       case .heart: return "HEART"
+      case .rocket: return "ROCKET"
+      case .eyes: return "EYES"
       case .__unknown(let value): return value
     }
   }
@@ -52,6 +60,8 @@ public enum ReactionContent: RawRepresentable, Equatable, Apollo.JSONDecodable, 
       case (.hooray, .hooray): return true
       case (.confused, .confused): return true
       case (.heart, .heart): return true
+      case (.rocket, .rocket): return true
+      case (.eyes, .eyes): return true
       case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
       default: return false
     }
