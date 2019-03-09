@@ -88,7 +88,7 @@ GitHubSessionListener {
                 case .none: color = Styles.Colors.Green.medium.color
                 case .minor: color = Styles.Colors.Yellow.medium.color
                 case .major: color = Styles.Colors.Red.medium.color
-                case .critical: color = Styles.Colors.Red.medium.color
+                case .critical: color = Styles.Colors.Red.dark.color
                 }
                 strongSelf.apiStatusView.isHidden = false
                 strongSelf.apiStatusView.backgroundColor = color

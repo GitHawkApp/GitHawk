@@ -90,6 +90,7 @@ enum Styles {
         static let splitViewBackground = UIColor(red: 0.556863, green: 0.556863, blue: 0.576471, alpha: 1)
 
         enum Red {
+            static let dark = "75151d"
             static let medium = "cb2431"
             static let light = "ffeef0"
         }
