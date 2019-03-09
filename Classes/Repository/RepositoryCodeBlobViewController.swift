@@ -159,7 +159,6 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         branch: branch,
         path: path.path
         ) { [weak self] (result) in
-            self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let text):
                 self?.handle(text: text)
@@ -172,17 +171,20 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         }
     }
 
-    func error(cannotLoad: Bool) {
+    private func error(cannotLoad: Bool) {
+        feedRefresh.endRefreshing()
         emptyView.isHidden = false
         emptyView.label.text = cannotLoad
             ? NSLocalizedString("Cannot display file as text", comment: "")
             : NSLocalizedString("Error loading file", comment: "")
     }
 
-    func handle(text: String) {
+    private func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-        codeView.set(code: text)
+        codeView.set(code: text) { [weak self] in
+            self?.feedRefresh.endRefreshing()
+        }
     }
 
     // MARK: EmptyViewDelegate
