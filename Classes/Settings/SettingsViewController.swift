@@ -82,21 +82,13 @@ GitHubSessionListener {
                 strongSelf.apiStatusView.isHidden = true
                 strongSelf.apiStatusLabel.text = NSLocalizedString("error", comment: "")
             case .success(let response):
-                let text: String
+                let text = response.data.status.description
                 let color: UIColor
                 switch response.data.status.indicator {
-                case .none:
-                    text = response.data.status.description
-                    color = Styles.Colors.Green.medium.color
-                case .minor:
-                    text = response.data.status.description
-                    color = Styles.Colors.Yellow.medium.color
-                case .major:
-                    text = response.data.status.description
-                    color = Styles.Colors.Red.medium.color
-                case .critical:
-                    text = response.data.status.description
-                    color = Styles.Colors.Red.medium.color
+                case .none: color = Styles.Colors.Green.medium.color
+                case .minor: color = Styles.Colors.Yellow.medium.color
+                case .major: color = Styles.Colors.Red.medium.color
+                case .critical: color = Styles.Colors.Red.medium.color
                 }
                 strongSelf.apiStatusView.isHidden = false
                 strongSelf.apiStatusView.backgroundColor = color
