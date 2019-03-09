@@ -40,7 +40,7 @@ GitHubSessionListener {
     @IBOutlet weak var markReadSwitch: UISwitch!
     @IBOutlet weak var accountsCell: StyledTableCell!
     @IBOutlet weak var apiStatusLabel: UILabel!
-    @IBOutlet weak var apiStatusView: UIView!
+    @IBOutlet weak var apiStatusView: UIImageView!
     @IBOutlet weak var signatureSwitch: UISwitch!
     @IBOutlet weak var defaultReactionLabel: UILabel!
     @IBOutlet weak var pushSwitch: UISwitch!
@@ -54,6 +54,7 @@ GitHubSessionListener {
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
+        apiStatusView.image = .from(color: Styles.Colors.Gray.border.color)
         signatureSwitch.isOn = Signature.enabled
         openExternalLinksSwitch.isOn = UserDefaults.standard.shouldOpenExternalLinksInSafari
         pushSettingsButton.accessibilityLabel = NSLocalizedString("How we send push notifications in GitHawk", comment: "")
@@ -93,7 +94,7 @@ GitHubSessionListener {
                 case .critical: color = Styles.Colors.Red.dark.color
                 }
                 strongSelf.apiStatusView.isHidden = false
-                strongSelf.apiStatusView.backgroundColor = color
+                strongSelf.apiStatusView.image = .from(color: color)
                 strongSelf.apiStatusLabel.text = text
                 strongSelf.apiStatusLabel.textColor = color
             }
