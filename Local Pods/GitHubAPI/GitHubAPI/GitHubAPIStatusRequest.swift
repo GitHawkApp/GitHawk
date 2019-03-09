@@ -16,7 +16,7 @@ public struct Status: Codable {
     public let indicator: StatusType
     public let description: String
     
-    public enum StatusType: String,Codable, CodingKey {
+    public enum StatusType: String, Codable, CodingKey {
         case none, minor, major, critical
     }
 }
