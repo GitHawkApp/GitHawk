@@ -84,18 +84,13 @@ GitHubSessionListener {
                 strongSelf.apiStatusView.isHidden = true
                 strongSelf.apiStatusLabel.text = NSLocalizedString("error", comment: "")
             case .success(let response):
-                let text: String
+                let text = response.data.status.description
                 let color: UIColor
-                switch response.data.status {
-                case .good:
-                    text = NSLocalizedString("Good", comment: "")
-                    color = Styles.Colors.Green.medium.color
-                case .minor:
-                    text = NSLocalizedString("Minor", comment: "")
-                    color = Styles.Colors.Yellow.medium.color
-                case .major:
-                    text = NSLocalizedString("Major", comment: "")
-                    color = Styles.Colors.Red.medium.color
+                switch response.data.status.indicator {
+                case .none: color = Styles.Colors.Green.medium.color
+                case .minor: color = Styles.Colors.Yellow.medium.color
+                case .major: color = Styles.Colors.Red.medium.color
+                case .critical: color = Styles.Colors.Red.dark.color
                 }
                 strongSelf.apiStatusView.isHidden = false
                 strongSelf.apiStatusView.backgroundColor = color
@@ -146,7 +141,7 @@ GitHubSessionListener {
     }
 
     private func onGitHubStatus() {
-        guard let url = URLBuilder(host: "status.github.com").add(path: "messages").url
+        guard let url = URLBuilder(host: "www.githubstatus.com").url
             else { return }
         presentSafari(url: url)
     }
