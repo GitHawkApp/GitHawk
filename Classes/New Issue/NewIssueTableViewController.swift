@@ -144,12 +144,12 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc func onSend() {
         guard let titleText = titleText else {
-            Squawk.showIssueError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"), view: bodyField)
+            Squawk.showIssueError(message: NSLocalizedString("An issue title is required. Please add a title and try again.", comment: "Invalid title when sending new issue"), view: bodyField)
             return
         }
 
         guard let bodyText = bodyText else {
-            Squawk.showIssueError(message: NSLocalizedString("You must provide an issue description!", comment: "Invalid description when sending new issue"), view: bodyField)
+            Squawk.showIssueError(message: NSLocalizedString("Please provide as much of a detailed description possible and try again.", comment: "Invalid description when sending new issue"), view: bodyField)
             return
         }
 
@@ -214,19 +214,9 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     }
 
     func updateSubmitButtonState() {
-        if titleText == nil {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            return
-        }
-
-        if bodyText == nil {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            return
-        }
-
-        navigationItem.rightBarButtonItem?.isEnabled = true
+        navigationItem.rightBarButtonItem?.isEnabled = ( titleText == nil || bodyText == nil ) ? false : true
     }
-    
+
     // MARK: UITextFieldDelegate
 
     /// Called when the user taps return on the title field, moves their cursor to the body
@@ -235,7 +225,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return false
     }
 
-    // MARK: UITextViewDelegatre
+    // MARK: UITextViewDelegate
 
     /// Called when editing changed on the body field, enable/disable submit button based on title and body
     func textViewDidChange(_ bodyField: UITextView) {
