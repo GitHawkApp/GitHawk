@@ -214,7 +214,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     }
 
     func updateSubmitButtonState() {
-        navigationItem.rightBarButtonItem?.isEnabled = ( titleText == nil || bodyText == nil ) ? false : true
+        navigationItem.rightBarButtonItem?.isEnabled = !( titleText == nil || bodyText == nil )
     }
 
     // MARK: UITextFieldDelegate
