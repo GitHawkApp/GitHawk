@@ -44,7 +44,7 @@ protocol NewIssueTableViewControllerDelegate: class {
     func didDismissAfterCreatingIssue(model: IssueDetailsModel)
 }
 
-final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
+final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate {
 
     weak var delegate: NewIssueTableViewControllerDelegate?
 
@@ -103,6 +103,9 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         titleField.delegate = self
         titleField.font = Styles.Text.body.preferredFont
 
+        // Setup the description textView to report if it has been edited
+        bodyField.delegate = self
+
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
         setupInputView()
@@ -141,7 +144,12 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc func onSend() {
         guard let titleText = titleText else {
-            Squawk.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            Squawk.showIssueError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"), view: bodyField)
+            return
+        }
+
+        guard let bodyText = bodyText else {
+            Squawk.showIssueError(message: NSLocalizedString("You must provide an issue description!", comment: "Invalid description when sending new issue"), view: bodyField)
             return
         }
 
@@ -155,7 +163,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             owner: owner,
             repo: repo,
             title: titleText,
-            body: (bodyText ?? "") + signature)
+            body: bodyText + signature)
         ) { [weak self] result in
             guard let strongSelf = self else { return }
             strongSelf.setRightBarItemIdle()
@@ -205,6 +213,20 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         bodyField.inputAccessoryView = actions
     }
 
+    func updateSubmitButtonState() {
+        if titleText == nil {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            return
+        }
+
+        if bodyText == nil {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            return
+        }
+
+        navigationItem.rightBarButtonItem?.isEnabled = true
+    }
+    
     // MARK: UITextFieldDelegate
 
     /// Called when the user taps return on the title field, moves their cursor to the body
@@ -213,11 +235,18 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return false
     }
 
+    // MARK: UITextViewDelegatre
+
+    /// Called when editing changed on the body field, enable/disable submit button based on title and body
+    func textViewDidChange(_ bodyField: UITextView) {
+        updateSubmitButtonState()
+    }
+
     // MARK: Actions
 
-    /// Called when editing changed on the title field, enable/disable submit button based on title text
+    /// Called when editing changed on the title field, enable/disable submit button based on title and body
     @IBAction func titleFieldEditingChanged(_ sender: Any) {
-        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
+        updateSubmitButtonState()
     }
 
 }

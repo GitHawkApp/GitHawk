@@ -83,4 +83,9 @@ extension Squawk {
         triggerHaptic()
     }
 
+    static func showIssueError(message: String, view: UIView?) {
+        Squawk.shared.show(in: view, config: errorConfig(text: message))
+        triggerHaptic()
+    }
+
 }
