@@ -26,7 +26,7 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
     private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
+            image: UIImage(named: "chevron-down"),
             target: self,
             action: #selector(RepositoryCodeBlobViewController.onShare(sender:))
         )

@@ -35,7 +35,7 @@ UIScrollViewDelegate {
 
     private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
+            image: UIImage(named: "chevron-down"),
             target: self,
             action: #selector(RepositoryImageViewController.onShare(sender:)))
         barButtonItem.isEnabled = false
