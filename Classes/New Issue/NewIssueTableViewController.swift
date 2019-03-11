@@ -44,7 +44,7 @@ protocol NewIssueTableViewControllerDelegate: class {
     func didDismissAfterCreatingIssue(model: IssueDetailsModel)
 }
 
-final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate {
+final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
 
     weak var delegate: NewIssueTableViewControllerDelegate?
 
@@ -103,9 +103,6 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         titleField.delegate = self
         titleField.font = Styles.Text.body.preferredFont
 
-        // Setup the description textView to report if it has been edited
-        bodyField.delegate = self
-
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
         setupInputView()
@@ -143,13 +140,26 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
 
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc func onSend() {
-        guard let titleText = titleText else {
-            Squawk.showIssueError(message: NSLocalizedString("An issue title is required. Please add a title and try again.", comment: "Invalid title when sending new issue"), view: bodyField)
-            return
+        if let bodyText = bodyText {
+            self.finishSend()
+        } else {
+        let submitAlert = UIAlertController(title: "Please Provide Description", message: "Are you certain you want to submit this issue without a description?", preferredStyle: UIAlertControllerStyle.alert)
+
+        submitAlert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { (action: UIAlertAction!) in
+            self.finishSend()
+        }))
+
+        submitAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            self.viewDidLoad()
+        }))
+
+        present(submitAlert, animated: true, completion: nil)
         }
 
-        guard let bodyText = bodyText else {
-            Squawk.showIssueError(message: NSLocalizedString("Please provide as much of a detailed description possible and try again.", comment: "Invalid description when sending new issue"), view: bodyField)
+    }
+    func finishSend() {
+        guard let titleText = titleText else {
+            Squawk.showIssueError(message: NSLocalizedString("An issue title is required. Please add a title and try again.", comment: "Invalid title when sending new issue"), view: bodyField)
             return
         }
 
@@ -163,7 +173,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             owner: owner,
             repo: repo,
             title: titleText,
-            body: bodyText + signature)
+            body: (bodyText ?? "") + signature)
         ) { [weak self] result in
             guard let strongSelf = self else { return }
             strongSelf.setRightBarItemIdle()
@@ -213,11 +223,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         bodyField.inputAccessoryView = actions
     }
 
-    func updateSubmitButtonState() {
-        navigationItem.rightBarButtonItem?.isEnabled = !( titleText == nil || bodyText == nil )
-    }
-
-    // MARK: UITextFieldDelegate
+  // MARK: UITextFieldDelegate
 
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -225,18 +231,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return false
     }
 
-    // MARK: UITextViewDelegate
-
-    /// Called when editing changed on the body field, enable/disable submit button based on title and body
-    func textViewDidChange(_ bodyField: UITextView) {
-        updateSubmitButtonState()
-    }
-
     // MARK: Actions
 
     /// Called when editing changed on the title field, enable/disable submit button based on title and body
     @IBAction func titleFieldEditingChanged(_ sender: Any) {
-        updateSubmitButtonState()
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
 
 }
