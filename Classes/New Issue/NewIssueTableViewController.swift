@@ -150,7 +150,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         }))
 
         submitAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-            self.viewDidLoad()
+            submitAlert .dismiss(animated: true, completion: nil)
         }))
 
         present(submitAlert, animated: true, completion: nil)
