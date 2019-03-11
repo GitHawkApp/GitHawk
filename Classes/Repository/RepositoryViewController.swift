@@ -104,7 +104,7 @@ EmptyViewDelegate {
 
     private func updateRightBarItems() {
         let moreItem = UIBarButtonItem(
-            image: UIImage(named: "chevron-down"),
+            image: UIImage(named: "bullets-hollow"),
             target: self,
             action: #selector(RepositoryViewController.onMore(sender:))
         )

@@ -32,7 +32,7 @@ IndicatorInfoProvider {
     }
     private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
-            image: UIImage(named: "chevron-down"),
+            image: UIImage(named: "bullets-hollow"),
             target: self,
             action: #selector(RepositoryCodeDirectoryViewController.onShare(sender:)))
         barButtonItem.isEnabled = false
