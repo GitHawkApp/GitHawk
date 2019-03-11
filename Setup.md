@@ -1,18 +1,18 @@
 # Getting Started With GitHawk
-First off, welcome to the GitHawk community!
+First off, welcome to the GitHawk community! 👋
 
-This guide will walk through the setup process required in order to get the GitHawk app running properly.
+This guide will walk through the setup process required in order to get the GitHawk app up and running.
 
 ## 1. Cloning the repo
 1. Create or navigation to a folder/directory where you’ll store the GitHawk project.
 
 	Example: `mkdir ./desktop/GitHawkApp/`
 
-2. In terminal clone the repo using: `git clone https://github.com/<YourGithubName>/GitHawk.git`
+2. In terminal clone the repo using: `git clone https://github.com/<YourGithubUsername>/GitHawk.git`
 
 ## 2. Installing
 
-```
+```bash
 cd GitHawk
 bundle
 bundle exec pod install
@@ -43,14 +43,23 @@ To add the Client ID and Client Secret to the App, follow these steps:
 
 The copy of the scheme is to avoid commiting your private environement variable to the repository.
 
+>   Checkpoint: At this point you should be able to successfully build the app on the simulator
+
+🎉 The project is officially set up! 🎉 
+
+At this point you can begin making changes and testing on your simulator.
+If you would like to test on a physical device, one more step remains.
+
 ## 4. Setting up code-signing (With automatic code-signing)
+
+> ⚠️ **1. This step is only if you would like to test/run the app on your physical device 2. This step changes the bundleID and groupID, keep in mind when you commit to leave these changes out**
 
 1. Open the Xcode workspace called: `Freetime.xcworkspace`
 (`open Freetime.xcworkspace`)
 
 
-	**Setting up bundle and group ID’s**
-	- - - -
+**Setting up bundle and group ID’s**
+- - - -
 
 2. Open the projects settings  ![](./Design/projectIcon.png).
 On the left there under Targets should be:
@@ -92,7 +101,7 @@ On the left there under Targets should be:
 2.  Expand `NSExtension` > `NSExtensionAttributes`
 4.  Change `WKAppBundleIdentifier` from *com.xxxx.freetime.watchkitapp* ➡️ the FreetimeWatch Target Bundle ID (*com.`<yourRegularBundleName>`.freetime.watchkitapp*)
 
->   Checkpoint: At this point you should be able to successfully build the app (But not able to sign in)
+>   Checkpoint: At this point you should be able to successfully build the app on your physical device
 
 
 Build and Code away!
