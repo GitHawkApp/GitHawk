@@ -9,11 +9,15 @@
 import UIKit
 import SnapKit
 
+protocol SearchableCell: class {}
+
 protocol SearchBarCellDelegate: class {
-    func didChangeSearchText(cell: SearchBarCell, query: String)
+    func didChangeSearchText(cell: SearchableCell, query: String)
+    func didChangeSegment(cell: SearchableCell, index: Int)
 }
 
-final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
+
+final class SearchBarCell: UICollectionViewCell, SearchableCell, UISearchBarDelegate {
 
     weak var delegate: SearchBarCellDelegate?
 
