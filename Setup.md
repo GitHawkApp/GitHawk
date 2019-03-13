@@ -3,7 +3,9 @@ First off, welcome to the GitHawk community! 👋
 
 This guide will walk through the setup process required in order to get the GitHawk app up and running.
 
-## 1. Cloning the repo
+## 1a. Fork the repo
+Head to [the GitHawk repo](https://github.com/GitHawkApp/GitHawk) and tap the Fork button located at the top right of the screen. 
+## 1b. Cloning the repo
 1. Create or navigation to a folder/directory where you’ll store the GitHawk project.
 
 	Example: `mkdir ./desktop/GitHawkApp/`
