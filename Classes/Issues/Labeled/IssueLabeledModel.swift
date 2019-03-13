@@ -40,17 +40,17 @@ final class IssueLabeledModel: ListDiffable {
         ) {
         self.id = id
         self.actor = actor
-        self.title = title
+        self.title = title.replacingGithubEmoji
         self.color = color
         self.date = date
         self.type = type
-
         let labelColor = color.color
         let actionString: String
         switch type {
         case .added: actionString = NSLocalizedString(" added  ", comment: "")
         case .removed: actionString = NSLocalizedString(" removed  ", comment: "")
         }
+
 
         let builder = StyledTextBuilder(styledText: StyledText(
             style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
@@ -64,11 +64,11 @@ final class IssueLabeledModel: ListDiffable {
             .restore()
             .add(text: actionString)
             .save()
-            .add(styledText: StyledText(text: title, style: Styles.Text.smallTitle.with(attributes: [
+            .add(styledText: StyledText(text: self.title, style: Styles.Text.smallTitle.with(attributes: [
                 .backgroundColor: labelColor,
                 .foregroundColor: labelColor.textOverlayColor ?? .black,
                 .baselineOffset: 1, // offset for better rounded background colors
-                MarkdownAttribute.label: LabelDetails(owner: repoOwner, repo: repoName, label: title)
+                MarkdownAttribute.label: LabelDetails(owner: repoOwner, repo: repoName, label: self.title)
                 ]
             )))
             .restore()

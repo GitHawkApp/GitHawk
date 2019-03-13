@@ -110,20 +110,19 @@
                                                     <color key="textColor" red="0.63921568627450975" green="0.66666666666666663" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mP-Dr-7rt">
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wqw-0q-16V">
                                                     <rect key="frame" x="270" y="15" width="14" height="14"/>
-                                                    <color key="backgroundColor" red="0.73725490196078436" green="0.73333333333333328" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="14" id="LRa-0r-Kib"/>
-                                                        <constraint firstAttribute="width" constant="14" id="hum-9p-JUR"/>
+                                                        <constraint firstAttribute="width" constant="14" id="ZDk-Zk-GPk"/>
+                                                        <constraint firstAttribute="height" constant="14" id="w9v-uc-7PB"/>
                                                     </constraints>
-                                                </view>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="rIC-a2-0GF" secondAttribute="trailing" id="C2A-Af-SXu"/>
                                                 <constraint firstItem="Tnv-Bx-YAk" firstAttribute="leading" secondItem="oVx-yt-y92" secondAttribute="leading" constant="16" id="VE8-RG-Yq6"/>
-                                                <constraint firstItem="1mP-Dr-7rt" firstAttribute="centerY" secondItem="oVx-yt-y92" secondAttribute="centerY" id="ejb-XH-Hbe"/>
-                                                <constraint firstItem="rIC-a2-0GF" firstAttribute="leading" secondItem="1mP-Dr-7rt" secondAttribute="trailing" constant="4" id="hiY-5o-Tap"/>
+                                                <constraint firstItem="Wqw-0q-16V" firstAttribute="centerY" secondItem="oVx-yt-y92" secondAttribute="centerY" id="a87-PV-1BY"/>
+                                                <constraint firstItem="rIC-a2-0GF" firstAttribute="leading" secondItem="Wqw-0q-16V" secondAttribute="trailing" constant="4" id="fB0-DK-2Oz"/>
                                                 <constraint firstItem="Tnv-Bx-YAk" firstAttribute="centerY" secondItem="oVx-yt-y92" secondAttribute="centerY" id="mc6-XY-pYG"/>
                                                 <constraint firstItem="rIC-a2-0GF" firstAttribute="centerY" secondItem="oVx-yt-y92" secondAttribute="centerY" id="npa-sd-pci"/>
                                             </constraints>
@@ -463,7 +462,7 @@
                     <connections>
                         <outlet property="accountsCell" destination="64O-sw-wTx" id="UPX-Wa-mYM"/>
                         <outlet property="apiStatusLabel" destination="rIC-a2-0GF" id="ceC-Ij-CrY"/>
-                        <outlet property="apiStatusView" destination="1mP-Dr-7rt" id="f66-HG-AkG"/>
+                        <outlet property="apiStatusView" destination="Wqw-0q-16V" id="ir1-9k-Esu"/>
                         <outlet property="badgeCell" destination="pnm-5p-yC5" id="hdC-aO-QSy"/>
                         <outlet property="badgeSettingsButton" destination="36B-Ge-m5V" id="7Sw-oi-5Ra"/>
                         <outlet property="badgeSwitch" destination="FvK-93-raA" id="twy-bl-O1q"/>
