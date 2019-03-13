@@ -5,8 +5,9 @@ This guide will walk through the setup process required in order to get the GitH
 
 ## 1a. Fork the repo
 Head to [the GitHawk repo](https://github.com/GitHawkApp/GitHawk) and tap the Fork button located at the top right of the screen. 
+
 ## 1b. Cloning the repo
-1. Create or navigation to a folder/directory where you’ll store the GitHawk project.
+1. Create or navigate to a folder/directory where you’ll store the GitHawk project.
 
 	Example: `mkdir ./desktop/GitHawkApp/`
 
@@ -35,13 +36,14 @@ You will be redirected to the application page where you can access your Client 
 
 To add the Client ID and Client Secret to the App, follow these steps:
 
-1. In Xcode, go to `Product` (in the Menu bar) > `Scheme` > `Manage Schemes...`
-2. Select `Freetime-AppCenter` and click the cog.
-3. Click on `Duplicate`.
-4. Uncheck the `Shared` checkbox.
-5. Select `Copy of Freetime-AppCenter` and click on `Edit...`
-6. Go to `Run` > `Arguments`
-7. Add your Client ID (`GITHUB_CLIENT_ID` as key) and Client Secret (`GITHUB_CLIENT_SECRET`) to the Environment Variables.
+1. In the directory you created, open the {YOUR_DIR}/GitHawk/Freetime.xcworkspace file.
+2. In Xcode, go to `Product` (in the Menu bar) > `Scheme` > `Manage Schemes...`
+3. Select `Freetime-AppCenter` and click the cog.
+4. Click on `Duplicate`.
+5. Select `Copy of Freetime-AppCenter` and uncheck "Shared" checkbox. 
+6. With 'Copy of Freetime-Appcenter' selected, click on `Edit...`
+7. Go to `Run` > `Arguments`
+8. Add your Client ID (`GITHUB_CLIENT_ID` as key) and Client Secret (`GITHUB_CLIENT_SECRET`) to the Environment Variables.
 
 The copy of the scheme is to avoid commiting your private environement variable to the repository.
 
