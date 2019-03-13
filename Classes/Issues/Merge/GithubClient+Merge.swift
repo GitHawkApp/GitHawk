@@ -18,7 +18,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         type: IssueMergeType,
-        error: @escaping () -> Void
+        completionHandler: @escaping (_ success: Bool) -> Void
         ) {
         let newLabels = IssueLabelsModel(
             status: IssueLabelStatusModel(
@@ -54,9 +54,10 @@ extension GithubClient {
             switch result {
             case .success:
                 cache.set(value: optimisticResult)
+                completionHandler(true)
             case .failure(let err):
                 Squawk.show(error: err)
-                error()
+                completionHandler(false)
             }
         }
     }
