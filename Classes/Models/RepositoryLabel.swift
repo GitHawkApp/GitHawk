@@ -12,7 +12,7 @@ import IGListKit
 final class RepositoryLabel: ListDiffable, Hashable, Equatable, ListSwiftDiffable {
 
     let color: String
-    var name: String = ""
+    let name: String
 
     init(color: String, name: String) {
         self.color = color
