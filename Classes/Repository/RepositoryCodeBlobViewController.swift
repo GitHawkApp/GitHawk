@@ -30,7 +30,7 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
             target: self,
             action: #selector(RepositoryCodeBlobViewController.onShare(sender:))
         )
-        barButtonItem.accessibilityLabel =  Constants.Strings.moreOptions
+        barButtonItem.accessibilityLabel = Constants.Strings.moreOptions
         return barButtonItem
     }()
 
