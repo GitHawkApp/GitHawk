@@ -77,15 +77,15 @@ RepositoryBranchSectionControllerDelegate {
             guard let strongSelf = self else { return }
             switch result {
             case .success(let payload):
-                self?.branches = RepositoryBranchesViewController.arrangeBranches(
+                strongSelf.branches = RepositoryBranchesViewController.arrangeBranches(
                     selectedBranch: strongSelf.selectedBranch,
                     defaultBranch: strongSelf.defaultBranch,
                     branches: strongSelf.branches + payload.branches
                 )
-                self?.update(page: payload.nextPage, animated: true)
+                strongSelf.update(page: payload.nextPage, animated: true)
             case .error(let error):
                 Squawk.show(error: error)
-                self?.error(animated: trueUnlessReduceMotionEnabled)
+                strongSelf.error(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
