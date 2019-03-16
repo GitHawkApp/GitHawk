@@ -313,7 +313,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             self.update(selected: controller.selected, previous: previous)
         } else {
             // Ask for confirmation
-            self.showCancelAlert { [weak self] in
+            self.showCancelAlert { [weak self] keepChanges in
+                guard keepChanges else { return }
                 self?.update(selected: controller.selected, previous: previous)
             }
         }
@@ -340,7 +341,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             self.update(selected: selected, type: controller.type, previous: previous)
         } else {
             // Ask for confirmation
-            self.showCancelAlert { [weak self] in
+            self.showCancelAlert { [weak self] keepChanges in
+                guard keepChanges else { return }
                 self?.update(selected: selected, type: controller.type, previous: previous)
             }
         }
@@ -374,7 +376,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             self.update(selected: controller.selected, previous: previous)
         } else {
             // Ask for confirmation
-            self.showCancelAlert { [weak self] in
+            self.showCancelAlert { [weak self] keepChanges in
+                guard keepChanges else { return }
                 self?.update(selected: controller.selected, previous: previous)
             }
         }
@@ -405,16 +408,16 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
-    func showCancelAlert(onKeep: @escaping () -> Void) {
+    private func showCancelAlert(completion: @escaping (_ keepChanges: Bool) -> Void) {
         guard let viewController = self.viewController else { return }
 
         let title = NSLocalizedString("Are you sure?", comment: "")
-        let message = NSLocalizedString("Some changes have been made. Are you sure to discard them?", comment: "")
+        let message = NSLocalizedString("Some changes have been made. Are you sure you want to discard them?", comment: "")
         let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
 
         alert.addActions([
-            AlertAction.keep { _ in onKeep() },
-            AlertAction.discard()
+            AlertAction.keep { _ in completion(true) },
+            AlertAction.discard { _ in completion(false) }
         ])
 
         viewController.present(alert, animated: trueUnlessReduceMotionEnabled)

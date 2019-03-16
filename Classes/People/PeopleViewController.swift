@@ -30,7 +30,7 @@ PeopleSectionControllerDelegate {
     private var owner: String
     private var repo: String
 
-    var wasDismissedByDone: Bool = false
+    var wasDismissedByDone = false
 
     init(
         selections: [String],

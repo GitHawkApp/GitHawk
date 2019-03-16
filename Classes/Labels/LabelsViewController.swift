@@ -19,7 +19,7 @@ LabelSectionControllerDelegate {
     private let client: GithubClient
     private let request: RepositoryLabelsQuery
 
-    var wasDismissedByDone: Bool = false
+    var wasDismissedByDone = false
 
     init(
         selected: [RepositoryLabel],

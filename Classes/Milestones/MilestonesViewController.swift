@@ -26,7 +26,7 @@ MilestoneSectionControllerDelegate {
     private let feedRefresh = FeedRefresh()
     private var milestones = [Milestone]()
 
-    var wasDismissedByDone: Bool = false
+    var wasDismissedByDone = false
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
