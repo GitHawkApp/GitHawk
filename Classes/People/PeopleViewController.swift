@@ -50,6 +50,7 @@ PeopleSectionControllerDelegate {
         self.dataSource = self
 
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.collectionView.indicatorStyle = .white
         feed.setLoadingSpinnerColor(to: .white)
         preferredContentSize = Styles.Sizes.contextMenuSize
         updateTitle()

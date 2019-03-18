@@ -32,6 +32,7 @@ LabelSectionControllerDelegate {
         preferredContentSize = Styles.Sizes.contextMenuSize
         title = Constants.Strings.labels
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.collectionView.indicatorStyle = .white
         feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
