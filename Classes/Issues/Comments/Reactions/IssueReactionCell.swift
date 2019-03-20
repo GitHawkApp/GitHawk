@@ -89,6 +89,7 @@ final class IssueReactionCell: UICollectionViewCell {
         accessibilityHint = isViewer
             ? NSLocalizedString("Tap to remove your reaction", comment: "")
             : NSLocalizedString("Tap to react with this emoji", comment: "")
+        restoreDisplay()
     }
 
     func popIn() {
@@ -109,9 +110,7 @@ final class IssueReactionCell: UICollectionViewCell {
         // hack to prevent changing to "0"
         countLabel.text = "1"
 
-        countLabel.alpha = 1
-        emojiLabel.transform = .identity
-        emojiLabel.alpha = 1
+        restoreDisplay()
         UIView.animate(withDuration: 0.2, delay: 0, animations: {
             self.countLabel.alpha = 0
             self.emojiLabel.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
@@ -129,6 +128,12 @@ final class IssueReactionCell: UICollectionViewCell {
     }
 
     // MARK: Private API
+
+    func restoreDisplay() {
+        countLabel.alpha = 1
+        emojiLabel.transform = .identity
+        emojiLabel.alpha = 1
+    }
 
     @objc func showMenu(recognizer: UITapGestureRecognizer) {
         guard recognizer.state == .began,

@@ -17,16 +17,33 @@ extension ReactionContent: Hashable {
 
 final class IssueCommentReactionViewModel: ListDiffable {
 
+    static let allReactions: [ReactionContent] = [
+        .thumbsUp,
+        .thumbsDown,
+        .laugh,
+        .hooray,
+        .confused,
+        .heart,
+        .rocket,
+        .eyes
+    ]
+
     let models: [ReactionViewModel]
     private let map: [ReactionContent: ReactionViewModel]
     private let flatState: String
 
     init(models: [ReactionViewModel]) {
-        self.models = models
+        let reactions = IssueCommentReactionViewModel.allReactions
+        let sortedModels = models.sorted { (m1, m2) -> Bool in
+            let m1Idx = reactions.firstIndex(of: m1.content) ?? 0
+            let m2Idx = reactions.firstIndex(of: m2.content) ?? 0
+            return m1Idx < m2Idx
+        }
+        self.models = sortedModels
 
         var map = [ReactionContent: ReactionViewModel]()
         var flatState = ""
-        for model in models {
+        for model in sortedModels {
             map[model.content] = model
             flatState += "\(model.content.rawValue)\(model.count)"
         }
