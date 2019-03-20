@@ -14898,18 +14898,20 @@ public final class RemoveReactionMutation: GraphQLMutation {
 
 public final class FetchRepositoryBranchesQuery: GraphQLQuery {
   public static let operationString =
-    "query fetchRepositoryBranches($owner: String!, $name: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    refs(first: 50, refPrefix: \"refs/heads/\") {\n      __typename\n      edges {\n        __typename\n        node {\n          __typename\n          name\n        }\n      }\n    }\n  }\n}"
+    "query fetchRepositoryBranches($owner: String!, $name: String!, $after: String) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    refs(first: 50, after: $after, refPrefix: \"refs/heads/\") {\n      __typename\n      edges {\n        __typename\n        node {\n          __typename\n          name\n        }\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
 
   public var owner: String
   public var name: String
+  public var after: String?
 
-  public init(owner: String, name: String) {
+  public init(owner: String, name: String, after: String? = nil) {
     self.owner = owner
     self.name = name
+    self.after = after
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name]
+    return ["owner": owner, "name": name, "after": after]
   }
 
   public struct Data: GraphQLSelectionSet {
@@ -14944,7 +14946,7 @@ public final class FetchRepositoryBranchesQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("refs", arguments: ["first": 50, "refPrefix": "refs/heads/"], type: .object(Ref.selections)),
+        GraphQLField("refs", arguments: ["first": 50, "after": GraphQLVariable("after"), "refPrefix": "refs/heads/"], type: .object(Ref.selections)),
       ]
 
       public var snapshot: Snapshot
@@ -14982,6 +14984,7 @@ public final class FetchRepositoryBranchesQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("edges", type: .list(.object(Edge.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
         ]
 
         public var snapshot: Snapshot
@@ -14990,8 +14993,8 @@ public final class FetchRepositoryBranchesQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(edges: [Edge?]? = nil) {
-          self.init(snapshot: ["__typename": "RefConnection", "edges": edges.flatMap { (value: [Edge?]) -> [Snapshot?] in value.map { (value: Edge?) -> Snapshot? in value.flatMap { (value: Edge) -> Snapshot in value.snapshot } } }])
+        public init(edges: [Edge?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "RefConnection", "edges": edges.flatMap { (value: [Edge?]) -> [Snapshot?] in value.map { (value: Edge?) -> Snapshot? in value.flatMap { (value: Edge) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
         }
 
         public var __typename: String {
@@ -15010,6 +15013,16 @@ public final class FetchRepositoryBranchesQuery: GraphQLQuery {
           }
           set {
             snapshot.updateValue(newValue.flatMap { (value: [Edge?]) -> [Snapshot?] in value.map { (value: Edge?) -> Snapshot? in value.flatMap { (value: Edge) -> Snapshot in value.snapshot } } }, forKey: "edges")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
           }
         }
 
@@ -15085,6 +15098,55 @@ public final class FetchRepositoryBranchesQuery: GraphQLQuery {
               set {
                 snapshot.updateValue(newValue, forKey: "name")
               }
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
             }
           }
         }
