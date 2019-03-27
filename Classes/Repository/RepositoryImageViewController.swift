@@ -38,6 +38,7 @@ UIScrollViewDelegate {
             image: UIImage(named: "bullets-hollow"),
             target: self,
             action: #selector(RepositoryImageViewController.onShare(sender:)))
+        barButtonItem.accessibilityLabel = Constants.Strings.moreOptions
         barButtonItem.isEnabled = false
         return barButtonItem
     }()

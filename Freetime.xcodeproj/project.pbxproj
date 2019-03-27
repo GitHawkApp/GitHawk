@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031E0241220B433C00A329F1 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E0240220B433C00A329F1 /* UIImage+Color.swift */; };
 		03C127B8220993300062F7C9 /* InboxZeroLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C127B7220993300062F7C9 /* InboxZeroLoaderTests.swift */; };
+		03E8D824221D339200EB792A /* GithubURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E8D823221D339200EB792A /* GithubURL.swift */; };
+		03E8D826221D358000EB792A /* GithubURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E8D825221D358000EB792A /* GithubURLTests.swift */; };
 		0F9440FD32236514CD7215E9 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF622FFD773FDA73297C0D0 /* Pods_Freetime.framework */; };
 		15F28F992108DBA6006421B6 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F28F982108DBA6006421B6 /* SplashView.swift */; };
 		290056F3210028B20046EAE5 /* UIViewController+MenuDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290056F2210028B20046EAE5 /* UIViewController+MenuDone.swift */; };
@@ -594,7 +597,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		031E0240220B433C00A329F1 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		03C127B7220993300062F7C9 /* InboxZeroLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxZeroLoaderTests.swift; sourceTree = "<group>"; };
+		03E8D823221D339200EB792A /* GithubURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubURL.swift; sourceTree = "<group>"; };
+		03E8D825221D358000EB792A /* GithubURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubURLTests.swift; sourceTree = "<group>"; };
 		07C7DC5A7A907BE73BCA95AC /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0F26A46A43D11F8D04E17D4A /* Pods-FreetimeWatch Extension.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch Extension.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension.testflight.xcconfig"; sourceTree = "<group>"; };
 		15F28F982108DBA6006421B6 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -1746,6 +1752,7 @@
 				295F52A61EF1B9D2000B53CF /* Test.md */,
 				291E987C21973FA700E5EED9 /* URLBuilderTests.swift */,
 				29827D7321AA5DA300A1B293 /* ViewControllerTestUtil.swift */,
+				03E8D825221D358000EB792A /* GithubURLTests.swift */,
 				03C127B7220993300062F7C9 /* InboxZeroLoaderTests.swift */,
 			);
 			path = FreetimeTests;
@@ -2294,6 +2301,8 @@
 				C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */,
 				C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */,
 				298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */,
+				031E0240220B433C00A329F1 /* UIImage+Color.swift */,
+				03E8D823221D339200EB792A /* GithubURL.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2700,7 +2709,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo-iOS/Apollo.framework",
@@ -2763,7 +2772,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CB9D7CC581BBD847FBB3FBDA /* [CP] Check Pods Manifest.lock */ = {
@@ -2790,7 +2799,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-watchOS/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo-watchOS/Apollo.framework",
 				"${BUILT_PRODUCTS_DIR}/DateAgo-watchOS/DateAgo.framework",
@@ -2809,7 +2818,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DCF1A6481F9E3E1F00A7A4A0 /* SwiftLint */ = {
@@ -2832,7 +2841,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/Apollo-iOS/Apollo.framework",
@@ -2897,7 +2906,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3015,6 +3024,7 @@
 				292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */,
 				290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */,
 				292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */,
+				03E8D824221D339200EB792A /* GithubURL.swift in Sources */,
 				292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
 				DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */,
@@ -3254,6 +3264,7 @@
 				29DAA7AB20202A1A0029277A /* PullRequestReviewReplySectionController.swift in Sources */,
 				29792B1D1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift in Sources */,
 				2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */,
+				031E0241220B433C00A329F1 /* UIImage+Color.swift in Sources */,
 				29999734203135E100995FFD /* IssueMergeContextCell.swift in Sources */,
 				29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */,
 				29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */,
@@ -3412,6 +3423,7 @@
 				BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */,
 				291E988521976B5600E5EED9 /* ContentWidthUtilsTests.swift in Sources */,
 				2977D8BF215AE12D0073F737 /* LocalNotificationCacheTests.swift in Sources */,
+				03E8D826221D358000EB792A /* GithubURLTests.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
 				49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */,
