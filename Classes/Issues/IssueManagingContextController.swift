@@ -91,10 +91,12 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         case lock
         case reopen
         case close
+        case subscribe
+        case unsubscribe
     }
 
     var actions: [Action] {
-        if case .none = permissions { return [] }
+
         guard let result = self.result else { return [] }
 
         var actions = [Action]()
@@ -104,21 +106,30 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             if result.pullRequest {
                 actions.append(.reviewers)
             }
+        }
+
+        if result.subscriptionState == .subscribed {
+            actions.append(.unsubscribe)
+        } else {
+            actions.append(.subscribe)
+        }
+
+        if case .collaborator = permissions {
             if result.labels.locked {
                 actions.append(.unlock)
             } else {
                 actions.append(.lock)
             }
         }
-
-        switch result.labels.status.status {
-        case .closed:
-            actions.append(.reopen)
-        case .open:
-            actions.append(.close)
-        case .merged: break
+        if permissions == .collaborator || permissions == .author {
+            switch result.labels.status.status {
+            case .closed:
+                actions.append(.reopen)
+            case .open:
+                actions.append(.close)
+            case .merged: break
+            }
         }
-
         return actions
     }
 
@@ -151,13 +162,19 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         case .close:
             title = Constants.Strings.close
             iconName = "x"
+        case .subscribe:
+            title = Constants.Strings.subscribe
+            iconName = "unmute"
+        case .unsubscribe:
+            title = Constants.Strings.unsubscribe
+            iconName = "mute"
         }
 
         // Lock always has the divider above it assuming you're a collaborator.
         // If you aren't a collaborator (Lock does not show), close has the divider above it.
         let separator: Bool
         switch action {
-        case .lock, .unlock: separator = true
+        case .subscribe, .unsubscribe: separator = true
         case .reopen, .close: separator = permissions != .collaborator
         default: separator = false
         }
@@ -193,6 +210,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             case .lock: strongSelf.lock(true)
             case .reopen: strongSelf.close(false)
             case .close: strongSelf.close(true)
+            case .subscribe: strongSelf.subscribe(true)
+            case .unsubscribe: strongSelf.subscribe(false)
             }
         }
     }
@@ -278,6 +297,12 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         )
     }
 
+    func subscribe(_ doSubscribe: Bool) {
+        guard let previous = result else { return }
+        delegate?.willMutateModel(from: self)
+        client.setSubscription(previous: previous, subscribe: doSubscribe)
+        Haptic.triggerNotification(.success)
+    }
     func close(_ doClose: Bool) {
         guard let previous = result else { return }
         delegate?.willMutateModel(from: self)

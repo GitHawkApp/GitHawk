@@ -11,6 +11,10 @@ import IGListKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: IssueType {
 
+    var subscriptionState: SubscriptionState {
+        return viewerSubscription ?? .unsubscribed
+    }
+
     var pullRequest: Bool {
         return false
     }

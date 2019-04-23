@@ -1,3 +1,9 @@
+fragment subscribableFields on Subscribable {
+  id
+  viewerCanSubscribe
+  viewerSubscription
+}
+
 fragment reactionFields on Reactable {
   viewerCanReact
   reactionGroups {

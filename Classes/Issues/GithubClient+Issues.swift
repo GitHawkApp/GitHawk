@@ -168,7 +168,8 @@ extension GithubClient {
                         viewerCanAdminister: canAdmin,
                         defaultBranch: repository.defaultBranchRef?.name ?? "master",
                         fileChanges: issueType.fileChanges,
-                        mergeModel: issueType.mergeModel(availableTypes: availableMergeTypes)
+                        mergeModel: issueType.mergeModel(availableTypes: availableMergeTypes),
+                        subscriptionState: issueType.subscriptionState
                     )
 
                     DispatchQueue.main.async {
@@ -294,6 +295,37 @@ extension GithubClient {
                 completion?(.error(error))
             }
         }
+    }
+
+    func setSubscription(
+        previous: IssueResult,
+        subscribe: Bool,
+        completion: ((Result<SubscriptionState?>) -> Void)? = nil
+        ) {
+
+        let state: SubscriptionState = subscribe
+            ? .subscribed
+            : .unsubscribed
+
+        let optimisticResult = previous.updated(subscriptionState: state)
+
+        let cache = self.cache
+        cache.set(value: optimisticResult)
+
+        let mutation = UpdateSubscriptionMutation(subscribable_Id: previous.id, subscription_state: state)
+
+        client.mutate(mutation, result: { data in
+            data.updateSubscription?.subscribable
+        }, completion: { result in
+            switch result {
+            case .success(let subscribable):
+                completion?(.success(subscribable.viewerSubscription))
+            case .failure(let error):
+                cache.set(value: previous)
+                completion?(.error(error))
+                Squawk.show(error: error)
+            }
+        })
     }
 
     enum CollaboratorPermission: String {

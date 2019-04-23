@@ -34,6 +34,8 @@ protocol IssueType {
     var headPaging: HeadPaging { get }
     var viewerCanUpdate: Bool { get }
     var fileChanges: FileChanges? { get }
+    var subscriptionState: SubscriptionState { get }
+
 
     var reviewRequestModel: IssueAssigneesModel? { get }
     func mergeModel(availableTypes: [IssueMergeType]) -> IssueMergeModel?
