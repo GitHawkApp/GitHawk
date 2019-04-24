@@ -10,5 +10,5 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target     = '11.0'
   spec.watchos.deployment_target = '3.0'
   spec.dependency 'Alamofire', '~> 4.8'
-  spec.dependency 'Apollo', '~> 0.8.0'
+  spec.dependency 'Apollo', '~> 0.10.0'
 end

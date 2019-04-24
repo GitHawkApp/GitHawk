@@ -2,9 +2,9 @@ PODS:
   - Alamofire (4.8.1)
   - AlamofireNetworkActivityIndicator (2.3.0):
     - Alamofire (~> 4.7)
-  - Apollo (0.8.0):
-    - Apollo/Core (= 0.8.0)
-  - Apollo/Core (0.8.0)
+  - Apollo (0.10.1):
+    - Apollo/Core (= 0.10.1)
+  - Apollo/Core (0.10.1)
   - cmark-gfm-swift (0.1.0)
   - ContextMenu (0.5.1)
   - Crashlytics (3.12.0):
@@ -26,7 +26,7 @@ PODS:
   - GitHawkRoutes (0.1.1)
   - GitHubAPI (0.1.0):
     - Alamofire (~> 4.8)
-    - Apollo (~> 0.8.0)
+    - Apollo (~> 0.10.0)
   - GitHubSession (0.1.0)
   - Highlightr (1.1.0)
   - HTMLString (4.0.2)
@@ -182,7 +182,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
-  Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
+  Apollo: 4d690a9b2e48e8820182df4b988d7a253e1ee589
   cmark-gfm-swift: 9915dfe0cd7feda740ab01fc2a1882989b6d5128
   ContextMenu: ac51afb5eec6022a3d1e7a99cd1dc9fc8e9d7505
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
@@ -195,7 +195,7 @@ SPEC CHECKSUMS:
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GitHawkRoutes: 468138c117a6fbe79bdd9ba7390bf45d363bc69b
-  GitHubAPI: 999f30c1305bddf22e8835d889aaf4a58d4dd6b9
+  GitHubAPI: 1becfe6ad87d6afcbeb433f6f28c6f1253a471be
   GitHubSession: 3c6466abb32644f37995bd58bb209751476ff3e9
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: d346ba551d1b7e687190c948ec0c2ddaf4057544

@@ -23,6 +23,12 @@ public struct GraphQLHTTPResponseError: Error, LocalizedError {
   /// Information about the response as provided by the server.
   public let response: HTTPURLResponse
   public let kind: ErrorKind
+
+    public init(body: Data? = nil, response: HTTPURLResponse, kind: ErrorKind) {
+        self.body = body
+        self.response = response
+        self.kind = kind
+    }
   
   public var bodyDescription: String {
     if let body = body {
@@ -116,11 +122,11 @@ public class HTTPNetworkTransport: NetworkTransport {
 
   private func requestBody<Operation: GraphQLOperation>(for operation: Operation) -> GraphQLMap {
     if sendOperationIdentifiers {
-      guard let operationIdentifier = type(of: operation).operationIdentifier else {
+      guard let operationIdentifier = operation.operationIdentifier else {
         preconditionFailure("To send operation identifiers, Apollo types must be generated with operationIdentifiers")
       }
       return ["id": operationIdentifier, "variables": operation.variables]
     }
-    return ["query": type(of: operation).requestString, "variables": operation.variables]
+    return ["query": operation.queryDocument, "variables": operation.variables]
   }
 }

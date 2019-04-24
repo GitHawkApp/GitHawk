@@ -4,6 +4,17 @@ import Dispatch
 public typealias CacheKeyForObject = (_ object: JSONObject) -> JSONValue?
 public typealias DidChangeKeysFunc = (Set<CacheKey>, UnsafeMutableRawPointer?) -> Void
 
+func rootCacheKey<Operation: GraphQLOperation>(for operation: Operation) -> String {
+  switch operation.operationType {
+  case .query:
+    return "QUERY_ROOT"
+  case .mutation:
+    return "MUTATION_ROOT"
+  case .subscription:
+    return "SUBSCRIPTION_ROOT"
+  }
+}
+
 protocol ApolloStoreSubscriber: class {
   func store(_ store: ApolloStore, didChangeKeys changedKeys: Set<CacheKey>, context: UnsafeMutableRawPointer?)
 }
@@ -107,18 +118,18 @@ public final class ApolloStore {
     }
   }
 
-  func load<Query: GraphQLQuery>(query: Query) -> Promise<GraphQLResult<Query.Data>> {
+  public func load<Query: GraphQLQuery>(query: Query) -> Promise<GraphQLResult<Query.Data>> {
     return withinReadTransaction { transaction in
       let mapper = GraphQLSelectionSetMapper<Query.Data>()
       let dependencyTracker = GraphQLDependencyTracker()
 
-      return try transaction.execute(selections: Query.Data.selections, onObjectWithKey: Query.rootCacheKey, variables: query.variables, accumulator: zip(mapper, dependencyTracker))
+      return try transaction.execute(selections: Query.Data.selections, onObjectWithKey: rootCacheKey(for: query), variables: query.variables, accumulator: zip(mapper, dependencyTracker))
     }.map { (data: Query.Data, dependentKeys: Set<CacheKey>) in
       GraphQLResult(data: data, errors: nil, source:.cache, dependentKeys: dependentKeys)
     }
   }
 
-  func load<Query: GraphQLQuery>(query: Query, resultHandler: @escaping OperationResultHandler<Query>) {
+  public func load<Query: GraphQLQuery>(query: Query, resultHandler: @escaping OperationResultHandler<Query>) {
     load(query: query).andThen { result in
       resultHandler(result, nil)
     }.catch { error in
@@ -132,24 +143,13 @@ public final class ApolloStore {
 
     fileprivate lazy var loader: DataLoader<CacheKey, Record?> = DataLoader(self.cache.loadRecords)
 
-    fileprivate func makeExecutor() -> GraphQLExecutor {
-      let executor = GraphQLExecutor { object, info in
-        let value = object[info.cacheKeyForField]
-        return self.complete(value: value)
-      }
-
-      executor.dispatchDataLoads = self.loader.dispatch
-      executor.cacheKeyForObject = self.cacheKeyForObject
-      return executor
-    }
-
     init(cache: NormalizedCache, cacheKeyForObject: CacheKeyForObject?) {
       self.cache = cache
       self.cacheKeyForObject = cacheKeyForObject
     }
 
     public func read<Query: GraphQLQuery>(query: Query) throws -> Query.Data {
-      return try readObject(ofType: Query.Data.self, withKey: Query.rootCacheKey, variables: query.variables)
+      return try readObject(ofType: Query.Data.self, withKey: rootCacheKey(for: query), variables: query.variables)
     }
 
     public func readObject<SelectionSet: GraphQLSelectionSet>(ofType type: SelectionSet.Type, withKey key: CacheKey, variables: GraphQLMap? = nil) throws -> SelectionSet {
@@ -176,7 +176,16 @@ public final class ApolloStore {
 
     final func execute<Accumulator: GraphQLResultAccumulator>(selections: [GraphQLSelection], onObjectWithKey key: CacheKey, variables: GraphQLMap?, accumulator: Accumulator) throws -> Promise<Accumulator.FinalResult> {
       return loadObject(forKey: key).flatMap { object in
-        try self.makeExecutor().execute(selections: selections, on: object, withKey: key, variables: variables, accumulator: accumulator)
+        let executor = GraphQLExecutor { object, info in
+          let value = object[info.cacheKeyForField]
+          return self.complete(value: value)
+        }
+        
+        
+        executor.dispatchDataLoads = self.loader.dispatch
+        executor.cacheKeyForObject = self.cacheKeyForObject
+        
+        return try executor.execute(selections: selections, on: object, withKey: key, variables: variables, accumulator: accumulator)
       }
     }
 
@@ -195,8 +204,8 @@ public final class ApolloStore {
     fileprivate var updateChangedKeysFunc: DidChangeKeysFunc?
 
     init(cache: NormalizedCache, cacheKeyForObject: CacheKeyForObject?, updateChangedKeysFunc: @escaping DidChangeKeysFunc) {
-        self.updateChangedKeysFunc = updateChangedKeysFunc
-        super.init(cache: cache, cacheKeyForObject: cacheKeyForObject)
+      self.updateChangedKeysFunc = updateChangedKeysFunc
+      super.init(cache: cache, cacheKeyForObject: cacheKeyForObject)
     }
 
     public func update<Query: GraphQLQuery>(query: Query, _ body: (inout Query.Data) throws -> Void) throws {
@@ -212,7 +221,7 @@ public final class ApolloStore {
     }
 
     public func write<Query: GraphQLQuery>(data: Query.Data, forQuery query: Query) throws {
-      try write(object: data, withKey: Query.rootCacheKey, variables: query.variables)
+      try write(object: data, withKey: rootCacheKey(for: query), variables: query.variables)
     }
 
     public func write(object: GraphQLSelectionSet, withKey key: CacheKey, variables: GraphQLMap? = nil) throws {
@@ -221,14 +230,20 @@ public final class ApolloStore {
 
     private func write(object: JSONObject, forSelections selections: [GraphQLSelection], withKey key: CacheKey, variables: GraphQLMap?) throws {
       let normalizer = GraphQLResultNormalizer()
-      try self.makeExecutor().execute(selections: selections, on: object, withKey: key, variables: variables, accumulator: normalizer)
+      let executor = GraphQLExecutor { object, info in
+        return .result(.success(object[info.responseKeyForField]))
+      }
+      
+      executor.cacheKeyForObject = self.cacheKeyForObject
+      
+      try executor.execute(selections: selections, on: object, withKey: key, variables: variables, accumulator: normalizer)
       .flatMap {
         self.cache.merge(records: $0)
       }.andThen { changedKeys in
         if let didChangeKeysFunc = self.updateChangedKeysFunc {
-            didChangeKeysFunc(changedKeys, nil)
+          didChangeKeysFunc(changedKeys, nil)
         }
-      }.await()
+      }.wait()
     }
   }
 }
