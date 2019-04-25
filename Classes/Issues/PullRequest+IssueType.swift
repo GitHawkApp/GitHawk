@@ -12,6 +12,18 @@ import StyledTextKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullRequest: IssueType {
 
+    var id: String {
+        return fragments.nodeFields.id
+    }
+
+    var locked: Bool {
+        return fragments.lockableFields.locked
+    }
+
+    var viewerCanUpdate: Bool {
+        return fragments.updatableFields.viewerCanUpdate
+    }
+
     var pullRequest: Bool {
         return true
     }
@@ -57,7 +69,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             else { return nil }
 
         var contexts = [IssueMergeContextModel]()
-        for context in commit.status?.contexts ?? [] {
+        for context in commit.fragments.commitContext.status?.contexts ?? [] {
             guard let creator = context.creator,
                 let avatarURL = URL(string: creator.avatarUrl),
                 let targetUrlString = context.targetUrl,
@@ -75,7 +87,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         }
 
         return IssueMergeModel(
-            id: commit.id,
+            id: commit.fragments.commitContext.id,
             state: mergeStateStatus,
             contexts: contexts,
             availableTypes: availableTypes
