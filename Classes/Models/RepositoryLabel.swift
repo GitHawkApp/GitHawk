@@ -33,9 +33,9 @@ final class RepositoryLabel: ListDiffable, Hashable, Equatable, ListSwiftDiffabl
 
     // MARK: Hashable
 
-    var hashValue: Int {
-        return color.hashValue
-            .combineHash(with: name.hashValue)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(color.hashValue)
+        hasher.combine(name.hashValue)
     }
 
     // MARK: Equatable

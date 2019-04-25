@@ -11,8 +11,8 @@ import GitHubAPI
 
 extension V3Repository: Hashable, Equatable {
 
-    public var hashValue: Int {
-        return fullName.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(fullName.hashValue)
     }
 
     public static func ==(lhs: V3Repository, rhs: V3Repository) -> Bool {
