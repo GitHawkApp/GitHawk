@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "Alamofire": [
-      "~> 4.4.0"
+      "~> 4.8"
     ],
     "Apollo": [
       "~> 0.8.0"

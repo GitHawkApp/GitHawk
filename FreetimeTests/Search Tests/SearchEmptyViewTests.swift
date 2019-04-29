@@ -8,8 +8,8 @@
 
 import Foundation
 import XCTest
-
 @testable import Freetime
+
 class InitialEmptyViewTests: XCTestCase {
 
     var initialEmptyView: InitialEmptyView!
@@ -18,7 +18,8 @@ class InitialEmptyViewTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockDelegateObject = MockInitialEmptyViewDelegate()
-        initialEmptyView = InitialEmptyView(imageName: "repo", title: "repo", description: "repo")
+        initialEmptyView = InitialEmptyView()
+        initialEmptyView.configure(imageName: "repo", title: "repo", description: "repo")
         initialEmptyView.delegate = mockDelegateObject
     }
 

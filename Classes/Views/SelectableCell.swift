@@ -41,6 +41,11 @@ class SelectableCell: UICollectionViewCell {
         return self.contentView.addOverlay()
     }()
 
+    var overlayColor: UIColor? {
+        get { return overlay.backgroundColor }
+        set { overlay.backgroundColor = newValue }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
@@ -58,7 +63,7 @@ class SelectableCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
         overlay.layoutOverlay()
     }
 
@@ -106,7 +111,7 @@ class SwipeSelectableCell: SwipeCollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
         overlay.layoutOverlay()
     }
 

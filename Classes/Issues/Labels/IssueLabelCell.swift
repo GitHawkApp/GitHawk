@@ -41,7 +41,7 @@ final class IssueLabelCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: ListBindable

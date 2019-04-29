@@ -19,7 +19,7 @@ final class PathCommitCell: SelectableCell {
     )
 
     private let textView = MarkdownStyledTextView()
-    private let disclosureImageView = UIImageView(image: UIImage(named: "chevron-right")?.withRenderingMode(.alwaysTemplate))
+    private let disclosureImageView = UIImageView(image: UIImage(named: "chevron-right").withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)

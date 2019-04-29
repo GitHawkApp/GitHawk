@@ -13,7 +13,7 @@ final class RepositoryFileCell: SelectableCell {
 
     private let imageView = UIImageView()
     private let label = UILabel()
-    private let disclosure = UIImageView(image: UIImage(named: "chevron-right")?.withRenderingMode(.alwaysTemplate))
+    private let disclosure = UIImageView(image: UIImage(named: "chevron-right").withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)

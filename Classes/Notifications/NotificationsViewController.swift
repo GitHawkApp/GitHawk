@@ -10,24 +10,30 @@ import UIKit
 import IGListKit
 import FlatCache
 import Squawk
+import DropdownTitleView
+import ContextMenu
 
-final class NotificationsViewController: BaseListViewController2<Int>,
-BaseListViewController2DataSource,
+final class NotificationsViewController: BaseListViewController<Int>,
+BaseListViewControllerDataSource,
 FlatCacheListener,
 TabNavRootViewControllerType,
-BaseListViewController2EmptyDataSource {
+BaseListViewControllerEmptyDataSource,
+NewFeaturesSectionControllerDelegate,
+InboxFilterControllerListener {
 
     private let modelController: NotificationModelController
-    private let inboxType: InboxType
-    private var notificationIDs = [String]()
+    private var modelIDs = [String]()
+    private var newFeaturesController: NewFeaturesController? = NewFeaturesController()
+    private let inboxFilterController: InboxFilterController
+    private let navigationTitle = DropdownTitleView()
 
     private var notifications: [NotificationViewModel] {
-        return notificationIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
+        return modelIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
     }
 
-    init(modelController: NotificationModelController, inboxType: InboxType) {
+    init(modelController: NotificationModelController) {
         self.modelController = modelController
-        self.inboxType = inboxType
+        self.inboxFilterController = InboxFilterController(client: modelController.githubClient)
 
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
@@ -37,11 +43,8 @@ BaseListViewController2EmptyDataSource {
         self.dataSource = self
         self.emptyDataSource = self
 
-        switch inboxType {
-        case .all: title = NSLocalizedString("All", comment: "")
-        case .unread: title = NSLocalizedString("Inbox", comment: "")
-        case .repo(let repo): title = repo.name
-        }
+        inboxFilterController.announcer.add(listener: self)
+        updateTitle()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,49 +57,70 @@ BaseListViewController2EmptyDataSource {
         makeBackBarItemEmpty()
         resetRightBarItem()
 
-        switch inboxType {
-        case .unread:
-            let item = UIBarButtonItem(
-                image: UIImage(named: "bullets-hollow"),
-                style: .plain,
-                target: self,
-                action: #selector(NotificationsViewController.onMore(sender:))
-            )
-            item.accessibilityLabel = Constants.Strings.moreOptions
-            navigationItem.leftBarButtonItem = item
-        case .repo, .all: break
-        }
-
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
+        navigationItem.titleView = navigationTitle
+        navigationTitle.addTouchEffect()
+        navigationTitle.titleFont = UIFont.preferredFont(forTextStyle: .headline)
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle), for: .touchUpInside)
+
+        newFeaturesController?.fetch { [weak self] in
+            self?.update()
+        }
     }
 
     override func fetch(page: Int?) {
-        let width = view.bounds.width
-        let showAll = inboxType.showAll
+        let type = inboxFilterController.selected.type
+        let width = view.safeContentWidth(with: feed.collectionView)
+        let fetchPage = page ?? 1
+        // append model ids if paging
+        let append = page != nil
+        // do not animate paged updates, only head loads
+        let animated = page == nil && trueUnlessReduceMotionEnabled
 
-        let repo: Repository?
-        switch inboxType {
-        case .repo(let r): repo = r
-        case .all, .unread: repo = nil
-        }
+        switch type {
+        case .unread, .all, .repo:
 
-        if let page = page {
-            modelController.fetchNotifications(repo: repo, all: showAll, page: page, width: width) { [weak self] result in
-                self?.handle(result: result, append: true, animated: false, page: page)
+            let repo: Repository?
+            if case .repo(let owner, let name) = type {
+                repo = Repository(owner: owner, name: name)
+            } else {
+                repo = nil
             }
-        } else {
-            let first = 1
-            modelController.fetchNotifications(repo: repo, all: showAll, page: first, width: width) { [weak self] result in
-                self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
+
+            modelController.fetchNotifications(
+                repo: repo,
+                // always fetch all for repos, otherwise use selection
+                all: repo != nil || type == .all,
+                page: fetchPage,
+                width: width
+            ) { [weak self] result in
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
+            }
+        case .assigned:
+            modelController.fetch(for: .assigned, page: fetchPage, width: width) { [weak self] result in
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
+            }
+        case .created:
+            modelController.fetch(for: .created, page: fetchPage, width: width) { [weak self] result in
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
+            }
+        case .mentioned:
+            modelController.fetch(for: .mentioned, page: fetchPage, width: width) { [weak self] result in
+                self?.handle(result: result, append: append, animated: animated, page: fetchPage)
             }
         }
     }
 
-    private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
+    private func handle<T: Cachable>(
+        result: Result<([T], Int?)>,
+        append: Bool,
+        animated: Bool,
+        page: Int
+        ) {
         switch result {
-        case .success(let notifications, let next):
+        case .success(let models, let next):
             var ids = [String]()
-            notifications.forEach {
+            models.forEach {
                 modelController.githubClient.cache.add(listener: self, value: $0)
                 ids.append($0.id)
             }
@@ -111,15 +135,8 @@ BaseListViewController2EmptyDataSource {
     }
 
     private func updateUnreadState() {
-        // don't update tab bar and badges when not showing only new notifications
-        // prevents archives updating badge and tab #s
-        switch inboxType {
-        case .repo: return
-        case .all, .unread: break
-        }
-
         var unread = 0
-        for id in notificationIDs {
+        for id in modelIDs {
             guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?,
                 !model.read
                 else { continue }
@@ -130,49 +147,6 @@ BaseListViewController2EmptyDataSource {
         navigationItem.rightBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unread)" : nil
         BadgeNotifications.updateBadge(count: unread)
-    }
-
-    @objc func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
-
-        alert.add(action: UIAlertAction(
-            title: NSLocalizedString("View All", comment: ""),
-            style: .default,
-            handler: { [weak self] _ in
-                self?.onViewAll()
-        }))
-
-        let cache = modelController.githubClient.cache
-        var repoNames = Set<String>()
-        for id in notificationIDs {
-            guard let model = cache.get(id: id) as NotificationViewModel?,
-                !repoNames.contains(model.repo)
-                else { continue }
-            repoNames.insert(model.repo)
-            alert.add(action: UIAlertAction(title: model.repo, style: .default, handler: { [weak self] _ in
-                self?.pushRepoNotifications(owner: model.owner, repo: model.repo)
-            }))
-        }
-
-        alert.add(action: AlertAction.cancel())
-        alert.popoverPresentationController?.barButtonItem = sender
-        present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    func pushRepoNotifications(owner: String, repo: String) {
-        let controller = NotificationsViewController(
-            modelController: modelController,
-            inboxType: .repo(Repository(owner: owner, name: repo))
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    func onViewAll() {
-        let controller = NotificationsViewController(
-            modelController: modelController,
-            inboxType: .all
-        )
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func resetRightBarItem(updatingState updateState: Bool = true) {
@@ -190,13 +164,19 @@ BaseListViewController2EmptyDataSource {
     }
 
     @objc private func onMarkAll() {
+        let type = inboxFilterController.selected.type
         let message: String
-        switch inboxType {
-        case .all, .unread:
+        switch type {
+        case .unread, .all:
             message = NSLocalizedString("Mark all notifications as read?", comment: "")
-        case .repo(let repo):
-            let messageFormat = NSLocalizedString("Mark %@ notifications as read?", comment: "")
-            message = String(format: messageFormat, repo.name)
+        case .assigned, .created, .mentioned:
+            message = NSLocalizedString(
+                "Mark all notifications as read? This includes notifications not currently visible.",
+                comment: ""
+            )
+        case let .repo(owner, name):
+            let messageFormat = NSLocalizedString("Mark %@/%@ notifications as read?", comment: "")
+            message = String(format: messageFormat, owner, name)
         }
 
         let alert = UIAlertController.configured(
@@ -210,7 +190,7 @@ BaseListViewController2EmptyDataSource {
                 title: Constants.Strings.markRead,
                 style: .destructive,
                 handler: { [weak self] _ in
-                    self?.markRead()
+                    self?.markRead(type: type)
             }),
             AlertAction.cancel()
             ])
@@ -218,7 +198,7 @@ BaseListViewController2EmptyDataSource {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func markRead() {
+    private func markRead(type: InboxFilterModel.FilterType) {
         self.setRightBarItemSpinning()
 
         let block: (Bool) -> Void = { success in
@@ -241,9 +221,11 @@ BaseListViewController2EmptyDataSource {
             RatingController.prompt(.system)
         }
 
-        switch inboxType {
-        case .all, .unread: modelController.markAllNotifications(completion: block)
-        case .repo(let repo): modelController.markRepoNotifications(repo: repo, completion: block)
+        switch type {
+        case .unread, .all, .assigned, .created, .mentioned:
+            modelController.markAllNotifications(completion: block)
+        case let .repo(owner, name):
+            modelController.markRepoNotifications(owner: owner, name: name, completion: block)
         }
     }
 
@@ -254,26 +236,52 @@ BaseListViewController2EmptyDataSource {
         animated: Bool
         ) {
         if append {
-            notificationIDs += ids
+            modelIDs += ids
         } else {
-            notificationIDs = ids
+            modelIDs = ids
         }
         update(page: page, animated: animated)
     }
 
-    // MARK: BaseListViewController2DataSource
-
-    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
-        return notificationIDs.compactMap { id in
-            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?
-                else { return nil }
-            return ListSwiftPair.pair(model) { [modelController] in
-                NotificationSectionController(modelController: modelController)
-            }
-        }
+    private func updateTitle() {
+        navigationTitle.configure(
+            title: inboxFilterController.selected.type.title,
+            subtitle: inboxFilterController.selected.type.subtitle
+        )
     }
 
-    // MARK: BaseListViewController2EmptyDataSource
+    @objc private func onNavigationTitle() {
+        inboxFilterController.showMenu(from: self)
+    }
+
+    // MARK: BaseListViewControllerDataSource
+
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        var models = [ListSwiftPair]()
+
+        if let markdown = newFeaturesController?.latestMarkdown {
+            models.append(ListSwiftPair.pair(markdown, { [weak self] in
+                NewFeaturesSectionController(delegate: self)
+            }))
+        }
+
+        models += modelIDs.compactMap { id in
+            if let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel? {
+                return ListSwiftPair.pair(model) { [modelController] in
+                    NotificationSectionController(modelController: modelController)
+                }
+            } else if let model = modelController.githubClient.cache.get(id: id) as InboxDashboardModel? {
+                return ListSwiftPair.pair(model) {
+                    InboxDashboardSectionController()
+                }
+            }
+            return nil
+        }
+
+        return models
+    }
+
+    // MARK: BaseListViewControllerEmptyDataSource
 
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         let layoutInsets = view.safeAreaInsets
@@ -297,6 +305,20 @@ BaseListViewController2EmptyDataSource {
 
     func didDoubleTapTab() {
         didSingleTapTab()
+    }
+
+    // MARK: NewFeaturesSectionControllerDelegate
+
+    func didTapClose(for sectionController: NewFeaturesSectionController) {
+        newFeaturesController = nil
+        update()
+    }
+
+    // MARK: InboxFilterControllerListener
+
+    func didUpdateSelectedFilter(for controller: InboxFilterController) {
+        updateTitle()
+        feed.refreshHead()
     }
 
 }

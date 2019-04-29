@@ -14,10 +14,10 @@ import GitHawkRoutes
 final class AppController: NSObject,
 LoginSplashViewControllerDelegate,
 GitHubSessionListener,
-RouterDelegate {
+RouterPropsSource {
 
     public private(set) lazy var router = {
-        return Router(delegate: self)
+        return Router(propsSource: self)
     }()
 
     private var splitViewController: AppSplitViewController!
@@ -71,7 +71,7 @@ RouterDelegate {
         ShortcutHandler.configure(sessionUsernames: sessionManager.userSessions.compactMap { $0.username })
     }
 
-    private func resetViewControllers(userSession: GitHubUserSession) {
+    private func resetViewControllers(userSession: GitHubUserSession, isSwitch: Bool = false) {
         let appClient = GithubClient(userSession: userSession)
         self.appClient = appClient
         settingsNavigationController = settingsNavigationController
@@ -81,12 +81,17 @@ RouterDelegate {
             settings.client = appClient
         }
 
-        splitViewController.reset(viewControllers: [
-            newNotificationsRootViewController(client: appClient),
-            newSearchRootViewController(client: appClient),
-            newBookmarksRootViewController(client: appClient),
-            settingsNavigationController ?? UINavigationController() // satisfy compiler
-            ])
+        splitViewController.reset(
+            viewControllers: [
+                newNotificationsRootViewController(client: appClient),
+                newSearchRootViewController(client: appClient),
+                newBookmarksRootViewController(client: appClient),
+                settingsNavigationController ?? UINavigationController() // satisfy compiler
+            ],
+            clearDetail: !isSwitch
+        )
+        // recursively update all new children
+        splitViewController.router = router
     }
 
     private func showLogin(animated: Bool) {
@@ -114,19 +119,16 @@ RouterDelegate {
 
     func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
         sessionManager.focus(
-            GitHubUserSession(token: token, authMethod: authMethod, username: username),
-            dismiss: true
+            GitHubUserSession(token: token, authMethod: authMethod, username: username)
         )
     }
 
     // MARK: GitHubSessionListener
 
-    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
-        resetViewControllers(userSession: userSession)
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, isSwitch: Bool) {
+        resetViewControllers(userSession: userSession, isSwitch: isSwitch)
 
-        if dismiss {
-            splitViewController.presentedViewController?.dismiss(animated: trueUnlessReduceMotionEnabled)
-        }
+        splitViewController.presentedViewController?.dismiss(animated: trueUnlessReduceMotionEnabled)
 
         resetShortcuts()
         if let watch = watchAppSync {
@@ -140,11 +142,11 @@ RouterDelegate {
         showLogin(animated: trueUnlessReduceMotionEnabled)
     }
 
-    // MARK: RouteHandlerDelegate
+    // MARK: RouterPropsSource
 
-    func perform(route: RoutePerformable, router: Router) -> Bool {
-        guard let client = appClient else { return false }
-        return route.perform(
+    func props(for router: Router) -> RoutePerformableProps? {
+        guard let client = appClient else { return nil }
+        return RoutePerformableProps(
             sessionManager: sessionManager,
             splitViewController: splitViewController,
             client: client

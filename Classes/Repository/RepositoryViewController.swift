@@ -7,49 +7,52 @@
 //
 
 import UIKit
-import Tabman
-import Pageboy
+import XLPagerTabStrip
 import TUSafariActivity
 import Squawk
 import ContextMenu
 import DropdownTitleView
 
-class RepositoryViewController: TabmanViewController,
-PageboyViewControllerDataSource,
+final class RepositoryViewController: ButtonBarPagerTabStripViewController,
 NewIssueTableViewControllerDelegate,
-ContextMenuDelegate {
+ContextMenuDelegate,
+EmptyViewDelegate {
+
+    private struct Details {
+        let hasIssuesEnabled: Bool
+        let defaultBranch: String
+        let graphQLID: String
+    }
+
+    private enum State {
+        case loading
+        case error
+        case value(Details)
+    }
 
     private let repo: RepositoryDetails
     private let client: GithubClient
-    private let controllers: [UIViewController]
+    private var controllers = [UIViewController]()
     private var bookmarkNavController: BookmarkNavigationController?
-    public private(set) var branch: String
+    public private(set) var branch: String?
+    private var state: State = .loading {
+        didSet {
+            if case .value(let details) = state {
+                branch = branch ?? details.defaultBranch
+                bookmarkNavController = BookmarkNavigationController(
+                    store: client.bookmarkCloudStore,
+                    graphQLID: details.graphQLID
+                )
+                updateRightBarItems()
+            }
+        }
+    }
 
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = client
-        self.branch = repo.defaultBranch
-
-        let bookmark = Bookmark(
-            type: .repo,
-            name: repo.name,
-            owner: repo.owner,
-            hasIssueEnabled: repo.hasIssuesEnabled,
-            defaultBranch: repo.defaultBranch
-        )
-        self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
-
-        var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
-        if repo.hasIssuesEnabled {
-            controllers.append(RepositoryIssuesViewController(client: client, owner: repo.owner, repo: repo.name, type: .issues))
-        }
-        controllers += [
-            RepositoryIssuesViewController(client: client, owner: repo.owner, repo: repo.name, type: .pullRequests),
-            RepositoryCodeDirectoryViewController.createRoot(client: client, repo: repo, branch: repo.defaultBranch)
-        ]
-        self.controllers = controllers
-
         super.init(nibName: nil, bundle: nil)
+        buildViewControllers()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,22 +60,49 @@ ContextMenuDelegate {
     }
 
     override func viewDidLoad() {
+        settings.style.buttonBarBackgroundColor = .white
+        settings.style.buttonBarItemBackgroundColor = .white
+        settings.style.selectedBarBackgroundColor = Styles.Colors.Blue.medium.color
+        settings.style.buttonBarItemFont = Styles.Text.body.preferredFont
+        settings.style.selectedBarHeight = 2.0
+        settings.style.buttonBarItemTitleColor = Styles.Colors.Gray.medium.color
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
+        settings.style.buttonBarHeight = 44
+
+        pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
+        changeCurrentIndex = { (oldCell, newCell, animated) in
+            oldCell?.label.textColor = Styles.Colors.Gray.medium.color
+            newCell?.label.textColor = Styles.Colors.Blue.medium.color
+        }
+
+        edgesForExtendedLayout = []
+
         super.viewDidLoad()
 
+        navigationController?.navigationBar.backgroundColor = .white
         view.backgroundColor = .white
-
         makeBackBarItemEmpty()
-
-        dataSource = self
         delegate = self
-        bar.items = controllers.map { Item(title: $0.title ?? "" ) }
-        bar.appearance = TabmanBar.Appearance({ appearance in
-            appearance.text.font = Styles.Text.button.preferredFont
-            appearance.state.color = Styles.Colors.Gray.light.color
-            appearance.state.selectedColor = Styles.Colors.Blue.medium.color
-            appearance.indicator.color = Styles.Colors.Blue.medium.color
-        })
 
+        updateRightBarItems()
+
+        let navigationTitle = DropdownTitleView()
+        navigationTitle.addTouchEffect()
+        navigationItem.titleView = navigationTitle
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
+        let labelFormat = NSLocalizedString(
+            "Repository %@ by %@",
+            comment: "Accessibility label for a repository navigation item"
+        )
+        let accessibilityLabel = String(format: labelFormat, arguments: [repo.name, repo.owner])
+        navigationTitle.configure(title: repo.name, subtitle: repo.owner, accessibilityLabel: accessibilityLabel)
+
+        fetchDetails()
+    }
+
+    // MARK: Private API
+
+    private func updateRightBarItems() {
         let moreItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
             target: self,
@@ -84,19 +114,79 @@ ContextMenuDelegate {
             items.append(bookmarkItem)
         }
         navigationItem.rightBarButtonItems = items
-
-        let navigationTitle = DropdownTitleView()
-        navigationItem.titleView = navigationTitle
-        navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
-        let labelFormat = NSLocalizedString(
-            "Repository %@ by %@",
-            comment: "Accessibility label for a repository navigation item"
-        )
-        let accessibilityLabel = String(format: labelFormat, arguments: [repo.name, repo.owner])
-        navigationTitle.configure(title: repo.name, subtitle: repo.owner, accessibilityLabel: accessibilityLabel)
     }
 
-    // MARK: Private API
+    private func buildViewControllers() {
+        var controllers = [UIViewController]()
+
+        switch state {
+        case .error:
+            let controller = RepositoryErrorViewController()
+            controller.delegate = self
+            controllers.append(controller)
+        case .value(let details):
+            controllers.append(RepositoryOverviewViewController(
+                client: client,
+                repo: repo,
+                branch: branch ?? details.defaultBranch
+            ))
+            if details.hasIssuesEnabled {
+                controllers.append(RepositoryIssuesViewController(
+                    client: client,
+                    owner: repo.owner,
+                    repo: repo.name,
+                    type: .issues
+                ))
+            }
+            controllers += [
+                RepositoryIssuesViewController(
+                    client: client,
+                    owner: repo.owner,
+                    repo: repo.name,
+                    type: .pullRequests
+                ),
+                RepositoryCodeDirectoryViewController.createRoot(
+                    client: client,
+                    repo: repo,
+                    branch: branch ?? details.defaultBranch
+                )
+            ]
+        case .loading:
+            controllers.append(RepositoryLoadingViewController())
+        }
+
+        self.controllers = controllers
+    }
+
+    func fetchDetails() {
+        state = .loading
+        buildViewControllers()
+        reloadPagerTabStripView()
+
+        client.client.query(
+            RepositoryInfoQuery(owner: repo.owner, name: repo.name),
+            result: { $0 },
+            completion: { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    self?.state = .error
+                    Squawk.show(error: error)
+                case .success(let data):
+                    if let repo = data.repository {
+                        let details = Details(
+                            hasIssuesEnabled: repo.hasIssuesEnabled,
+                            defaultBranch: repo.defaultBranchRef?.name ?? "master",
+                            graphQLID: repo.id
+                        )
+                        self?.state = .value(details)
+                    } else {
+                        self?.state = .error
+                    }
+                }
+                self?.buildViewControllers()
+                self?.reloadPagerTabStripView()
+            })
+    }
 
     @objc func onNavigationTitle(sender: UIView) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -110,26 +200,30 @@ ContextMenuDelegate {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+    var repoUrl: URL? {
+        return URLBuilder.github().add(paths: [repo.owner, repo.name]).url
     }
 
-    var switchBranchAction: UIAlertAction {
+    var switchBranchAction: UIAlertAction? {
+        guard case .value(let details) = self.state else { return nil }
+
         return UIAlertAction(
             title: NSLocalizedString("Switch Branch", comment: ""),
             style: .default
         ) { [weak self] _ in
-            guard let strongSelf = self else { return }
+            guard let `self` = self,
+                let branch = self.branch
+                else { return }
             let viewController =
                 RepositoryBranchesViewController(
-                    defaultBranch: strongSelf.repo.defaultBranch,
-                    selectedBranch: strongSelf.branch,
-                    owner: strongSelf.repo.owner,
-                    repo: strongSelf.repo.name,
-                    client: strongSelf.client
+                    defaultBranch: details.defaultBranch,
+                    selectedBranch: branch,
+                    owner: self.repo.owner,
+                    repo: self.repo.name,
+                    client: self.client
             )
 
-            strongSelf.showContextualMenu(
+            self.showContextualMenu(
                 viewController,
                 options: ContextMenu.Options(
                     containerStyle: ContextMenu.ContainerStyle(
@@ -142,13 +236,14 @@ ContextMenuDelegate {
     }
 
     func newIssueAction() -> UIAlertAction? {
-        guard let newIssueViewController = NewIssueTableViewController.create(
+        guard case .value(let details) = state,
+            details.hasIssuesEnabled,
+            let newIssueViewController = NewIssueTableViewController.create(
             client: client,
             owner: repo.owner,
             repo: repo.name,
             signature: .sentWithGitHawk)
         else {
-            Squawk.showGenericError()
             return nil
         }
 
@@ -160,9 +255,12 @@ ContextMenuDelegate {
     }
 
     func workingCopyAction() -> UIAlertAction? {
-        guard let remote = self.repoUrl.absoluteString.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else { return nil}
+        guard let remote = repoUrl?.absoluteString
+            .addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)
+            else { return nil}
 
-        guard let url = URL(string: "working-copy://show?remote=\(remote)") else { return nil }
+        guard let url = URL(string: "working-copy://show?remote=\(remote)")
+            else { return nil }
         guard UIApplication.shared.canOpenURL(url) else { return nil }
 
         let title = NSLocalizedString("Working Copy", comment: "")
@@ -174,6 +272,8 @@ ContextMenuDelegate {
     }
 
     @objc func onMore(sender: UIButton) {
+        guard let branch = self.branch else { return }
+
         let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
         let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
@@ -182,38 +282,33 @@ ContextMenuDelegate {
 
         alert.addActions([
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client),
-            repo.hasIssuesEnabled ? newIssueAction() : nil,
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
+            newIssueAction()
+        ])
+        if let url = repoUrl {
+            alert.add(action: AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
                 $0.popoverPresentationController?.setSourceView(sender)
-            },
+            })
+        }
+        alert.addActions([
             switchBranchAction,
             workingCopyAction(),
             AlertAction.cancel()
-        ])
+            ])
         alert.popoverPresentationController?.setSourceView(sender)
 
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    // MARK: PageboyViewControllerDataSource
+    // MARK: ButtonBarPagerTabStripViewController Overrides
 
-    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-        return controllers.count
-    }
-
-    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-        return controllers[index]
-    }
-
-    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        return controllers
     }
 
     // MARK: NewIssueTableViewControllerDelegate
 
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
-        let issuesViewController = IssuesViewController(client: client, model: model)
-        show(issuesViewController, sender: self)
+        route_push(to: IssuesViewController(client: client, model: model))
     }
 
     // MARK: ContextMenuDelegate
@@ -229,5 +324,11 @@ ContextMenuDelegate {
     }
 
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry(view: EmptyView) {
+        fetchDetails()
+    }
 
 }

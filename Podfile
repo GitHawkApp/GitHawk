@@ -12,21 +12,21 @@ end
 
 def testing_pods
   # normal pods
-  pod 'AlamofireNetworkActivityIndicator', '~> 2.1'
-  pod 'HTMLString', '~> 4.0.1'
-  pod 'NYTPhotoViewer', '~> 1.1.0'
+  pod 'AlamofireNetworkActivityIndicator', '~> 2.3'
+  pod 'HTMLString', '~> 4.0'
+  pod 'NYTPhotoViewer/AnimatedGifSupport', '~> 2.0.0'
   pod 'SDWebImage/GIF', '~> 4.0.0'
-  pod 'SnapKit', '~> 4.0.0'
-  pod 'TUSafariActivity', '~> 1.0.0'
+  pod 'SnapKit', '~> 4.2'
+  pod 'TUSafariActivity', '~> 1.0'
   pod 'SwiftLint'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Tabman', '~> 1.8'
+  pod 'XLPagerTabStrip', '~> 8.1'
   pod 'ImageAlertAction'
   pod 'FMDB'
 
   # prerelease pods
-  pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'
+  pod 'IGListKit/Swift', :git => 'https://github.com/GitHawkApp/IGListKit.git', :branch => 'fix-layout-insets'
   pod 'StyledTextKit', :git => 'https://github.com/GitHawkApp/StyledTextKit.git', :branch => 'master'
   pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
   pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch => 'master'

@@ -10,9 +10,8 @@ import UIKit
 
 func IssueManageButton() -> UIButton {
     let button = UIButton()
-    if let image = UIImage(named: "three-bars")?.withRenderingMode(.alwaysTemplate) {
-        button.setImage(image, for: .normal)
-    }
+    let image = UIImage(named: "three-bars").withRenderingMode(.alwaysTemplate)
+    button.setImage(image, for: .normal)
     button.tintColor = .white
     button.backgroundColor = Styles.Colors.Blue.medium.color
     let width = Styles.Sizes.tableCellHeight

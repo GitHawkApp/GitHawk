@@ -50,7 +50,7 @@ final class RatingCell: UICollectionViewCell {
             make.centerX.equalTo(contentView)
         }
 
-        dismissButton.setImage(UIImage(named: "x")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        dismissButton.setImage(UIImage(named: "x").withRenderingMode(.alwaysTemplate), for: .normal)
         dismissButton.tintColor = tint
         dismissButton.addTarget(self, action: #selector(RatingCell.onDismiss), for: .touchUpInside)
         contentView.addSubview(dismissButton)
@@ -66,7 +66,7 @@ final class RatingCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: Private API

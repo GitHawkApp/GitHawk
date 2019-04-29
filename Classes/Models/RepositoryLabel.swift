@@ -12,11 +12,11 @@ import IGListKit
 final class RepositoryLabel: ListDiffable, Hashable, Equatable, ListSwiftDiffable {
 
     let color: String
-    let name: String
+    var name: String = ""
 
     init(color: String, name: String) {
         self.color = color
-        self.name = name
+        self.name = name.replacingGithubEmoji
     }
 
     // MARK: ListDiffable

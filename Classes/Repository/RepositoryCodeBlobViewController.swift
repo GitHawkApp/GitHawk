@@ -20,17 +20,17 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
     private let feedRefresh = FeedRefresh()
     private let emptyView = EmptyView()
     private var sharingPayload: Any?
-    private var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/blob/\(branch)/\(path.path)")!
+    private var repoUrl: URL? {
+        return GithubURL.codeBlob(repo: repo, branch: branch, path: path)
     }
 
     private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
             target: self,
-            action: #selector(RepositoryCodeBlobViewController.onShare(sender:)))
-        barButtonItem.isEnabled = false
-
+            action: #selector(RepositoryCodeBlobViewController.onShare(sender:))
+        )
+        barButtonItem.accessibilityLabel = Constants.Strings.moreOptions
         return barButtonItem
     }()
 
@@ -62,8 +62,8 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         emptyView.isHidden = true
         emptyView.delegate = self
         emptyView.button.isHidden = false
-        view.addSubview(emptyView)
         view.addSubview(codeView)
+        view.addSubview(emptyView)
 
         codeView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -72,6 +72,22 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
         fetch()
         feedRefresh.beginRefreshing()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let url = repoUrl {
+            setupUserActivity(with: HandoffInformator(
+                activityName: "viewCodeBlob",
+                activityTitle: "\(repo.owner)/\(repo.name)/\(branch)/" + path.components.joined(separator: "/"),
+                url: url
+            ))
+        }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        invalidateUserActivity()
     }
 
     override func viewWillLayoutSubviews() {
@@ -95,7 +111,6 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
 
     func didFetchPayload(_ payload: Any) {
         sharingPayload = payload
-        moreOptionsItem.isEnabled = true
     }
 
     @objc func onRefresh() {
@@ -112,12 +127,15 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client, path: path),
             AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
                 $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction.cancel()
+            }
         ]
+
+        if let url = repoUrl {
+            actions.append(AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            })
+        }
+        actions.append(AlertAction.cancel())
 
         if let name = self.path.components.last {
             actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {
@@ -142,7 +160,6 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         branch: branch,
         path: path.path
         ) { [weak self] (result) in
-            self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let text):
                 self?.handle(text: text)
@@ -155,17 +172,20 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         }
     }
 
-    func error(cannotLoad: Bool) {
+    private func error(cannotLoad: Bool) {
+        feedRefresh.endRefreshing()
         emptyView.isHidden = false
         emptyView.label.text = cannotLoad
             ? NSLocalizedString("Cannot display file as text", comment: "")
             : NSLocalizedString("Error loading file", comment: "")
     }
 
-    func handle(text: String) {
+    private func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-        codeView.set(code: text)
+        codeView.set(code: text) { [weak self] in
+            self?.feedRefresh.endRefreshing()
+        }
     }
 
     // MARK: EmptyViewDelegate

@@ -12,26 +12,39 @@ import SafariServices
 extension UIViewController {
 
     func presentSafari(url: URL) {
-		guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
-		present(safariViewController, animated: trueUnlessReduceMotionEnabled)
+        if UserDefaults.standard.shouldOpenExternalLinksInSafari {
+            guard UIApplication.shared.canOpenURL(url) else {
+                assertionFailure("Can't open url: \(url)")
+                return
+            }
+            UIApplication.shared.open(url)
+        } else {
+            do {
+                let safariViewController = try SFSafariViewController.configured(with: url)
+                route_present(to: safariViewController)
+            } catch {
+                assertionFailure(error.localizedDescription)
+            }
+        }
     }
 
     func presentProfile(login: String) {
-        present(CreateProfileViewController(login: login), animated: trueUnlessReduceMotionEnabled)
+        guard let controller = CreateProfileViewController(login: login) else { return }
+        route_present(to: controller)
     }
 
     func presentCommit(owner: String, repo: String, hash: String) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/commit/\(hash)") else { return }
+        guard let url = URLBuilder.github().add(paths: [owner, repo, "commit", hash]).url else { return }
         presentSafari(url: url)
     }
 
     func presentRelease(owner: String, repo: String, release: String) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/releases/tag/\(release)") else { return }
+        guard let url = URLBuilder.github().add(paths: [owner, repo, "releases", "tag", release]).url else { return }
         presentSafari(url: url)
     }
 
     func presentMilestone(owner: String, repo: String, milestone: Int) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/milestone/\(milestone)") else { return }
+        guard let url = URLBuilder.github().add(paths: [owner, repo, "milestone", milestone]).url else { return }
         presentSafari(url: url)
     }
 

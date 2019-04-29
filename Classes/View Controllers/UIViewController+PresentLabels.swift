@@ -10,19 +10,19 @@ import UIKit
 import GitHubAPI
 
 extension UIViewController {
-    func presentLabels(client: GithubClient, owner: String, repo: String, label: String, type: RepositoryIssuesType) {
-        let repositoryIssuesViewController =
-            RepositoryIssuesViewController(
-                client: client,
-                owner: owner,
-                repo: repo,
-                type: type,
-                label: label
-        )
-
-        navigationController?.pushViewController(
-            repositoryIssuesViewController,
-            animated: true
-        )
+    func presentLabels(
+        client: GithubClient,
+        owner: String,
+        repo: String,
+        label: String,
+        type: RepositoryIssuesType
+        ) {
+        route_push(to: RepositoryIssuesViewController(
+            client: client,
+            owner: owner,
+            repo: repo,
+            type: type,
+            label: label
+        ))
     }
 }

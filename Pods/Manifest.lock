@@ -1,18 +1,17 @@
 PODS:
-  - Alamofire (4.4.0)
-  - AlamofireNetworkActivityIndicator (2.1.0):
-    - Alamofire (~> 4.1)
+  - Alamofire (4.8.1)
+  - AlamofireNetworkActivityIndicator (2.3.0):
+    - Alamofire (~> 4.7)
   - Apollo (0.8.0):
     - Apollo/Core (= 0.8.0)
   - Apollo/Core (0.8.0)
-  - AutoInsetter (1.2.3)
   - cmark-gfm-swift (0.1.0)
-  - ContextMenu (0.3.1)
-  - Crashlytics (3.9.3):
-    - Fabric (~> 1.7.2)
+  - ContextMenu (0.5.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - DateAgo (0.1.0)
   - DropdownTitleView (0.1.0)
-  - Fabric (1.7.2)
+  - Fabric (1.9.0)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
@@ -21,48 +20,42 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
-  - FMDB (2.7.2):
-    - FMDB/standard (= 2.7.2)
-  - FMDB/standard (2.7.2)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - GitHawkRoutes (0.1.1)
   - GitHubAPI (0.1.0):
-    - Alamofire (~> 4.4.0)
+    - Alamofire (~> 4.8)
     - Apollo (~> 0.8.0)
   - GitHubSession (0.1.0)
   - Highlightr (1.1.0)
-  - HTMLString (4.0.1)
+  - HTMLString (4.0.2)
   - IGListKit/Default (3.3.0):
     - IGListKit/Diffing
   - IGListKit/Diffing (3.3.0)
   - IGListKit/Swift (3.3.0):
     - IGListKit/Default
-  - ImageAlertAction (1.0.0)
+  - ImageAlertAction (2.0.0)
   - MessageViewController (0.2.1)
-  - NYTPhotoViewer (1.1.0):
-    - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
-    - NYTPhotoViewer/Core (= 1.1.0)
-  - NYTPhotoViewer/AnimatedGifSupport (1.1.0):
-    - FLAnimatedImage (~> 1.0.8)
+  - NYTPhotoViewer/AnimatedGifSupport (2.0.0):
+    - FLAnimatedImage (~> 1.0.12)
     - NYTPhotoViewer/Core
-  - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.5.1)
+  - NYTPhotoViewer/Core (2.0.0)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
-  - SnapKit (4.0.0)
+  - SnapKit (4.2.0)
   - Squawk (0.1.0)
   - StringHelpers (0.1.0)
-  - StyledTextKit (0.1.1)
-  - SwiftLint (0.27.0)
+  - StyledTextKit (0.2.0)
+  - SwiftLint (0.30.1)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.8.2):
-    - AutoInsetter (~> 1.2.0)
-    - Pageboy (~> 2.5.0)
   - TUSafariActivity (1.0.4)
+  - XLPagerTabStrip (8.1.1)
 
 DEPENDENCIES:
-  - AlamofireNetworkActivityIndicator (~> 2.1)
+  - AlamofireNetworkActivityIndicator (~> 2.3)
   - cmark-gfm-swift (from `https://github.com/GitHawkApp/cmark-gfm-swift.git`, branch `master`)
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
@@ -77,27 +70,26 @@ DEPENDENCIES:
   - GitHubAPI (from `Local Pods/GitHubAPI`)
   - GitHubSession (from `Local Pods/GitHubSession`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
-  - HTMLString (~> 4.0.1)
-  - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
+  - HTMLString (~> 4.0)
+  - IGListKit/Swift (from `https://github.com/GitHawkApp/IGListKit.git`, branch `fix-layout-insets`)
   - ImageAlertAction
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
-  - NYTPhotoViewer (~> 1.1.0)
+  - NYTPhotoViewer/AnimatedGifSupport (~> 2.0.0)
   - SDWebImage/GIF (~> 4.0.0)
-  - SnapKit (~> 4.0.0)
+  - SnapKit (~> 4.2)
   - Squawk (from `https://github.com/GitHawkApp/Squawk.git`, branch `master`)
   - StringHelpers (from `Local Pods/StringHelpers`)
   - StyledTextKit (from `https://github.com/GitHawkApp/StyledTextKit.git`, branch `master`)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
-  - Tabman (~> 1.8)
-  - TUSafariActivity (~> 1.0.0)
+  - TUSafariActivity (~> 1.0)
+  - XLPagerTabStrip (~> 8.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireNetworkActivityIndicator
     - Apollo
-    - AutoInsetter
     - Crashlytics
     - Fabric
     - FBSnapshotTestCase
@@ -107,12 +99,11 @@ SPEC REPOS:
     - HTMLString
     - ImageAlertAction
     - NYTPhotoViewer
-    - Pageboy
     - SDWebImage
     - SnapKit
     - SwiftLint
-    - Tabman
     - TUSafariActivity
+    - XLPagerTabStrip
 
 EXTERNAL SOURCES:
   cmark-gfm-swift:
@@ -140,8 +131,8 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :branch: swift
-    :git: https://github.com/Instagram/IGListKit.git
+    :branch: fix-layout-insets
+    :git: https://github.com/GitHawkApp/IGListKit.git
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
@@ -161,69 +152,67 @@ CHECKOUT OPTIONS:
     :commit: 74cc625beed7cbcec5c1c50f2aba807e9246a73a
     :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
-    :commit: a6956a50277f2382b920058ea90f78a82caeaaa9
+    :commit: 03c33c46e0c768f2bc3f85e5c6eb53677b9d6004
     :git: https://github.com/GitHawkApp/ContextMenu.git
   DropdownTitleView:
-    :commit: 5d6e0eb1f422a185353dabcd673b04c9ac1d7100
+    :commit: da41d90f6fd980384c6d21d33e610cdbcd36f99a
     :git: https://github.com/GitHawkApp/DropdownTitleView.git
   FlatCache:
-    :commit: beb697643eea11f40bb66683d1576a2772080d9d
+    :commit: 22477a9e1404330326685ac0d5c69a68117300cd
     :git: https://github.com/GitHawkApp/FlatCache.git
   GitHawkRoutes:
-    :commit: 26e45170b4ba06843d7a034f4a321a5797c77ec8
+    :commit: 9ebcd0849df87ded3f1dc60a300320a1739b1011
     :git: https://github.com/GitHawkApp/GitHawkRoutes.git
   Highlightr:
-    :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
+    :commit: 2006891ea191fc42535af3ee2f21af418d94924c
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 5c1c92b600f0d8094f22fff48e26ded323568194
-    :git: https://github.com/Instagram/IGListKit.git
+    :commit: 34773b673601ad8cb5fb2df8196ca619cdc243d0
+    :git: https://github.com/GitHawkApp/IGListKit.git
   MessageViewController:
-    :commit: 89b13d60e88882cbd3cba66efe75d85fadc13621
+    :commit: f82a510d28fb060a509fbc540569be115f824a7a
     :git: https://github.com/GitHawkApp/MessageViewController.git
   Squawk:
-    :commit: 88d671bbe86e3c18d54e094fac97df12a3054d53
+    :commit: 0a48086f54dd575b44091373ad2fe78b0c4e263d
     :git: https://github.com/GitHawkApp/Squawk.git
   StyledTextKit:
-    :commit: 8583c80e742f886e541c5ec500b7be6f5e7a233f
+    :commit: fe3232c980c374d59e520b086b04869e3c920f86
     :git: https://github.com/GitHawkApp/StyledTextKit.git
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
-  AutoInsetter: 1a8f8ad5e7da8e993970b3809cfb8e8e330f4db1
   cmark-gfm-swift: 9915dfe0cd7feda740ab01fc2a1882989b6d5128
-  ContextMenu: 7c2853a894e09325dba222dbc87ba594ab775321
-  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  DateAgo: c678b6435627f2b267980bc6f0a9969389686691
-  DropdownTitleView: 063054a1200a16b9c15596e597e2f1c310caeff4
-  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  ContextMenu: ac51afb5eec6022a3d1e7a99cd1dc9fc8e9d7505
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  DateAgo: c7a99bc0e4b84f8d5cc8ec89bc29a8881560eba4
+  DropdownTitleView: e02e559243efb248dd0e8a50665b0acc5f6f2413
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
+  FlatCache: 97ef13ece2ddc5445679c957e2c1f9dd448ab96b
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GitHawkRoutes: 468138c117a6fbe79bdd9ba7390bf45d363bc69b
-  GitHubAPI: 44a907f9699210536d65179d3d0dc0dc70dde7a1
-  GitHubSession: 60c7bbd84fb915a0bd911a367c9661418ccfd7ae
+  GitHubAPI: 999f30c1305bddf22e8835d889aaf4a58d4dd6b9
+  GitHubSession: 3c6466abb32644f37995bd58bb209751476ff3e9
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
-  HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
+  HTMLString: d346ba551d1b7e687190c948ec0c2ddaf4057544
   IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
-  ImageAlertAction: a32a5053978ef2cffbc96f192d4ca2a24c774dd5
-  MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
-  NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
+  ImageAlertAction: 59e1652decdaa1d1ad2d12f35cd7223b7a4f7bcc
+  MessageViewController: 4d5bb8873d04ec1d727b3d1dc11d5e48b08bb6d4
+  NYTPhotoViewer: 34b8bd6bcc297466adec1668f9a01249d73c90e6
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   Squawk: 7dbe029a1de47153a1722a98b787f755f2df2b3e
-  StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
-  StyledTextKit: ea9a28a86955c16ea27f1a1a9278b004966f2bf6
-  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
-  SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
-  Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
+  StringHelpers: cb493b91c64ff9fbdb30324407c12b1e8c83b03f
+  StyledTextKit: dbfb29a59922c6f18897a0266acd139b7c9e712b
+  SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
+  SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
+  XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: f20afa6a8f2119dd4614c7abb36f0ccc71ad9f48
+PODFILE CHECKSUM: f4d47de41add5db350ac055e9dce4562d972780f
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.1

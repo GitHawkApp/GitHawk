@@ -143,7 +143,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
             let blue = Styles.Colors.Blue.medium.color
             sendButton.tintColor = blue
             sendButton.imageView?.tintColor = blue
-            sendButton.setImage(UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            sendButton.setImage(UIImage(named: "send").withRenderingMode(.alwaysTemplate), for: .normal)
             sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
             addSubview(sendButton)
 

@@ -19,7 +19,7 @@ struct ContrastContextMenuItem {
     init(
         title: String,
         iconName: String? = nil,
-        iconColor: UIColor? = Styles.Colors.Blue.medium.color,
+        iconColor: UIColor? = Styles.Colors.Blue.menu.color,
         separator: Bool = false,
         action: ((ContrastContextMenu) -> Void)? = nil
         ) {
@@ -50,7 +50,7 @@ final class ContrastContextMenu: UITableViewController {
             textLabel?.font = Styles.Text.bodyBold.preferredFont
             textLabel?.textColor = .white
 
-            imageView?.tintColor = Styles.Colors.Blue.medium.color
+            imageView?.tintColor = Styles.Colors.Blue.menu.color
 
             border = contentView.addBorder(.top)
             border?.backgroundColor = Styles.Colors.Gray.medium.color
@@ -59,10 +59,11 @@ final class ContrastContextMenu: UITableViewController {
         override func layoutSubviews() {
             super.layoutSubviews()
             guard let frame = textLabel?.frame, imageView != nil else { return }
-            textLabel?.frame = CGRect(x: 55,
-                                      y: frame.minY,
-                                      width: frame.width,
-                                      height: frame.height
+            textLabel?.frame = CGRect(
+                x: 55,
+                y: frame.minY,
+                width: frame.width,
+                height: frame.height
             )
         }
 
@@ -89,7 +90,10 @@ final class ContrastContextMenu: UITableViewController {
         tableView.separatorStyle = .none
         tableView.reloadData()
         tableView.layoutIfNeeded()
-        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height)
+        preferredContentSize = CGSize(
+            width: Styles.Sizes.contextMenuSmallSize.width,
+            height: tableView.contentSize.height
+        )
     }
 
     // MARK: UITableViewDataSource

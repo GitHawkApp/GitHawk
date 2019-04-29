@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // log device environment information
         LogEnvironmentInformation(application: application)
 
+        // setup content size category change handler
+        UIContentSizeCategoryChangeHandler.shared.setup()
+
         return true
     }
 
@@ -58,6 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         appController.performFetch(application: application, with: completionHandler)
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+        return appController.router.handle(url: url).wasHandled
     }
 
 }

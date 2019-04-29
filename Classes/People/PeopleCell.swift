@@ -19,6 +19,7 @@ final class PeopleCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        overlayColor = Styles.Colors.Gray.medium.color
         backgroundColor = nil
         contentView.backgroundColor = nil
 
@@ -39,8 +40,8 @@ final class PeopleCell: SelectableCell {
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.gutter)
         }
 
-        checkmarkImageView.image = UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate)
-        checkmarkImageView.tintColor = Styles.Colors.Blue.medium.color
+        checkmarkImageView.image = UIImage(named: "check-small").withRenderingMode(.alwaysTemplate)
+        checkmarkImageView.tintColor = Styles.Colors.Blue.menu.color
         checkmarkImageView.contentMode = .scaleAspectFit
 
         checkmarkImageView.snp.makeConstraints { make in

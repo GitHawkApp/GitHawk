@@ -47,7 +47,7 @@ MarkdownStyledTextViewDelegate {
         }
         switch attribute {
         case .issue(let issue):
-            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
+            viewController?.route_push(to: IssuesViewController(client: client, model: issue))
         default: break
         }
     }
@@ -71,8 +71,6 @@ MarkdownStyledTextViewDelegate {
         ) -> CGSize {
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Missing context") }
-        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
-
         // use default if IssueReviewDetailsModel
         let height: CGFloat
         if viewModel === tailModel {
@@ -82,12 +80,12 @@ MarkdownStyledTextViewDelegate {
         } else {
             height = BodyHeightForComment(
                 viewModel: viewModel,
-                width: width,
+                width: collectionContext.safeContentWidth(),
                 webviewCache: webviewCache,
                 imageCache: imageCache
             )
         }
-        return CGSize(width: width, height: height)
+        return collectionContext.cellSize(with: height)
     }
 
     func sectionController(
@@ -151,12 +149,11 @@ MarkdownStyledTextViewDelegate {
     // MARK: IssueReviewViewCommentsCellDelegate
 
     func didTapViewComments(cell: IssueReviewViewCommentsCell) {
-        let controller = PullRequestReviewCommentsViewController(
+        viewController?.route_push(to: PullRequestReviewCommentsViewController(
             model: model,
             client: client,
             autocomplete: autocomplete
-        )
-        viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+        ))
     }
 
 }

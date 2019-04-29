@@ -11,8 +11,8 @@ import IGListKit
 import Squawk
 import DropdownTitleView
 
-final class PathHistoryViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource {
+final class PathHistoryViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource {
 
     private let viewModel: PathHistoryViewModel
     private var models = [PathCommitModel]()
@@ -36,22 +36,18 @@ BaseListViewController2DataSource {
             subtitle: viewModel.path?.path,
             chevronEnabled: false
         )
+        titleView.addTouchEffect()
         navigationItem.titleView = titleView
     }
 
     override func fetch(page: String?) {
-        // assumptions here, but the collectionview may not have been laid out or content size found
-        // assume the collectionview is pinned to the view's bounds
-        let contentInset = feed.collectionView.contentInset
-        let width = view.bounds.width - contentInset.left - contentInset.right
-
         viewModel.client.client.fetchHistory(
             owner: viewModel.owner,
             repo: viewModel.repo,
             branch: viewModel.branch,
             path: viewModel.path?.path,
             cursor: page,
-            width: width,
+            width: view.safeContentWidth(with: feed.collectionView),
             contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
         ) { [weak self] result in
                 switch result {
@@ -68,7 +64,7 @@ BaseListViewController2DataSource {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return models.map { ListSwiftPair.pair($0, { PathCommitSectionController() }) }

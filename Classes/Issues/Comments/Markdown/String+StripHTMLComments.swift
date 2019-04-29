@@ -9,8 +9,10 @@
 import Foundation
 import StringHelpers
 
-private let regex = try! NSRegularExpression(pattern: "<!--((.|\n|\r)*?)-->", options: [])
+private let regex = NSRegularExpression("<!--((.|\n|\r)*?)-->")
+
 extension String {
+
     var strippingHTMLComments: String {
         let matches = regex.matches(in: self, options: [], range: nsrange)
         guard matches.count > 0 else { return self }
@@ -21,4 +23,5 @@ extension String {
         }
         return string
     }
+
 }

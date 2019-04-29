@@ -34,6 +34,7 @@ private extension TextElement {
     func build(
         _ builder: StyledTextBuilder,
         options: CMarkOptions,
+        position: TextElementPosition,
         context: CMarkContext = CMarkContext()
         ) -> StyledTextBuilder {
         builder.save()
@@ -53,9 +54,17 @@ private extension TextElement {
                 }
                 builder.add(text: linkText)
             } else {
-                text.detectAndHandleShortlink(owner: options.owner, repo: options.repo, builder: builder)
+                text.replacingGithubEmoji
+                    .strippingHTMLComments
+                    .removingHTMLEntities
+                    .detectAndHandleCustomRegex(owner: options.owner, repo: options.repo, builder: builder)
             }
-        case .softBreak, .lineBreak:
+        case .softBreak:
+            switch position {
+            case .neck: builder.add(text: "\u{2028}")
+            case .first, .last: break
+            }
+        case .lineBreak:
             builder.add(text: "\n")
         case .code(let text):
             builder.add(styledText: StyledText(
@@ -99,14 +108,33 @@ private extension TextElement {
     }
 }
 
-private extension Sequence where Iterator.Element == TextElement {
+private enum TextElementPosition {
+    case first
+    case neck
+    case last
+}
+
+private extension Array where Iterator.Element == TextElement {
     @discardableResult
     func build(
         _ builder: StyledTextBuilder,
         options: CMarkOptions,
         context: CMarkContext = CMarkContext()
         ) -> StyledTextBuilder {
-        forEach { $0.build(builder, options: options, context: context) }
+        for (i, el) in enumerated() {
+            let position: TextElementPosition
+            switch i {
+            case 0: position = .first
+            case count - 1: position = .last
+            default: position = .neck
+            }
+            el.build(
+                builder,
+                options: options,
+                position: position,
+                context: context
+            )
+        }
         return builder
     }
 }
@@ -257,7 +285,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
     let endRunningText: (Bool) -> Void = { isLast in
         if let builder = runningBuilder {
             models.append(StyledTextRenderer(
-                string: builder.build(renderMode: .preserve),
+                string: builder.build(),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset(isLast: isLast),
                 backgroundColor: .white
@@ -300,7 +328,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
             let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
                 .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
             let string = StyledTextRenderer(
-                string: items.build(builder, options: options).build(renderMode: .preserve),
+                string: items.build(builder, options: options).build(),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentQuoteCell.inset(quoteLevel: level),
                 backgroundColor: .white
@@ -324,7 +352,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
             guard !trimmed.isEmpty else { continue }
             let baseURL: URL?
             if let branch = options.branch {
-                baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/\(branch)/")
+                baseURL = URLBuilder.github().add(paths: [options.owner, options.repo, "raw", branch]).url
             } else {
                 baseURL = nil
             }
@@ -386,9 +414,6 @@ func MarkdownModels(
     branch: String = "master"
     ) -> [ListDiffable] {
     let cleaned = markdown
-        .replacingGithubEmojiRegex
-        .strippingHTMLComments
-        .removingHTMLEntities
         .trimmingCharacters(in: .whitespacesAndNewlines)
     guard let node = Node(markdown: cleaned) else { return [] }
     let options = CMarkOptions(

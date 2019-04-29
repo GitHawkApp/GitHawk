@@ -48,11 +48,10 @@ final class RepositoryWebViewController: UIViewController {
     }
 
     private var resourceURL: URL? {
-        guard let encodedPath = path.path.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-            return nil
-        }
-
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/raw/\(branch)/\(encodedPath)")
+        return URLBuilder.github()
+            .add(paths: [repo.owner, repo.name, "raw", branch])
+            .add(paths: path.components)
+            .url
     }
 
     private lazy var webView: WKWebView = {

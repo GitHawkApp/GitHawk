@@ -10,7 +10,13 @@ import UIKit
 import ContextMenu
 import GitHubAPI
 
+protocol IssueManagingContextControllerDelegate: class {
+    func willMutateModel(from controller: IssueManagingContextController)
+}
+
 final class IssueManagingContextController: NSObject, ContextMenuDelegate {
+
+    weak var delegate: IssueManagingContextControllerDelegate?
 
     // Int with lowers-highest permissions to do rank comparisons
     enum Permissions: Int {
@@ -50,6 +56,13 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     init(model: IssueDetailsModel, client: GithubClient) {
         let button = IssueManageButton()
+        // alpha animation is jarring when you see the contents beneath
+        button.addTouchEffect(UIControlEffect(
+            backgroundColor: "3E93F4".color,
+            alpha: 1,
+            transform: CGAffineTransform(scaleX: 0.92, y: 0.92)
+        ))
+        button.adjustsImageWhenHighlighted = false
         manageButton = button
         self.client = client
         self.model = model
@@ -151,10 +164,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
         let iconColor: UIColor
         switch action {
-        case .lock: iconColor = Styles.Colors.Gray.light.color
+        case .lock, .unlock: iconColor = Styles.Colors.Gray.light.color
         case .close: iconColor = Styles.Colors.Red.medium.color
         case .reopen: iconColor = Styles.Colors.Green.medium.color
-        default: iconColor = Styles.Colors.Blue.medium.color
+        default: iconColor = Styles.Colors.Blue.menu.color
         }
 
         return ContrastContextMenuItem(
@@ -267,6 +280,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func close(_ doClose: Bool) {
         guard let previous = result else { return }
+        delegate?.willMutateModel(from: self)
         client.setStatus(
             previous: previous,
             owner: model.owner,
@@ -279,6 +293,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func lock(_ doLock: Bool) {
         guard let previous = result else { return }
+        delegate?.willMutateModel(from: self)
         client.setLocked(
             previous: previous,
             owner: model.owner,
@@ -290,7 +305,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     func didDismiss(selected labels: [RepositoryLabel]) {
-        guard let previous = result else { return }
+        guard let previous = result,
+            previous.labels.labels != labels
+            else { return }
+        delegate?.willMutateModel(from: self)
         client.mutateLabels(
             previous: previous,
             owner: model.owner,
@@ -302,6 +320,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func didDismiss(controller: PeopleViewController) {
         guard let previous = result else { return }
+
+        let selected = controller.selected
+        guard controller.selectionChanged(newValues: selected) else { return }
+        delegate?.willMutateModel(from: self)
 
         let mutationType: V3AddPeopleRequest.PeopleType
         switch controller.type {
@@ -320,7 +342,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     func didDismiss(controller: MilestonesViewController) {
-        guard let previous = result else { return }
+        guard let previous = result,
+            previous.milestone != controller.selected
+            else { return }
+        delegate?.willMutateModel(from: self)
         client.setMilestone(
             previous: previous,
             owner: model.owner,

@@ -10,8 +10,8 @@ import UIKit
 import Squawk
 import IGListKit
 
-final class MilestonesViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class MilestonesViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 MilestoneSectionControllerDelegate {
 
     public private(set) var selected: Milestone? = nil {
@@ -47,6 +47,7 @@ MilestoneSectionControllerDelegate {
         title = Constants.Strings.milestone
         preferredContentSize = Styles.Sizes.contextMenuSize
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.collectionView.indicatorStyle = .white
         feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
@@ -96,7 +97,7 @@ MilestoneSectionControllerDelegate {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return milestones.map { [dateFormatter, selected] milestone in

@@ -12,6 +12,24 @@ import StyledTextKit
 
 class IssueTests: XCTestCase {
 
+    func test_whenSoftBreak() {
+        let body = [
+            "this is the first line",
+            "then some more text"
+            ].joined(separator: "\r\n")
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large,
+            isRoot: false
+        )
+        XCTAssertEqual(models.count, 1)
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\u{2028}then some more text")
+    }
+
     func test_whenPluckingSubstringFromRange() {
         let result = "foo ![alt](https://apple.com) bar".substring(with: NSRange(location: 11, length: 17))
         XCTAssertEqual(result, "https://apple.com")
@@ -43,9 +61,9 @@ class IssueTests: XCTestCase {
             isRoot: false
         )
         XCTAssertEqual(models.count, 3)
-        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\n")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nthen some more text")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "then some more text")
     }
 
     func test_whenImageAtTheBeginning() {
@@ -65,7 +83,7 @@ class IssueTests: XCTestCase {
         )
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "\nthis is the first line\nthen some more text")
+        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "this is the first line\u{2028}then some more text")
     }
 
     func test_whenImageAtTheEnd() {
@@ -84,7 +102,7 @@ class IssueTests: XCTestCase {
             isRoot: false
         )
         XCTAssertEqual(models.count, 2)
-        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\nthen some more text\n")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\u{2028}then some more text")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
 
@@ -109,7 +127,7 @@ class IssueTests: XCTestCase {
         let body = [
             "this is the first line",
             "![alt text](https://apple.com)",
-            "then some more text",
+            "\nthen some more text\n",
             "![alt text](https://google.com)",
             "foo bar baz"
             ].joined(separator: "\r\n")
@@ -123,11 +141,11 @@ class IssueTests: XCTestCase {
             isRoot: false
         )
         XCTAssertEqual(models.count, 5)
-        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\n")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nthen some more text\n")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "then some more text")
         XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
-        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "\nfoo bar baz")
+        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "foo bar baz")
     }
 
     func test_whenCodeBlock_withLanguage_withSurroundedByText() {
@@ -200,9 +218,9 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "lang")
-        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "then some more text\n")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "then some more text")
         XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
-        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "\nfoo bar baz")
+        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "foo bar baz")
     }
 
     func test_whenCodePartOfParagraph() {
@@ -223,10 +241,10 @@ class IssueTests: XCTestCase {
         let body = [
             "line one",
             "> quote one",
-            "\nline two\n",
+            "line two\n",
             ">quote two",
             "> quote three",
-            "\nline three"
+            "line three"
         ].joined(separator: "\r\n")
         let models = MarkdownModels(
             body,
@@ -237,12 +255,10 @@ class IssueTests: XCTestCase {
             contentSizeCategory: .large,
             isRoot: false
         )
-        XCTAssertEqual(models.count, 5)
+        XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "line one")
         XCTAssertTrue(models[1] is IssueCommentQuoteModel)
-        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "line two")
-        XCTAssertTrue(models[3] is IssueCommentQuoteModel)
-        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "line three")
+        XCTAssertTrue(models[2] is IssueCommentQuoteModel)
     }
 
     func test_whenCheckmarks() {

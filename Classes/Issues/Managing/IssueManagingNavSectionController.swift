@@ -22,10 +22,8 @@ final class IssueManagingNavSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let containerWidth = collectionContext?.insetContainerSize.width
-            else { fatalError("Collection context must be set") }
         return CGSize(
-            width: floor(containerWidth / 2),
+            width: floor(collectionContext.cellWidth() / 2),
             height: Styles.Sizes.labelEventHeight
         )
     }

@@ -11,8 +11,8 @@ import IGListKit
 import GitHubAPI
 import Squawk
 
-final class PeopleViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class PeopleViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 PeopleSectionControllerDelegate {
 
     enum PeopleType {
@@ -50,6 +50,7 @@ PeopleSectionControllerDelegate {
         self.dataSource = self
 
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.collectionView.indicatorStyle = .white
         feed.setLoadingSpinnerColor(to: .white)
         preferredContentSize = Styles.Sizes.contextMenuSize
         updateTitle()
@@ -75,6 +76,11 @@ PeopleSectionControllerDelegate {
             }
             return false
         }
+    }
+
+    func selectionChanged(newValues: [IssueAssigneeViewModel]) -> Bool {
+        // pretty hacky but oh well
+        return Set<String>(newValues.map { $0.login }) != selections
     }
 
     func updateClearButtonEnabled() {
@@ -160,7 +166,7 @@ PeopleSectionControllerDelegate {
         }
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return users

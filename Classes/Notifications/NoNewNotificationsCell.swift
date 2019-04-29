@@ -63,7 +63,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         contentView.accessibilityLabel = NSLocalizedString("You have no new notifications!", comment: "Inbox Zero Accessibility Label")
 
         //configure reviewGitHubAcess button
-        reviewGitHubAccessButton.setTitle(Constants.Strings.reviewGitHubAccess, for: .normal)
+        reviewGitHubAccessButton.setTitle(NSLocalizedString("Missing notifications?", comment: ""), for: .normal)
         reviewGitHubAccessButton.isAccessibilityElement = false
         reviewGitHubAccessButton.titleLabel?.textAlignment = .center
         reviewGitHubAccessButton.backgroundColor = .clear
@@ -91,7 +91,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
 
         let width: CGFloat = 30
         let height: CGFloat = 12

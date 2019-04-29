@@ -12,11 +12,12 @@ import SnapKit
 final class LabelMenuCell: SelectableCell {
 
     public let button = UIButton()
-    public let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
+    public let checkedImageView = UIImageView(image: UIImage(named: "check-small").withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        overlayColor = Styles.Colors.Gray.medium.color
         backgroundColor = nil
         contentView.backgroundColor = nil
 
@@ -24,7 +25,7 @@ final class LabelMenuCell: SelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
 
         contentView.addSubview(checkedImageView)
-        checkedImageView.tintColor = Styles.Colors.Blue.medium.color
+        checkedImageView.tintColor = Styles.Colors.Blue.menu.color
         checkedImageView.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalToSuperview()

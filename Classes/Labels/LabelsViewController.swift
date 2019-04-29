@@ -10,8 +10,8 @@ import UIKit
 import IGListKit
 import Squawk
 
-final class LabelsViewController: BaseListViewController2<String>,
-BaseListViewController2DataSource,
+final class LabelsViewController: BaseListViewController<String>,
+BaseListViewControllerDataSource,
 LabelSectionControllerDelegate {
 
     private let selectedLabels: Set<RepositoryLabel>
@@ -32,6 +32,7 @@ LabelSectionControllerDelegate {
         preferredContentSize = Styles.Sizes.contextMenuSize
         title = Constants.Strings.labels
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.collectionView.indicatorStyle = .white
         feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
@@ -102,7 +103,7 @@ LabelSectionControllerDelegate {
         })
     }
 
-    // MARK: BaseListViewController2DataSource
+    // MARK: BaseListViewControllerDataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return labels.map { [selectedLabels] label in

@@ -12,10 +12,10 @@ extension CGRect {
 
     func dominantCorner(in rect: CGRect) -> SourceViewCorner? {
         let corners: [SourceViewCorner] = [
-            SourceViewCorner(point: CGPoint(x: rect.minX, y: rect.minY), position: .topLeft),
-            SourceViewCorner(point: CGPoint(x: rect.maxX, y: rect.minY), position: .topRight),
-            SourceViewCorner(point: CGPoint(x: rect.minX, y: rect.maxY), position: .bottomLeft),
-            SourceViewCorner(point: CGPoint(x: rect.maxX, y: rect.maxY), position: .bottomRight),
+            SourceViewCorner(rect: rect, position: .topLeft),
+            SourceViewCorner(rect: rect, position: .topRight),
+            SourceViewCorner(rect: rect, position: .bottomLeft),
+            SourceViewCorner(rect: rect, position: .bottomRight),
             ]
 
         var maxArea: CGFloat = 0

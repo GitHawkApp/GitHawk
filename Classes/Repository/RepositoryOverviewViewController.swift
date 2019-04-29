@@ -10,34 +10,28 @@ import UIKit
 import IGListKit
 import GitHubAPI
 import Squawk
+import XLPagerTabStrip
 
-class HackScrollIndicatorInsetsCollectionView: UICollectionView {
-    override var scrollIndicatorInsets: UIEdgeInsets {
-        set {
-            super.scrollIndicatorInsets = UIEdgeInsets(top: newValue.top, left: 0, bottom: newValue.bottom, right: 0)
-        }
-        get { return super.scrollIndicatorInsets }
-    }
-}
-
-class RepositoryOverviewViewController: BaseListViewController<NSString>,
-BaseListViewControllerDataSource,
-RepositoryBranchUpdatable {
+final class RepositoryOverviewViewController: BaseListViewController<String>,
+    BaseListViewControllerDataSource,
+    BaseListViewControllerEmptyDataSource,
+    RepositoryBranchUpdatable,
+IndicatorInfoProvider {
 
     private let repo: RepositoryDetails
     private let client: RepositoryClient
     private var readme: RepositoryReadmeModel?
     private var branch: String
 
-    init(client: GithubClient, repo: RepositoryDetails) {
+    init(client: GithubClient, repo: RepositoryDetails, branch: String) {
         self.repo = repo
+        self.branch = branch
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
-        self.branch = repo.defaultBranch
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: "")
         )
         self.dataSource = self
-        title = NSLocalizedString("Overview", comment: "")
+        title = Constants.Strings.overview
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,15 +40,21 @@ RepositoryBranchUpdatable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        feed.collectionView.contentInset = UIEdgeInsets(
+            top: Styles.Sizes.columnSpacing,
+            left: 0,
+            bottom: Styles.Sizes.columnSpacing,
+            right: 0
+        )
         feed.collectionView.backgroundColor = .white
         makeBackBarItemEmpty()
     }
 
     // MARK: Overrides
 
-    override func fetch(page: NSString?) {
+    override func fetch(page: String?) {
         let repo = self.repo
-        let width = view.bounds.width - Styles.Sizes.gutter * 2
+        let width = view.safeContentWidth(with: feed.collectionView)
         let contentSizeCategory = UIContentSizeCategory.preferred
         let branch = self.branch
 
@@ -89,25 +89,18 @@ RepositoryBranchUpdatable {
 
     // MARK: BaseListViewControllerDataSource
 
-    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
-    }
-
-    func models(listAdapter: ListAdapter) -> [ListDiffable] {
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         guard let readme = self.readme else { return [] }
-        return [readme]
+        return [ListSwiftPair.pair(readme) { RepositoryReadmeSectionController() }]
     }
 
-    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
-        return RepositoryReadmeSectionController()
-    }
+    // MARK: BaseListViewControllerEmptyDataSource
 
-    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
-        return RepositoryEmptyResultsSectionController(
-            topInset: 0,
-            layoutInsets: view.safeAreaInsets,
-            type: .readme
-        )
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        let layoutInsets = view.safeAreaInsets
+        return ListSwiftPair.pair("empty") {
+            RepositoryEmptyResultsSectionController2(layoutInsets: layoutInsets, type: .readme)
+        }
     }
 
     // MARK: RepositoryBranchUpdatable
@@ -116,6 +109,12 @@ RepositoryBranchUpdatable {
         guard self.branch != newBranch else { return }
         self.branch = newBranch
         fetch(page: nil)
+    }
+
+    // MARK: IndicatorInfoProvider
+
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: title)
     }
 
 }

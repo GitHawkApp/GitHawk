@@ -11,20 +11,11 @@ import GitHawkRoutes
 import GitHubSession
 
 extension RepoRoute: RoutePerformable {
-    func perform(
-        sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController,
-        client: GithubClient
-        ) -> Bool {
-        // TODO issues enabled should be fetched in the VC
+    func perform(props: RoutePerformableProps) -> RoutePerformableResult {
         let model = RepositoryDetails(
             owner: owner,
-            name: repo,
-            defaultBranch: branch,
-            hasIssuesEnabled: true
+            name: repo
         )
-        let controller = RepositoryViewController(client: client, repo: model)
-        splitViewController.showDetailViewController(controller, sender: nil)
-        return true
+        return .push(RepositoryViewController(client: props.client, repo: model))
     }
 }

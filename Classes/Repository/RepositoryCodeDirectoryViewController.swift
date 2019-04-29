@@ -10,27 +10,33 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 import Squawk
+import XLPagerTabStrip
 
-final class RepositoryCodeDirectoryViewController: BaseListViewController<NSNumber>,
-BaseListViewControllerDataSource,
-ListSingleSectionControllerDelegate,
-RepositoryBranchUpdatable {
+final class RepositoryCodeDirectoryViewController: BaseListViewController<Int>,
+    BaseListViewControllerDataSource,
+    BaseListViewControllerEmptyDataSource,
+    RepositoryCodeDirectorySectionControllerDelegate,
+    RepositoryBranchUpdatable,
+IndicatorInfoProvider {
 
     private let client: GithubClient
     private var branch: String
     private let path: FilePath
     private let repo: RepositoryDetails
     private var files = [RepositoryFile]()
-    private var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/tree/\(branch)/\(path.path)")!
+    private var repoUrl: URL? {
+        return URLBuilder.github()
+            .add(paths: [repo.owner, repo.name, "tree", branch])
+            .add(paths: path.components)
+            .url
     }
     private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
             target: self,
             action: #selector(RepositoryCodeDirectoryViewController.onShare(sender:)))
+        barButtonItem.accessibilityLabel = Constants.Strings.moreOptions
         barButtonItem.isEnabled = false
-
         return barButtonItem
     }()
 
@@ -50,6 +56,7 @@ RepositoryBranchUpdatable {
         )
 
         self.dataSource = self
+        self.emptyDataSource = self
 
         // set on init in case used by Tabman
         self.title = NSLocalizedString("Code", comment: "")
@@ -91,18 +98,20 @@ RepositoryBranchUpdatable {
         let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
         let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
-        weak var weakSelf = self
-        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
+        let alertBuilder = AlertActionBuilder { [weak self] in $0.rootViewController = self }
         var actions = [
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client, path: path),
             AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
                 $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction.cancel()
+            }
         ]
+
+        if let url = repoUrl {
+            actions.append(AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            })
+        }
+        actions.append(AlertAction.cancel())
 
         if let name = self.path.components.last {
             actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {
@@ -115,9 +124,44 @@ RepositoryBranchUpdatable {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
+    private func showDirectory(at path: FilePath) {
+        route_push(to: RepositoryCodeDirectoryViewController(
+            client: client,
+            repo: repo,
+            branch: branch,
+            path: path
+        ))
+    }
+
+    private func showFile(at path: FilePath) {
+        let controller: UIViewController
+        if path.hasBinarySuffix {
+            controller = RepositoryWebViewController(
+                repo: repo,
+                branch: branch,
+                path: path
+            )
+        } else if path.isImage {
+            controller = RepositoryImageViewController(
+                repo: repo,
+                branch: branch,
+                path: path,
+                client: client
+            )
+        } else {
+            controller = RepositoryCodeBlobViewController(
+                client: client,
+                repo: repo,
+                branch: branch,
+                path: path
+            )
+        }
+        route_push(to: controller)
+    }
+
     // MARK: Overrides
 
-    override func fetch(page: NSNumber?) {
+    override func fetch(page: Int?) {
         client.fetchFiles(
         owner: repo.owner,
         repo: repo.name,
@@ -138,90 +182,29 @@ RepositoryBranchUpdatable {
 
     // MARK: BaseListViewControllerDataSource
 
-    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        return files.map {
+            ListSwiftPair.pair($0, { [weak self] in RepositoryCodeDirectorySectionController(delegate: self) })
+        }
     }
 
-    func models(listAdapter: ListAdapter) -> [ListDiffable] {
-        return files
-    }
+    // MARK: BaseListViewControllerEmptyDataSource
 
-    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
-        let controller = ListSingleSectionController(cellClass: RepositoryFileCell.self, configureBlock: { (file, cell: UICollectionViewCell) in
-            guard let cell = cell as? RepositoryFileCell, let file = file as? RepositoryFile else { return }
-            cell.configure(path: file.name, isDirectory: file.isDirectory)
-        }, sizeBlock: { (_, context: ListCollectionContext?) -> CGSize in
-            guard let width = context?.containerSize.width else { return .zero }
-            return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
-        })
-        controller.selectionDelegate = self
-        return controller
-    }
-
-    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
-        return ListSingleSectionController(cellClass: LabelCell.self, configureBlock: { (_, cell: UICollectionViewCell) in
-            guard let cell = cell as? LabelCell else { return }
-            cell.label.text = NSLocalizedString("No files found.", comment: "")
-        }, sizeBlock: { [weak self] (_, context: ListCollectionContext?) -> CGSize in
-            guard let context = context,
-                let strongSelf = self
-                else { return .zero }
-            return CGSize(
-                width: context.containerSize.width,
-                height: context.containerSize.height - strongSelf.view.safeAreaInsets.top - strongSelf.view.safeAreaInsets.bottom
-            )
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        return ListSwiftPair.pair(NSLocalizedString("No files found.", comment: ""), {
+            EmptyMessageSectionController()
         })
     }
 
-    // MARK: ListSingleSectionControllerDelegate
+    // MARK: RepositoryCodeDirectorySectionControllerDelegate
 
-    func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
-        guard let file = object as? RepositoryFile else { return }
-        let nextPath = path.appending(file.name)
-
-        if file.isDirectory {
+    func didSelect(controller: RepositoryCodeDirectorySectionController, path: String, isDirectory: Bool) {
+        let nextPath = self.path.appending(path)
+        if isDirectory {
             showDirectory(at: nextPath)
         } else {
             showFile(at: nextPath)
         }
-    }
-
-}
-
-// MARK: - RepositoryCodeDirectoryViewController (Navigation) -
-
-extension RepositoryCodeDirectoryViewController {
-
-    private func showDirectory(at path: FilePath) {
-        let controller = RepositoryCodeDirectoryViewController(
-            client: client,
-            repo: repo,
-            branch: branch,
-            path: path
-        )
-
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    private func showFile(at path: FilePath) {
-        let controller: UIViewController
-
-        if path.hasBinarySuffix {
-            controller = RepositoryWebViewController(
-                repo: repo,
-                branch: branch,
-                path: path
-            )
-        } else {
-            controller = RepositoryCodeBlobViewController(
-                client: client,
-                repo: repo,
-                branch: branch,
-                path: path
-            )
-        }
-
-        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: RepositoryBranchUpdatable
@@ -230,6 +213,12 @@ extension RepositoryCodeDirectoryViewController {
         guard self.branch != newBranch else { return }
         self.branch = newBranch
         fetch(page: nil)
+    }
+
+    // MARK: IndicatorInfoProvider
+
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: title)
     }
 
 }

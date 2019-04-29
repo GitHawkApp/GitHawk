@@ -10,7 +10,9 @@ import UIKit
 import GitHubAPI
 import GitHubSession
 
-final class SettingsAccountsViewController: UITableViewController, GitHubSessionListener {
+final class SettingsAccountsViewController: UITableViewController,
+GitHubSessionListener,
+SettingsAccountCellDelegate {
 
     private var client: Client!
     private var sessionManager: GitHubSessionManager!
@@ -33,12 +35,28 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
     // MARK: Private API
 
     @IBAction func onAdd(_ sender: Any) {
-        let alert = UIAlertController.configured(
-            title: NSLocalizedString("Add Account", comment: ""),
-            message: NSLocalizedString("To sign in with another account, please add a new Personal Access Token with user and repo scopes.", comment: ""),
-            preferredStyle: .alert
-        )
+        showPATAlert()
+    }
 
+    private func showPATAlert(updating session: GitHubUserSession? = nil) {
+        let title: String
+        let message: String
+
+        if let username = session?.username {
+            title = username
+            message = NSLocalizedString(
+                "Add or update a Personal Access Token with user, repo, and notification scopes.",
+                comment: ""
+            )
+        } else {
+            title = NSLocalizedString("Add Account", comment: "")
+            message = NSLocalizedString(
+                "To sign in with another account, please add a new Personal Access Token with user, repo, and notification scopes.",
+                comment: ""
+            )
+        }
+
+        let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = NSLocalizedString("Personal Access Token", comment: "")
         }
@@ -53,11 +71,11 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
                     case .failure:
                         self?.handleError()
                     case .success(let user):
-                        self?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
+                        self?.finishLogin(token: token, username: user.data.login, updateSession: session)
                     }
                 }
             })
-        ])
+            ])
 
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
@@ -72,11 +90,13 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
-        sessionManager.focus(
-            GitHubUserSession(token: token, authMethod: authMethod, username: username),
-            dismiss: false
-        )
+    private func finishLogin(token: String, username: String, updateSession: GitHubUserSession?) {
+        let newUserSession = GitHubUserSession(token: token, authMethod: .pat, username: username)
+        if let oldUserSession = updateSession {
+            sessionManager.update(oldUserSession: oldUserSession, newUserSession: newUserSession)
+        } else {
+            sessionManager.focus(newUserSession)
+        }
     }
 
     private func updateUserSessions() {
@@ -93,9 +113,15 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "account", for: indexPath)
-        let session = userSessions[indexPath.row]
-        cell.textLabel?.text = session.username ?? session.token
-        cell.accessoryType = sessionManager.focusedUserSession == session ? .checkmark : .none
+        if let cell = cell as? SettingsAccountCell {
+            let session = userSessions[indexPath.row]
+            cell.configure(
+                with: session.username ?? session.token,
+                delegate: self,
+                hasPAT: session.authMethod == .pat,
+                isCurrentUser: sessionManager.focusedUserSession == session
+            )
+        }
         return cell
     }
 
@@ -106,16 +132,23 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
 
         let selectedSession = userSessions[indexPath.row]
         guard selectedSession != sessionManager.focusedUserSession else { return }
-        sessionManager.focus(selectedSession, dismiss: false)
+        sessionManager.focus(selectedSession)
     }
 
     // MARK: GitHubSessionListener
 
-    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, isSwitch: Bool) {
         updateUserSessions()
         tableView.reloadData()
     }
 
     func didLogout(manager: GitHubSessionManager) {}
+
+    // MARK: SettingsAccountCellDelegate
+
+    func didTapPAT(for cell: SettingsAccountCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        showPATAlert(updating: userSessions[indexPath.row])
+    }
 
 }

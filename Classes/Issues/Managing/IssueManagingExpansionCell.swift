@@ -20,7 +20,7 @@ final class IssueManagingRoundedBackgroundView: UIView {
 final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     private let label = UILabel()
-    private let chevron = UIImageView(image: UIImage(named: "chevron-down-small")?.withRenderingMode(.alwaysTemplate))
+    private let chevron = UIImageView(image: UIImage(named: "chevron-down-small").withRenderingMode(.alwaysTemplate))
     private let backgroundHighlightView = IssueManagingRoundedBackgroundView()
 
     override init(frame: CGRect) {
@@ -64,7 +64,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     override var isSelected: Bool {

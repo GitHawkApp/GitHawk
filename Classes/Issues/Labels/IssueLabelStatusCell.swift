@@ -73,7 +73,7 @@ final class IssueLabelStatusCell: UICollectionViewCell, ListBindable {
             label.text = viewModel
             label.textColor = tint
             imageView.tintColor = tint
-            imageView.image = UIImage(named: "lock-small")?.withRenderingMode(.alwaysTemplate)
+            imageView.image = UIImage(named: "lock-small").withRenderingMode(.alwaysTemplate)
         }
     }
 

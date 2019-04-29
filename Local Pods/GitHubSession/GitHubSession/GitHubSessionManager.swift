@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol GitHubSessionListener: class {
-    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool)
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, isSwitch: Bool)
     func didLogout(manager: GitHubSessionManager)
 }
 
@@ -66,6 +66,17 @@ public class GitHubSessionManager: NSObject {
         }
     }
 
+    private func _update(oldUserSession: GitHubUserSession, newUserSession: GitHubUserSession) {
+        _userSessions.remove(oldUserSession)
+        _userSessions.insert(newUserSession, at: 0)
+        save()
+
+        let isSwitch = _userSessions.count > 0
+        for wrapper in listeners {
+            wrapper.listener?.didFocus(manager: self, userSession: newUserSession, isSwitch: isSwitch)
+        }
+    }
+
     // MARK: Public API
 
     public var focusedUserSession: GitHubUserSession? {
@@ -83,15 +94,13 @@ public class GitHubSessionManager: NSObject {
     }
 
     public func focus(
-        _ userSession: GitHubUserSession,
-        dismiss: Bool
+        _ userSession: GitHubUserSession
         ) {
-        _userSessions.remove(userSession)
-        _userSessions.insert(userSession, at: 0)
-        save()
-        for wrapper in listeners {
-            wrapper.listener?.didFocus(manager: self, userSession: userSession, dismiss: dismiss)
-        }
+        _update(oldUserSession: userSession, newUserSession: userSession)
+    }
+
+    public func update(oldUserSession: GitHubUserSession, newUserSession: GitHubUserSession) {
+        _update(oldUserSession: oldUserSession, newUserSession: newUserSession)
     }
 
     public func logout() {

@@ -40,7 +40,7 @@ final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
     }
 
     // MARK: Private API

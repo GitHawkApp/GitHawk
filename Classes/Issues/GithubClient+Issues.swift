@@ -185,16 +185,15 @@ extension GithubClient {
         subjectID: String,
         content: ReactionContent,
         isAdd: Bool,
-        completion: @escaping (IssueCommentReactionViewModel?) -> Void
+        completion: @escaping (Result<IssueCommentReactionViewModel>) -> Void
         ) {
 
         let handler: (GitHubAPI.Result<ReactionFields>) -> Void = { result in
             switch result {
             case .success(let data):
-                completion(createIssueReactions(reactions: data))
+                completion(.success(createIssueReactions(reactions: data)))
             case .failure(let error):
-                completion(nil)
-                Squawk.show(error: error)
+                completion(.error(error))
             }
         }
 

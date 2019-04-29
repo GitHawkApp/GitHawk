@@ -95,6 +95,13 @@ class SearchViewController: UIViewController,
         rz_smoothlyDeselectRows(collectionView: collectionView)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // https://stackoverflow.com/a/47976999
+        navigationController?.view.setNeedsLayout()
+        navigationController?.view.layoutIfNeeded()
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
@@ -127,11 +134,20 @@ class SearchViewController: UIViewController,
         self.update(animated: animated)
     }
 
-    func search(term: String) {
-        let query: SearchQuery = .search(term)
+    func search(term: String, includeForks: Bool = true) {
+
+        let searchTerm = includeForks
+            ? "fork:true " + term
+            : term
+
+        let query: SearchQuery = .search(searchTerm)
+
         guard canSearch(query: query) else { return }
 
-        let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
+        let request = client.search(
+            query: searchTerm,
+            containerWidth: view.safeContentWidth(with: collectionView)
+        ) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: trueUnlessReduceMotionEnabled)
         }
@@ -181,7 +197,8 @@ class SearchViewController: UIViewController,
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         switch state {
         case .idle:
-            let view = InitialEmptyView(
+            let view = InitialEmptyView()
+            view.configure(
                 imageName: "search-large",
                 title: Constants.Strings.searchGitHub,
                 description: NSLocalizedString("Find your favorite repositories.\nRecent searches are saved.", comment: "")
@@ -274,9 +291,7 @@ class SearchViewController: UIViewController,
         // otherwise pushing the next view controller wont be animated
         update(animated: trueUnlessReduceMotionEnabled)
 
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navigation = UINavigationController(rootViewController: repoViewController)
-        showDetailViewController(navigation, sender: nil)
+        route_detail(to: RepositoryViewController(client: client, repo: repo))
     }
 
     // MARK: SearchRecentHeaderSectionControllerDelegate

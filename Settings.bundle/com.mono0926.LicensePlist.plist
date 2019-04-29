@@ -8,7 +8,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Alamofire</string>
 			<key>Title</key>
-			<string>Alamofire (4.4.0)</string>
+			<string>Alamofire (4.8.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -16,7 +16,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/AlamofireNetworkActivityIndicator</string>
 			<key>Title</key>
-			<string>AlamofireNetworkActivityIndicator (2.1.0)</string>
+			<string>AlamofireNetworkActivityIndicator (2.3.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -25,14 +25,6 @@
 			<string>com.mono0926.LicensePlist/Apollo</string>
 			<key>Title</key>
 			<string>Apollo (0.8.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/AutoInsetter</string>
-			<key>Title</key>
-			<string>AutoInsetter (1.2.3)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -48,7 +40,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/ContextMenu</string>
 			<key>Title</key>
-			<string>ContextMenu (0.3.1)</string>
+			<string>ContextMenu (0.5.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -56,7 +48,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Crashlytics</string>
 			<key>Title</key>
-			<string>Crashlytics (3.9.3)</string>
+			<string>Crashlytics (3.12.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -72,7 +64,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Fabric</string>
 			<key>Title</key>
-			<string>Fabric (1.7.2)</string>
+			<string>Fabric (1.9.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -112,7 +104,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FMDB</string>
 			<key>Title</key>
-			<string>FMDB (2.7.2)</string>
+			<string>FMDB (2.7.5)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -136,7 +128,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/HTMLString</string>
 			<key>Title</key>
-			<string>HTMLString (4.0.1)</string>
+			<string>HTMLString (4.0.2)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -152,7 +144,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/ImageAlertAction</string>
 			<key>Title</key>
-			<string>ImageAlertAction (1.0.0)</string>
+			<string>ImageAlertAction (2.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -168,15 +160,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/NYTPhotoViewer</string>
 			<key>Title</key>
-			<string>NYTPhotoViewer (1.1.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/Pageboy</string>
-			<key>Title</key>
-			<string>Pageboy (2.5.1)</string>
+			<string>NYTPhotoViewer (2.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -192,7 +176,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SnapKit</string>
 			<key>Title</key>
-			<string>SnapKit (4.0.0)</string>
+			<string>SnapKit (4.2.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -208,7 +192,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/StyledTextKit</string>
 			<key>Title</key>
-			<string>StyledTextKit (0.1.1)</string>
+			<string>StyledTextKit (0.2.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -216,7 +200,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SwiftLint</string>
 			<key>Title</key>
-			<string>SwiftLint (0.27.0)</string>
+			<string>SwiftLint (0.30.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -230,17 +214,17 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/Tabman</string>
+			<string>com.mono0926.LicensePlist/TUSafariActivity</string>
 			<key>Title</key>
-			<string>Tabman (1.8.2)</string>
+			<string>TUSafariActivity (1.0.4)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/TUSafariActivity</string>
+			<string>com.mono0926.LicensePlist/XLPagerTabStrip</string>
 			<key>Title</key>
-			<string>TUSafariActivity (1.0.4)</string>
+			<string>XLPagerTabStrip (8.1.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

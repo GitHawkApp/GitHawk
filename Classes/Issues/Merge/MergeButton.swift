@@ -14,12 +14,12 @@ protocol MergeButtonDelegate: class {
     func didSelectOptions(button: MergeButton)
 }
 
-final class MergeButton: UIView {
+final class MergeButton: UIControl {
 
     weak var delegate: MergeButtonDelegate?
 
     // public to use as source view for popover
-    let optionIconView = UIImageView()
+    let optionButton = UIButton()
 
     private let mergeLabel = UILabel()
     private let optionBorder = UIView()
@@ -29,20 +29,30 @@ final class MergeButton: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        addTouchEffect()
+
         addSubview(mergeLabel)
-        addSubview(optionIconView)
+        addSubview(optionButton)
         addSubview(optionBorder)
         addSubview(activityView)
 
+        addTarget(self, action: #selector(onMainTouch), for: .touchUpInside)
         layer.cornerRadius = Styles.Sizes.avatarCornerRadius
 
-        let image = UIImage(named: "chevron-down")?.withRenderingMode(.alwaysTemplate)
-        let optionButtonWidth = (image?.size.width ?? 0) + (2 * Styles.Sizes.gutter)
-        optionIconView.contentMode = .center
-        optionIconView.image = image
-        optionIconView.isAccessibilityElement = true
-        optionIconView.accessibilityTraits = UIAccessibilityTraitButton
-        optionIconView.snp.makeConstraints { make in
+        let image = UIImage(named: "chevron-down").withRenderingMode(.alwaysTemplate)
+        let optionButtonWidth = image.size.width + 2 * Styles.Sizes.gutter
+        // more exagerated than the default given the small button size
+        optionButton.addTouchEffect(UIControlEffect(
+            alpha: 0.5,
+            transform: CGAffineTransform(scaleX: 0.85, y: 0.85)
+        ))
+        optionButton.adjustsImageWhenHighlighted = false
+        optionButton.imageView?.contentMode = .center
+        optionButton.setImage(image, for: .normal)
+        optionButton.isAccessibilityElement = true
+        optionButton.accessibilityTraits = UIAccessibilityTraitButton
+        optionButton.addTarget(self, action: #selector(onOptionsTouch), for: .touchUpInside)
+        optionButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
             make.width.equalTo(optionButtonWidth)
         }
@@ -58,7 +68,7 @@ final class MergeButton: UIView {
             make.top.equalToSuperview().offset(Styles.Sizes.rowSpacing/2)
             make.bottom.equalToSuperview().offset(-Styles.Sizes.rowSpacing/2)
             make.width.equalTo(1/UIScreen.main.scale)
-            make.right.equalTo(optionIconView.snp.left)
+            make.right.equalTo(optionButton.snp.left)
         }
 
         activityView.hidesWhenStopped = true
@@ -66,8 +76,6 @@ final class MergeButton: UIView {
             make.centerY.equalToSuperview()
             make.right.equalTo(mergeLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
-
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap(recognizer:))))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -99,7 +107,7 @@ final class MergeButton: UIView {
             ]
             layer.addSublayer(gradientLayer)
 
-            [mergeLabel, optionIconView, optionBorder, activityView].forEach {
+            [mergeLabel, optionButton, optionBorder, activityView].forEach {
                 bringSubview(toFront: $0)
             }
         } else {
@@ -108,7 +116,7 @@ final class MergeButton: UIView {
 
         let titleColor = enabled ? .white : Styles.Colors.Gray.dark.color
         mergeLabel.textColor = titleColor
-        optionIconView.tintColor = titleColor
+        optionButton.imageView?.tintColor = titleColor
         optionBorder.backgroundColor = titleColor
 
         mergeLabel.text = title
@@ -120,29 +128,11 @@ final class MergeButton: UIView {
         }
 
         let mergeButtonElement = mergeElement(withAccessibilityLabel: title)
-        accessibilityElements = [mergeButtonElement, optionIconView]
-        optionIconView.accessibilityLabel = NSLocalizedString("More merging options", comment: "More options button for merging")
-    }
-
-    // MARK: Overrides
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        // don't highlight when touching inside the chevron button
-        if let touch = touches.first, optionIconView.frame.contains(touch.location(in: self)) {
-            return
-        }
-        highlight(true)
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesCancelled(touches, with: event)
-        highlight(false)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        highlight(false)
+        accessibilityElements = [mergeButtonElement, optionButton]
+        optionButton.accessibilityLabel = NSLocalizedString(
+            "More merging options",
+            comment: "More options button for merging"
+        )
     }
 
     // MARK: Private API
@@ -153,7 +143,7 @@ final class MergeButton: UIView {
         element.accessibilityFrameInContainerSpace = CGRect(
             origin: bounds.origin,
             size: CGSize(
-                width: bounds.size.width - optionIconView.bounds.size.width,
+                width: bounds.size.width - optionButton.bounds.size.width,
                 height: bounds.size.height
             )
         )
@@ -161,19 +151,12 @@ final class MergeButton: UIView {
         return element
     }
 
-    func highlight(_ highlight: Bool) {
-        guard isUserInteractionEnabled else { return }
-        alpha = highlight ? 0.5 : 1
+    @objc func onMainTouch() {
+        delegate?.didSelect(button: self)
     }
 
-    @objc func onTap(recognizer: UITapGestureRecognizer) {
-        guard recognizer.state == .ended else { return }
-
-        if optionIconView.frame.contains(recognizer.location(in: self)) {
-            delegate?.didSelectOptions(button: self)
-        } else {
-            delegate?.didSelect(button: self)
-        }
+    @objc func onOptionsTouch() {
+        delegate?.didSelectOptions(button: self)
     }
 
 }

@@ -19,12 +19,8 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width,
-            let object = self.object
-            else { fatalError("Missing context") }
-        return CGSize(
-            width: width,
-            height: object.string.viewSize(in: width).height
+        return collectionContext.cellSize(
+            with: object?.string.viewSize(in: collectionContext.safeContentWidth()).height ?? 0
         )
     }
 
@@ -40,11 +36,7 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { return }
         let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: object.number)
-        let controller = IssuesViewController(
-            client: client,
-            model: model
-        )
-        viewController?.show(controller, sender: nil)
+        viewController?.route_push(to: IssuesViewController(client: client, model: model))
     }
 
 }

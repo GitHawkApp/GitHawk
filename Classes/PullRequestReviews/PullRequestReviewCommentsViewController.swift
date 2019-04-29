@@ -215,6 +215,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
             number: model.number,
             width: insetWidth
         ) { [weak self] result in
+            actionsView.isProcessing = false
             switch result {
             case .error: break
             case .success(let comment): self?.insertComment(model: comment, reply: reply)

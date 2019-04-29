@@ -35,7 +35,8 @@ final class IssuesViewController: MessageViewController,
     IssueTextActionsViewSendDelegate,
     EmptyViewDelegate,
     MessageTextViewListener,
-    IssueLabelTapSectionControllerDelegate {
+    IssueLabelTapSectionControllerDelegate,
+IssueManagingContextControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -73,15 +74,10 @@ final class IssuesViewController: MessageViewController,
                 let result = self.client.cache.get(id: id) as IssueResult? {
                 hidden = result.labels.locked && !viewerIsCollaborator
 
-                let bookmark = Bookmark(
-                    type: result.pullRequest ? .pullRequest : .issue,
-                    name: self.model.repo,
-                    owner: self.model.owner,
-                    number: self.model.number,
-                    title: result.title.string.allText,
-                    defaultBranch: result.defaultBranch
+                self.bookmarkNavController = BookmarkNavigationController(
+                    store: client.bookmarkCloudStore,
+                    graphQLID: id
                 )
-                self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
                 self.configureNavigationItems()
             } else {
                 hidden = true
@@ -134,6 +130,7 @@ final class IssuesViewController: MessageViewController,
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
 
         manageController.viewController = self
+        manageController.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -149,6 +146,7 @@ final class IssuesViewController: MessageViewController,
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
 
         let navigationTitle = DropdownTitleView()
+        navigationTitle.addTouchEffect()
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         navigationTitle.configure(
             title: "#\(model.number)",
@@ -208,12 +206,13 @@ final class IssuesViewController: MessageViewController,
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let informator = HandoffInformator(
-            activityName: "viewIssue",
-            activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
-            url: externalURL
-        )
-        setupUserActivity(with: informator)
+        if let url = externalURL {
+            setupUserActivity(with: HandoffInformator(
+                activityName: "viewIssue",
+                activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
+                url: url
+            ))
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -243,8 +242,8 @@ final class IssuesViewController: MessageViewController,
 
     // MARK: Private API
 
-    var externalURL: URL {
-        return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
+    var externalURL: URL? {
+        return URLBuilder.github().add(paths: [model.owner, model.repo, "issues", model.number]).url
     }
 
     var bookmark: Bookmark? {
@@ -254,8 +253,7 @@ final class IssuesViewController: MessageViewController,
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: result.title.string.allText,
-            defaultBranch: result.defaultBranch
+            title: result.title.string.allText
         )
     }
 
@@ -266,20 +264,18 @@ final class IssuesViewController: MessageViewController,
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard let result = result else { return nil }
         return action(
             owner: model.owner,
             repo: model.repo,
             icon: #imageLiteral(resourceName: "repo"),
-            branch: result.defaultBranch,
-            issuesEnabled: result.hasIssuesEnabled,
             client: client
         )
     }
 
     @objc func onMore(sender: UIBarButtonItem) {
+        guard let url = externalURL else { return }
         let activityController = UIActivityViewController(
-            activityItems: [externalURL],
+            activityItems: [url],
             applicationActivities: [TUSafariActivity()]
         )
         activityController.popoverPresentationController?.barButtonItem = sender
@@ -311,16 +307,11 @@ final class IssuesViewController: MessageViewController,
             }
         }
 
-        // assumptions here, but the collectionview may not have been laid out or content size found
-        // assume the collectionview is pinned to the view's bounds
-        let contentInset = feed.collectionView.contentInset
-        let width = view.bounds.width - contentInset.left - contentInset.right
-
         client.fetch(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            width: width,
+            width: view.safeContentWidth(with: feed.collectionView),
             prependResult: previous ? result : nil
         ) { [weak self] resultType in
             guard let strongSelf = self else { return }
@@ -347,14 +338,14 @@ final class IssuesViewController: MessageViewController,
 
     func updateAndScrollIfNeeded(dismissRefresh: Bool = true) {
         feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
-            if self?.needsScrollToBottom == true {
-                self?.needsScrollToBottom = false
-                self?.scrollToLastContentElement()
-            }
+            self?.scrollToLastContentElement()
         }
     }
 
     func scrollToLastContentElement() {
+        guard needsScrollToBottom == true else { return }
+        needsScrollToBottom = false
+
         guard let lastTimeline = lastTimelineElement else { return }
 
         // assuming the last element is the "actions" when collaborator
@@ -362,12 +353,12 @@ final class IssuesViewController: MessageViewController,
     }
 
     func onPreview() {
-        let controller = IssuePreviewViewController(
+        route_push(to: IssuePreviewViewController(
             markdown: messageView.text,
             owner: model.owner,
-            repo: model.repo
-        )
-        showDetailViewController(controller, sender: nil)
+            repo: model.repo,
+            title: Constants.Strings.preview
+        ))
     }
 
     @objc func onNavigationTitle(sender: UIView) {
@@ -539,7 +530,7 @@ final class IssuesViewController: MessageViewController,
                 commentFields: commentFields,
                 reactionFields: reactionFields,
                 contentSizeCategory: UIContentSizeCategory.preferred,
-                width: view.bounds.width,
+                width: view.safeContentWidth(with: feed.collectionView),
                 owner: model.owner,
                 repo: model.repo,
                 threadState: .single,
@@ -581,7 +572,7 @@ final class IssuesViewController: MessageViewController,
         case .item(let item):
             guard item is IssueResult else { break }
             updateAndScrollIfNeeded()
-        case .list: break
+        case .list, .clear: break
         }
     }
 
@@ -640,6 +631,12 @@ final class IssuesViewController: MessageViewController,
     func didTapIssueLabel(owner: String, repo: String, label: String) {
         guard let issueType = self.issueType else { return }
         presentLabels(client: client, owner: owner, repo: repo, label: label, type: issueType)
+    }
+
+    // MARK: IssueManagingContextControllerDelegate
+
+    func willMutateModel(from controller: IssueManagingContextController) {
+        needsScrollToBottom = true
     }
 
 }

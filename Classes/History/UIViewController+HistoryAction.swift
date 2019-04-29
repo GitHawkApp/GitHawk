@@ -20,18 +20,15 @@ extension UIViewController {
             title: NSLocalizedString("View History", comment: ""),
             style: .default
         ) { [weak self] _ in
-            self?.navigationController?.pushViewController(
-                PathHistoryViewController(
-                    viewModel: PathHistoryViewModel(
-                        owner: owner,
-                        repo: repo,
-                        client: client,
-                        branch: branch,
-                        path: path
-                    )
-                ),
-                animated: trueUnlessReduceMotionEnabled
-            )
+            self?.route_push(to: PathHistoryViewController(
+                viewModel: PathHistoryViewModel(
+                    owner: owner,
+                    repo: repo,
+                    client: client,
+                    branch: branch,
+                    path: path
+                )
+            ))
         }
     }
 }

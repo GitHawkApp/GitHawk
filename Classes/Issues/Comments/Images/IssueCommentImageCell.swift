@@ -21,6 +21,8 @@ protocol IssueCommentImageHeightCellDelegate: class {
 
 final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
 
+    static let bottomInset = Styles.Sizes.rowSpacing
+
     weak var delegate: IssueCommentImageCellDelegate?
     weak var heightDelegate: IssueCommentImageHeightCellDelegate?
 
@@ -56,7 +58,8 @@ final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        var frame = bounds
+        var frame = contentView.bounds
+        frame.size.height -= IssueCommentImageCell.bottomInset
         if let size = imageView.image?.size {
             frame.size = BoundedImageSize(originalSize: size, containerWidth: frame.width)
         }
@@ -81,11 +84,15 @@ final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
+        configure(with: viewModel)
+    }
+
+    func configure(with model: IssueCommentImageModel) {
         imageView.image = nil
         imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         spinner.startAnimating()
 
-        let imageURL = viewModel.url
+        let imageURL = model.url
         imageView.sd_setImage(with: imageURL) { [weak self] (image, _, _, url) in
             guard let strongSelf = self else { return }
             strongSelf.imageView.backgroundColor = .clear

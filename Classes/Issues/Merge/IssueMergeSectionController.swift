@@ -74,9 +74,14 @@ ListBindingSectionControllerSelectionDelegate {
             repo: model.repo,
             number: model.number,
             type: preferredMergeType,
-            error: { [weak self] in
-                self?.loading = false
-                self?.update(animated: true)
+            completionHandler: { [weak self] isSuccessfulMerge in
+                if isSuccessfulMerge {
+                    Haptic.triggerNotification(.success)
+                } else {
+                    self?.loading = false
+                    self?.update(animated: true)
+                    Haptic.triggerNotification(.error)
+                }
         })
     }
 
@@ -145,14 +150,12 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width
-            else { fatalError() }
         let height: CGFloat
         switch viewModel {
         case is IssueMergeButtonModel: height = Styles.Sizes.tableCellHeightLarge
         default: height = Styles.Sizes.tableCellHeight
         }
-        return CGSize(width: width, height: height)
+        return collectionContext.cellSize(with: height)
     }
 
     func sectionController(
@@ -214,7 +217,7 @@ ListBindingSectionControllerSelectionDelegate {
             title: NSLocalizedString("Change merge type", comment: ""),
             preferredStyle: .actionSheet
         )
-        alert.popoverPresentationController?.sourceView = button.optionIconView
+        alert.popoverPresentationController?.sourceView = button.optionButton
 
         for type in types {
             alert.add(action: AlertAction(AlertActionBuilder {

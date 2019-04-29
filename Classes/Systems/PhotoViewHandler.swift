@@ -18,6 +18,7 @@ IssueCommentHtmlCellImageDelegate {
 
     private weak var viewController: UIViewController?
     private weak var referenceImageView: UIImageView?
+    private var singlePhotoDataSource: NYTPhotoViewerSinglePhotoDataSource?
 
     init(viewController: UIViewController?) {
         self.viewController = viewController
@@ -28,9 +29,13 @@ IssueCommentHtmlCellImageDelegate {
     func didTapImage(cell: IssueCommentImageCell, image: UIImage, animatedImageData: Data?) {
         referenceImageView = cell.imageView
         let photo = IssueCommentPhoto(image: image, data: animatedImageData)
-        let photosViewController = NYTPhotosViewController(photos: [photo])
-        photosViewController.delegate = self
-        viewController?.present(photosViewController, animated: trueUnlessReduceMotionEnabled)
+        let dataSource = NYTPhotoViewerSinglePhotoDataSource(photo: photo)
+        singlePhotoDataSource = dataSource
+        viewController?.route_present(to: NYTPhotosViewController(
+            dataSource: dataSource,
+            initialPhoto: photo,
+            delegate: self
+        ))
     }
 
     // MARK: NYTPhotosViewControllerDelegate
@@ -39,21 +44,36 @@ IssueCommentHtmlCellImageDelegate {
         return referenceImageView
     }
 
+    func photosViewControllerDidDismiss(_ photosViewController: NYTPhotosViewController) {
+        referenceImageView = nil
+    }
+
     // MARK: IssueCommentHtmlCellImageDelegate
 
     func webViewDidTapImage(cell: IssueCommentHtmlCell, url: URL) {
         // cannot download svgs yet
         guard url.pathExtension != "svg" else { return }
 
+        let isGif = url.pathExtension.lowercased() == "gif"
+
+        let photo = IssueCommentPhoto()
+        let dataSource = NYTPhotoViewerSinglePhotoDataSource(photo: photo)
+        singlePhotoDataSource = dataSource
+        let controller = NYTPhotosViewController(dataSource: dataSource, initialPhoto: photo, delegate: self)
+        viewController?.route_present(to: controller)
+
         SDWebImageDownloader.shared().downloadImage(
             with: url,
             options: [.highPriority],
             progress: nil
-        ) { [weak self] (image, data, _, _) in
-            if let image = image {
-                let photo = IssueCommentPhoto(image: image, data: nil)
-                let photosViewController = NYTPhotosViewController(photos: [photo])
-                self?.viewController?.present(photosViewController, animated: trueUnlessReduceMotionEnabled)
+        ) { (image, data, _, _) in
+            if image != nil || data != nil {
+                if isGif {
+                    photo.imageData = data
+                } else {
+                    photo.image = image
+                }
+                controller.update(photo)
             } else {
                 Squawk.showGenericError()
             }

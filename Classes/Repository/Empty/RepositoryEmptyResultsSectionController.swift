@@ -10,12 +10,10 @@ import IGListKit
 
 final class RepositoryEmptyResultsSectionController: ListSectionController {
 
-    let topInset: CGFloat
     let layoutInsets: UIEdgeInsets
     let type: RepositoryEmptyResultsType
 
-    init(topInset: CGFloat, layoutInsets: UIEdgeInsets, type: RepositoryEmptyResultsType) {
-        self.topInset = topInset
+    init(layoutInsets: UIEdgeInsets, type: RepositoryEmptyResultsType) {
         self.layoutInsets = layoutInsets
         self.type = type
         super.init()
@@ -23,7 +21,7 @@ final class RepositoryEmptyResultsSectionController: ListSectionController {
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let size = collectionContext?.containerSize else { fatalError("Missing context") }
-        return CGSize(width: size.width, height: size.height - topInset - layoutInsets.top - layoutInsets.bottom)
+        return CGSize(width: size.width, height: size.height - layoutInsets.top - layoutInsets.bottom)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

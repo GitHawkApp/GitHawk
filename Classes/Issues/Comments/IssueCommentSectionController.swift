@@ -85,9 +85,12 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     // MARK: Private API
 
     func shareAction(sender: UIView) -> UIAlertAction? {
-        let attribute = object?.asReviewComment == true ? "#discussion_r" : "#issuecomment-"
+        let attribute = object?.asReviewComment == true ? "discussion_r" : "issuecomment-"
         guard let number = object?.number,
-            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)\(attribute)\(number)")
+            let url = URLBuilder.github()
+                .add(paths: [model.owner, model.repo, "issues", model.number])
+                .set(fragment: "\(attribute)\(number)")
+                .url
         else { return nil }
         weak var weakSelf = self
 
@@ -134,7 +137,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)
             nav.modalPresentationStyle = .formSheet
-            self?.viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
+            self?.viewController?.route_present(to: nav)
         })
     }
 
@@ -164,10 +167,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
                 let nav = UINavigationController(
                     rootViewController: ViewMarkdownViewController(markdown: markdown)
                 )
-                self?.viewController?.present(
-                    nav,
-                    animated: trueUnlessReduceMotionEnabled
-                )
+                self?.viewController?.route_present(to: nav)
             }
         )
     }
@@ -208,15 +208,18 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         update(animated: trueUnlessReduceMotionEnabled)
         generator.impactOccurred()
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
-            if result == nil {
+            switch result {
+            case .success: break
+            case .error(let error):
                 self?.reactionMutation = previousReaction
                 self?.update(animated: trueUnlessReduceMotionEnabled)
+                Squawk.show(error: error)
             }
         }
     }
 
     func edit(markdown: String) {
-        guard let width = collectionContext?.insetContainerSize.width else { return }
+        let width = collectionContext.cellWidth()
         let bodyModels = MarkdownModels(
             // strip githawk signatures on edit
             CheckIfSentWithGitHawk(markdown: markdown).markdown,
@@ -239,7 +242,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         }
         switch attribute {
         case .issue(let issue):
-            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
+            viewController?.route_push(to: IssuesViewController(client: client, model: issue))
         case .checkbox(let checkbox):
             didTapCheckbox(checkbox: checkbox)
         default: break
@@ -340,8 +343,6 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
-        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
-
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
@@ -354,13 +355,12 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         } else {
             height = BodyHeightForComment(
                 viewModel: viewModel,
-                width: width,
+                width: collectionContext.safeContentWidth(),
                 webviewCache: webviewCache,
                 imageCache: imageCache
             )
         }
-
-        return CGSize(width: width, height: height)
+        return collectionContext.cellSize(with: height)
     }
 
     func sectionController(

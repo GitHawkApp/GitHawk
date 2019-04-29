@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import StyledTextKit
 
-final class BookmarkCell: SwipeSelectableCell {
+final class BookmarkCell: SelectableCell {
 
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
@@ -26,24 +26,24 @@ final class BookmarkCell: SwipeSelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        accessibilityIdentifier = "bookmark-cell"
         backgroundColor = .white
 
         contentView.clipsToBounds = true
 
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
+        imageView.contentMode = .center
         imageView.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.rowSpacing)
+            make.left.equalTo(Styles.Sizes.columnSpacing)
             make.size.equalTo(Styles.Sizes.icon)
         }
 
         contentView.addSubview(textView)
         contentView.addSubview(detailLabel)
 
-        addBorder(.bottom, left: Styles.Sizes.gutter)
+        addBorder(.bottom, left: BookmarkCell.titleInset.left)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -52,7 +52,7 @@ final class BookmarkCell: SwipeSelectableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
+        layoutContentView()
 
         let bounds = contentView.bounds
         textView.reposition(for: bounds.width)
@@ -73,33 +73,54 @@ final class BookmarkCell: SwipeSelectableCell {
         }
     }
 
-    func configure(viewModel: BookmarkViewModel, height: CGFloat) {
-        imageView.image = viewModel.bookmark.type.icon.withRenderingMode(.alwaysTemplate)
-        textView.configure(with: viewModel.text, width: contentView.bounds.width)
-
-        // set "Owner/Repo #123" on the detail label if issue/PR, otherwise clear and collapse it
-        switch viewModel.bookmark.type {
-        case .issue, .pullRequest:
-            let detailString = NSMutableAttributedString(
-                string: "\(viewModel.bookmark.owner)/\(viewModel.bookmark.name)",
-                attributes: [
-                    .font: Styles.Text.secondaryBold.preferredFont,
-                    .foregroundColor: Styles.Colors.Gray.light.color
-                    ]
-            )
-            detailString.append(NSAttributedString(
-                string: " #\(viewModel.bookmark.number)",
-                attributes: [
-                    .font: Styles.Text.secondary.preferredFont,
-                    .foregroundColor: Styles.Colors.Gray.light.color
-                ]
-            ))
-            detailLabel.attributedText = detailString
-        default:
-            detailLabel.text = ""
+    func configure(with model: BookmarkIssueViewModel) {
+        let imageName: String
+        if model.state == .merged {
+            imageName = "git-merge"
+        } else {
+            imageName = model.isPullRequest ? "git-pull-request" : "issue-opened"
         }
-        detailLabel.sizeToFit()
+        imageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
 
-        setNeedsLayout()
+        let tint: UIColor
+        switch model.state {
+        case .merged: tint = Styles.Colors.purple.color
+        case .open: tint = Styles.Colors.Green.medium.color
+        case .closed: tint = Styles.Colors.Red.medium.color
+        case .pending: tint = Styles.Colors.Yellow.medium.color
+        }
+        imageView.tintColor = tint
+
+        textView.configure(with: model.text, width: contentView.bounds.width)
+
+        let detailString = NSMutableAttributedString(
+            string: "\(model.repo.owner)/\(model.repo.name)",
+            attributes: [
+                .font: Styles.Text.secondaryBold.preferredFont,
+                .foregroundColor: Styles.Colors.Gray.light.color
+            ]
+        )
+        detailString.append(NSAttributedString(
+            string: " #\(model.number)",
+            attributes: [
+                .font: Styles.Text.secondary.preferredFont,
+                .foregroundColor: Styles.Colors.Gray.light.color
+            ]
+        ))
+        detailLabel.attributedText = detailString
+        detailLabel.sizeToFit()
     }
+
+    func configureRepo(
+        imageName: String,
+        text: StyledTextRenderer,
+        owner: String,
+        name: String
+        ) {
+        imageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        textView.configure(with: text, width: contentView.bounds.width)
+        // clear the detail for reuse
+        detailLabel.text = ""
+    }
+
 }

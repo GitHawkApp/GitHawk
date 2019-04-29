@@ -122,8 +122,12 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        webView.backgroundColor = .white
+        // https://stackoverflow.com/a/23427923
+        webView.isOpaque = false
+        webView.backgroundColor = .clear
+
         webView.delegate = self
+        webView.scrollView.isScrollEnabled = false
         webView.scrollView.bounces = false
 
         let scrollView = webView.scrollView
@@ -162,8 +166,14 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentHtmlModel else { return }
-        body = viewModel.html
-        webViewBaseURL = viewModel.baseURL
+        configure(with: viewModel)
+    }
+
+    func configure(with model: IssueCommentHtmlModel) {
+        body = model.html
+        // hack that appends a trailing slash if its missing
+        // required to load raw images
+        webViewBaseURL = model.baseURL?.appendingPathComponent("", isDirectory: false)
 
         let html = IssueCommentHtmlCell.htmlHead + body + IssueCommentHtmlCell.htmlTail
         webView.loadHTMLString(html, baseURL: webViewBaseURL)

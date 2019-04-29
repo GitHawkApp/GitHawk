@@ -10,7 +10,7 @@ import UIKit
 
 final class RepositoryBranchCell: SelectableCell {
     public let label = UILabel()
-    private let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
+    private let checkedImageView = UIImageView(image: UIImage(named: "check-small").withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,7 +19,7 @@ final class RepositoryBranchCell: SelectableCell {
         contentView.backgroundColor = nil
 
         contentView.addSubview(checkedImageView)
-        checkedImageView.tintColor = Styles.Colors.Blue.medium.color
+        checkedImageView.tintColor = Styles.Colors.Blue.menu.color
         checkedImageView.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(contentView.snp.centerY)
