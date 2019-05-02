@@ -30,7 +30,7 @@ protocol IssueType {
     var milestoneFields: MilestoneFields? { get }
     var merged: Bool { get }
     var targetBranch: String? { get }
-    var locked: Bool { get }
+    var isLocked: Bool { get }
     var headPaging: HeadPaging { get }
     var viewerCanUpdate: Bool { get }
     var fileChanges: FileChanges? { get }

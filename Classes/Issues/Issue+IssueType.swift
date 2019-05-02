@@ -11,6 +11,18 @@ import IGListKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: IssueType {
 
+    var id: String {
+        return fragments.nodeFields.id
+    }
+
+    var isLocked: Bool {
+        return fragments.lockableFields.locked
+    }
+
+    var viewerCanUpdate: Bool {
+        return fragments.updatableFields.viewerCanUpdate
+    }
+
     var pullRequest: Bool {
         return false
     }

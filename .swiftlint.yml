@@ -11,6 +11,7 @@ disabled_rules:
   - file_length
   - large_tuple
   - nesting
+  - unused_setter_value
 
 included: 
   - Classes
