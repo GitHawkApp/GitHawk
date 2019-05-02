@@ -16,7 +16,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.nodeFields.id
     }
 
-    var locked: Bool {
+    var isLocked: Bool {
         return fragments.lockableFields.locked
     }
 

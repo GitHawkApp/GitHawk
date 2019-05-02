@@ -154,7 +154,7 @@ extension GithubClient {
                         title: titleStringSizing(title: issueType.title, contentSizeCategory: contentSizeCategory, width: width),
                         labels: IssueLabelsModel(
                             status: IssueLabelStatusModel(status: status, pullRequest: issueType.pullRequest),
-                            locked: issueType.locked,
+                            locked: issueType.isLocked,
                             labels: issueType.labelableFields.issueLabelModels
                         ),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
