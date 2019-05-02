@@ -54,7 +54,7 @@ target 'Freetime' do
 end
 
 target 'FreetimeWatch' do
-
+  platform :watchos, '3.0'
 end
 
 target 'FreetimeWatch Extension' do
@@ -66,6 +66,9 @@ target 'FreetimeWatch Extension' do
 end
 
 target 'FreetimeTests' do
+  
+  platform :ios, '11.0'
+  
   # normal pods
   pod 'FBSnapshotTestCase'
 

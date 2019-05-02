@@ -24,7 +24,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Apollo</string>
 			<key>Title</key>
-			<string>Apollo (0.8.0)</string>
+			<string>Apollo (0.10.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
