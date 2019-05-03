@@ -23,7 +23,8 @@ final class BookmarkViewController: BaseListViewController<String>,
 BaseListViewControllerDataSource,
 BaseListViewControllerEmptyDataSource,
 BookmarkIDCloudStoreListener,
-BookmarkHeaderSectionControllerDelegate {
+BookmarkHeaderSectionControllerDelegate,
+BookmarkSectionControllerDelegate {
 
     typealias Client = BookmarkViewControllerClient & BookmarkCloudMigratorClient
 
@@ -150,11 +151,11 @@ BookmarkHeaderSectionControllerDelegate {
             switch $0 {
             case .issue(let model):
                 return ListSwiftPair.pair(model, {
-                    BookmarkIssueSectionController()
+                    BookmarkIssueSectionController(delegate: self)
                 })
             case .repo(let model):
                 return ListSwiftPair.pair(model, {
-                    BookmarkRepoSectionController()
+                    BookmarkRepoSectionController(delegate: self)
                 })
             }
         }
@@ -194,4 +195,10 @@ BookmarkHeaderSectionControllerDelegate {
         cloudStore.clear()
     }
 
+    // MARK: BookmarkSectionControllerDelegate
+
+    func didSwipeToDelete(at indexPath: IndexPath) {
+        let graphQLID = cloudStore.ids[indexPath.row + 1]
+        cloudStore.remove(graphQLID: graphQLID)
+    }
 }
