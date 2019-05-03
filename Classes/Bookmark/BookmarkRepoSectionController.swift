@@ -11,10 +11,6 @@ import IGListKit
 import GitHawkRoutes
 import SwipeCellKit
 
-protocol BookmarkSectionControllerDelegate: AnyObject {
-    func didSwipeToDelete(at indexPath: IndexPath)
-}
-
 final class BookmarkRepoSectionController: ListSwiftSectionController<RepositoryDetails>, SwipeCollectionViewCellDelegate {
 
     private weak var delegate: BookmarkSectionControllerDelegate?

@@ -10,6 +10,10 @@ import Foundation
 import IGListKit
 import Squawk
 
+protocol BookmarkSectionControllerDelegate: AnyObject {
+    func didSwipeToDelete(at indexPath: IndexPath)
+}
+
 protocol BookmarkViewControllerClient {
     func fetch(graphQLIDs: [String], completion: @escaping (Result<[BookmarkModelType]>) -> Void)
 }
