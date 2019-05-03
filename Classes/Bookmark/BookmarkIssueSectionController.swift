@@ -44,7 +44,7 @@ final class BookmarkIssueSectionController: ListSwiftSectionController<BookmarkI
     func collectionView(_ collectionView: UICollectionView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
 
-        let action = DeleteSwipeAction { _, _ in
+        let action = DeleteSwipeAction { _, indexPath in
             self.delegate?.didSwipeToDelete(at: indexPath)
         }
 

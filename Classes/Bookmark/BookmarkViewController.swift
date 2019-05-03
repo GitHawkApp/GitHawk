@@ -198,7 +198,7 @@ BookmarkSectionControllerDelegate {
     // MARK: BookmarkSectionControllerDelegate
 
     func didSwipeToDelete(at indexPath: IndexPath) {
-        let graphQLID = cloudStore.ids[indexPath.row + 1]
+        let graphQLID = cloudStore.ids[indexPath.section-1]
         cloudStore.remove(graphQLID: graphQLID)
     }
 }
