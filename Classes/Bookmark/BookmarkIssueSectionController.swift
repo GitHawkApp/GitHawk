@@ -41,6 +41,8 @@ final class BookmarkIssueSectionController: ListSwiftSectionController<BookmarkI
         ]
     }
 
+    // MARK: SwipeCollectionViewCellDelegate
+
     func collectionView(_ collectionView: UICollectionView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
 
