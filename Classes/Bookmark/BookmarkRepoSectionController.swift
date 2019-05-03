@@ -24,20 +24,23 @@ final class BookmarkRepoSectionController: ListSwiftSectionController<Repository
     }
 
     override func createBinders(from value: RepositoryDetails) -> [ListBinder] {
-        let createdBinder = binder(value,
-                                   cellType: ListCellType.class(BookmarkRepoCell.self),
-                                   size: {
-            return $0.collection.cellSize(with: Styles.Sizes.tableCellHeightLarge)
-        }, configure: { (cell, listSectionController) in
-            cell.configure(owner: listSectionController.value.owner, name: listSectionController.value.name)
-            cell.delegate = self
-        }, didSelect: { [weak self] context in
-            self?.viewController?.route(RepoRoute(owner: context.value.owner,
-                                                  repo: context.value.name,
-                                                  branch: nil))
-        })
-
-        return [createdBinder]
+        return [
+            binder(
+                value,
+                cellType: ListCellType.class(BookmarkRepoCell.self),
+                size: {
+                    return $0.collection.cellSize(with: Styles.Sizes.tableCellHeightLarge)
+            }, configure: {
+                $0.configure(owner: $1.value.owner, name: $1.value.name)
+                $0.delegate = self
+            }, didSelect: { [weak self] context in
+                self?.viewController?.route(RepoRoute(
+                    owner: context.value.owner,
+                    repo: context.value.name,
+                    branch: nil
+                ))
+            })
+        ]
     }
 
     func collectionView(_ collectionView: UICollectionView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
