@@ -24,7 +24,7 @@ GitHawk is the highest rated iOS app for GitHub.
 
 ## Contributing
 
-We are always looking for contributions from **all skill levels**! A great way to get started is by helping [organize and/or squish bugs](https://github.com/GitHawkApp/GitHawk/issues?q=is%3Aissue+is%3Aopen+label%3A%22%3Abug%3A+bug%22). If you're looking to ease your way into the project try out a [good first issue](https://github.com/GitHawkApp/GitHawk/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+We are always looking for contributions from **all skill levels**! A great way to get started is by helping [organize and/or squish bugs](https://github.com/GitHawkApp/GitHawk/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3A%22🐛+bug%22). If you're looking to ease your way into the project try out a [good first issue](https://github.com/GitHawkApp/GitHawk/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3A%22✨+good+first+issue%22+).
 
 #### Highest Priority Needs:
 
