@@ -51,6 +51,9 @@ IssueManagingContextControllerDelegate {
         bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
         right: Styles.Sizes.gutter
     )
+    private var insetForManageButton: CGFloat {
+        return manageController.manageButton.isHidden ? 0 : manageController.manageButton.frame.height
+    }
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
