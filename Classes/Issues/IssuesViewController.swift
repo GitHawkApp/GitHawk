@@ -45,14 +45,16 @@ IssueManagingContextControllerDelegate {
     private var bookmarkNavController: BookmarkNavigationController?
     private var autocompleteController: AutocompleteController!
     private let manageController: IssueManagingContextController
-    private let threadInset = UIEdgeInsets(
-        top: Styles.Sizes.rowSpacing / 2,
-        left: Styles.Sizes.gutter,
-        bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
-        right: Styles.Sizes.gutter
-    )
     private var insetForManageButton: CGFloat {
         return manageController.manageButton.isHidden ? 0 : manageController.manageButton.frame.height
+    }
+    private var threadInset: UIEdgeInsets {
+        return UIEdgeInsets(
+            top: Styles.Sizes.rowSpacing / 2,
+            left: Styles.Sizes.gutter,
+            bottom: 2 * Styles.Sizes.rowSpacing + insetForManageButton,
+            right: Styles.Sizes.gutter
+        )
     }
 
     private var needsScrollToBottom = false
