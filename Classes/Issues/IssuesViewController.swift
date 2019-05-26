@@ -644,4 +644,8 @@ IssueManagingContextControllerDelegate {
         needsScrollToBottom = true
     }
 
+    func didUpdateManageButtonVisibility(_ manageButton: UIView) {
+        feed.collectionView.updateSafeInset(container: view, base: threadInset)
+    }
+
 }
