@@ -212,7 +212,10 @@ GitHubSessionListener {
                 self?.signout()
             }
         ])
-
+        if let popoverPresentationController = alert.popoverPresentationController {
+            popoverPresentationController.sourceView = signOutCell
+            popoverPresentationController.sourceRect = signOutCell.bounds
+        }
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
