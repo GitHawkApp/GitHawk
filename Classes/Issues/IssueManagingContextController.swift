@@ -12,6 +12,7 @@ import GitHubAPI
 
 protocol IssueManagingContextControllerDelegate: class {
     func willMutateModel(from controller: IssueManagingContextController)
+    func didUpdateManageButtonVisibility(_ manageButton: UIView)
 }
 
 final class IssueManagingContextController: NSObject, ContextMenuDelegate {
@@ -80,6 +81,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func updateButtonVisibility() {
         manageButton.isHidden = actions.count == 0
+        delegate?.didUpdateManageButtonVisibility(manageButton)
     }
 
     enum Action {
