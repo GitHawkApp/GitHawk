@@ -34,8 +34,6 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
             make.trailing.equalTo(contentView)
             make.centerY.equalTo(contentView)
         }
-
-        searchBar.resignWhenKeyboardHides()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,6 +59,10 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
 }
