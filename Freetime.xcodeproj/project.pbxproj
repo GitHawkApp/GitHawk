@@ -184,7 +184,6 @@
 		294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
 		294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */; };
 		294A3D761FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */; };
-		294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */; };
 		294AF7F11FC674A400854790 /* CommitDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294AF7F01FC674A400854790 /* CommitDetails.swift */; };
 		294B111E1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */; };
 		294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */; };
@@ -773,7 +772,6 @@
 		294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlModel.swift; sourceTree = "<group>"; };
 		294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlCell.swift; sourceTree = "<group>"; };
 		294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewKeyboardAdjuster.swift; sourceTree = "<group>"; };
-		294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Keyboard.swift"; sourceTree = "<group>"; };
 		294AF7F01FC674A400854790 /* CommitDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitDetails.swift; sourceTree = "<group>"; };
 		294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavRootViewControllerType.swift; sourceTree = "<group>"; };
 		294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerDelegate.swift; sourceTree = "<group>"; };
@@ -1947,7 +1945,6 @@
 				29136BDE200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift */,
 				290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */,
 				294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */,
-				294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */,
 				29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
@@ -3314,7 +3311,6 @@
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
 				D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */,
 				29C62F9B218F406A001724B2 /* IssueFilesSectionController.swift in Sources */,
-				294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */,
 				2977A35B219927F500DBC354 /* SpecialGitHubEmoji.swift in Sources */,
 				297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */,
 				29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */,

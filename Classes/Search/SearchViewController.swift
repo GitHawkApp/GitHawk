@@ -86,8 +86,6 @@ class SearchViewController: UIViewController,
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
-
-        searchBar.resignWhenKeyboardHides()
     }
 
     override func viewWillAppear(_ animated: Bool) {
