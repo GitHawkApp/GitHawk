@@ -52,9 +52,6 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
         case .username(let username):
             shouldShowIssueOnItemSelection = false
             viewController?.presentProfile(login: username)
-        case .issue(let issue):
-            shouldShowIssueOnItemSelection = false
-            viewController?.route_push(to: IssuesViewController(client: client, model: issue))
         default: viewController?.didTap(cell: cell, attribute: attribute)
         }
     }
