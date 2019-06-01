@@ -53,6 +53,12 @@ final class IssueReferencedModel: ListDiffable {
         self.title = title
         self.actor = actor
 
+        let issueDetailsModel = IssueDetailsModel(
+        owner: actor,
+        repo: repo,
+        number: number
+        )
+
         let builder = StyledTextBuilder(styledText: StyledText(
             style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
         ))
@@ -69,9 +75,9 @@ final class IssueReferencedModel: ListDiffable {
             .restore()
             .add(text: "\n")
             .save()
-            .add(styledText: StyledText(text: title, style: Styles.Text.secondaryBold))
+            .add(styledText: StyledText(text: title, style: Styles.Text.secondaryBold.with(attributes: [MarkdownAttribute.issue: issueDetailsModel]) ))
             .restore()
-            .add(text: " #\(number)")
+            .add(text: " #\(number)", attributes: [MarkdownAttribute.issue: issueDetailsModel])
 
         self.string = StyledTextRenderer(
             string: builder.build(),
