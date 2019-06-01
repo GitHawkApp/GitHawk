@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueReferencedSectionController: ListGenericSectionController<IssueReferencedModel> {
+final class IssueReferencedSectionController: ListGenericSectionController<IssueReferencedModel>, MarkdownStyledTextViewDelegate {
 
     private let client: GithubClient
 
@@ -29,14 +29,34 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
         let object = self.object
             else { fatalError("Missing context, model, or cell wrong type") }
         cell.configure(object)
-        cell.delegate = viewController
+        cell.delegate = self
         return cell
     }
 
+    private var shouldShowIssueOnItemSelection: Bool = true
+
     override func didSelectItem(at index: Int) {
+        guard shouldShowIssueOnItemSelection else {
+            shouldShowIssueOnItemSelection = true
+            return
+        }
         guard let object = self.object else { return }
         let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: object.number)
         viewController?.route_push(to: IssuesViewController(client: client, model: model))
+    }
+
+    // MARK: MarkdownStyledTextViewDelegate
+
+    func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
+        switch attribute {
+        case .username(let username):
+            shouldShowIssueOnItemSelection = false
+            viewController?.presentProfile(login: username)
+        case .issue(let issue):
+            shouldShowIssueOnItemSelection = false
+            viewController?.route_push(to: IssuesViewController(client: client, model: issue))
+        default: viewController?.didTap(cell: cell, attribute: attribute)
+        }
     }
 
 }
