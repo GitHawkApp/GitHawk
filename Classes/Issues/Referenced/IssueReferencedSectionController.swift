@@ -48,12 +48,10 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
     // MARK: MarkdownStyledTextViewDelegate
 
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
-        if case let .username(username) = attribute {
-            shouldShowIssueOnItemSelection = false
-            viewController?.presentProfile(login: username)
-        } else {
-            viewController?.didTap(cell: cell, attribute: attribute)
+        guard let viewController = viewController else {
+            return
         }
+        shouldShowIssueOnItemSelection = !viewController.handle(attribute: attribute)
     }
 
 }
