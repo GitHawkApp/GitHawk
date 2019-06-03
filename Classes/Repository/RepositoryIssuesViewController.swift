@@ -91,8 +91,25 @@ IndicatorInfoProvider {
                     self?.models = payload.models
                 }
                 self?.update(page: payload.nextPage, animated: trueUnlessReduceMotionEnabled)
+                let updateTitle = self?.composeIndicatorTitle(with: payload.numberOfItems)
+                guard let update = updateTitle else { return }
+                self?.title = NSLocalizedString(update, comment: "")
+                self?.updatePagerTabStrip()
             }
         }
+    }
+    func composeIndicatorTitle(with itemCount: Int) -> String? {
+        var newTitle: String?
+        switch type {
+        case .issues: newTitle = "Issues (\(itemCount))"
+        case .pullRequests: newTitle = "Pull Requests (\(itemCount))"
+        }
+        guard itemCount > 0, let __title = newTitle else { return nil }
+        return __title
+    }
+    func updatePagerTabStrip() {
+        guard let pagerTabStrip = parent as? ButtonBarPagerTabStripViewController else { return }
+        pagerTabStrip.reloadPagerTabStripView()
     }
 
     // MARK: SearchBarSectionControllerDelegate

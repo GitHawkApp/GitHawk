@@ -12642,7 +12642,7 @@ public final class RepoFilesQuery: GraphQLQuery {
 
 public final class RepoSearchPagesQuery: GraphQLQuery {
   public let operationDefinition =
-    "query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {\n  search(query: $query, type: ISSUE, after: $after, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              status {\n                __typename\n                state\n              }\n            }\n          }\n        }\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n  }\n}"
+    "query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {\n  search(query: $query, type: ISSUE, after: $after, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              status {\n                __typename\n                state\n              }\n            }\n          }\n        }\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n    issueCount\n  }\n}"
 
   public var queryDocument: String { return operationDefinition.appending(RepoEventFields.fragmentDefinition).appending(NodeFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition) }
 
@@ -12694,6 +12694,7 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("nodes", type: .list(.object(Node.selections))),
         GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        GraphQLField("issueCount", type: .nonNull(.scalar(Int.self))),
       ]
 
       public private(set) var resultMap: ResultMap
@@ -12702,8 +12703,8 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
-        self.init(unsafeResultMap: ["__typename": "SearchResultItemConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }, "pageInfo": pageInfo.resultMap])
+      public init(nodes: [Node?]? = nil, pageInfo: PageInfo, issueCount: Int) {
+        self.init(unsafeResultMap: ["__typename": "SearchResultItemConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }, "pageInfo": pageInfo.resultMap, "issueCount": issueCount])
       }
 
       public var __typename: String {
@@ -12732,6 +12733,16 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue.resultMap, forKey: "pageInfo")
+        }
+      }
+
+      /// The number of issues that matched the search query.
+      public var issueCount: Int {
+        get {
+          return resultMap["issueCount"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "issueCount")
         }
       }
 
