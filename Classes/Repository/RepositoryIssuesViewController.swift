@@ -100,6 +100,7 @@ IndicatorInfoProvider {
             }
         }
     }
+
     func composeIndicatorTitle(with itemCount: Int) -> String {
         let newTitle: String
         switch type {
@@ -108,6 +109,7 @@ IndicatorInfoProvider {
         }
         return NSLocalizedString(newTitle, comment: "")
     }
+
     func reloadPagerTabStripView() {
         guard let pagerTabStrip = parent as? ButtonBarPagerTabStripViewController else { return }
         pagerTabStrip.reloadPagerTabStripView()
