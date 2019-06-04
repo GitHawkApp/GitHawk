@@ -81,32 +81,32 @@ IndicatorInfoProvider {
             nextPage: page as String?,
             containerWidth: view.safeContentWidth(with: feed.collectionView)
         ) { [weak self] (result: Result<RepositoryClient.RepositoryPayload>) in
+            guard let `self` = self else { return }
             switch result {
             case .error:
-                self?.error(animated: trueUnlessReduceMotionEnabled)
+                self.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let payload):
                 if let itemCount = payload.numberOfItems,
-                      itemCount > 0,
-                    let updatedTitle = self?.composeIndicatorTitle(with: itemCount) {
-                    self?.title = NSLocalizedString(updatedTitle, comment: "")
-                    self?.reloadPagerTabStripView()
+                      itemCount > 0 {
+                    self.title = self.composeIndicatorTitle(with: itemCount)
+                    self.reloadPagerTabStripView()
                 }
                 if page != nil {
-                    self?.models += payload.models
+                    self.models += payload.models
                 } else {
-                    self?.models = payload.models
+                    self.models = payload.models
                 }
-                self?.update(page: payload.nextPage, animated: trueUnlessReduceMotionEnabled)
+                self.update(page: payload.nextPage, animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
     func composeIndicatorTitle(with itemCount: Int) -> String {
-        var newTitle: String
+        let newTitle: String
         switch type {
         case .issues: newTitle = "Issues (\(itemCount))"
         case .pullRequests: newTitle = "Pull Requests (\(itemCount))"
         }
-        return newTitle
+        return NSLocalizedString(newTitle, comment: "")
     }
     func reloadPagerTabStripView() {
         guard let pagerTabStrip = parent as? ButtonBarPagerTabStripViewController else { return }
@@ -177,5 +177,4 @@ IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: title)
     }
-
 }
