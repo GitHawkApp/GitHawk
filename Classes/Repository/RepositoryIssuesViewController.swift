@@ -85,11 +85,12 @@ IndicatorInfoProvider {
             case .error:
                 self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let payload):
-                let composedTitle = self?.composeIndicatorTitle(with: payload.numberOfItems)
-                guard let updatedTitle = composedTitle else { return }
-                self?.title = NSLocalizedString(updatedTitle, comment: "")
-                self?.reloadPagerTabStripView()
-
+                if let itemCount = payload.numberOfItems,
+                      itemCount > 0,
+                    let updatedTitle = self?.composeIndicatorTitle(with: itemCount) {
+                    self?.title = NSLocalizedString(updatedTitle, comment: "")
+                    self?.reloadPagerTabStripView()
+                }
                 if page != nil {
                     self?.models += payload.models
                 } else {
@@ -99,13 +100,12 @@ IndicatorInfoProvider {
             }
         }
     }
-    func composeIndicatorTitle(with itemCount: Int) -> String? {
+    func composeIndicatorTitle(with itemCount: Int) -> String {
         var newTitle: String
         switch type {
         case .issues: newTitle = "Issues (\(itemCount))"
         case .pullRequests: newTitle = "Pull Requests (\(itemCount))"
         }
-        guard itemCount > 0 else { return nil }
         return newTitle
     }
     func reloadPagerTabStripView() {
