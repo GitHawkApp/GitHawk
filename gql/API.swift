@@ -2088,18 +2088,22 @@ public final class RepoFileHistoryQuery: GraphQLQuery {
 
 public final class RepositoryInfoQuery: GraphQLQuery {
   public let operationDefinition =
-    "query RepositoryInfo($owner: String!, $name: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    id\n    defaultBranchRef {\n      __typename\n      name\n    }\n    hasIssuesEnabled\n  }\n}"
+    "query RepositoryInfo($owner: String!, $name: String!, $issueQuery: String!, $prQuery: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    id\n    defaultBranchRef {\n      __typename\n      name\n    }\n    hasIssuesEnabled\n  }\n  repoIssueOverview: search(query: $issueQuery, type: ISSUE) {\n    __typename\n    issueCount\n  }\n  repoPullRequestOverView: search(query: $prQuery, type: ISSUE) {\n    __typename\n    issueCount\n  }\n}"
 
   public var owner: String
   public var name: String
+  public var issueQuery: String
+  public var prQuery: String
 
-  public init(owner: String, name: String) {
+  public init(owner: String, name: String, issueQuery: String, prQuery: String) {
     self.owner = owner
     self.name = name
+    self.issueQuery = issueQuery
+    self.prQuery = prQuery
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name]
+    return ["owner": owner, "name": name, "issueQuery": issueQuery, "prQuery": prQuery]
   }
 
   public struct Data: GraphQLSelectionSet {
@@ -2107,6 +2111,8 @@ public final class RepositoryInfoQuery: GraphQLQuery {
 
     public static let selections: [GraphQLSelection] = [
       GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name")], type: .object(Repository.selections)),
+      GraphQLField("search", alias: "repoIssueOverview", arguments: ["query": GraphQLVariable("issueQuery"), "type": "ISSUE"], type: .nonNull(.object(RepoIssueOverview.selections))),
+      GraphQLField("search", alias: "repoPullRequestOverView", arguments: ["query": GraphQLVariable("prQuery"), "type": "ISSUE"], type: .nonNull(.object(RepoPullRequestOverView.selections))),
     ]
 
     public private(set) var resultMap: ResultMap
@@ -2115,8 +2121,8 @@ public final class RepositoryInfoQuery: GraphQLQuery {
       self.resultMap = unsafeResultMap
     }
 
-    public init(repository: Repository? = nil) {
-      self.init(unsafeResultMap: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> ResultMap in value.resultMap }])
+    public init(repository: Repository? = nil, repoIssueOverview: RepoIssueOverview, repoPullRequestOverView: RepoPullRequestOverView) {
+      self.init(unsafeResultMap: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> ResultMap in value.resultMap }, "repoIssueOverview": repoIssueOverview.resultMap, "repoPullRequestOverView": repoPullRequestOverView.resultMap])
     }
 
     /// Lookup a given repository by the owner and repository name.
@@ -2126,6 +2132,26 @@ public final class RepositoryInfoQuery: GraphQLQuery {
       }
       set {
         resultMap.updateValue(newValue?.resultMap, forKey: "repository")
+      }
+    }
+
+    /// Perform a search across resources.
+    public var repoIssueOverview: RepoIssueOverview {
+      get {
+        return RepoIssueOverview(unsafeResultMap: resultMap["repoIssueOverview"]! as! ResultMap)
+      }
+      set {
+        resultMap.updateValue(newValue.resultMap, forKey: "repoIssueOverview")
+      }
+    }
+
+    /// Perform a search across resources.
+    public var repoPullRequestOverView: RepoPullRequestOverView {
+      get {
+        return RepoPullRequestOverView(unsafeResultMap: resultMap["repoPullRequestOverView"]! as! ResultMap)
+      }
+      set {
+        resultMap.updateValue(newValue.resultMap, forKey: "repoPullRequestOverView")
       }
     }
 
@@ -2222,6 +2248,82 @@ public final class RepositoryInfoQuery: GraphQLQuery {
           set {
             resultMap.updateValue(newValue, forKey: "name")
           }
+        }
+      }
+    }
+
+    public struct RepoIssueOverview: GraphQLSelectionSet {
+      public static let possibleTypes = ["SearchResultItemConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("issueCount", type: .nonNull(.scalar(Int.self))),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(issueCount: Int) {
+        self.init(unsafeResultMap: ["__typename": "SearchResultItemConnection", "issueCount": issueCount])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The number of issues that matched the search query.
+      public var issueCount: Int {
+        get {
+          return resultMap["issueCount"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "issueCount")
+        }
+      }
+    }
+
+    public struct RepoPullRequestOverView: GraphQLSelectionSet {
+      public static let possibleTypes = ["SearchResultItemConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("issueCount", type: .nonNull(.scalar(Int.self))),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(issueCount: Int) {
+        self.init(unsafeResultMap: ["__typename": "SearchResultItemConnection", "issueCount": issueCount])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The number of issues that matched the search query.
+      public var issueCount: Int {
+        get {
+          return resultMap["issueCount"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "issueCount")
         }
       }
     }
@@ -12642,7 +12744,7 @@ public final class RepoFilesQuery: GraphQLQuery {
 
 public final class RepoSearchPagesQuery: GraphQLQuery {
   public let operationDefinition =
-    "query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {\n  search(query: $query, type: ISSUE, after: $after, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              status {\n                __typename\n                state\n              }\n            }\n          }\n        }\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n    issueCount\n  }\n}"
+    "query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {\n  search(query: $query, type: ISSUE, after: $after, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              status {\n                __typename\n                state\n              }\n            }\n          }\n        }\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n  }\n}"
 
   public var queryDocument: String { return operationDefinition.appending(RepoEventFields.fragmentDefinition).appending(NodeFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition) }
 
@@ -12694,7 +12796,6 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("nodes", type: .list(.object(Node.selections))),
         GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
-        GraphQLField("issueCount", type: .nonNull(.scalar(Int.self))),
       ]
 
       public private(set) var resultMap: ResultMap
@@ -12703,8 +12804,8 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(nodes: [Node?]? = nil, pageInfo: PageInfo, issueCount: Int) {
-        self.init(unsafeResultMap: ["__typename": "SearchResultItemConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }, "pageInfo": pageInfo.resultMap, "issueCount": issueCount])
+      public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
+        self.init(unsafeResultMap: ["__typename": "SearchResultItemConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }, "pageInfo": pageInfo.resultMap])
       }
 
       public var __typename: String {
@@ -12733,16 +12834,6 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue.resultMap, forKey: "pageInfo")
-        }
-      }
-
-      /// The number of issues that matched the search query.
-      public var issueCount: Int {
-        get {
-          return resultMap["issueCount"]! as! Int
-        }
-        set {
-          resultMap.updateValue(newValue, forKey: "issueCount")
         }
       }
 

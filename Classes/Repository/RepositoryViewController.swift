@@ -22,6 +22,8 @@ EmptyViewDelegate {
         let hasIssuesEnabled: Bool
         let defaultBranch: String
         let graphQLID: String
+        let numberOfIssues: Int?
+        let numberOfPullRequests: Int?
     }
 
     private enum State {
@@ -135,7 +137,8 @@ EmptyViewDelegate {
                     client: client,
                     owner: repo.owner,
                     repo: repo.name,
-                    type: .issues
+                    type: .issues,
+                    numberOfItems: details.numberOfIssues
                 ))
             }
             controllers += [
@@ -143,7 +146,9 @@ EmptyViewDelegate {
                     client: client,
                     owner: repo.owner,
                     repo: repo.name,
-                    type: .pullRequests
+                    type: .pullRequests,
+                    numberOfItems: details.numberOfPullRequests
+
                 ),
                 RepositoryCodeDirectoryViewController.createRoot(
                     client: client,
@@ -157,14 +162,23 @@ EmptyViewDelegate {
 
         self.controllers = controllers
     }
+    
+    func buildQueryString(using repo: RepositoryDetails, _ searchString: String) -> String {
+        return "repo:\(repo.owner)/\(repo.name)  \(searchString) ".lowercased()
+    }
 
     func fetchDetails() {
         state = .loading
         buildViewControllers()
         reloadPagerTabStripView()
-
+        let issueSearchQueryString = "is:issue is:open"
+        let prSearchQueryString = "is:pr is:open"
         client.client.query(
-            RepositoryInfoQuery(owner: repo.owner, name: repo.name),
+            RepositoryInfoQuery(owner: repo.owner,
+                                name: repo.name,
+                                issueQuery: buildQueryString(using: repo, issueSearchQueryString),
+                                prQuery: buildQueryString(using: repo, prSearchQueryString)
+            ),
             result: { $0 },
             completion: { [weak self] result in
                 switch result {
@@ -176,7 +190,9 @@ EmptyViewDelegate {
                         let details = Details(
                             hasIssuesEnabled: repo.hasIssuesEnabled,
                             defaultBranch: repo.defaultBranchRef?.name ?? "master",
-                            graphQLID: repo.id
+                            graphQLID: repo.id,
+                            numberOfIssues: data.repoIssueOverview.issueCount,
+                            numberOfPullRequests: data.repoPullRequestOverView.issueCount
                         )
                         self?.state = .value(details)
                     } else {

@@ -1,9 +1,16 @@
-query RepositoryInfo($owner: String!, $name: String!) {
+query RepositoryInfo($owner: String!, $name: String!, $issueQuery: String!, $prQuery: String!) {
   repository(owner: $owner, name: $name) {
     id
     defaultBranchRef {
       name
     }
     hasIssuesEnabled
+  }
+
+  repoIssueOverview: search(query: $issueQuery, type: ISSUE) {
+    issueCount
+  }
+  repoPullRequestOverView: search(query: $prQuery, type: ISSUE) {
+    issueCount
   }
 }

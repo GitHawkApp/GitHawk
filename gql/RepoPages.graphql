@@ -31,6 +31,5 @@ query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {
       hasNextPage
       endCursor
     }
-    issueCount
   }
 }

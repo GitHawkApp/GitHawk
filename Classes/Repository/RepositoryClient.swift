@@ -15,8 +15,6 @@ protocol RepositoryQuery {
     // generated queries should share the same init
     func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType]
     func nextPageToken(from data: GraphQLSelectionSet) -> String?
-    func numberOfItems(from data: GraphQLSelectionSet) -> Int?
-
 }
 
 extension RepoSearchPagesQuery: RepositoryQuery {
@@ -31,12 +29,6 @@ extension RepoSearchPagesQuery: RepositoryQuery {
             results.search.pageInfo.hasNextPage else { return nil }
         return results.search.pageInfo.endCursor
     }
-    func numberOfItems(from data: GraphQLSelectionSet) -> Int? {
-        guard let data = data as? RepoSearchPagesQuery.Data else { return nil }
-        // issueCount is used for both issues and pull requests.
-        return data.search.issueCount
-    }
-
 }
 
 func createSummaryModel(
@@ -95,7 +87,7 @@ func createSummaryModel(
     data: GraphQLSelectionSet,
     contentSizeCategory: UIContentSizeCategory,
     containerWidth: CGFloat
-    ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?, numberOfItems: Int?) {
+    ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?) {
     let nextPage = query.nextPageToken(from: data)
     let models = query.summaryTypes(from: data).compactMap { node in
         return createSummaryModel(
@@ -104,8 +96,7 @@ func createSummaryModel(
             containerWidth: containerWidth
         )
     }.sorted {$0.created > $1.created }
-    let numberOfItems = query.numberOfItems(from: data)
-    return (models, nextPage, numberOfItems)
+    return (models, nextPage)
 }
 
 final class RepositoryClient {
@@ -124,7 +115,6 @@ final class RepositoryClient {
     struct RepositoryPayload {
         let models: [RepositoryIssueSummaryModel]
         let nextPage: String?
-        let numberOfItems: Int?
     }
 
     private func loadPage<T: GraphQLQuery>(
@@ -150,8 +140,7 @@ final class RepositoryClient {
                     DispatchQueue.main.async {
                         completion(.success(RepositoryPayload(
                             models: summary.models,
-                            nextPage: summary.nextPage,
-                            numberOfItems: summary.numberOfItems
+                            nextPage: summary.nextPage
                         )))
                     }
                 }

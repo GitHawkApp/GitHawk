@@ -31,13 +31,15 @@ IndicatorInfoProvider {
     private let debouncer = Debouncer()
     private var previousSearchString = "is:open "
     private var label: String?
+    private var numberOfItems: Int?
 
-    init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType, label: String? = nil) {
+    init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType, label: String? = nil, numberOfItems: Int? = nil) {
         self.owner = owner
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: owner, name: repo)
         self.type = type
         self.label = label
+        self.numberOfItems = numberOfItems
         if let label = label {
             previousSearchString += "label:\"\(label)\" "
         }
@@ -49,10 +51,12 @@ IndicatorInfoProvider {
         self.dataSource = self
         self.emptyDataSource = self
         self.headerDataSource = self
-
-        switch type {
-        case .issues: title = NSLocalizedString("Issues", comment: "")
-        case .pullRequests: title = NSLocalizedString("Pull Requests", comment: "")
+        
+        if let itemCount = numberOfItems,
+           itemCount > 0 {
+            title = self.composeLocalizedTitle(using: itemCount)
+        } else {
+            title = self.composeLocalizedTitle()
         }
     }
 
@@ -86,11 +90,6 @@ IndicatorInfoProvider {
             case .error:
                 self.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let payload):
-                if let itemCount = payload.numberOfItems,
-                      itemCount > 0 {
-                    self.title = self.composeIndicatorTitle(with: itemCount)
-                    self.reloadPagerTabStripView()
-                }
                 if page != nil {
                     self.models += payload.models
                 } else {
@@ -101,7 +100,7 @@ IndicatorInfoProvider {
         }
     }
 
-    func composeIndicatorTitle(with itemCount: Int) -> String {
+    func composeLocalizedTitle(using itemCount: Int) -> String {
         let newTitle: String
         switch type {
         case .issues: newTitle = "Issues (\(itemCount))"
@@ -109,10 +108,14 @@ IndicatorInfoProvider {
         }
         return NSLocalizedString(newTitle, comment: "")
     }
-
-    func reloadPagerTabStripView() {
-        guard let pagerTabStrip = parent as? ButtonBarPagerTabStripViewController else { return }
-        pagerTabStrip.reloadPagerTabStripView()
+    
+    func composeLocalizedTitle() -> String {
+        let localizedTitle: String
+        switch type {
+        case .issues: localizedTitle = "Issues"
+        case .pullRequests: localizedTitle = "Pull Requests"
+        }
+        return NSLocalizedString(localizedTitle, comment: "")
     }
 
     // MARK: SearchBarSectionControllerDelegate
