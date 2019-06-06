@@ -81,7 +81,7 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
 
         BadgeNotifications.clear(for: model)
 
-        if model.type == .securityVulnerability {
+        guard model.type != .securityVulnerability else {
             viewController?.route_push(to: RepositoryViewController(
                 client: modelController.githubClient,
                 repo: RepositoryDetails(owner: model.owner, name: model.repo)
