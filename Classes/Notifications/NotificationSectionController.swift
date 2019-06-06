@@ -81,6 +81,14 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
 
         BadgeNotifications.clear(for: model)
 
+        if model.type == .securityVulnerability {
+            viewController?.route_push(to: RepositoryViewController(
+                client: modelController.githubClient,
+                repo: RepositoryDetails(owner: model.owner, name: model.repo)
+            ))
+            return
+        }
+
         switch model.number {
         case .hash(let hash):
             viewController?.presentCommit(owner: model.owner, repo: model.repo, hash: hash)
