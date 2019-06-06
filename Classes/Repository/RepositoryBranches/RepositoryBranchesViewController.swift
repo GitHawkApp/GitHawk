@@ -37,6 +37,7 @@ RepositoryBranchSectionControllerDelegate {
         title = NSLocalizedString("Branches", comment: "")
         preferredContentSize = Styles.Sizes.contextMenuSize
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.collectionView.indicatorStyle = .white
         feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
@@ -69,22 +70,24 @@ RepositoryBranchSectionControllerDelegate {
     }
 
     override func fetch(page: String?) {
-        client.fetchRepositoryBranches(owner: owner,
-                                 repo: repo
-            ) {  [weak self] result in
+        client.fetchRepositoryBranches(
+            owner: owner,
+            repo: repo,
+            nextPage: page as String?
+        ) {  [weak self] result in
             guard let strongSelf = self else { return }
             switch result {
-            case .success(let branches):
-                self?.branches = RepositoryBranchesViewController.arrangeBranches(
+            case .success(let payload):
+                strongSelf.branches = RepositoryBranchesViewController.arrangeBranches(
                     selectedBranch: strongSelf.selectedBranch,
                     defaultBranch: strongSelf.defaultBranch,
-                    branches: branches
+                    branches: strongSelf.branches + payload.branches
                 )
-
+                strongSelf.update(page: payload.nextPage, animated: true)
             case .error(let error):
                 Squawk.show(error: error)
+                strongSelf.error(animated: trueUnlessReduceMotionEnabled)
             }
-            self?.update(animated: true)
         }
     }
 

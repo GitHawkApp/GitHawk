@@ -15,8 +15,11 @@ extension ReactionContent {
         case .heart: return "❤️"
         case .hooray: return "🎉"
         case .laugh: return "😄"
-        case .thumbsUp, .__unknown: return "👍"
+        case .thumbsUp: return "👍"
         case .thumbsDown: return "👎"
+        case .rocket: return "🚀"
+        case .eyes: return "👀"
+        case .__unknown: return "❓"
         }
     }
 
@@ -37,6 +40,8 @@ extension String {
         case "😄": return .laugh
         case "👍": return .thumbsUp
         case "👎": return .thumbsDown
+        case "🚀": return .rocket
+        case "👀": return .eyes
         default:   return nil
         }
     }

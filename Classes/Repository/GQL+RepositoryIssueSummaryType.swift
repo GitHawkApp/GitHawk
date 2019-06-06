@@ -10,6 +10,10 @@ import Foundation
 
 extension RepoSearchPagesQuery.Data.Search.Node.AsIssue: RepositoryIssueSummaryType {
 
+    var id: String {
+        return fragments.nodeFields.id
+    }
+
     var labelableFields: LabelableFields {
         return fragments.labelableFields
     }
@@ -36,6 +40,10 @@ extension RepoSearchPagesQuery.Data.Search.Node.AsIssue: RepositoryIssueSummaryT
 }
 
 extension RepoSearchPagesQuery.Data.Search.Node.AsPullRequest: RepositoryIssueSummaryType {
+
+    var id: String {
+        return fragments.nodeFields.id
+    }
 
     var labelableFields: LabelableFields {
         return fragments.labelableFields

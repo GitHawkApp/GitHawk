@@ -23,6 +23,7 @@ BaseListViewControllerDataSource {
         title = NSLocalizedString("Watched Repos", comment: "")
         preferredContentSize = Styles.Sizes.contextMenuSize
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.collectionView.indicatorStyle = .white
         feed.setLoadingSpinnerColor(to: .white)
     }
 

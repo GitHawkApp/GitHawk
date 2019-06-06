@@ -15,7 +15,7 @@ final class SplitPlaceholderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Styles.Colors.background
+        view.backgroundColor = Styles.Colors.Gray.lighter.color
 
         view.addSubview(imageView)
         imageView.snp.makeConstraints { make in

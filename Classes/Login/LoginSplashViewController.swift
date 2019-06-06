@@ -68,6 +68,7 @@ final class LoginSplashViewController: UIViewController {
         super.viewDidLoad()
         state = .idle
         signInButton.layer.cornerRadius = Styles.Sizes.cardCornerRadius
+        signInButton.addTouchEffect()
     }
 
     override func viewDidAppear(_ animated: Bool) {

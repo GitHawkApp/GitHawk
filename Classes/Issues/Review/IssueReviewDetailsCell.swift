@@ -83,7 +83,7 @@ final class IssueReviewDetailsCell: IssueCommentBaseCell, ListBindable {
             action = NSLocalizedString("requested changes", comment: "")
             iconBackgroundColor = Styles.Colors.Red.medium.color
             iconTintColor = .white
-            iconName = "x-small"
+            iconName = "request-changes"
         case .approved:
             action = NSLocalizedString("approved", comment: "")
             iconBackgroundColor = Styles.Colors.Green.medium.color

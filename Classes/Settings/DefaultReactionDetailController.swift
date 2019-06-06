@@ -20,7 +20,13 @@ class DefaultReactionDetailController: UITableViewController {
     @IBOutlet var hoorayCell: UITableViewCell!
     @IBOutlet var confusedCell: UITableViewCell!
     @IBOutlet var heartCell: UITableViewCell!
+    @IBOutlet var rocketCell: UITableViewCell!
+    @IBOutlet var eyesCell: UITableViewCell!
     @IBOutlet var enabledSwitch: UISwitch!
+
+    private var allEmojiCells: [UITableViewCell] {
+        return [thumbsUpCell, thumbsDownCell, laughCell, hoorayCell, confusedCell, heartCell, rocketCell, eyesCell]
+    }
 
     weak var delegate: DefaultReactionDelegate?
 
@@ -45,6 +51,8 @@ class DefaultReactionDetailController: UITableViewController {
         case hoorayCell: updateDefault(reaction: .hooray)
         case confusedCell: updateDefault(reaction: .confused)
         case heartCell: updateDefault(reaction: .heart)
+        case rocketCell: updateDefault(reaction: .rocket)
+        case eyesCell: updateDefault(reaction: .eyes)
         default: break
         }
     }
@@ -69,6 +77,8 @@ class DefaultReactionDetailController: UITableViewController {
         case .hooray: cell = hoorayCell
         case .confused: cell = confusedCell
         case .heart: cell = heartCell
+        case .rocket: cell = rocketCell
+        case .eyes: cell = eyesCell
         }
         updateCells(cell: cell)
     }
@@ -77,7 +87,7 @@ class DefaultReactionDetailController: UITableViewController {
         rz_smoothlyDeselectRows(tableView: self.tableView)
 
         // Reset all to none
-        [thumbsUpCell, thumbsDownCell, laughCell, hoorayCell, confusedCell, heartCell].forEach { $0.accessoryType = .none }
+        allEmojiCells.forEach { $0.accessoryType = .none }
 
         // Set proper cell to check
         cell.accessoryType = .checkmark

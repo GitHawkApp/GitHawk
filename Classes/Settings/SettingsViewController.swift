@@ -40,12 +40,13 @@ GitHubSessionListener {
     @IBOutlet weak var markReadSwitch: UISwitch!
     @IBOutlet weak var accountsCell: StyledTableCell!
     @IBOutlet weak var apiStatusLabel: UILabel!
-    @IBOutlet weak var apiStatusView: UIView!
+    @IBOutlet weak var apiStatusView: UIImageView!
     @IBOutlet weak var signatureSwitch: UISwitch!
     @IBOutlet weak var defaultReactionLabel: UILabel!
     @IBOutlet weak var pushSwitch: UISwitch!
     @IBOutlet weak var pushCell: UITableViewCell!
     @IBOutlet weak var pushSettingsButton: UIButton!
+    @IBOutlet weak var openExternalLinksSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +54,9 @@ GitHubSessionListener {
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
+        apiStatusView.image = .from(color: Styles.Colors.Gray.border.color)
         signatureSwitch.isOn = Signature.enabled
+        openExternalLinksSwitch.isOn = UserDefaults.standard.shouldOpenExternalLinksInSafari
         pushSettingsButton.accessibilityLabel = NSLocalizedString("How we send push notifications in GitHawk", comment: "")
 
         updateBadge()
@@ -82,21 +85,16 @@ GitHubSessionListener {
                 strongSelf.apiStatusView.isHidden = true
                 strongSelf.apiStatusLabel.text = NSLocalizedString("error", comment: "")
             case .success(let response):
-                let text: String
+                let text = response.data.status.description
                 let color: UIColor
-                switch response.data.status {
-                case .good:
-                    text = NSLocalizedString("Good", comment: "")
-                    color = Styles.Colors.Green.medium.color
-                case .minor:
-                    text = NSLocalizedString("Minor", comment: "")
-                    color = Styles.Colors.Yellow.medium.color
-                case .major:
-                    text = NSLocalizedString("Major", comment: "")
-                    color = Styles.Colors.Red.medium.color
+                switch response.data.status.indicator {
+                case .none: color = Styles.Colors.Green.medium.color
+                case .minor: color = Styles.Colors.Yellow.medium.color
+                case .major: color = Styles.Colors.Red.medium.color
+                case .critical: color = Styles.Colors.Red.dark.color
                 }
                 strongSelf.apiStatusView.isHidden = false
-                strongSelf.apiStatusView.backgroundColor = color
+                strongSelf.apiStatusView.image = .from(color: color)
                 strongSelf.apiStatusLabel.text = text
                 strongSelf.apiStatusLabel.textColor = color
             }
@@ -144,7 +142,7 @@ GitHubSessionListener {
     }
 
     private func onGitHubStatus() {
-        guard let url = URLBuilder(host: "status.github.com").add(path: "messages").url
+        guard let url = URLBuilder(host: "www.githubstatus.com").url
             else { return }
         presentSafari(url: url)
     }
@@ -214,7 +212,10 @@ GitHubSessionListener {
                 self?.signout()
             }
         ])
-
+        if let popoverPresentationController = alert.popoverPresentationController {
+            popoverPresentationController.sourceView = signOutCell
+            popoverPresentationController.sourceRect = signOutCell.bounds
+        }
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
@@ -284,6 +285,10 @@ GitHubSessionListener {
 
     @IBAction private func onPushNotificationsInfo(_ sender: Any) {
         showContextualMenu(PushNotificationsDisclaimerViewController())
+    }
+
+    @IBAction private func onOpenExternalLinks(_ sender: Any) {
+        UserDefaults.standard.shouldOpenExternalLinksInSafari = openExternalLinksSwitch.isOn
     }
 
     // MARK: NewIssueTableViewControllerDelegate

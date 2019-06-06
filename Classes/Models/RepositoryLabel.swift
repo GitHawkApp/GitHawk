@@ -12,11 +12,11 @@ import IGListKit
 final class RepositoryLabel: ListDiffable, Hashable, Equatable, ListSwiftDiffable {
 
     let color: String
-    let name: String
+    var name: String = ""
 
     init(color: String, name: String) {
         self.color = color
-        self.name = name
+        self.name = name.replacingGithubEmoji
     }
 
     // MARK: ListDiffable
@@ -33,9 +33,9 @@ final class RepositoryLabel: ListDiffable, Hashable, Equatable, ListSwiftDiffabl
 
     // MARK: Hashable
 
-    var hashValue: Int {
-        return color.hashValue
-            .combineHash(with: name.hashValue)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(color.hashValue)
+        hasher.combine(name.hashValue)
     }
 
     // MARK: Equatable

@@ -5,8 +5,8 @@ inhibit_all_warnings!
 
 target 'GitHubAPI' do
 
-  pod 'Alamofire', '~> 4.4.0'
-  pod 'Apollo', '~> 0.8.0'
+  pod 'Alamofire', '~> 4.8'
+  pod 'Apollo', '~> 0.10.0'
 
 end
 

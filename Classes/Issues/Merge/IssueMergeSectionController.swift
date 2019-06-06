@@ -74,9 +74,14 @@ ListBindingSectionControllerSelectionDelegate {
             repo: model.repo,
             number: model.number,
             type: preferredMergeType,
-            error: { [weak self] in
-                self?.loading = false
-                self?.update(animated: true)
+            completionHandler: { [weak self] isSuccessfulMerge in
+                if isSuccessfulMerge {
+                    Haptic.triggerNotification(.success)
+                } else {
+                    self?.loading = false
+                    self?.update(animated: true)
+                    Haptic.triggerNotification(.error)
+                }
         })
     }
 
@@ -212,7 +217,7 @@ ListBindingSectionControllerSelectionDelegate {
             title: NSLocalizedString("Change merge type", comment: ""),
             preferredStyle: .actionSheet
         )
-        alert.popoverPresentationController?.sourceView = button.optionIconView
+        alert.popoverPresentationController?.sourceView = button.optionButton
 
         for type in types {
             alert.add(action: AlertAction(AlertActionBuilder {

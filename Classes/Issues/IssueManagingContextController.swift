@@ -12,6 +12,7 @@ import GitHubAPI
 
 protocol IssueManagingContextControllerDelegate: class {
     func willMutateModel(from controller: IssueManagingContextController)
+    func didUpdateManageButtonVisibility(_ manageButton: UIView)
 }
 
 final class IssueManagingContextController: NSObject, ContextMenuDelegate {
@@ -56,6 +57,13 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     init(model: IssueDetailsModel, client: GithubClient) {
         let button = IssueManageButton()
+        // alpha animation is jarring when you see the contents beneath
+        button.addTouchEffect(UIControlEffect(
+            backgroundColor: "3E93F4".color,
+            alpha: 1,
+            transform: CGAffineTransform(scaleX: 0.92, y: 0.92)
+        ))
+        button.adjustsImageWhenHighlighted = false
         manageButton = button
         self.client = client
         self.model = model
@@ -73,6 +81,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func updateButtonVisibility() {
         manageButton.isHidden = actions.count == 0
+        delegate?.didUpdateManageButtonVisibility(manageButton)
     }
 
     enum Action {

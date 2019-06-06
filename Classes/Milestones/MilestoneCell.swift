@@ -18,6 +18,7 @@ final class MilestoneCell2: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        overlayColor = Styles.Colors.Gray.medium.color
         backgroundColor = nil
         contentView.backgroundColor = nil
 

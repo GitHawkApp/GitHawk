@@ -87,6 +87,7 @@ EmptyViewDelegate {
         updateRightBarItems()
 
         let navigationTitle = DropdownTitleView()
+        navigationTitle.addTouchEffect()
         navigationItem.titleView = navigationTitle
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         let labelFormat = NSLocalizedString(

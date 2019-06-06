@@ -35,6 +35,7 @@ IndicatorInfoProvider {
             image: UIImage(named: "bullets-hollow"),
             target: self,
             action: #selector(RepositoryCodeDirectoryViewController.onShare(sender:)))
+        barButtonItem.accessibilityLabel = Constants.Strings.moreOptions
         barButtonItem.isEnabled = false
         return barButtonItem
     }()

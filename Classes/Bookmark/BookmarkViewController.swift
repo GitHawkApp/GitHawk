@@ -10,6 +10,10 @@ import Foundation
 import IGListKit
 import Squawk
 
+protocol BookmarkSectionControllerDelegate: AnyObject {
+    func didSwipeToDelete(at indexPath: IndexPath)
+}
+
 protocol BookmarkViewControllerClient {
     func fetch(graphQLIDs: [String], completion: @escaping (Result<[BookmarkModelType]>) -> Void)
 }
@@ -23,7 +27,8 @@ final class BookmarkViewController: BaseListViewController<String>,
 BaseListViewControllerDataSource,
 BaseListViewControllerEmptyDataSource,
 BookmarkIDCloudStoreListener,
-BookmarkHeaderSectionControllerDelegate {
+BookmarkHeaderSectionControllerDelegate,
+BookmarkSectionControllerDelegate {
 
     typealias Client = BookmarkViewControllerClient & BookmarkCloudMigratorClient
 
@@ -64,6 +69,8 @@ BookmarkHeaderSectionControllerDelegate {
                 self?.handleMigrationSuccess(graphQLIDs: ids)
             case .error(let error):
                 self?.handleMigration(error: error)
+            case .partial(let ids, let errors):
+                self?.handleMigrationPartial(graphQLIDs: ids, errors: errors)
             }
         }
     }
@@ -91,6 +98,25 @@ BookmarkHeaderSectionControllerDelegate {
     private func handleMigrationSuccess(graphQLIDs: [String]) {
         cloudStore.add(graphQLIDs: graphQLIDs)
         fetch(page: nil)
+    }
+
+    private func handleMigrationPartial(graphQLIDs: [String], errors: Int) {
+        handleMigrationSuccess(graphQLIDs: graphQLIDs)
+
+        let messageFormat: String
+        if errors == 1 {
+            messageFormat = NSLocalizedString("%i bookmark could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
+        } else {
+            messageFormat = NSLocalizedString("%i bookmarks could not be migrated due to OAuth restrictions on one or more repos. We're sorry for any inconvenience!", comment: "")
+        }
+
+        let alert = UIAlertController(
+            title: NSLocalizedString("Error Migrating Bookmarks", comment: ""),
+            message: String.localizedStringWithFormat(messageFormat, errors),
+            preferredStyle: .alert
+        )
+        alert.add(action: UIAlertAction(title: Constants.Strings.ok, style: .default))
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: Overrides
@@ -129,11 +155,11 @@ BookmarkHeaderSectionControllerDelegate {
             switch $0 {
             case .issue(let model):
                 return ListSwiftPair.pair(model, {
-                    BookmarkIssueSectionController()
+                    BookmarkIssueSectionController(delegate: self)
                 })
             case .repo(let model):
                 return ListSwiftPair.pair(model, {
-                    BookmarkRepoSectionController()
+                    BookmarkRepoSectionController(delegate: self)
                 })
             }
         }
@@ -173,4 +199,10 @@ BookmarkHeaderSectionControllerDelegate {
         cloudStore.clear()
     }
 
+    // MARK: BookmarkSectionControllerDelegate
+
+    func didSwipeToDelete(at indexPath: IndexPath) {
+        let graphQLID = cloudStore.ids[indexPath.section-1]
+        cloudStore.remove(graphQLID: graphQLID)
+    }
 }

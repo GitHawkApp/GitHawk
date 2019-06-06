@@ -208,9 +208,12 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
         update(animated: trueUnlessReduceMotionEnabled)
         generator.impactOccurred()
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
-            if result == nil {
+            switch result {
+            case .success: break
+            case .error(let error):
                 self?.reactionMutation = previousReaction
                 self?.update(animated: trueUnlessReduceMotionEnabled)
+                Squawk.show(error: error)
             }
         }
     }

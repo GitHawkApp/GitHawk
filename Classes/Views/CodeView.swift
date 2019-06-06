@@ -31,7 +31,7 @@ final class CodeView: UITextView {
     }
 
     // MARK: Public API
-    func set(code: String, language: String? = nil) {
+    func set(code: String, language: String? = nil, completion: @escaping () -> Void) {
         DispatchQueue.global().async {
             let maybeHighlighted: NSAttributedString?
             if let language = language {
@@ -40,9 +40,13 @@ final class CodeView: UITextView {
                 // Automatic language detection
                 maybeHighlighted = GithubHighlighting.highlight(code)
             }
-            guard let highlighted = maybeHighlighted else { return }
+            guard let highlighted = maybeHighlighted else {
+                DispatchQueue.main.async(execute: completion)
+                return
+            }
             DispatchQueue.main.async { [weak self] in
                 self?.set(attributedCode: highlighted)
+                completion()
             }
         }
     }

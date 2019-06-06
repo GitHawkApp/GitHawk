@@ -131,7 +131,7 @@ public final class MessageView: UIView, MessageTextViewListener {
 
     /// - Parameter accessibilityLabel: A custom `accessibilityLabel` to set on the button.
     /// If none is supplied, it will default to the icon's `accessibilityLabel`.
-    public func setButton(icon: UIImage?, for state: UIControlState, position: ButtonPosition, accessibilityLabel: String? = nil) {
+    public func setButton(icon: UIImage?, for state: UIControl.State, position: ButtonPosition, accessibilityLabel: String? = nil) {
         let button: UIButton
         switch position {
         case .left:
@@ -146,7 +146,7 @@ public final class MessageView: UIView, MessageTextViewListener {
 
     /// - Parameter accessibilityLabel: A custom `accessibilityLabel` to set on the button.
     /// If none is supplied, it will default to the the supplied `title`.
-    public func setButton(title: String, for state: UIControlState, position: ButtonPosition, accessibilityLabel: String? = nil) {
+    public func setButton(title: String, for state: UIControl.State, position: ButtonPosition, accessibilityLabel: String? = nil) {
         let button: UIButton
         switch position {
         case .left:
