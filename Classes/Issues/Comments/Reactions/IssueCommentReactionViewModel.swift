@@ -34,11 +34,10 @@ final class IssueCommentReactionViewModel: ListDiffable {
 
     init(models: [ReactionViewModel]) {
         let reactions = IssueCommentReactionViewModel.allReactions
-        let sortedModels = models.sorted { (m1, m2) -> Bool in
-            let m1Idx = reactions.firstIndex(of: m1.content) ?? 0
-            let m2Idx = reactions.firstIndex(of: m2.content) ?? 0
-            return m1Idx < m2Idx
+        let indexOfModel: (ReactionViewModel) -> Int = {
+            reactions.firstIndex(of: $0.content) ?? 0
         }
+        let sortedModels = models.sorted { indexOfModel($0) < indexOfModel($1) }
         self.models = sortedModels
 
         var map = [ReactionContent: ReactionViewModel]()
