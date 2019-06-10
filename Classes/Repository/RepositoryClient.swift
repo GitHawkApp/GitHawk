@@ -29,7 +29,6 @@ extension RepoSearchPagesQuery: RepositoryQuery {
             results.search.pageInfo.hasNextPage else { return nil }
         return results.search.pageInfo.endCursor
     }
-
 }
 
 func createSummaryModel(
