@@ -170,7 +170,9 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         let title = NSMutableAttributedString(string: "\(model.owner)/\(model.repo) ", attributes: titleAttributes)
         titleAttributes[.font] = Styles.Text.secondary.preferredFont
         switch model.number {
-        case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
+        case .number(let number):
+            guard model.type != .securityVulnerability else { break }
+            title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break
         }
         detailsLabel.attributedText = title
