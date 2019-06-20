@@ -21,7 +21,13 @@ final class InboxFilterController {
 
     let client: InboxFilterControllerClient
     let announcer = Announcer<InboxFilterControllerListener>()
-
+    private static let key = "com.freetime.InboxFilterController.filterIndex"
+    
+    private static var filterIndex: Int {
+        get { return UserDefaults.standard.integer(forKey: key) }
+        set(newIndex) { UserDefaults.standard.set(newIndex, forKey: key) }
+    }
+    
     private static let filters = [
         InboxFilterModel(type: .unread),
         InboxFilterModel(type: .all),
@@ -30,9 +36,12 @@ final class InboxFilterController {
         InboxFilterModel(type: .created)
     ]
 
-    private(set) var selected: InboxFilterModel = InboxFilterController.filters[0] {
+    private(set) var selected: InboxFilterModel = InboxFilterController.filters[filterIndex] {
         didSet {
             announcer.enumerate { $0.didUpdateSelectedFilter(for: self) }
+            guard let newIndex = InboxFilterController.filters
+                .firstIndex(where: { $0.type == selected.type }) else { return }
+            InboxFilterController.filterIndex = newIndex
         }
     }
     private var fetchedFilters = [InboxFilterModel]()
