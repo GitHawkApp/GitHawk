@@ -1,0 +1,50 @@
+#!/usr/bin/env groovy
+
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/thanhlelgg/brain-and-brawn"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-unit-tests"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+    agent {
+        node {
+            label 'MacOSX'
+        }
+    }
+    stages {
+        stage('Setup project') {
+            steps {
+                setBuildStatus("In progress...", "PENDING")
+                sh "bundle"
+                sh "bundle exec pod install"
+                sh "npm install"         
+            }
+        }
+        stage('Run unit test') {
+            steps {
+                sh "fastlane tests"
+            }
+        }
+    }
+    post('Tear down') {
+        always {        
+            emailext body: '${DEFAULT_CONTENT}',
+            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+            subject: '${DEFAULT_SUBJECT}'
+        }
+        always {
+            junit 'fastlane/report.xml'
+        }
+        success {
+            setBuildStatus("Build succeeded", "SUCCESS")
+        }
+        failure {
+            setBuildStatus("Build failed", "FAILURE")
+        }
+    }
+}

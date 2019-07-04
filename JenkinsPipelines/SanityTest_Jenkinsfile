@@ -1,0 +1,88 @@
+#!/usr/bin/env groovy
+
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/thanhlelgg/brain-and-brawn"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/sanity-test"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+    agent {
+        node {
+            label 'MacOSX'
+        }
+    }
+    environment {
+        APP_FOLDER = "brainbrawnios/"
+        ARTIFACTS_FOLDER = "artifacts/"
+        TESTS_FILE_PATH = "tests/brain_and_brawns/testcases/test_bb_home_page.py"
+        APPIUM_TESTS_FOLDER = "appium_tests"
+        ALLURE_REPORT_FOLDER = "allure-results"
+    }
+    stages {
+        stage('Pod install') {
+            steps {
+                setBuildStatus("In progress...", "PENDING")
+                dir("${env.APP_FOLDER}") {
+                    sh "pod install"
+                }             
+            }
+        }
+        stage('Build testing app') {
+            steps {
+                dir("${env.APP_FOLDER}") {
+                    sh 'xcodebuild clean build -workspace brainbrawnios.xcworkspace -scheme brainbrawnios \
+                        -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" \
+                        CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -sdk iphonesimulator12.2'
+                    script {
+                        env.APP_PATH = sh(returnStdout: true, 
+                            script: 'xcodebuild clean build -workspace brainbrawnios.xcworkspace -scheme brainbrawnios \
+                            -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" \
+                            CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -sdk iphonesimulator12.2 \
+                            -showBuildSettings | grep -m 1 "CODESIGNING_FOLDER_PATH" | grep -oEi "\\/.*"').trim()
+                    }
+                }
+                sh "mkdir -p ${env.ARTIFACTS_FOLDER} && cp -R ${env.APP_PATH} ${env.ARTIFACTS_FOLDER}"
+            }
+        }
+        stage('Run appium tests') {
+            steps {
+                dir("${env.APPIUM_TESTS_FOLDER}") {
+                    git url: 'git@github.com:mwd-tampham/mwd-smart-shopper-auto.git'
+                    sh './start_appium_server.sh'
+                    sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} ${env.TESTS_FILE_PATH}"
+                }
+            }
+        }
+        stage('Generate reports') {
+            steps {
+                script {
+                    allure([
+                            includeProperties: false,
+                            jdk: '',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: "${env.APPIUM_TESTS_FOLDER}/${env.ALLURE_REPORT_FOLDER}"]]
+                    ])
+                }
+            }
+        }
+    }
+    post('Close appium server and simulators') {
+        always {
+            sh 'killall -KILL node'
+            sh 'killall "Simulator"'
+            archiveArtifacts artifacts: "${env.ARTIFACTS_FOLDER}", onlyIfSuccessful: true
+        }
+        success {
+            setBuildStatus("Build succeeded", "SUCCESS")
+        }
+        failure {
+            setBuildStatus("Build failed", "FAILURE")
+        }
+    }
+}

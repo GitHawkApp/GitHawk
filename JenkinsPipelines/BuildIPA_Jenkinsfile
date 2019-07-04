@@ -1,0 +1,56 @@
+#!/usr/bin/env groovy
+
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/thanhlelgg/brain-and-brawn"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-ipa"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+    agent {
+        node {
+            label 'MacOSX'
+        }
+    }
+    environment {
+        APP_FOLDER = "brainbrawnios/"
+        ARTIFACTS_FOLDER = "artifacts/"
+        ARCHIVE_FILEPATH = "archive_folder/brainbrawnios.xcarchive"
+    }
+    stages {
+        stage('Pod install') {
+            steps {
+                setBuildStatus("In progress...", "PENDING")
+                dir("${env.APP_FOLDER}") {
+                    sh "pod install"
+                }             
+            }
+        }
+        stage('Build Release app') {
+            steps {
+                dir("${env.APP_FOLDER}") {
+                    withCredentials([string(credentialsId: 'thanh_mac_password', variable: 'mac_password')]) {
+                        sh "security unlock-keychain -p ${mac_password} login.keychain-db"
+                    }
+                    sh "xcodebuild -workspace brainbrawnios.xcworkspace -scheme brainbrawnios -configuration Release \
+                        -allowProvisioningUpdates -sdk iphoneos12.2 archive -archivePath ${env.ARCHIVE_FILEPATH}/"
+                    sh "xcodebuild -exportArchive -archivePath  ${env.ARCHIVE_FILEPATH} -exportOptionsPlist \
+                        exportOptions.plist -exportPath ${env.ARTIFACTS_FOLDER}"
+                }
+            }
+        }
+    }
+    post('Archive release app') {
+        success {
+            archiveArtifacts artifacts: "${env.APP_FOLDER}/${env.ARTIFACTS_FOLDER}", onlyIfSuccessful: true
+            setBuildStatus("Build succeeded", "SUCCESS")
+        }
+        failure {
+            setBuildStatus("Build failed", "FAILURE")
+        }
+    }
+}

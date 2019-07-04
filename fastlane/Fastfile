@@ -13,6 +13,11 @@ default_platform :ios
 # Fastfile actions accept additional configuration, but
 # don't worry, fastlane will prompt you for required
 # info which you can add here later
+
+lane :build do
+  build_app(scheme: "Freetime-AppCenter")
+end
+
 lane :beta do
   # match(type: "appstore")
   gym(scheme: "Freetime", configuration: "TestFlight")
@@ -24,4 +29,8 @@ end
 lane :appstore do
   gym(scheme: "Freetime")
   appstore(skip_screenshots: true)
+end
+
+lane :tests do
+  run_tests(scheme: "Freetime-AppCenter")
 end
