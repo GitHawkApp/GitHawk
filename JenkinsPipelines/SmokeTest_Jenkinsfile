@@ -1,0 +1,89 @@
+#!/usr/bin/env groovy
+
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/sonnguyen-logigear/GitHawk"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/smoke-test"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+    agent {
+        node {
+            label 'MacOSX'
+        }
+    }
+    environment {
+        APP_FOLDER = "brainbrawnios/"
+        ARTIFACTS_FOLDER = "artifacts/"
+        TESTCASES_FOLDER = "./src/tests/freetime/testcases/"
+        APPIUM_TESTS_FOLDER = "appium_tests"
+        ALLURE_REPORT_FOLDER = "allure-results"
+        withCredentials([string(credentialsId: 'test_github_token', variable: 'TOKEN')]) {
+            PERSONAL_TOKEN = $TOKEN
+        }
+    }
+    stages {
+        stage('Setup project') {
+            steps {
+                setBuildStatus("In progress...", "PENDING")
+                catchError {
+                    sh "bundle"
+                    sh "bundle exec pod install"
+                    sh "npm install"  
+                }       
+            }
+        }
+        stage('Build testing app') {
+            steps {
+                sh 'xcodebuild clean build -workspace Freetime.xcworkspace -scheme "Freetime-AppCenter" \
+                    -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" \
+                    CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6"'
+                script {
+                    env.APP_PATH = sh(returnStdout: true, 
+                        script: 'xcodebuild clean build -workspace Freetime.xcworkspace -scheme "Freetime-AppCenter" \
+                        -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
+                        CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6" \
+                        -showBuildSettings | grep -m 1 "CODESIGNING_FOLDER_PATH" | grep -oEi "\\/.*"').trim()
+                }
+            }
+        }
+        stage('Run appium tests') {
+            steps {
+                dir("${env.APPIUM_TESTS_FOLDER}") {
+                    git url: 'git@github.com:sonnguyen-logigear/mwd-githawk-automation-python.git'
+                    sh './src/tools/start_appium_server.sh'
+                    sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} -v -m smoke_test ${TESTCASES_FOLDER}"
+                }
+            }
+        }
+        stage('Generate reports') {
+            steps {
+                script {
+                    allure([
+                            includeProperties: false,
+                            jdk: '',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: "${env.APPIUM_TESTS_FOLDER}/${env.ALLURE_REPORT_FOLDER}"]]
+                    ])
+                }
+            }
+        }
+    }
+    post('Close appium server and simulators') {
+        always {
+            sh 'killall -KILL node'
+            sh 'killall "Simulator"'
+        }
+        success {
+            setBuildStatus("Build succeeded", "SUCCESS")
+        }
+        failure {
+            setBuildStatus("Build failed", "FAILURE")
+        }
+    }
+}
