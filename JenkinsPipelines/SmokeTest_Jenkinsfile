@@ -17,11 +17,11 @@ pipeline {
         }
     }
     environment {
-        APP_FOLDER = "brainbrawnios/"
-        ARTIFACTS_FOLDER = "artifacts/"
+        ARTIFACTS_FOLDER = "artifacts"
         TESTCASES_FOLDER = "./src/tests/freetime/testcases/"
         APPIUM_TESTS_FOLDER = "appium_tests"
         ALLURE_REPORT_FOLDER = "allure-results"
+        BUILD_LOG = "${ARTIFACTS_FOLDER}/xcodebuild.log"
     }
     stages {
         stage('Setup project') {
@@ -31,30 +31,32 @@ pipeline {
                     sh "bundle"
                     sh "bundle exec pod install"
                     sh "npm install"  
-                }       
+                } 
+                sh "mkdir -p $ARTIFACTS_FOLDER"      
             }
         }
         stage('Build testing app') {
             steps {
-                sh 'xcodebuild clean build -workspace Freetime.xcworkspace -scheme "Freetime-AppCenter" \
-                    -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" \
-                    CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6"'
-                script {
-                    env.APP_PATH = sh(returnStdout: true, 
-                        script: 'xcodebuild clean build -workspace Freetime.xcworkspace -scheme "Freetime-AppCenter" \
+                catchError {
+                    sh 'xcodebuild clean build -workspace Freetime.xcworkspace -scheme "Freetime-AppCenter" \
                         -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
-                        CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6" \
-                        -showBuildSettings | grep -m 1 "CODESIGNING_FOLDER_PATH" | grep -oEi "\\/.*"').trim()
+                        CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6" > $BUILD_LOG'
+                    script {
+                            env.APP_PATH = sh(returnStdout: true, 
+                                script: 'grep -m 1 "Freetime.app" $BUILD_LOG | grep -oEi "\\/.*.app"').trim()
+                    }
                 }
             }
         }
         stage('Run appium tests') {
             steps {
-                dir("${env.APPIUM_TESTS_FOLDER}") {
-                    git url: 'git@github.com:sonnguyen-logigear/mwd-githawk-automation-python.git'
-                    sh './src/tools/start_appium_server.sh'
-                    withCredentials([string(credentialsId: 'test_github_token', variable: 'PERSONAL_TOKEN')]) {
-                        sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} -v -m smoke_test ${TESTCASES_FOLDER}"
+                catchError {
+                    dir("${env.APPIUM_TESTS_FOLDER}") {
+                        git url: 'git@github.com:sonnguyen-logigear/mwd-githawk-automation-python.git'
+                        sh './src/tools/start_appium_server.sh ../$ARTIFACTS_FOLDER'
+                        withCredentials([string(credentialsId: 'test_github_token', variable: 'PERSONAL_TOKEN')]) {
+                            sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} -v -m smoke_test ${TESTCASES_FOLDER}"
+                        }
                     }
                 }
             }
@@ -75,6 +77,7 @@ pipeline {
     }
     post('Close appium server and simulators') {
         always {
+            archiveArtifacts artifacts: "${env.ARTIFACTS_FOLDER}/", onlyIfSuccessful: false
             sh 'killall -KILL node'
             sh 'killall "Simulator"'
         }

@@ -3,8 +3,8 @@
 void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/thanhlelgg/brain-and-brawn"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/stress-test"],
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/sonnguyen-logigear/GitHawk"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/smoke-test"],
       errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ]);
@@ -16,43 +16,51 @@ pipeline {
             label 'MacOSX'
         }
     }
+    triggers {
+        cron('H 0 19 * * *')
+    }
     environment {
-        APP_FOLDER = "brainbrawnios/"
+        ARTIFACTS_FOLDER = "artifacts"
+        TESTCASES_FOLDER = "./src/tests/freetime/testcases/"
         APPIUM_TESTS_FOLDER = "appium_tests"
         ALLURE_REPORT_FOLDER = "allure-results"
-        TESTCASES_FOLDER = "./tests/brain_and_brawns/testcases"
+        BUILD_LOG = "${ARTIFACTS_FOLDER}/xcodebuild.log"
     }
     stages {
-        stage('Pod install') {
+        stage('Setup project') {
             steps {
                 setBuildStatus("In progress...", "PENDING")
-                dir("${env.APP_FOLDER}") {
-                    sh "pod install"
-                }             
+                catchError {
+                    sh "bundle"
+                    sh "bundle exec pod install"
+                    sh "npm install"  
+                } 
+                sh "mkdir -p $ARTIFACTS_FOLDER"      
             }
         }
         stage('Build testing app') {
             steps {
-                dir("${env.APP_FOLDER}") {
-                    sh 'xcodebuild clean build -workspace brainbrawnios.xcworkspace -scheme brainbrawnios \
-                        -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" \
-                        CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -sdk iphonesimulator12.2'
+                catchError {
+                    sh 'xcodebuild clean build -workspace Freetime.xcworkspace -scheme "Freetime-AppCenter" \
+                        -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
+                        CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6" > $BUILD_LOG'
                     script {
-                        env.APP_PATH = sh(returnStdout: true, 
-                            script: 'xcodebuild clean build -workspace brainbrawnios.xcworkspace -scheme brainbrawnios \
-                            -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" \
-                            CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -sdk iphonesimulator12.2 \
-                            -showBuildSettings | grep -m 1 "CODESIGNING_FOLDER_PATH" | grep -oEi "\\/.*"').trim()
+                            env.APP_PATH = sh(returnStdout: true, 
+                                script: 'grep -m 1 "Freetime.app" $BUILD_LOG | grep -oEi "\\/.*.app"').trim()
                     }
                 }
             }
         }
-        stage('Run stress tests') {
+        stage('Run appium tests') {
             steps {
-                dir("${env.APPIUM_TESTS_FOLDER}") {
-                    git url: 'git@github.com:mwd-tampham/mwd-smart-shopper-auto.git'
-                    sh './start_appium_server.sh'
-                    sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} -v -m stress_test ${TESTCASES_FOLDER}"
+                catchError {
+                    dir("${env.APPIUM_TESTS_FOLDER}") {
+                        git url: 'git@github.com:sonnguyen-logigear/mwd-githawk-automation-python.git'
+                        sh './src/tools/start_appium_server.sh ../$ARTIFACTS_FOLDER'
+                        withCredentials([string(credentialsId: 'test_github_token', variable: 'PERSONAL_TOKEN')]) {
+                            sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} -v -m stress_test ${TESTCASES_FOLDER}"
+                        }
+                    }
                 }
             }
         }
@@ -72,6 +80,7 @@ pipeline {
     }
     post('Close appium server and simulators') {
         always {
+            archiveArtifacts artifacts: "${env.ARTIFACTS_FOLDER}/", onlyIfSuccessful: false
             sh 'killall -KILL node'
             sh 'killall "Simulator"'
         }
