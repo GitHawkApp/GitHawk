@@ -53,10 +53,9 @@ pipeline {
                 dir("${env.APPIUM_TESTS_FOLDER}") {
                     git url: 'git@github.com:sonnguyen-logigear/mwd-githawk-automation-python.git'
                     sh './src/tools/start_appium_server.sh'
-                    withCredentials([string(credentialsId: 'test_github_token', variable: 'TOKEN')]) {
-                        env.PERSONAL_TOKEN = "${TOKEN}"
+                    withCredentials([string(credentialsId: 'test_github_token', variable: 'PERSONAL_TOKEN')]) {
+                        sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} -v -m smoke_test ${TESTCASES_FOLDER}"
                     }
-                    sh "python3 -m pytest --alluredir ${env.ALLURE_REPORT_FOLDER} -v -m smoke_test ${TESTCASES_FOLDER}"
                 }
             }
         }
