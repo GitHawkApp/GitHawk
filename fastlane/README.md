@@ -25,14 +25,29 @@ fastlane build
 fastlane beta
 ```
 
+### publish
+```
+fastlane publish
+```
+
 ### tests
 ```
 fastlane tests
 ```
 
-### certificates
+### certificates_dev
 ```
-fastlane certificates
+fastlane certificates_dev
+```
+
+### certificates_adhoc
+```
+fastlane certificates_adhoc
+```
+
+### certificates_appstore
+```
+fastlane certificates_appstore
 ```
 
 

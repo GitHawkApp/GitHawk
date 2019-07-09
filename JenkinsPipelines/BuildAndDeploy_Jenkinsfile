@@ -1,0 +1,54 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent {
+        node {
+            label 'MacOSX'
+        }
+    }
+    environment {
+        ARTIFACTS_FOLDER = "artifacts"
+        GYM_DESTINATION = "${ARTIFACTS_FOLDER}"
+        BUILD_LOG = "${ARTIFACTS_FOLDER}/xcodebuild.log"
+    }
+    stages {
+        stage('Setup project') {
+            steps {
+                setBuildStatus("In progress...", "PENDING")
+                catchError {
+                    sh "bundle"
+                    sh "bundle exec pod install"
+                    sh "npm install"  
+                } 
+                sh "mkdir -p $ARTIFACTS_FOLDER"      
+            }
+        }
+        stage('Build and/or deploy Application') {
+            steps {
+                catchError {
+                    withCredentials([string(credentialsId: 'thanh_mac_password', variable: 'mac_password')]) {
+                        sh "security unlock-keychain -p ${mac_password} login.keychain-db"
+                    }
+                    script {
+                        if (env.BRANCH_NAME == 'master') {
+                            echo 'fastlane appstore'
+                        } else if (env.BRANCH_NAME.startWiths('rc-')) {
+                            withCredentials([string(credentialsId: 'crashlytics_api_token', 
+                                                    variable: 'CRASHLYTICS_API_TOKEN'),
+                                             string(credentialsId: 'crashlytics_build_secret', 
+                                                    variable: 'CRASHLYTICS_BUILD_SECRET')]) {
+                                sh "fastlane beta"
+                            }
+                        } else {
+                            sh "fastlane build"
+                        }
+                    }
+                }
+            }
+        }
+    post('Archive necessary artifact') {
+        always {
+            archiveArtifacts artifacts: "${env.ARTIFACTS_FOLDER}/", onlyIfSuccessful: false
+        }
+    }
+}

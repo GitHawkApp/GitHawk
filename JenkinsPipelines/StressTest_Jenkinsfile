@@ -1,15 +1,5 @@
 #!/usr/bin/env groovy
 
-void setBuildStatus(String message, String state) {
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/sonnguyen-logigear/GitHawk"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/smoke-test"],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ]);
-}
-
 pipeline {
     agent {
         node {
@@ -45,8 +35,8 @@ pipeline {
                         -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
                         CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6" > $BUILD_LOG'
                     script {
-                            env.APP_PATH = sh(returnStdout: true, 
-                                script: 'grep -m 1 "Freetime.app" $BUILD_LOG | grep -oEi "\\/.*.app"').trim()
+                        env.APP_PATH = sh(returnStdout: true, 
+                            script: 'grep -m 1 "Freetime.app" $BUILD_LOG | grep -oEi "\\/.*.app"').trim()
                     }
                 }
             }
@@ -83,12 +73,6 @@ pipeline {
             archiveArtifacts artifacts: "${env.ARTIFACTS_FOLDER}/", onlyIfSuccessful: false
             sh 'killall -KILL node'
             sh 'killall "Simulator"'
-        }
-        success {
-            setBuildStatus("Build succeeded", "SUCCESS")
-        }
-        failure {
-            setBuildStatus("Build failed", "FAILURE")
         }
     }
 }

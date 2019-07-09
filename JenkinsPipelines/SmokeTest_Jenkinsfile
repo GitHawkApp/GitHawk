@@ -42,8 +42,8 @@ pipeline {
                         -configuration Debug -allowProvisioningUpdates CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO \
                         CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -destination name="iPhone 6" > $BUILD_LOG'
                     script {
-                            env.APP_PATH = sh(returnStdout: true, 
-                                script: 'grep -m 1 "Freetime.app" $BUILD_LOG | grep -oEi "\\/.*.app"').trim()
+                        env.APP_PATH = sh(returnStdout: true, 
+                            script: 'grep -m 1 "Freetime.app" $BUILD_LOG | grep -oEi "\\/.*.app"').trim()
                     }
                 }
             }
