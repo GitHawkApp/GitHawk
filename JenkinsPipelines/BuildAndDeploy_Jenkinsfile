@@ -46,6 +46,7 @@ pipeline {
                 }
             }
         }
+    }
     post('Archive necessary artifact') {
         always {
             archiveArtifacts artifacts: "${env.ARTIFACTS_FOLDER}/", onlyIfSuccessful: false
