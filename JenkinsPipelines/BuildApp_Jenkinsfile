@@ -3,8 +3,8 @@
 void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/thanhlelgg/brain-and-brawn"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-ipa"],
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/sonnguyen-logigear/GitHawk"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-app"],
       errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ]);
@@ -17,34 +17,31 @@ pipeline {
         }
     }
     environment {
-        APP_FOLDER = "brainbrawnios/"
-        ARTIFACTS_FOLDER = "artifacts/"
-        ARCHIVE_FILEPATH = "archive_folder/brainbrawnios.xcarchive"
+        GYM_DESTINATION = "artifacts"
     }
     stages {
-        stage('Pod install') {
+        stage('Setup project') {
             steps {
                 setBuildStatus("In progress...", "PENDING")
-                dir("${env.APP_FOLDER}") {
-                    sh "pod install"
-                }             
+                catchError {
+                    sh "bundle"
+                    sh "bundle exec pod install"
+                    sh "npm install"  
+                }          
             }
         }
-        stage('Build Release app') {
+        stage('Build app') {
             steps {
                 dir("${env.APP_FOLDER}") {
                     withCredentials([string(credentialsId: 'thanh_mac_password', variable: 'mac_password')]) {
                         sh "security unlock-keychain -p ${mac_password} login.keychain-db"
                     }
-                    sh "xcodebuild -workspace brainbrawnios.xcworkspace -scheme brainbrawnios -configuration Release \
-                        -allowProvisioningUpdates -sdk iphoneos12.2 archive -archivePath ${env.ARCHIVE_FILEPATH}/"
-                    sh "xcodebuild -exportArchive -archivePath  ${env.ARCHIVE_FILEPATH} -exportOptionsPlist \
-                        exportOptions.plist -exportPath ${env.ARTIFACTS_FOLDER}"
+                    sh "fastlane build"
                 }
             }
         }
     }
-    post('Archive release app') {
+    post('Archive app') {
         success {
             archiveArtifacts artifacts: "${env.APP_FOLDER}/${env.ARTIFACTS_FOLDER}", onlyIfSuccessful: true
             setBuildStatus("Build succeeded", "SUCCESS")

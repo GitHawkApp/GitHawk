@@ -7,20 +7,16 @@ pipeline {
         }
     }
     environment {
-        ARTIFACTS_FOLDER = "artifacts"
-        GYM_DESTINATION = "${ARTIFACTS_FOLDER}"
-        BUILD_LOG = "${ARTIFACTS_FOLDER}/xcodebuild.log"
+        GYM_DESTINATION = "artifacts"
     }
     stages {
         stage('Setup project') {
             steps {
-                setBuildStatus("In progress...", "PENDING")
                 catchError {
                     sh "bundle"
                     sh "bundle exec pod install"
                     sh "npm install"  
-                } 
-                sh "mkdir -p $ARTIFACTS_FOLDER"      
+                }      
             }
         }
         stage('Build and/or deploy Application') {
@@ -32,15 +28,13 @@ pipeline {
                     script {
                         if (env.BRANCH_NAME == 'master') {
                             echo 'fastlane appstore'
-                        } else if (env.BRANCH_NAME.startWiths('rc-')) {
+                        } else {
                             withCredentials([string(credentialsId: 'crashlytics_api_token', 
                                                     variable: 'CRASHLYTICS_API_TOKEN'),
                                              string(credentialsId: 'crashlytics_build_secret', 
                                                     variable: 'CRASHLYTICS_BUILD_SECRET')]) {
                                 sh "fastlane beta"
                             }
-                        } else {
-                            sh "fastlane build"
                         }
                     }
                 }
@@ -49,7 +43,7 @@ pipeline {
     }
     post('Archive necessary artifact') {
         always {
-            archiveArtifacts artifacts: "${env.ARTIFACTS_FOLDER}/", onlyIfSuccessful: false
+            archiveArtifacts artifacts: "${env.GYM_DESTINATION}/", onlyIfSuccessful: true
         }
     }
 }

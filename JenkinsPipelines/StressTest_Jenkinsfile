@@ -19,7 +19,6 @@ pipeline {
     stages {
         stage('Setup project') {
             steps {
-                setBuildStatus("In progress...", "PENDING")
                 catchError {
                     sh "bundle"
                     sh "bundle exec pod install"
