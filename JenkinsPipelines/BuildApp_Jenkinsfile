@@ -17,7 +17,10 @@ pipeline {
         }
     }
     environment {
-        GYM_DESTINATION = "artifacts"
+        LC_ALL = "en_US.UTF-8"
+        LANG = "en_US.UTF-8"
+        LANGUAGE = "en_US.UTF-8"
+        GYM_OUTPUT_DIRECTORY = "artifacts"
     }
     stages {
         stage('Setup project') {
@@ -33,7 +36,7 @@ pipeline {
         stage('Build app') {
             steps {
                 dir("${env.APP_FOLDER}") {
-                    withCredentials([string(credentialsId: 'thanh_mac_password', variable: 'mac_password')]) {
+                    withCredentials([string(credentialsId: "${MAC_PASSWORD}", variable: 'mac_password')]) {
                         sh "security unlock-keychain -p ${mac_password} login.keychain-db"
                     }
                     sh "fastlane build"
@@ -43,7 +46,7 @@ pipeline {
     }
     post('Archive app') {
         success {
-            archiveArtifacts artifacts: "${env.APP_FOLDER}/${env.ARTIFACTS_FOLDER}", onlyIfSuccessful: true
+            archiveArtifacts artifacts: "${env.GYM_OUTPUT_DIRECTORY}/", onlyIfSuccessful: true
             setBuildStatus("Build succeeded", "SUCCESS")
         }
         failure {

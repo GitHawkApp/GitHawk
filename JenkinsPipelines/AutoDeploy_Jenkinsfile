@@ -7,7 +7,10 @@ pipeline {
         }
     }
     environment {
-        GYM_DESTINATION = "artifacts"
+        LC_ALL = "en_US.UTF-8"
+        LANG = "en_US.UTF-8"
+        LANGUAGE = "en_US.UTF-8"
+        GYM_OUTPUT_DIRECTORY = "artifacts"
     }
     stages {
         stage('Setup project') {
@@ -19,20 +22,22 @@ pipeline {
                 }      
             }
         }
-        stage('Build and/or deploy Application') {
+        stage('Build and deploy Application') {
             steps {
                 catchError {
-                    withCredentials([string(credentialsId: 'thanh_mac_password', variable: 'mac_password')]) {
+                    withCredentials([string(credentialsId: "${MAC_PASSWORD}", variable: 'mac_password')]) {
                         sh "security unlock-keychain -p ${mac_password} login.keychain-db"
                     }
                     script {
                         if (env.BRANCH_NAME == 'master') {
-                            echo 'fastlane appstore'
+                            sh 'fastlane publish'
                         } else {
                             withCredentials([string(credentialsId: 'crashlytics_api_token', 
                                                     variable: 'CRASHLYTICS_API_TOKEN'),
                                              string(credentialsId: 'crashlytics_build_secret', 
-                                                    variable: 'CRASHLYTICS_BUILD_SECRET')]) {
+                                                    variable: 'CRASHLYTICS_BUILD_SECRET'),
+                                             string(credentialsId: 'github_match_password', 
+                                                    variable: 'MATCH_PASSWORD')]) {
                                 sh "fastlane beta"
                             }
                         }
@@ -43,7 +48,7 @@ pipeline {
     }
     post('Archive necessary artifact') {
         always {
-            archiveArtifacts artifacts: "${env.GYM_DESTINATION}/", onlyIfSuccessful: true
+            archiveArtifacts artifacts: "${env.GYM_OUTPUT_DIRECTORY}/", onlyIfSuccessful: true
         }
     }
 }

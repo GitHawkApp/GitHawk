@@ -4,7 +4,7 @@ void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/sonnguyen-logigear/GitHawk"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/run-unit-tests"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/unit-tests"],
       errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ]);
@@ -18,6 +18,8 @@ pipeline {
     }
     environment {
         LC_ALL = "en_US.UTF-8"
+        LANG = "en_US.UTF-8"
+        LANGUAGE = "en_US.UTF-8"
         TEST_OUTPUT = "fastlane/test_output/"
     }
     stages {
