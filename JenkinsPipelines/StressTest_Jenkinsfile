@@ -7,7 +7,7 @@ pipeline {
         }
     }
     triggers {
-        cron('H 0 19 * * *')
+        cron('H 19 * * *')
     }
     environment {
         ARTIFACTS_FOLDER = "artifacts"
