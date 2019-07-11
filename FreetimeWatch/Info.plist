@@ -26,7 +26,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.logigear.githawk</string>
+	<string>com.mowede.githawk</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>

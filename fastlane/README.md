@@ -30,9 +30,9 @@ fastlane beta
 fastlane publish
 ```
 
-### tests
+### test
 ```
-fastlane tests
+fastlane test
 ```
 
 ### certificates_dev

@@ -37,7 +37,7 @@ pipeline {
             steps {
                 sh "rm -rf ${env.TEST_OUTPUT}"
                 catchError {
-                    sh "fastlane tests"
+                    sh "fastlane test"
                 }
                 sh "mv ${env.TEST_OUTPUT}/report.junit ${env.TEST_OUTPUT}/report.xml"
             }

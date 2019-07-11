@@ -15,15 +15,15 @@ default_platform :ios
 # info which you can add here later
 
 lane :build do
-  match(app_identifier: ["com.logigear.githawk", "com.logigear.githawk.watchkitapp", 
-                         "com.logigear.githawk.watchkitapp.watchkitextension"], 
+  match(app_identifier: ["com.mowede.githawk", "com.mowede.githawk.watchkitapp", 
+                         "com.mowede.githawk.watchkitapp.watchkitextension"], 
         type: "development", readonly: true)
   gym(scheme: "Freetime-AppCenter", export_method: "development")
 end
 
 lane :beta do
-  match(app_identifier: ["com.logigear.githawk", "com.logigear.githawk.watchkitapp", 
-                         "com.logigear.githawk.watchkitapp.watchkitextension"], 
+  match(app_identifier: ["com.mowede.githawk", "com.mowede.githawk.watchkitapp", 
+                         "com.mowede.githawk.watchkitapp.watchkitextension"], 
         type: "adhoc", readonly: true)
   gym(scheme: "Freetime-AppCenter", export_method: "ad-hoc")
   crashlytics
@@ -31,31 +31,31 @@ end
 
 lane :publish do
   # capture_screenshots       # Will be implemented later
-  match(app_identifier: ["com.logigear.githawk", "com.logigear.githawk.watchkitapp", 
-                         "com.logigear.githawk.watchkitapp.watchkitextension"], 
+  match(app_identifier: ["com.mowede.githawk", "com.mowede.githawk.watchkitapp", 
+                         "com.mowede.githawk.watchkitapp.watchkitextension"], 
         type: "appstore", readonly: true)
   gym(scheme: "Freetime-AppCenter", export_method: "app-store")
   # upload_to_app_store       # Currently we don't want to actual upload app to appstore
 end
 
-lane :tests do
+lane :test do
   run_tests(scheme: "Freetime-AppCenter")
 end
 
 lane :certificates_dev do
-  match(app_identifier: ["com.logigear.githawk", "com.logigear.githawk.watchkitapp", 
-                         "com.logigear.githawk.watchkitapp.watchkitextension"], 
+  match(app_identifier: ["com.mowede.githawk", "com.mowede.githawk.watchkitapp", 
+                         "com.mowede.githawk.watchkitapp.watchkitextension"], 
         type: "development")
 end
 
 lane :certificates_adhoc do
-  match(app_identifier: ["com.logigear.githawk", "com.logigear.githawk.watchkitapp", 
-                         "com.logigear.githawk.watchkitapp.watchkitextension"], 
+  match(app_identifier: ["com.mowede.githawk", "com.mowede.githawk.watchkitapp", 
+                         "com.mowede.githawk.watchkitapp.watchkitextension"], 
         type: "adhoc")
 end
 
 lane :certificates_appstore do
-  match(app_identifier: ["com.logigear.githawk", "com.logigear.githawk.watchkitapp", 
-                         "com.logigear.githawk.watchkitapp.watchkitextension"], 
+  match(app_identifier: ["com.mowede.githawk", "com.mowede.githawk.watchkitapp", 
+                         "com.mowede.githawk.watchkitapp.watchkitextension"], 
         type: "appstore")
 end

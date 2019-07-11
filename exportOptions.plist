@@ -10,11 +10,11 @@
 	<string>development</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.logigear.freetime</key>
+		<key>com.mowede.freetime</key>
 		<string>githawn 2</string>
-		<key>com.logigear.freetime.watchkitapp</key>
+		<key>com.mowede.freetime.watchkitapp</key>
 		<string>freetime watchkitapp</string>
-		<key>com.logigear.freetime.watchkitapp.watchkitextension</key>
+		<key>com.mowede.freetime.watchkitapp.watchkitextension</key>
 		<string>watchkitapp watchkitextension</string>
 	</dict>
 	<key>signingCertificate</key>

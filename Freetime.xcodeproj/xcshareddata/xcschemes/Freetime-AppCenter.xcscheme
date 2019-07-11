@@ -38,6 +38,11 @@
                BlueprintName = "FreetimeTests"
                ReferencedContainer = "container:Freetime.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "SecretsTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
