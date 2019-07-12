@@ -1,0 +1,58 @@
+#!/usr/bin/env groovy
+
+void setAnalyzeStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/sonnguyen-logigear/GitHawk"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/analyze-code"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+    agent {
+        node {
+            label 'MacOSX'
+        }
+    }
+    environment {
+        LC_ALL = "en_US.UTF-8"
+        LANG = "en_US.UTF-8"
+        LANGUAGE = "en_US.UTF-8"
+        GYM_OUTPUT_DIRECTORY = "artifacts"
+        ANALYZE_HTML_FILE = "analyze-code.html"
+    }
+    stages {
+        stage('Setup project') {
+            steps {
+                setAnalyzeStatus("In progress...", "PENDING")
+                catchError {
+                    sh "bundle"
+                    sh "bundle exec pod install"
+                    sh "npm install"  
+                }          
+            }
+        }
+        stage('Analyze code') {
+            steps {
+                dir("${env.APP_FOLDER}") {
+                    withCredentials([string(credentialsId: "${MAC_PASSWORD}", variable: 'mac_password')]) {
+                        sh "security unlock-keychain -p ${mac_password} login.keychain-db"
+                    }
+                    sh "brew install swiftlint"
+                    sh "fastlane run swiftlint output_file:\"${env.GYM_OUTPUT_DIRECTORY}/${env.ANALYZE_HTML_FILE}\" reporter:\"html\""
+                }
+            }
+        }
+    }
+    post('Archive app') {
+        success {
+            archiveArtifacts artifacts: "${env.GYM_OUTPUT_DIRECTORY}/", onlyIfSuccessful: true
+            setAnalyzeStatus("Build succeeded", "SUCCESS")
+        }
+        failure {
+            setAnalyzeStatus("Build failed", "FAILURE")
+        }
+    }
+}
