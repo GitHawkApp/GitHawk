@@ -33,6 +33,7 @@ final class RepoInboxRowController: NSObject {
         case .release: imageName = "tag"
         case .repo: imageName = "repo"
         case .vulnerabilityAlert: imageName = "alert"
+        case .ci_activity: imageName = "alert"
         }
         typeImage.setImage(UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate))
 

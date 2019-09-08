@@ -171,7 +171,7 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         titleAttributes[.font] = Styles.Text.secondary.preferredFont
         switch model.number {
         case .number(let number):
-            guard model.type != .securityVulnerability else { break }
+            guard model.type != .securityVulnerability || model.type != .ci_activity  else { break }
             title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break
         }
@@ -184,10 +184,11 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         case .open: tintColor = Styles.Colors.Green.medium.color
         case .pending: tintColor = Styles.Colors.Blue.medium.color
         }
-        iconImageView.tintColor = tintColor
+        
+            iconImageView.tintColor = tintColor
+        
         iconImageView.image = model.type.icon(merged: model.state == .merged)?
             .withRenderingMode(.alwaysTemplate)
-
         let hasComments = model.comments > 0
         commentButton.alpha = hasComments ? 1 : 0.3
         commentButton.setTitle(hasComments ? model.comments.abbreviated : "", for: .normal)

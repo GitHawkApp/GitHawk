@@ -16,6 +16,7 @@ enum NotificationType: String {
     case repo = "Repository"
     case release = "Release"
     case securityVulnerability = "RepositoryVulnerabilityAlert"
+    case ci_activity = "CheckSuite"
 
     var localizedString: String {
         switch self {
@@ -25,6 +26,7 @@ enum NotificationType: String {
         case .release: return NSLocalizedString("Release", comment: "")
         case .pullRequest: return Constants.Strings.pullRequest
         case .securityVulnerability: return NSLocalizedString("Security Vulnerability", comment: "")
+        case .ci_activity: return NSLocalizedString("CI Activity", comment: "")
         }
     }
 }

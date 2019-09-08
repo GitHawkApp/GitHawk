@@ -21,6 +21,7 @@ extension NotificationType {
         case .pullRequest: name = "git-pull-request"
         case .release: name = "tag"
         case .securityVulnerability: name = "alert"
+        case .ci_activity: name = "actions"
         }
         return UIImage(named: name)
     }

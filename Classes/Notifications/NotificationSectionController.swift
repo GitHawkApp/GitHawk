@@ -75,13 +75,18 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
     }
 
     private func showIssue(model: NotificationViewModel) {
+        if model.type == .ci_activity {
+            guard let url = URL(string: "https://github.com/" + model.owner + "/" + model.repo + "/actions"  ) else { return }
+            viewController?.presentSafari(url: url)
+        } else {
         if NotificationModelController.readOnOpen {
             modelController.markNotificationRead(id: model.id)
         }
-
+        
+        
         BadgeNotifications.clear(for: model)
 
-        guard model.type != .securityVulnerability else {
+        guard model.type != .securityVulnerability || model.type != .ci_activity else {
             viewController?.route_push(to: RepositoryViewController(
                 client: modelController.githubClient,
                 repo: RepositoryDetails(owner: model.owner, name: model.repo)
@@ -101,6 +106,7 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
         case .release(let release):
             showRelease(release, model: model)
         }
+    }
     }
 
     private func showRelease(_ release: String, model: NotificationViewModel) {

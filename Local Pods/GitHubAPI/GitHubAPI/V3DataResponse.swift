@@ -21,7 +21,6 @@ public struct V3DataResponse<T: Codable>: EntityResponse {
 
         // https://developer.github.com/v3/#schema
         decoder.dateDecodingStrategy = .iso8601
-
         self.data = try decoder.decode(T.self, from: input)
         self.next = (response?.allHeaderFields["Link"] as? String)?.httpNextPageNumber
     }
