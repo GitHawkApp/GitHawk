@@ -1389,20 +1389,22 @@ public final class AddReactionMutation: GraphQLMutation {
   }
 }
 
-public final class RepositoryLabelsQuery: GraphQLQuery {
+public final class FetchRepositoryLabelsQuery: GraphQLQuery {
   public let operationDefinition =
-    "query RepositoryLabels($owner: String!, $repo: String!) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    labels(first: 100) {\n      __typename\n      nodes {\n        __typename\n        name\n        color\n      }\n    }\n  }\n}"
+    "query fetchRepositoryLabels($owner: String!, $repo: String!, $after: String) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    labels(first: 100, after: $after) {\n      __typename\n      nodes {\n        __typename\n        name\n        color\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
 
   public var owner: String
   public var repo: String
+  public var after: String?
 
-  public init(owner: String, repo: String) {
+  public init(owner: String, repo: String, after: String? = nil) {
     self.owner = owner
     self.repo = repo
+    self.after = after
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "repo": repo]
+    return ["owner": owner, "repo": repo, "after": after]
   }
 
   public struct Data: GraphQLSelectionSet {
@@ -1437,7 +1439,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("labels", arguments: ["first": 100], type: .object(Label.selections)),
+        GraphQLField("labels", arguments: ["first": 100, "after": GraphQLVariable("after")], type: .object(Label.selections)),
       ]
 
       public private(set) var resultMap: ResultMap
@@ -1475,6 +1477,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -1503,6 +1506,16 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(unsafeResultMap: resultMap["pageInfo"]! as! ResultMap)
+          }
+          set {
+            resultMap.updateValue(newValue.resultMap, forKey: "pageInfo")
           }
         }
 
@@ -1552,6 +1565,55 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
             set {
               resultMap.updateValue(newValue, forKey: "color")
             }
+          }
+        }
+      }
+
+      public struct PageInfo: GraphQLSelectionSet {
+        public static let possibleTypes = ["PageInfo"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+          GraphQLField("endCursor", type: .scalar(String.self)),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(hasNextPage: Bool, endCursor: String? = nil) {
+          self.init(unsafeResultMap: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// When paginating forwards, are there more items?
+        public var hasNextPage: Bool {
+          get {
+            return resultMap["hasNextPage"]! as! Bool
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "hasNextPage")
+          }
+        }
+
+        /// When paginating forwards, the cursor to continue.
+        public var endCursor: String? {
+          get {
+            return resultMap["endCursor"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "endCursor")
           }
         }
       }

@@ -16,8 +16,9 @@ LabelSectionControllerDelegate {
 
     private let selectedLabels: Set<RepositoryLabel>
     private var labels = [RepositoryLabel]()
+    private let owner: String
+    private let repo: String
     private let client: GithubClient
-    private let request: RepositoryLabelsQuery
 
     init(
         selected: [RepositoryLabel],
@@ -27,7 +28,8 @@ LabelSectionControllerDelegate {
         ) {
         self.selectedLabels = Set(selected)
         self.client = client
-        self.request = RepositoryLabelsQuery(owner: owner, repo: repo)
+        self.owner = owner
+        self.repo = repo
         super.init(emptyErrorMessage: NSLocalizedString("No labels found", comment: ""))
         preferredContentSize = Styles.Sizes.contextMenuSize
         title = Constants.Strings.labels
@@ -87,20 +89,20 @@ LabelSectionControllerDelegate {
     // MARK: Overrides
 
     override func fetch(page: String?) {
-        client.client.query(request, result: { data in
-            data.repository?.labels?.nodes
-        }, completion: { [weak self] result in
+        client.fetchRepositoryLabels(
+            owner: owner,
+            repo: repo,
+            nextPage: page as String?
+        ) {  [weak self] result in
+            guard let strongSelf = self else { return }
             switch result {
-            case .success(let nodes):
-                self?.labels = nodes.compactMap {
-                    guard let node = $0 else { return nil }
-                    return RepositoryLabel(color: node.color, name: node.name)
-                }.sorted { $0.name < $1.name }
-                self?.update(animated: true)
-            case .failure(let error):
+            case .success(let payload):
+                self?.labels = payload.labels.sorted { $0.name < $1.name }
+                strongSelf.update(page: payload.nextPage, animated: true)
+            case .error(let error):
                 Squawk.show(error: error)
             }
-        })
+        }
     }
 
     // MARK: BaseListViewControllerDataSource
