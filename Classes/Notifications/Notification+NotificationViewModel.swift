@@ -19,17 +19,21 @@ func CreateNotificationViewModels(
         var models = [NotificationViewModel]()
 
         for notification in v3notifications {
-            guard let type = NotificationType(rawValue: notification.subject.type.rawValue),
-                let identifier = notification.subject.identifier
+            guard let type = NotificationType(rawValue: notification.subject.type.rawValue)
                 else { continue }
-
             let number: NotificationViewModel.Number
-            switch identifier {
-            case .hash(let h): number = .hash(h)
-            case .number(let n): number = .number(n)
-            case .release(let r): number = .release(r)
+            
+            if notification.subject.identifier != nil {
+            guard let identifier = notification.subject.identifier
+                else {continue}
+                switch identifier {
+                case .hash(let h): number = .hash(h)
+                case .number(let n): number = .number(n)
+                case .release(let r): number = .release(r)
+                }
+            } else {
+                number = .number(1)
             }
-
             models.append(NotificationViewModel(
                 v3id: notification.id,
                 repo: notification.repository.name,
@@ -47,8 +51,9 @@ func CreateNotificationViewModels(
                 branch: "master",
                 issuesEnabled: true
             ))
+            
         }
-
+        
         DispatchQueue.main.async {
             completion(models)
         }

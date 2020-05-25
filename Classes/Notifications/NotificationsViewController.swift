@@ -53,7 +53,6 @@ InboxFilterControllerListener {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         makeBackBarItemEmpty()
         resetRightBarItem()
 
@@ -62,7 +61,7 @@ InboxFilterControllerListener {
         navigationTitle.addTouchEffect()
         navigationTitle.titleFont = UIFont.preferredFont(forTextStyle: .headline)
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle), for: .touchUpInside)
-
+        // @ Fetches for new features
         newFeaturesController?.fetch { [weak self] in
             self?.update()
         }

@@ -59,13 +59,12 @@ final class NewFeaturesController {
             }
         }
     }
-
+    // fetches for the latest changes
     func fetch(success: @escaping () -> Void) {
         guard let url = fetchURL,
             (testing == true || hasFetchedLatest == false)
             else { return }
         hasFetchedLatest = true
-
         let task = session.dataTask(with: url) { (data, response, _) in
             if let response = response as? HTTPURLResponse,
                 response.statusCode == 200,

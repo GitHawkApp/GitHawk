@@ -45,7 +45,7 @@ final class BookmarkCloudMigrator {
     init(username: String, oldBookmarks: [Bookmark], client: BookmarkCloudMigratorClient) {
         self.bookmarks = oldBookmarks.compactMap {
             switch $0.type {
-            case .commit, .release, .securityVulnerability: return nil
+            case .commit, .release, .securityVulnerability, .ci_activity: return nil
             case .issue, .pullRequest:
                 return .issueOrPullRequest(owner: $0.owner, name: $0.name, number: $0.number)
             case .repo:

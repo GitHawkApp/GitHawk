@@ -94,6 +94,7 @@ final class NotificationModelController {
             }
         } else {
             githubClient.client.send(V3NotificationRequest(all: all, page: page)) { [weak self] result in
+
                 switch result {
                 case .success(let response):
                     self?.handle(
@@ -244,6 +245,7 @@ final class NotificationModelController {
         case .created: mapped = .created
         }
 
+        // Seems important
         githubClient.client.send(V3IssuesRequest(filter: mapped, page: page), completion: { result in
             // iterate result data, convert to InboxDashboardModel
             switch result {
