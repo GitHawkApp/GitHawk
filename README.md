@@ -12,7 +12,7 @@
     </a>
 </p>
 
-GitHawk is the highest rated iOS app for GitHub.
+GitHawk is the second-highest rated iOS app for GitHub.
 
 |         | Features  |
 ----------|-----------------
