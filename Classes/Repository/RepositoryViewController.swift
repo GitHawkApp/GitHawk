@@ -201,7 +201,7 @@ EmptyViewDelegate {
                 }
                 self?.buildViewControllers()
                 self?.reloadPagerTabStripView()
-            })
+        })
     }
 
     @objc func onNavigationTitle(sender: UIView) {
@@ -251,23 +251,53 @@ EmptyViewDelegate {
         }
     }
 
-    func newIssueAction() -> UIAlertAction? {
-        guard case .value(let details) = state,
-            details.hasIssuesEnabled,
-            let newIssueViewController = NewIssueTableViewController.create(
-            client: client,
+    func newIssueAction(sender: UIView) -> UIAlertAction? {
+
+        guard case .value(let details) = self.state else { return nil }
+
+        let repoDetails = IssueTemplateRepoDetails(
             owner: repo.owner,
-            repo: repo.name,
-            signature: .sentWithGitHawk)
-        else {
-            return nil
+            name: repo.name,
+            defaultBranch: details.defaultBranch
+        )
+
+        let action = UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
+            self.client.createNewIssue(repoDetails: repoDetails) { [weak self] result in
+                guard let strongSelf = self else { return }
+
+                switch result {
+                case .success(let templates):
+
+                    if templates.count > 0 {
+                        let alertView = strongSelf.getTemplateIssueAlert(
+                            withTemplates: templates,
+                            details: repoDetails
+                        )
+                        alertView.popoverPresentationController?.setSourceView(sender)
+                        strongSelf.route_present(to: alertView)
+                    } else {
+
+                        // No templates exists, show blank new issue view controller
+                        guard let viewController = NewIssueTableViewController.create(
+                            client: strongSelf.client,
+                            owner: repoDetails.owner,
+                            repo: repoDetails.name,
+                            signature: .sentWithGitHawk
+                            ) else {
+                                assertionFailure("Failed to create NewIssueTableViewController")
+                                return
+                        }
+                        viewController.delegate = strongSelf
+                        let navController = UINavigationController(rootViewController: viewController)
+                        navController.modalPresentationStyle = .formSheet
+                        strongSelf.route_present(to: navController)
+                    }
+                case .error(let error):
+                    Squawk.show(error: error)
+                }
+            }
         }
-
-        newIssueViewController.delegate = self
-        weak var weakSelf = self
-
-        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .newIssue(issueController: newIssueViewController)
+        return action
     }
 
     func workingCopyAction() -> UIAlertAction? {
@@ -282,7 +312,7 @@ EmptyViewDelegate {
         let title = NSLocalizedString("Working Copy", comment: "")
         let action = UIAlertAction(title: title, style: .default,
                                    handler: { _ in
-            UIApplication.shared.open(url)
+                                    UIApplication.shared.open(url)
         })
         return action
     }
@@ -298,8 +328,8 @@ EmptyViewDelegate {
 
         alert.addActions([
             viewHistoryAction(owner: repo.owner, repo: repo.name, branch: branch, client: client),
-            newIssueAction()
-        ])
+            newIssueAction(sender: sender)
+            ])
         if let url = repoUrl {
             alert.add(action: AlertAction(alertBuilder).share([url], activities: [TUSafariActivity()], type: .shareUrl) {
                 $0.popoverPresentationController?.setSourceView(sender)

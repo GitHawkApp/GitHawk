@@ -10,6 +10,15 @@ import Foundation
 
 enum Constants {
 
+    enum GitHawk {
+        static let owner = "GitHawkApp"
+        static let name = "GitHawk"
+    }
+    enum URLs {
+        static let website = "http://www.githawk.com/"
+        static let blog = "http://blog.githawk.com/"
+    }
+
     enum Strings {
         static let all = NSLocalizedString("All", comment: "")
         static let markRead = NSLocalizedString("Mark Read", comment: "")

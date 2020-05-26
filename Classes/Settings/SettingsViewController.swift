@@ -30,7 +30,7 @@ GitHubSessionListener {
     @IBOutlet weak var githubStatusCell: StyledTableCell!
     @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
     @IBOutlet weak var tryTestFlightBetaCell: StyledTableCell!
-    @IBOutlet weak var reportBugCell: StyledTableCell!
+    @IBOutlet weak var reportBugCell: SpinnerTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var setDefaultReaction: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
@@ -151,20 +151,51 @@ GitHubSessionListener {
         UIApplication.shared.openWriteReview()
     }
 
-    private func onReportBug() {
-        guard let viewController = NewIssueTableViewController.create(
-                client: GithubClient(userSession: sessionManager.focusedUserSession),
-                owner: "GitHawkApp",
-                repo: "GitHawk",
-                signature: .bugReport
-            ) else {
-                Squawk.showGenericError()
-                return
+    func onReportBug() {
+
+        let repoDetails = IssueTemplateRepoDetails(
+            owner: "GitHawkApp",
+            name: "GitHawk",
+            defaultBranch: "master"
+        )
+
+        reportBugCell.startSpinner()
+        client.createNewIssue(repoDetails: repoDetails) { [weak self] result in
+            guard let strongSelf = self else { return }
+
+            switch result {
+            case .success(let templates):
+
+                strongSelf.reportBugCell.stopSpinner()
+                if templates.count > 0 {
+                    let alertView = strongSelf.getTemplateIssueAlert(
+                        withTemplates: templates,
+                        session: strongSelf.sessionManager.focusedUserSession,
+                        details: repoDetails
+                    )
+                    alertView.popoverPresentationController?.setSourceView(strongSelf.reportBugCell)
+                    strongSelf.route_present(to: alertView)
+                } else {
+
+                    // No templates exists, show blank new issue view controller
+                    guard let viewController = NewIssueTableViewController.create(
+                        client: GithubClient(userSession: strongSelf.sessionManager.focusedUserSession),
+                        owner: repoDetails.owner,
+                        repo: repoDetails.name,
+                        signature: .sentWithGitHawk
+                        ) else {
+                            assertionFailure("Failed to create NewIssueTableViewController")
+                            return
+                    }
+                    viewController.delegate = strongSelf
+                    let navController = UINavigationController(rootViewController: viewController)
+                    navController.modalPresentationStyle = .formSheet
+                    strongSelf.route_present(to: navController)
+                }
+            case .error(let error):
+                Squawk.show(error: error)
+            }
         }
-        viewController.delegate = self
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.modalPresentationStyle = .formSheet
-        route_present(to: navController)
     }
 
     private func onViewSource() {
