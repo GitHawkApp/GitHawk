@@ -113,6 +113,10 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .destructive, handler: handler)
     }
 
+    static func keep(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Keep", comment: ""), style: .default, handler: handler)
+    }
+
     static func delete(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: handler)
     }

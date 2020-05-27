@@ -306,10 +306,23 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         Haptic.triggerNotification(.success)
     }
 
-    func didDismiss(selected labels: [RepositoryLabel]) {
+    func didDismiss(controller: LabelsViewController) {
         guard let previous = result,
-            previous.labels.labels != labels
+            previous.labels.labels != controller.selected
             else { return }
+
+        if controller.wasDismissedByDone {
+            self.update(selected: controller.selected, previous: previous)
+        } else {
+            // Ask for confirmation
+            self.showCancelAlert { [weak self] keepChanges in
+                guard keepChanges else { return }
+                self?.update(selected: controller.selected, previous: previous)
+            }
+        }
+    }
+
+    private func update(selected labels: [RepositoryLabel], previous: IssueResult) {
         delegate?.willMutateModel(from: self)
         client.mutateLabels(
             previous: previous,
@@ -325,10 +338,23 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
         let selected = controller.selected
         guard controller.selectionChanged(newValues: selected) else { return }
+
+        if controller.wasDismissedByDone {
+            self.update(selected: selected, type: controller.type, previous: previous)
+        } else {
+            // Ask for confirmation
+            self.showCancelAlert { [weak self] keepChanges in
+                guard keepChanges else { return }
+                self?.update(selected: selected, type: controller.type, previous: previous)
+            }
+        }
+    }
+
+    private func update(selected assignees: [IssueAssigneeViewModel], type: PeopleViewController.PeopleType, previous: IssueResult) {
         delegate?.willMutateModel(from: self)
 
         let mutationType: V3AddPeopleRequest.PeopleType
-        switch controller.type {
+        switch type {
         case .assignee: mutationType = .assignees
         case .reviewer: mutationType = .reviewers
         }
@@ -339,7 +365,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            people: controller.selected
+            people: assignees
         )
     }
 
@@ -347,13 +373,26 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         guard let previous = result,
             previous.milestone != controller.selected
             else { return }
+
+        if controller.wasDismissedByDone {
+            self.update(selected: controller.selected, previous: previous)
+        } else {
+            // Ask for confirmation
+            self.showCancelAlert { [weak self] keepChanges in
+                guard keepChanges else { return }
+                self?.update(selected: controller.selected, previous: previous)
+            }
+        }
+    }
+
+    private func update(selected milestone: Milestone?, previous: IssueResult) {
         delegate?.willMutateModel(from: self)
         client.setMilestone(
             previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            milestone: controller.selected
+            milestone: milestone
         )
     }
 
@@ -365,10 +404,24 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         } else if let people = viewController as? PeopleViewController {
             didDismiss(controller: people)
         } else if let labels = viewController as? LabelsViewController {
-            didDismiss(selected: labels.selected)
+            didDismiss(controller: labels)
         }
     }
 
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
+    private func showCancelAlert(completion: @escaping (_ keepChanges: Bool) -> Void) {
+        guard let viewController = self.viewController else { return }
+
+        let title = NSLocalizedString("Are you sure?", comment: "")
+        let message = NSLocalizedString("Some changes have been made. Are you sure you want to discard them?", comment: "")
+        let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
+
+        alert.addActions([
+            AlertAction.keep { _ in completion(true) },
+            AlertAction.discard { _ in completion(false) }
+        ])
+
+        viewController.present(alert, animated: trueUnlessReduceMotionEnabled)
+    }
 }

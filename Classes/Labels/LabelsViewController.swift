@@ -19,6 +19,8 @@ LabelSectionControllerDelegate {
     private let client: GithubClient
     private let request: RepositoryLabelsQuery
 
+    var wasDismissedByDone = false
+
     init(
         selected: [RepositoryLabel],
         client: GithubClient,
@@ -101,6 +103,11 @@ LabelSectionControllerDelegate {
                 Squawk.show(error: error)
             }
         })
+    }
+
+    override func onMenuDone() {
+        self.wasDismissedByDone = true
+        super.onMenuDone()
     }
 
     // MARK: BaseListViewControllerDataSource

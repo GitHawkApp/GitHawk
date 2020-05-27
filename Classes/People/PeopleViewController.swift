@@ -30,6 +30,8 @@ PeopleSectionControllerDelegate {
     private var owner: String
     private var repo: String
 
+    var wasDismissedByDone = false
+
     init(
         selections: [String],
         exclusions: [String],
@@ -164,6 +166,11 @@ PeopleSectionControllerDelegate {
                 Squawk.show(error: error)
             }
         }
+    }
+
+    @objc override func onMenuDone() {
+        self.wasDismissedByDone = true
+        super.onMenuDone()
     }
 
     // MARK: BaseListViewControllerDataSource
