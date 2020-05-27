@@ -459,6 +459,7 @@
 		29FE635F21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE635E21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift */; };
 		29FE636121AE2E7900A07A86 /* RepositoryErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE636021AE2E7900A07A86 /* RepositoryErrorViewController.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
+		2CDD97C22411B61C0016D5CF /* GitHubClient+RepositoryLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD97C12411B61C0016D5CF /* GitHubClient+RepositoryLabels.swift */; };
 		3E79A2FF1F8A7DA700E1126B /* ShortcutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */; };
 		4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */; };
 		49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AF91B0204B416500DFF325 /* MergeTests.swift */; };
@@ -1060,6 +1061,7 @@
 		29FE635E21AE2E2F00A07A86 /* RepositoryLoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryLoadingViewController.swift; sourceTree = "<group>"; };
 		29FE636021AE2E7900A07A86 /* RepositoryErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryErrorViewController.swift; sourceTree = "<group>"; };
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
+		2CDD97C12411B61C0016D5CF /* GitHubClient+RepositoryLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+RepositoryLabels.swift"; sourceTree = "<group>"; };
 		36115D494E8C3B4F39AC8CD9 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		3E106824819769E0A6665A79 /* Pods-FreetimeWatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch/Pods-FreetimeWatch.release.xcconfig"; sourceTree = "<group>"; };
 		3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
@@ -2154,6 +2156,7 @@
 				2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */,
 				29C8F9B4208C081D0075931C /* LabelSectionController.swift */,
 				2924C18C20D5B3DD00FCFCFF /* LabelsViewController.swift */,
+				2CDD97C12411B61C0016D5CF /* GitHubClient+RepositoryLabels.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -3263,6 +3266,7 @@
 				031E0241220B433C00A329F1 /* UIImage+Color.swift in Sources */,
 				29999734203135E100995FFD /* IssueMergeContextCell.swift in Sources */,
 				29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */,
+				2CDD97C22411B61C0016D5CF /* GitHubClient+RepositoryLabels.swift in Sources */,
 				29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */,
 				29136BDF200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift in Sources */,
 				298C7E2621D7F56600DD2A60 /* SettingsAccountCell.swift in Sources */,

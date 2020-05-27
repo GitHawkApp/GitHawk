@@ -1,10 +1,14 @@
-query RepositoryLabels($owner: String!, $repo: String!) {
+query fetchRepositoryLabels($owner: String!, $repo: String!, $after: String) {
   repository(owner: $owner, name: $repo) {
-    labels(first:100) {
+    labels(first:100, after: $after) {
       nodes {
         name
         color
       }
-    }    
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
   }
 }
