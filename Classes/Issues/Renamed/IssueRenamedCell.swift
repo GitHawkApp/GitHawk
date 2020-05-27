@@ -17,7 +17,7 @@ protocol IssueRenamedCellDelegate: class {
 final class IssueRenamedCell: UICollectionViewCell {
 
     static let titleInset = UIEdgeInsets(
-        top: Styles.Sizes.labelEventHeight,
+        top: Styles.Sizes.labelEventHeight - Styles.Sizes.rowSpacing,
         left: 0,
         bottom: Styles.Sizes.rowSpacing,
         right: 0
@@ -47,7 +47,6 @@ final class IssueRenamedCell: UICollectionViewCell {
             make.left.equalTo(actorLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(actorLabel)
         }
-
         contentView.addSubview(titleView)
     }
 
