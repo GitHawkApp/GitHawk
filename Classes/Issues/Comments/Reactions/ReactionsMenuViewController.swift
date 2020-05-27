@@ -33,26 +33,25 @@ final class EmojiCell: UICollectionViewCell {
 
 }
 
+private extension Array {
+    func split(toNumberOfChunks number: Int) -> [[Element]] {
+        let size = count / number
+        return (0 ..< number).map {
+            let from = $0 * size
+            let to = from + size
+            let isLast = ($0 == number - 1)
+            return Array(self[from ..< (isLast ? count : to)])
+        }
+    }
+}
+
 final class ReactionsMenuViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout {
 
     private let reuseIdentifier = "cell"
     private let size: CGFloat = 50
 
-    private let sectionedReactions: [[ReactionContent]] = [
-        [
-            .thumbsUp,
-            .thumbsDown,
-            .laugh,
-            .hooray
-        ],
-        [
-            .confused,
-            .heart,
-            .rocket,
-            .eyes
-        ]
-    ]
+    private let sectionedReactions = IssueCommentReactionViewModel.allReactions.split(toNumberOfChunks: 2)
 
     var selectedReaction: ReactionContent? {
         guard let item = collectionView?.indexPathsForSelectedItems?.first else { return nil }

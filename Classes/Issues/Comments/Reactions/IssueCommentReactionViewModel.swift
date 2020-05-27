@@ -11,16 +11,32 @@ import IGListKit
 
 final class IssueCommentReactionViewModel: ListDiffable {
 
+    static let allReactions: [ReactionContent] = [
+        .thumbsUp,
+        .thumbsDown,
+        .laugh,
+        .hooray,
+        .confused,
+        .heart,
+        .rocket,
+        .eyes
+    ]
+
     let models: [ReactionViewModel]
     private let map: [ReactionContent: ReactionViewModel]
     private let flatState: String
 
     init(models: [ReactionViewModel]) {
-        self.models = models
+        let reactions = IssueCommentReactionViewModel.allReactions
+        let indexOfModel: (ReactionViewModel) -> Int = {
+            reactions.firstIndex(of: $0.content) ?? 0
+        }
+        let sortedModels = models.sorted { indexOfModel($0) < indexOfModel($1) }
+        self.models = sortedModels
 
         var map = [ReactionContent: ReactionViewModel]()
         var flatState = ""
-        for model in models {
+        for model in sortedModels {
             map[model.content] = model
             flatState += "\(model.content.rawValue)\(model.count)"
         }
