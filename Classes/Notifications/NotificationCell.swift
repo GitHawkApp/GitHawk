@@ -157,6 +157,17 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
     override var canBecomeFirstResponder: Bool {
         return true
     }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        for view in subviews {
+            let newPoint = view.convert(point, from: self)
+            let view = view.hitTest(newPoint, with: event)
+            if view != nil {
+                return view
+            }
+        }
+        return super.hitTest(point, with: event)
+    }
 
     public func configure(with model: NotificationViewModel, delegate: NotificationCellDelegate?) {
         textView.configure(with: model.title, width: contentView.bounds.width)
