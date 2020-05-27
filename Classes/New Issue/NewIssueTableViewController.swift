@@ -140,8 +140,9 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
 
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc func onSend() {
+ 
         guard let titleText = titleText else {
-            Squawk.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            Squawk.showIssueError(message: NSLocalizedString("An issue title is required. Please add a title and try again.", comment: "Invalid title when sending new issue"), view: bodyField)
             return
         }
 
@@ -205,7 +206,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         bodyField.inputAccessoryView = actions
     }
 
-    // MARK: UITextFieldDelegate
+  // MARK: UITextFieldDelegate
 
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -215,7 +216,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
 
     // MARK: Actions
 
-    /// Called when editing changed on the title field, enable/disable submit button based on title text
+    /// Called when editing changed on the title field, enable/disable submit button based on title and body
     @IBAction func titleFieldEditingChanged(_ sender: Any) {
         navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
