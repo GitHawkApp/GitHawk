@@ -519,6 +519,8 @@
 		BDB6AA762165B8EA009BB73C /* SwitchBranches.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */; };
 		C0E3CD4B21BAE49B00185B57 /* NSRegularExpression+StaticString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */; };
 		C0E3CD4D21BAE65000185B57 /* UIImage+StaticString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */; };
+		C0F0707A22386CC900C90A31 /* SearchSegmentBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F0707922386CC900C90A31 /* SearchSegmentBarCell.swift */; };
+		C0F0707C223882DD00C90A31 /* SegmentControl+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F0707B223882DD00C90A31 /* SegmentControl+Border.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -1127,6 +1129,8 @@
 		BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBranches.swift; sourceTree = "<group>"; };
 		C0E3CD4A21BAE49B00185B57 /* NSRegularExpression+StaticString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRegularExpression+StaticString.swift"; sourceTree = "<group>"; };
 		C0E3CD4C21BAE65000185B57 /* UIImage+StaticString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+StaticString.swift"; sourceTree = "<group>"; };
+		C0F0707922386CC900C90A31 /* SearchSegmentBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSegmentBarCell.swift; sourceTree = "<group>"; };
+		C0F0707B223882DD00C90A31 /* SegmentControl+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SegmentControl+Border.swift"; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -2210,6 +2214,7 @@
 			children = (
 				7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */,
 				7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */,
+				C0F0707922386CC900C90A31 /* SearchSegmentBarCell.swift */,
 			);
 			path = SearchBar;
 			sourceTree = "<group>";
@@ -2300,6 +2305,7 @@
 				298C7E2721D80BAF00DD2A60 /* Error+GraphQLForbidden.swift */,
 				031E0240220B433C00A329F1 /* UIImage+Color.swift */,
 				03E8D823221D339200EB792A /* GithubURL.swift */,
+				C0F0707B223882DD00C90A31 /* SegmentControl+Border.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -3025,6 +3031,7 @@
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
 				DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */,
 				2967DC56211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift in Sources */,
+				C0F0707C223882DD00C90A31 /* SegmentControl+Border.swift in Sources */,
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
 				29A10541216D912F004734A0 /* IssueRoute+RoutePerformable.swift in Sources */,
@@ -3277,6 +3284,7 @@
 				290CA778216AFAE600DE04F8 /* RoutePerformable.swift in Sources */,
 				29FE635B21AB86B700A07A86 /* BookmarkRepoCell.swift in Sources */,
 				295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */,
+				C0F0707A22386CC900C90A31 /* SearchSegmentBarCell.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
 				290CA76A216AC82700DE04F8 /* SearchShortcutRoute+RoutePerformable.swift in Sources */,

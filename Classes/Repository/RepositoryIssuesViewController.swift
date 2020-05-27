@@ -29,7 +29,8 @@ IndicatorInfoProvider {
     private let type: RepositoryIssuesType
     private let searchKey: ListDiffable = "searchKey" as ListDiffable
     private let debouncer = Debouncer()
-    private var previousSearchString = "is:open "
+    private var previousSearchString = ""
+    private var prefix = "is:open "
     private var label: String?
     private var numberOfItems: Int?
 
@@ -126,6 +127,14 @@ IndicatorInfoProvider {
         debouncer.action = { [weak self] in self?.fetch(page: nil) }
     }
 
+    func didChangeSegment(sectionController: SearchBarSectionController, index: Int) {
+        switch index {
+        case 0: updateState(isOpen: true)
+        case 1: updateState(isOpen: false)
+        default: break
+        }
+    }
+
     // MARK: BaseListViewControllerHeaderDataSource
 
     func headerModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
@@ -133,7 +142,8 @@ IndicatorInfoProvider {
             SearchBarSectionController(
                 placeholder: Constants.Strings.search,
                 delegate: self,
-                query: previousSearchString
+                query: previousSearchString,
+                items: ["Open", "Closed"]
             )
         })
     }
@@ -174,7 +184,12 @@ IndicatorInfoProvider {
         case .issues: typeQuery = "is:issue"
         case .pullRequests: typeQuery = "is:pr"
         }
-        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)".lowercased()
+        return "repo:\(owner)/\(repo) \(typeQuery) \(prefix + previousSearchString)".lowercased()
+    }
+
+    func updateState(isOpen: Bool = true) {
+        prefix = isOpen ? "is:open " : "is:closed "
+        debouncer.action = { [weak self] in self?.fetch(page: nil) }
     }
 
     // MARK: IndicatorInfoProvider
