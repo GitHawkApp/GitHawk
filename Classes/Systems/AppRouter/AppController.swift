@@ -33,6 +33,10 @@ RouterPropsSource {
         sessionManager.addListener(listener: self)
     }
 
+    func getAppClient() -> GithubClient? {
+        return self.appClient
+    }
+    
     func appDidFinishLaunching(with window: UIWindow?) {
         guard let controller = window?.rootViewController as? AppSplitViewController else {
             fatalError("App must be setup with a split view controller")
