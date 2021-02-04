@@ -18,6 +18,7 @@ final class AppSplitViewController: UISplitViewController {
         masterTabBarController?.delegate = tabDelegateController
         delegate = appSplitViewDelegateController
         preferredDisplayMode = .allVisible
+        Haptic.successFeedback()
     }
 
     var detailNavigationController: UINavigationController? {

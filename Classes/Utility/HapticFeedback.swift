@@ -24,4 +24,9 @@ enum Haptic {
     static func triggerNotification(_ type: UINotificationFeedbackType) {
         notificationGenerator.notificationOccurred(type)
     }
+    
+    static func successFeedback() {
+     let generator = UINotificationFeedbackGenerator()
+         generator.notificationOccurred(.success)
+     }
 }

@@ -15,6 +15,7 @@ final class SplitPlaceholderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        Haptic.successFeedback()
         view.backgroundColor = Styles.Colors.Gray.lighter.color
 
         view.addSubview(imageView)

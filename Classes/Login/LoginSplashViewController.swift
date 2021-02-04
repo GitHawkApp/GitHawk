@@ -119,6 +119,7 @@ final class LoginSplashViewController: UIViewController {
             }
         })
         self.authSession?.start()
+        Haptic.successFeedback()
     }
 
     @IBAction func onPersonalAccessTokenButton(_ sender: Any) {
@@ -152,6 +153,7 @@ final class LoginSplashViewController: UIViewController {
         ])
 
         present(alert, animated: trueUnlessReduceMotionEnabled)
+        Haptic.successFeedback()
     }
 
     private func handleError() {

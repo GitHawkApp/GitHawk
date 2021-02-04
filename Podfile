@@ -24,7 +24,6 @@ def testing_pods
   pod 'XLPagerTabStrip', '~> 8.1'
   pod 'ImageAlertAction'
   pod 'FMDB'
-
   # prerelease pods
   pod 'IGListKit/Swift', :git => 'https://github.com/GitHawkApp/IGListKit.git', :branch => 'fix-layout-insets'
   pod 'StyledTextKit', :git => 'https://github.com/GitHawkApp/StyledTextKit.git', :branch => 'master'

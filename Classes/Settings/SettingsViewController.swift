@@ -261,6 +261,7 @@ GitHubSessionListener {
         BadgeNotifications.configure { _ in
             self.updateBadge()
         }
+        Haptic.successFeedback()
     }
 
     @IBAction private func onPushChanged() {
@@ -268,6 +269,7 @@ GitHubSessionListener {
         BadgeNotifications.configure { _ in
             self.updateBadge()
         }
+        Haptic.successFeedback()
     }
 
     @IBAction private func onSettings(_ sender: Any) {
@@ -277,6 +279,7 @@ GitHubSessionListener {
 
     @IBAction private func onMarkRead(_ sender: Any) {
         NotificationModelController.setReadOnOpen(open: markReadSwitch.isOn)
+        Haptic.successFeedback()
     }
 
     @IBAction private func onSignature(_ sender: Any) {
@@ -285,10 +288,12 @@ GitHubSessionListener {
 
     @IBAction private func onPushNotificationsInfo(_ sender: Any) {
         showContextualMenu(PushNotificationsDisclaimerViewController())
+        Haptic.successFeedback()
     }
 
     @IBAction private func onOpenExternalLinks(_ sender: Any) {
         UserDefaults.standard.shouldOpenExternalLinksInSafari = openExternalLinksSwitch.isOn
+        Haptic.successFeedback()
     }
 
     // MARK: NewIssueTableViewControllerDelegate

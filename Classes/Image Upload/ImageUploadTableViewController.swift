@@ -213,6 +213,7 @@ final class ImageUploadTableViewController: UITableViewController,
             initialPhoto: photo,
             delegate: nil
         ))
+        Haptic.successFeedback()
     }
 
     // MARK: UITextFieldDelegate
